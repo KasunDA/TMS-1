@@ -1,0 +1,92 @@
+.set-logo{
+	font-weight: 600;
+	font-size: 20px;
+	margin: 9px 10px 0 !important;
+}
+.page-header.navbar .menu-toggler.sidebar-toggler {
+    margin: 19px 0 0;
+}
+.page-header.navbar .top-menu .navbar-nav > li.dropdown-user .dropdown-toggle {
+    padding: 13px 10px 0px;
+}
+.page-header-fixed .page-container {
+    margin-top: 25px;
+}
+.page-header.navbar {
+    height: 50px;
+    min-height: 50px;
+}
+.form .form-body, .portlet-form .form-body{
+	padding:0px !important;
+}
+.no-padding{
+	padding: 0px !important;
+}
+table.dataTable.no-footer{
+	border-bottom: 0px !important;
+}
+
+
+.form-control {
+    height: 27px !important;
+    padding: 4px 10px !important;
+    border-radius: 0px !important;
+}
+.form-control, output {
+    font-size: 13px !important;
+ 
+}
+.report-dateActions {
+    display: flex;
+    width: 315px !important;
+    border: none !important;
+    float: right;
+}
+
+textarea.form-control {
+    height: auto !important;
+}
+
+
+.table-checkable tr>td:first-child, .table-checkable tr>th:first-child {
+     
+    max-width: 100% !important;
+   
+}
+
+
+.addremove{ 
+     padding-left: 0px !important;
+     display: inline-flex !important;
+     list-style: none !important;
+ }
+ 
+ .col-md-2.small-lab input {
+     width: 50%;
+     margin-left: 10px;
+ }
+ .col-md-2.small-lab {
+     display: flex;
+ }
+.small-lab2 select {
+    width: 45%;
+    margin-left: 10px;
+}
+.small-lab2 {
+    display: flex;
+}
+.page-md .progress {
+    text-indent: 0 !important;
+}
+.progress-bar {
+    font-size: 10px !important;
+    text-transform: capitalize;
+    font-weight: 400;
+}
+div.progress-bar > span {
+    top: 2px !important;
+    font-size: 12px  !important;
+}
+#skills-pgr div.progress{
+    height: 1.5em  !important;
+}
