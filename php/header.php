@@ -1,3 +1,11 @@
+<?php
+@ob_start();
+session_start();
+if(!isset($_SESSION['login_id']) && !isset($_SESSION['username']) )
+{
+    echo '<script> location.assign("../index.php") </script>';    
+} 
+?>
 <!DOCTYPE html>
 <!-- 
 Template Name: Logic Saint | Transport Managment System

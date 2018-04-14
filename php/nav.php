@@ -25,16 +25,16 @@
                     <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
                     <li class="dropdown dropdown-user dropdown-dark">
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                            <span class="username username-hide-on-mobile"> Nick </span>
+                            <span class="username username-hide-on-mobile"> <?php echo $_SESSION['username']; ?></span>
                             <!-- DOC: Do not remove below empty space(&nbsp;) as its purposely used -->
-                            <img alt="" class="img-circle" src="../assets/layouts/layout4/img/avatar9.jpg" /> </a>
+                            <img alt="" class="img-circle" src="../assets/layouts/layout4/img/avatar.png" /> </a>
                         <ul class="dropdown-menu dropdown-menu-default">
-                            <li>
+                            <!-- <li>
                                 <a href="#">
                                     <i class="icon-user"></i> My Profile </a>
-                            </li>
+                            </li> -->
                             <li>
-                                <a href="#">
+                                <a href="logout.php">
                                     <i class="icon-key"></i> Log Out </a>
                             </li>
                         </ul>
