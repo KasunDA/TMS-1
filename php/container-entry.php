@@ -44,13 +44,13 @@ date_default_timezone_set("Asia/Karachi");
                                                 <div id="cm_id_div" class="hidden">
                                                   <label class="col-md-2 control-label">Transaction ID:</label>
                                                   <div class="col-md-3">
-                                                    <input type="text" class="form-control" placeholder="E-1035" required readonly >
+                                                    <input type="text" class="form-control" placeholder="E-1035" id="cm_id" name="cm_id" required readonly >
                                                   </div>
                                                 </div>
                                     
                                                   <label class="col-md-2 control-label">Transaction Date:</label>
                                                 <div class="col-md-3">
-                                                  <input type="date" class="form-control" value="<?php echo date('Y-m-d'); ?>" required tabindex="1">
+                                                  <input type="date" class="form-control" id="datee" name="datee" value="<?php echo date('Y-m-d'); ?>" required tabindex="1">
                                                 </div>
                                          </div>  
                                      </div>
@@ -78,20 +78,20 @@ date_default_timezone_set("Asia/Karachi");
                                           <div class="form-group">
                                                 <label class="col-md-2 control-label">On Account Of:</label>
                                                 <div class="col-md-3">
-                                                    <select class="form-control" id="cm_id" name="cm_id" required tabindex="3">
+                                                    <select class="form-control" id="coa_id" name="coa_id" required tabindex="3">
                                                         <option value="">Select Account</option>
                                                         <?php 
 
-                                                          $q = mysqli_query($mycon,'SELECT cm_id,short_form from container_movement where status=1 ORDER BY cm_id DESC');
+                                                          $q = mysqli_query($mycon,'SELECT coa_id,short_form from chart_of_account where status=1 ORDER BY coa_id DESC');
 
                                                           while( $r = mysqli_fetch_array($q) )
                                                             {?>
-                                                              <option value="<?php echo $r['cm_id']; ?>"><?php echo $r['short_form']; ?></option>
+                                                              <option value="<?php echo $r['coa_id']; ?>"><?php echo $r['short_form']; ?></option>
                                                           <?php } //END OF WHILE ?>
                                                     </select>
                                                 </div>
                                                 <div class="col-md-5">
-                                                  <input type="text" class="form-control" placeholder="Full Form" id="cm_id_full_form" readonly>
+                                                  <input type="text" class="form-control" placeholder="Full Form" id="coa_id_full_form" readonly>
                                                 </div>
                                             </div> 
                                       </div>
@@ -459,8 +459,24 @@ date_default_timezone_set("Asia/Karachi");
                                                 $q = mysqli_query($mycon,'SELECT * FROM container_movement WHERE status=1 ORDER BY cm_id DESC ');
                                                 $n  = 1;
                                                 while($r = mysqli_fetch_array($q))
-                                                {?>
-                                                    <tr class="odd gradeX">
+                                                {
+                                                  $c= '';
+                                                  if($r['color'] == 'red'){
+                                                    $c = '#f36a5a';
+                                                  }
+
+                                                  else if( $r['color'] == 'yellow' )
+                                                  {
+                                                    $c = '#d5d82d';
+                                                   }
+
+                                                  else{
+                                                    $c = '#26c281';
+                                                  }
+                                                  
+
+                                                  ?>
+                                                    <tr class="odd gradeX" style="background-color:<?php echo $c; ?> ; color: #fff;"  >
 
                                                     <td> 
                                                       <ul class="addremove">
@@ -472,35 +488,35 @@ date_default_timezone_set("Asia/Karachi");
                                                         </button> </li>
                                                       </ul>
                                                     </td>
-                                                    <td><?php echo $n ?></td>
+                                                    <td style="color: #000;"><?php echo $n ?></td>
                                                     <td><?php echo $r['datee']; ?> </td>
                                                     
                                                     <?php
                                                     $q1 = mysqli_query($mycon,"SELECT name from agent where agent_id=".$r['agent_id']);
                                                     if($r1 = mysqli_fetch_array($q1))
-                                                    ?><td><?php echo $r1['name']; ?> </td><?php
+                                                    ?><td id="<?php echo $r['agent_id']; ?>"><?php echo $r1['name']; ?> </td><?php
                                                     
                                                     $q1 = mysqli_query($mycon,"SELECT short_form from chart_of_account where coa_id=".$r['coa_id']);
                                                     if($r1 = mysqli_fetch_array($q1))
-                                                    ?> <td><?php echo $r1['short_form']; ?> </td> <?php
+                                                    ?> <td id="<?php echo $r['coa_id']; ?>"><?php echo $r1['short_form']; ?> </td> <?php
 
                                                     $q1 = mysqli_query($mycon,"SELECT short_form from consignee where consignee_id=".$r['consignee_id']);
                                                     if($r1 = mysqli_fetch_array($q1))
-                                                     ?><td><?php echo $r1['short_form']; ?> </td>
+                                                     ?><td id="<?php echo $r['consignee_id']; ?>"><?php echo $r1['short_form']; ?> </td>
                                                     
-                                                    <td><?php echo $r['movement']; ?> </td>
+                                                    <td><?php echo $r['movement']; ?></td>
                                                     
                                                   <?php $q1 = mysqli_query($mycon,"SELECT short_form from yard where yard_id=".$r['empty_terminal_id']);
                                                     if($r1 = mysqli_fetch_array($q1))
-                                                     ?> <td><?php echo $r1['short_form']; ?> </td><?php
+                                                     ?> <td id="<?php echo $r['empty_terminal_id']; ?>"><?php echo $r1['short_form']; ?> </td><?php
                                                     
                                                     $q1 = mysqli_query($mycon,"SELECT short_form from yard where yard_id=".$r['from_yard_id']);
                                                     if($r1 = mysqli_fetch_array($q1))
-                                                    ?> <td><?php echo $r1['short_form']; ?> </td><?php
+                                                    ?> <td id="<?php echo $r['from_yard_id']; ?>"><?php echo $r1['short_form']; ?> </td><?php
                                                     
                                                   $q1 = mysqli_query($mycon,"SELECT short_form from yard where yard_id=".$r['to_yard_id']);
                                                   if($r1 = mysqli_fetch_array($q1))
-                                                  ?> <td><?php echo $r1['short_form']; ?> </td>
+                                                  ?> <td id="<?php echo $r['to_yard_id']; ?>"><?php echo $r1['short_form']; ?> </td>
 
                                                   <td><?php echo $r['bl_cro_number']; ?> </td>
                                                   <td><?php echo $r['job_number']; ?> </td>
@@ -510,23 +526,23 @@ date_default_timezone_set("Asia/Karachi");
                                                   
                                                   <?php $q1 = mysqli_query($mycon,"SELECT vehicle_number from vehicle where vehicle_id=".$r['vehicle_id']);
                                                   if($r1 = mysqli_fetch_array($q1))
-                                                  ?> <td><?php echo $r1['vehicle_number']; ?> </td>
+                                                  ?> <td id="<?php echo $r['vehicle_id']; ?>"><?php echo $r1['vehicle_number']; ?> </td>
                                                   
-                                                  <td><?php echo $r['advance']; ?> </td>
-                                                  <td><?php echo $r['diesel']; ?> </td>
-                                                  <td><?php echo $r['rent']; ?> </td>
-                                                  <td><?php echo $r['balance']; ?> </td>
-                                                  <td><?php echo $r['party_charges']; ?> </td>
+                                                  <td><?php echo $r['advance']; ?></td>
+                                                  <td><?php echo $r['diesel']; ?></td>
+                                                  <td><?php echo $r['rent']; ?></td>
+                                                  <td><?php echo $r['balance']; ?></td>
+                                                  <td><?php echo $r['party_charges']; ?></td>
                                                   
                                                 <?php  $q1 = mysqli_query($mycon,"SELECT type from container where container_id=".$r['container_id']);
                                                   if($r1 = mysqli_fetch_array($q1))
-                                                   ?><td><?php echo $r1['type']; ?> </td>
+                                                   ?><td id="<?php echo $r['container_id']; ?>"><?php echo $r1['type']; ?> </td>
                               
                                                   <td><?php echo $r['lot_of']; ?></td>
                                                 
                                                   <?php $q1 = mysqli_query($mycon,"SELECT short_form from line where line_id=".$r['line_id']);
                                                   if($r1 = mysqli_fetch_array($q1))?> 
-                                                  <td><?php echo $r1['short_form']; ?></td>
+                                                  <td id="<?php echo $r['line_id']; ?>"><?php echo $r1['short_form']; ?></td>
                                                   
                                                   <td><?php echo $r['lolo_charges']; ?></td>
                                                   <td><?php echo $r['weight_charges']; ?></td>
@@ -610,7 +626,7 @@ include 'footer.php';
       }
 
       //Select2
-      $('#agent_id,#cm_id,#consignee_id,#empty_terminal_id,#movement,#vehicle_id,#container_id,#line_id,#color,#container_size,#from_yard_id,#to_yard_id').select2({
+      $('#agent_id,#coa_id,#consignee_id,#empty_terminal_id,#movement,#vehicle_id,#container_id,#line_id,#color,#container_size,#from_yard_id,#to_yard_id').select2({
           width: 'resolve'
       });
 
@@ -626,13 +642,13 @@ include 'footer.php';
         })
       }
 
-      $(document).on('change','#cm_id,#consignee_id,#line_id,#empty_terminal_id,#from_yard_id,#to_yard_id,#vehicle_id', function(){
+      $(document).on('change','#coa_id,#consignee_id,#line_id,#empty_terminal_id,#from_yard_id,#to_yard_id,#vehicle_id', function(){
 
         var param = $(this).val();
 
-        if( $(this).attr('id') == 'cm_id' )
+        if( $(this).attr('id') == 'coa_id' )
         {
-          var v = 'cm_id';
+          var v = 'coa_id';
         }
         else if( $(this).attr('id') == 'consignee_id' )
         {
@@ -726,10 +742,10 @@ include 'footer.php';
         });
       }
 
-      function add(datee,agent_id,cm_id,consignee_id,movement,empty_terminal_id,from_yard_id,to_yard_id,bl_cro_number,job_number,container_number,index_number,container_size,vehicle_id,advance,diesel,rent,balance,party_charges,container_id,lot_of,line_id,lolo_charges,weight_charges,color,mr_charges,remarks)
+      function add(datee,agent_id,coa_id,consignee_id,movement,empty_terminal_id,from_yard_id,to_yard_id,bl_cro_number,job_number,container_number,index_number,container_size,vehicle_id,advance,diesel,rent,balance,party_charges,container_id,lot_of,line_id,lolo_charges,weight_charges,color,mr_charges,remarks)
       {
           $.ajax({
-              url:'ajax/container_movement/add.php?datee='+datee+'&agent_id='+agent_id+'&cm_id='+cm_id+'&consignee_id='+consignee_id+'&movement='+movement+'&empty_terminal_id='+empty_terminal_id+'&from_yard_id='+from_yard_id+'&to_yard_id='+to_yard_id+'&bl_cro_number='+bl_cro_number+'&job_number='+job_number+'&container_number='+container_number+'&index_number='+index_number+'&container_size='+container_size+'&vehicle_id='+vehicle_id+'&advance='+advance+'&diesel='+diesel+'&rent='+rent+'&balance='+balance+'&party_charges='+party_charges+'&container_id='+container_id+'&lot_of='+lot_of+'&line_id='+line_id+'&lolo_charges='+lolo_charges+'&weight_charges='+weight_charges+'&color='+color+'&mr_charges='+mr_charges+'&remarks='+remarks,
+              url:'ajax/container_movement/add.php?datee='+datee+'&agent_id='+agent_id+'&coa_id='+coa_id+'&consignee_id='+consignee_id+'&movement='+movement+'&empty_terminal_id='+empty_terminal_id+'&from_yard_id='+from_yard_id+'&to_yard_id='+to_yard_id+'&bl_cro_number='+bl_cro_number+'&job_number='+job_number+'&container_number='+container_number+'&index_number='+index_number+'&container_size='+container_size+'&vehicle_id='+vehicle_id+'&advance='+advance+'&diesel='+diesel+'&rent='+rent+'&balance='+balance+'&party_charges='+party_charges+'&container_id='+container_id+'&lot_of='+lot_of+'&line_id='+line_id+'&lolo_charges='+lolo_charges+'&weight_charges='+weight_charges+'&color='+color+'&mr_charges='+mr_charges+'&remarks='+remarks,
               type:"POST",
               success:function(data){
                   if(data)
@@ -744,10 +760,10 @@ include 'footer.php';
           });
       }
 
-      function update(cm_id,datee,agent_id,cm_id,consignee_id,movement,empty_terminal_id,from_yard_id,to_yard_id,bl_cro_number,job_number,container_number,index_number,container_size,vehicle_id,advance,diesel,rent,balance,party_charges,container_id,lot_of,line_id,lolo_charges,weight_charges,color,mr_charges,remarks)
+      function update(cm_id,datee,agent_id,coa_id,consignee_id,movement,empty_terminal_id,from_yard_id,to_yard_id,bl_cro_number,job_number,container_number,index_number,container_size,vehicle_id,advance,diesel,rent,balance,party_charges,container_id,lot_of,line_id,lolo_charges,weight_charges,color,mr_charges,remarks)
       {
           $.ajax({
-              url:'ajax/container_movement/update.php?cm_id='+cm_id+'datee='+datee+'&agent_id='+agent_id+'&cm_id='+cm_id+'&consignee_id='+consignee_id+'&movement='+movement+'&empty_terminal_id='+empty_terminal_id+'&from_yard_id='+from_yard_id+'&to_yard_id='+to_yard_id+'&bl_cro_number='+bl_cro_number+'&job_number='+job_number+'&container_number='+container_number+'&index_number='+index_number+'&container_size='+container_size+'&vehicle_id='+vehicle_id+'&advance='+advance+'&diesel='+diesel+'&rent='+rent+'&balance='+balance+'&party_charges='+party_charges+'&container_id='+container_id+'&lot_of='+lot_of+'&line_id='+line_id+'&lolo_charges='+lolo_charges+'&weight_charges='+weight_charges+'&color='+color+'&mr_charges='+mr_charges+'&remarks='+remarks,
+              url:'ajax/container_movement/update.php?cm_id='+cm_id+'datee='+datee+'&agent_id='+agent_id+'&coa_id='+coa_id+'&consignee_id='+consignee_id+'&movement='+movement+'&empty_terminal_id='+empty_terminal_id+'&from_yard_id='+from_yard_id+'&to_yard_id='+to_yard_id+'&bl_cro_number='+bl_cro_number+'&job_number='+job_number+'&container_number='+container_number+'&index_number='+index_number+'&container_size='+container_size+'&vehicle_id='+vehicle_id+'&advance='+advance+'&diesel='+diesel+'&rent='+rent+'&balance='+balance+'&party_charges='+party_charges+'&container_id='+container_id+'&lot_of='+lot_of+'&line_id='+line_id+'&lolo_charges='+lolo_charges+'&weight_charges='+weight_charges+'&color='+color+'&mr_charges='+mr_charges+'&remarks='+remarks,
               type:"POST",
               success:function(data){
                   if(data)
@@ -799,11 +815,8 @@ include 'footer.php';
 
           $('form').removeClass('update_form');
 
-          $('#short_form').val('');
-          $('#full_form').val('');
-          $('#contact').val('');
-          $('#address').val('');
-
+          $('input').val("");
+          $('select').val("").trigger('change');
 
           $('#cm_id_div').addClass('hidden');
           $('#update_form_btn').addClass('hidden');
@@ -839,37 +852,82 @@ include 'footer.php';
           $('tr').each(function(){
               if( $(this).hasClass('selectedd') )
               {
-                  $(this).removeClass('selectedd'); 
+                $(this).removeClass('selectedd'); 
               }
           });
 
           trr.addClass('selectedd');   
 
           $('#cm_id').val( cm_id );
-          $('#short_form').val( trr.find('td').eq(2).text() );
-          $('#full_form').val( trr.find('td').eq(3).text() );
-          $('#address').val( trr.find('td').eq(4).text() );
-          $('#contact').val( trr.find('td').eq(5).text() );    
-
+          $('#datee').val('1997-05-21'); //trr.find('td').eq(2).text()
+          $('#agent_id').val( trr.find('td').eq(3).attr('id') ).trigger('change');
+          $('#coa_id').val( trr.find('td').eq(4).attr('id') ).trigger('change');
+          $('#consignee_id').val( trr.find('td').eq(5).attr('id') ).trigger('change');
+          $('#movement').val( trr.find('td').eq(6).text() ).trigger('change');
+          $('#empty_terminal_id').val( trr.find('td').eq(7).attr('id') ).trigger('change');
+          $('#from_yard_id').val( trr.find('td').eq(8).attr('id') ).trigger('change');
+          $('#to_yard_id').val( trr.find('td').eq(9).attr('id') ).trigger('change');
+          $('#bl_cro_number').val( trr.find('td').eq(10).text() );
+          $('#job_number').val( trr.find('td').eq(11).text() );
+          $('#container_number').val( trr.find('td').eq(12).text() );
+          $('#index_number').val( trr.find('td').eq(13).text() );
+          $('#container_size').val( trr.find('td').eq(14).text() ).trigger('change');
+          $('#vehicle_id').val( trr.find('td').eq(15).attr('id') ).trigger('change');
+          $('#advance').val( trr.find('td').eq(16).text() );
+          $('#diesel').val( trr.find('td').eq(17).text() );
+          $('#rent').val( trr.find('td').eq(18).text() );
+          $('#balance').val( trr.find('td').eq(19).text() );
+          $('#party_charges').val( trr.find('td').eq(20).text() );
+          $('#container_id').val( trr.find('td').eq(21).attr('id') ).trigger('change');
+          $('#lot_of').val( trr.find('td').eq(22).text() );
+          $('#line_id').val( trr.find('td').eq(23).attr('id') ).trigger('change');
+          $('#lolo_charges').val( trr.find('td').eq(24).text() );
+          $('#weight_charges').val( trr.find('td').eq(25).text() );
+          $('#color').val( trr.find('td').eq(26).text() ).trigger('change');
+          $('#mr_charges').val( trr.find('td').eq(27).text() );
+          $('#remarks').val( trr.find('td').eq(28).text() );
       });
 
       //Add & Update
       $('form').submit(function(e){
          e.preventDefault();
          
-         var short_form = $('#short_form').val() ,
-             full_form = $('#full_form').val(),
-             address = $('#address').val(),
-             contact = $('#contact').val(),
+         var datee = $('#datee').val() ,
+             agent_id = $('#agent_id').val(),
+             coa_id = $('#coa_id').val(),
+             consignee_id = $('#consignee_id').val(),
+             movement = $('#movement').val(),
+             empty_terminal_id = $('#empty_terminal_id').val(),
+             from_yard_id = $('#from_yard_id').val(),
+             to_yard_id = $('#to_yard_id').val(),
+             bl_cro_number = $('#bl_cro_number').val(),
+             job_number = $('#job_number').val(),
+             container_number = $('#container_number').val(),
+             index_number = $('#index_number').val(),
+             container_size = $('#container_size').val(),
+             vehicle_id = $('#vehicle_id').val(),
+             advance = $('#advance').val(),
+             diesel = $('#diesel').val(),
+             rent = $('#rent').val(),
+             balance = $('#balance').val(),
+             party_charges = $('#party_charges').val(),
+             container_id = $('#container_id').val(),
+             lot_of = $('#lot_of').val(),
+             line_id = $('#line_id').val(),
+             lolo_charges = $('#lolo_charges').val(),
+             weight_charges = $('#weight_charges').val(),
+             color = $('#color').val(),
+             mr_charges = $('#mr_charges').val(),
+             remarks = $('#remarks').val(),
              cm_id =  $('#cm_id').val();
 
          if( $(this).hasClass('update_form') ) 
          {
-              update(cm_id,short_form,full_form,contact,address);
+              update(cm_id,datee,agent_id,coa_id,consignee_id,movement,empty_terminal_id,from_yard_id,to_yard_id,bl_cro_number,job_number,container_number,index_number,container_size,vehicle_id,advance,diesel,rent,balance,party_charges,container_id,lot_of,line_id,lolo_charges,weight_charges,color,mr_charges,remarks);
          }
          else
          {
-              add(short_form,full_form,contact,address);
+              add(datee,agent_id,coa_id,consignee_id,movement,empty_terminal_id,from_yard_id,to_yard_id,bl_cro_number,job_number,container_number,index_number,container_size,vehicle_id,advance,diesel,rent,balance,party_charges,container_id,lot_of,line_id,lolo_charges,weight_charges,color,mr_charges,remarks);
          }
       });
 
