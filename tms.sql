@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 14, 2018 at 08:50 PM
+-- Generation Time: Apr 16, 2018 at 06:43 PM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 7.0.13
 
@@ -40,7 +40,7 @@ CREATE TABLE `agent` (
 
 INSERT INTO `agent` (`agent_id`, `name`, `address`, `contact`, `status`) VALUES
 (1, 'adnan', 'address', '03023056165', 1),
-(2, 'tayyabbbb', 'gulshanasdas', '00000000000', 1);
+(2, 'tayyab', 'gulshan', '00000000000', 1);
 
 -- --------------------------------------------------------
 
@@ -55,6 +55,7 @@ CREATE TABLE `bank` (
   `account_title` varchar(60) NOT NULL,
   `account_number` varchar(35) NOT NULL,
   `address` text NOT NULL,
+  `balance` decimal(13,2) NOT NULL,
   `status` tinyint(4) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -62,9 +63,10 @@ CREATE TABLE `bank` (
 -- Dumping data for table `bank`
 --
 
-INSERT INTO `bank` (`bank_id`, `short_form`, `full_form`, `account_title`, `account_number`, `address`, `status`) VALUES
-(1, 'HBL', 'habib bank', 'butt bros', '1080-0000-25464-52-4', 'address', 1),
-(2, 'BAHL', 'Bank Al-Habib ', 'Butt Brothers', '1080-5555-12345-21-7', 'Port Qasim', 1);
+INSERT INTO `bank` (`bank_id`, `short_form`, `full_form`, `account_title`, `account_number`, `address`, `balance`, `status`) VALUES
+(1, 'HBL', 'habib bank', 'butt bros', '1080-0000-25464-52-4', 'address', '10000.00', 1),
+(2, 'BAHL', 'Bank Al-Habib  ', 'Butt Brothers Transport', '1080-5555-12345-21-7', '20000.00', '20000.00', 1),
+(3, 'HBL', 'Habib Bank ', 'Jutt Bros', '1080-2568-96325-96-1', 'address', '20000.00', 1);
 
 -- --------------------------------------------------------
 
@@ -74,7 +76,8 @@ INSERT INTO `bank` (`bank_id`, `short_form`, `full_form`, `account_title`, `acco
 
 CREATE TABLE `chart_of_account` (
   `coa_id` int(11) NOT NULL,
-  `party_name` varchar(60) NOT NULL,
+  `short_form` varchar(16) NOT NULL,
+  `full_form` varchar(60) NOT NULL,
   `address` text NOT NULL,
   `contact` varchar(15) NOT NULL,
   `status` tinyint(4) NOT NULL DEFAULT '1'
@@ -84,13 +87,10 @@ CREATE TABLE `chart_of_account` (
 -- Dumping data for table `chart_of_account`
 --
 
-INSERT INTO `chart_of_account` (`coa_id`, `party_name`, `address`, `contact`, `status`) VALUES
-(1, 'BUTT BROTHER TRANSPORT CO.', 'Karachi Port Qasim', '03040025548', 1),
-(2, 'JUTT BROTHER TRANSPORT CO', 'Port Qasim', '03030355003', 1),
-(3, 'asdasd', 'asdasd', '00302316516', 1),
-(4, 'party 0007 ', 'address 0007', '00000000007', 1),
-(5, 'party', 'addasd asdkasd ak', '69898191981', 1),
-(6, 'party  ends', 'adasd', '00661565165', 1);
+INSERT INTO `chart_of_account` (`coa_id`, `short_form`, `full_form`, `address`, `contact`, `status`) VALUES
+(1, 'bbt', 'BUTT BROTHER TRA', 'Karachi Port Qasim', '03040025548', 1),
+(2, 'jbt', 'JUTT BROTHER TRA', 'Port Qasim', '03030355003', 1),
+(7, 'mbt ', 'Malik Bros Transport', 'gulshan e hadeed', '03030561651', 1);
 
 -- --------------------------------------------------------
 
@@ -110,8 +110,8 @@ CREATE TABLE `consignee` (
 --
 
 INSERT INTO `consignee` (`consignee_id`, `short_form`, `full_form`, `status`) VALUES
-(1, 'bbt  ', 'Butt bros', 1),
-(2, 'jbt  ', 'Jutt bros', 1);
+(1, 'bbt consignee', 'Butt bros', 1),
+(2, 'jbt consignee', 'Jutt bros', 1);
 
 -- --------------------------------------------------------
 
@@ -134,7 +134,49 @@ INSERT INTO `container` (`container_id`, `type`, `status`) VALUES
 (2, '20', 0),
 (3, '20', 1),
 (4, '40', 1),
-(5, '60', 1);
+(5, '60', 1),
+(6, 'Tanki', 1),
+(7, 'Dry Containers', 1),
+(8, 'Open Top Containers', 1),
+(9, 'Tunnel Container', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `container_movement`
+--
+
+CREATE TABLE `container_movement` (
+  `cm_id` int(11) NOT NULL,
+  `datee` varchar(11) NOT NULL,
+  `agent_id` int(11) NOT NULL,
+  `coa_id` int(11) NOT NULL,
+  `consignee_id` int(11) NOT NULL,
+  `movement` varchar(7) NOT NULL,
+  `empty_terminal_id` int(11) NOT NULL,
+  `from_yard_id` int(11) NOT NULL,
+  `to_yard_id` int(11) NOT NULL,
+  `bl_cro_number` varchar(15) NOT NULL,
+  `job_number` varchar(15) NOT NULL,
+  `container_number` int(11) NOT NULL,
+  `index_number` varchar(11) NOT NULL,
+  `container_size` tinyint(4) NOT NULL,
+  `vehicle_id` int(11) NOT NULL,
+  `advance` int(11) NOT NULL,
+  `diesel` int(11) NOT NULL,
+  `rent` int(11) NOT NULL,
+  `balance` int(11) NOT NULL,
+  `party_charges` int(11) NOT NULL,
+  `container_id` int(11) NOT NULL,
+  `lot_of` int(11) NOT NULL,
+  `line_id` int(11) NOT NULL,
+  `lolo_charges` int(11) NOT NULL,
+  `weight_charges` int(11) NOT NULL,
+  `color` varchar(7) NOT NULL,
+  `mr_charges` int(11) NOT NULL,
+  `remarks` text NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -197,8 +239,8 @@ CREATE TABLE `line` (
 --
 
 INSERT INTO `line` (`line_id`, `short_form`, `full_form`, `status`) VALUES
-(1, 'jbt ', 'Jutt brothers co', 1),
-(2, 'bbt ', 'Butt bros', 1);
+(1, 'jbt line', 'Jutt brothers co', 1),
+(2, 'bbt line', 'Butt bros', 1);
 
 -- --------------------------------------------------------
 
@@ -240,8 +282,7 @@ CREATE TABLE `vehicle` (
 
 INSERT INTO `vehicle` (`vehicle_id`, `owner_name`, `vehicle_number`, `engine_number`, `chassis_number`, `status`) VALUES
 (1, 'jutt bros ', '987654321', '987654321', '987654321', 1),
-(2, 'butt bros ', '00000000000', '000000', '00000000', 1),
-(3, '', '', '', '', 0);
+(2, 'butt bros ', '1564868486', '1515151', '98745848548', 1);
 
 -- --------------------------------------------------------
 
@@ -302,6 +343,12 @@ ALTER TABLE `container`
   ADD PRIMARY KEY (`container_id`);
 
 --
+-- Indexes for table `container_movement`
+--
+ALTER TABLE `container_movement`
+  ADD PRIMARY KEY (`cm_id`);
+
+--
 -- Indexes for table `daily_description`
 --
 ALTER TABLE `daily_description`
@@ -350,12 +397,12 @@ ALTER TABLE `agent`
 -- AUTO_INCREMENT for table `bank`
 --
 ALTER TABLE `bank`
-  MODIFY `bank_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `bank_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `chart_of_account`
 --
 ALTER TABLE `chart_of_account`
-  MODIFY `coa_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `coa_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `consignee`
 --
@@ -365,7 +412,12 @@ ALTER TABLE `consignee`
 -- AUTO_INCREMENT for table `container`
 --
 ALTER TABLE `container`
-  MODIFY `container_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `container_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+--
+-- AUTO_INCREMENT for table `container_movement`
+--
+ALTER TABLE `container_movement`
+  MODIFY `cm_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `daily_description`
 --
