@@ -54,19 +54,26 @@ include 'nav.php';
                                             </div>
                                         </div>
                                         <div class="form-group">
+                                            <div id="balance_div"> 
+                                              <label class="col-md-2 control-label">Opening Balance:</label>
+                                                <div class="col-md-3">
+                                                <input type="number" class="form-control" min="0" step="0.01" id="balance" name="balance" required tabindex="5" placeholder="0.00">
+                                              </div>
+                                            </div>
+
                                             <label class="col-md-2 control-label">Address:</label>
-                                            <div class="col-md-3">
-                                               <textarea type="text" class="form-control" id="address" name="address" required tabindex="5" placeholder="here"></textarea> 
+                                            <div class="col-md-4">
+                                               <textarea type="text" class="form-control" id="address" name="address" required tabindex="6" placeholder="here"></textarea> 
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <div class="col-md-5 col-md-push-2">
                                                 <div class="">
-                                                    <button type="submit" class="btn blue" id="btn_submit" tabindex="6">Submit</button> 
-                                                    <button type="reset" class="btn default" id="btn_reset" tabindex="7">Cancel</button>
+                                                    <button type="submit" class="btn blue" id="btn_submit" tabindex="7">Submit</button> 
+                                                    <button type="reset" class="btn default" id="btn_reset" tabindex="8">Cancel</button>
 
-                                                    <button type="submit" class="btn blue hidden" id="update_form_btn" tabindex="6">Update</button> 
-                                                    <button type="button" class="btn default hidden"  id="add_new" tabindex="7">Add New</button>
+                                                    <button type="submit" class="btn blue hidden" id="update_form_btn" tabindex="7">Update</button> 
+                                                    <button type="button" class="btn default hidden"  id="add_new" tabindex="8">Add New</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -103,6 +110,7 @@ include 'nav.php';
                                          <th> Full Form </th>
                                          <th> Name </th>
                                          <th> Account # </th>
+                                         <th> Opening Balance  </th>
                                          <th> Address </th> 
                                      </tr>
                                  </thead>
@@ -133,6 +141,7 @@ include 'nav.php';
                                             <td><?php echo $r['full_form']; ?> </td>
                                             <td><?php echo $r['account_title']; ?></td>
                                             <td><?php echo $r['account_number']; ?></td>
+                                            <td><?php echo $r['balance']; ?></td>
                                             <td><?php echo $r['address']; ?> </td>
 
                                         </tr>
@@ -220,6 +229,7 @@ include 'footer.php';
                                 '<td>'+value['full_form']+'</td>'+
                                 '<td>'+value['account_title']+'</td>'+
                                 '<td>'+value['account_number']+'</td>'+
+                                '<td>'+value['balance']+'</td>'+
                                 '<td>'+value['address']+'</td>'+
 
                                 '</tr>');
@@ -233,10 +243,10 @@ include 'footer.php';
 
         //loadData();
 
-        function add(short_form,full_form,account_title,account_number,address)
+        function add(short_form,full_form,account_title,account_number,balance,address)
         {
             $.ajax({
-                url:'ajax/bank/add.php?short_form='+short_form+'&full_form='+full_form+'&account_title='+account_title+'&account_number='+account_number+'&address='+address,
+                url:'ajax/bank/add.php?short_form='+short_form+'&full_form='+full_form+'&account_title='+account_title+'&account_number='+account_number+'&balance='+balance+'&address='+address,
                 type:"POST",
                 success:function(data){
                     if(data)
@@ -245,6 +255,7 @@ include 'footer.php';
                         $('#full_form').val("");
                         $('#account_title').val("");
                         $('#account_number').val("");
+                        $('#balance').val("");
                         $('#address').val("");
                         
                         loadData();
@@ -301,6 +312,8 @@ include 'footer.php';
             $('#update_form_btn').removeClass('hidden');
             $('#add_new').removeClass('hidden');
 
+            $('#balance').removeAttr('required');
+            $('#balance_div').addClass('hidden');
             $('#btn_submit').addClass('hidden');
             $('#btn_reset').addClass('hidden');
 
@@ -316,6 +329,9 @@ include 'footer.php';
             $('#account_title').val('');
             $('#account_number').val('');
             $('#address').val('');
+
+            $('#balance').attr('required','required');
+            $('#balance_div').removeClass('hidden');
 
             $('#bank_id_div').addClass('hidden');
             $('#update_form_btn').addClass('hidden');
@@ -374,6 +390,7 @@ include 'footer.php';
                full_form = $('#full_form').val(),
                account_title = $('#account_title').val(),
                account_number = $('#account_number').val(),
+               balance = $('#balance').val(),
                address = $('#address').val(),
                bank_id =  $('#bank_id').val();
 
@@ -383,7 +400,7 @@ include 'footer.php';
            }
            else
            {
-                add(short_form,full_form,account_title,account_number,address);
+                add(short_form,full_form,account_title,account_number,balance,address);
            }
         });
 

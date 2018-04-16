@@ -46,14 +46,14 @@ include 'nav.php';
                                     <div class="row"> 
                                         <div class="form-group">
 
-                                                <label class="col-md-2 control-label">Party Name:</label>
+                                                <label class="col-md-2 control-label">Short Form:</label>
                                                 <div class="col-md-3">
-                                                  <input type="text" name="party_name" id="party_name" tabindex="1" class="form-control" placeholder="here" required>
+                                                  <input type="text" name="short_form" id="short_form" tabindex="1" class="form-control" placeholder="here" required>
                                                 </div>
-                                    
-                                                  <label class="col-md-2 control-label">Address</label>
+
+                                                <label class="col-md-2 control-label">Full Form:</label>
                                                 <div class="col-md-3">
-                                                  <textarea class="form-control" name="address" tabindex="2" id="address" placeholder="here" required></textarea>
+                                                  <input type="text" name="full_form" id="full_form" tabindex="2" class="form-control" placeholder="here" required>
                                                 </div>
                                          </div>  
                                      </div>   
@@ -63,6 +63,11 @@ include 'nav.php';
                                                  <div class="col-md-3">
                                                    <input type="text" name="contact" id="contact" maxlength="11" tabindex="3" class="form-control" pattern="[\d]{11}" placeholder="03XXXXXXXXX" required>
                                                  </div>
+
+                                                 <label class="col-md-2 control-label">Address</label>
+                                                <div class="col-md-3">
+                                                  <textarea class="form-control" name="address" tabindex="4" id="address" placeholder="here" required></textarea>
+                                                </div>
                                      
                                                    <!-- <label class="col-md-2 control-label">City</label>
                                                  <div class="col-md-3">
@@ -75,11 +80,11 @@ include 'nav.php';
                                         
                                      
                                     <div class="form-actions ">
-                                        <button type="submit" class="btn blue" id="btn_submit" tabindex="4">Submit</button> 
-                                        <button type="reset" class="btn default" id="btn_reset" tabindex="5">Cancel</button>
+                                        <button type="submit" class="btn blue" id="btn_submit" tabindex="5">Submit</button> 
+                                        <button type="reset" class="btn default" id="btn_reset" tabindex="6">Cancel</button>
 
-                                        <button type="submit" class="btn blue hidden" id="update_form_btn" tabindex="4">Update</button> 
-                                        <button type="button" class="btn default hidden"  id="add_new" tabindex="5">Add New</button>
+                                        <button type="submit" class="btn blue hidden" id="update_form_btn" tabindex="5">Update</button> 
+                                        <button type="button" class="btn default hidden"  id="add_new" tabindex="6">Add New</button>
                                     </div>
                                 </div>
                                 
@@ -100,9 +105,11 @@ include 'nav.php';
                                                    
                                                     <th> Action </th> 
                                                     <th>#</th>
-                                                   <th> Party Name </th>
-                                                    <th> Address </th>
+                                                    <th> Short Form </th>
+                                                    <th> Full Form </th>
+                                                    <th> Address  </th>
                                                     <th> Contact Number  </th>
+
                                                    
                                                 </tr>
                                             </thead>
@@ -129,7 +136,8 @@ include 'nav.php';
                                                       </ul>
                                                     </td>
                                                     <td><?php echo $n ?></td>
-                                                    <td><?php echo $r['party_name']; ?> </td>
+                                                    <td><?php echo $r['short_form']; ?> </td>
+                                                    <td><?php echo $r['full_form']; ?> </td>
                                                     <td><?php echo $r['address']; ?></td>
                                                     <td><?php echo $r['contact']; ?></td>
 
@@ -204,7 +212,8 @@ include 'footer.php';
                                 '</td>'+                       
 
                                 '<td>'+n+'</td>'+
-                                '<td>'+value['party_name']+'</td>'+
+                                '<td>'+value['short_form']+'</td>'+
+                                '<td>'+value['full_form']+'</td>'+
                                 '<td>'+value['address']+'</td>'+
                                 '<td>'+value['contact']+'</td>'+
 
@@ -219,15 +228,16 @@ include 'footer.php';
 
         // loadData();
 
-        function add(party_name,contact,address)
+        function add(short_form,full_form,contact,address)
         {
             $.ajax({
-                url:'ajax/chart_of_account/add.php?party_name='+party_name+'&contact='+contact+'&address='+address,
+                url:'ajax/chart_of_account/add.php?short_form='+short_form+'&full_form='+full_form+'&contact='+contact+'&address='+address,
                 type:"POST",
                 success:function(data){
                     if(data)
                     {
-                        $('#party_name').val("");
+                        $('#short_form').val("");
+                        $('#full_form').val("");
                         $('#address').val("");
                         $('#contact').val("");
                         
@@ -238,10 +248,10 @@ include 'footer.php';
             });
         }
 
-        function update(coa_id,party_name,contact,address)
+        function update(coa_id,short_form,full_form,contact,address)
         {
             $.ajax({
-                url:'ajax/chart_of_account/update.php?coa_id='+coa_id+'&party_name='+party_name+'&contact='+contact+'&address='+address,
+                url:'ajax/chart_of_account/update.php?coa_id='+coa_id+'&short_form='+short_form+'&full_form='+full_form+'&contact='+contact+'&address='+address,
                 type:"POST",
                 success:function(data){
                     if(data)
@@ -250,9 +260,10 @@ include 'footer.php';
 
                         addNewClick();
 
-                        trr.find('td').eq(2).text(party_name);
-                        trr.find('td').eq(3).text(address);
-                        trr.find('td').eq(4).text(contact);
+                        trr.find('td').eq(2).text(short_form);
+                        trr.find('td').eq(3).text(full_form);
+                        trr.find('td').eq(4).text(address);
+                        trr.find('td').eq(5).text(contact);
                     }
                 },
                 error:function(){ alert("Error in Update Ajax Call.") }
@@ -292,7 +303,8 @@ include 'footer.php';
 
             $('form').removeClass('update_form');
 
-            $('#party_name').val('');
+            $('#short_form').val('');
+            $('#full_form').val('');
             $('#contact').val('');
             $('#address').val('');
 
@@ -338,9 +350,10 @@ include 'footer.php';
             trr.addClass('selectedd');   
 
             $('#coa_id').val( coa_id );
-            $('#party_name').val( trr.find('td').eq(2).text() );
-            $('#address').val( trr.find('td').eq(3).text() );
-            $('#contact').val( trr.find('td').eq(4).text() );    
+            $('#short_form').val( trr.find('td').eq(2).text() );
+            $('#full_form').val( trr.find('td').eq(3).text() );
+            $('#address').val( trr.find('td').eq(4).text() );
+            $('#contact').val( trr.find('td').eq(5).text() );    
 
         });
 
@@ -348,18 +361,19 @@ include 'footer.php';
         $('form').submit(function(e){
            e.preventDefault();
            
-           var party_name = $('#party_name').val() ,
+           var short_form = $('#short_form').val() ,
+               full_form = $('#full_form').val(),
                address = $('#address').val(),
                contact = $('#contact').val(),
                coa_id =  $('#coa_id').val();
 
            if( $(this).hasClass('update_form') ) 
            {
-                update(coa_id,party_name,contact,address);
+                update(coa_id,short_form,full_form,contact,address);
            }
            else
            {
-                add(party_name,contact,address);
+                add(short_form,full_form,contact,address);
            }
         });
 

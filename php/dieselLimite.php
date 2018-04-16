@@ -85,7 +85,7 @@ require 'connection.php';
                                     <div class="row">
                                         <div class="col-md-5 col-md-push-2">
                                             <div class="form-actions ">
-                                                <button type="submit" class="btn blue" id="btn_submit" tabindex="4">Submit</button> 
+                                        <button type="submit" class="btn blue" id="btn_submit" tabindex="4">Submit</button> 
                                         <button type="reset" class="btn default" id="btn_reset" tabindex="5">Cancel</button>
 
                                         <button type="submit" class="btn blue hidden" id="update_form_btn" tabindex="4">Update</button> 
@@ -104,7 +104,6 @@ require 'connection.php';
                                 <div class="portlet light bordered">
                                     
                                     <div class="portlet-body">
-                                 
                                         <table class="table table-striped table-bordered table-hover table-checkable order-column" id="sample_1">
                                             <thead>
                                                 <tr>

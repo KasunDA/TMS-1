@@ -13,6 +13,7 @@
 		$json[$n]['full_form'] = $r['full_form'];
 		$json[$n]['account_title'] = $r['account_title'];
 		$json[$n]['account_number'] = $r['account_number'];
+		$json[$n]['balance'] = $r['balance'];
 		$json[$n]['address'] = $r['address'];
 
 		$n++;
