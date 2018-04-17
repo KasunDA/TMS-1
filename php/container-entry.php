@@ -336,7 +336,7 @@ date_default_timezone_set("Asia/Karachi");
                                                             <label class="col-md-2 control-label">Shipping Line:</label>
                                                             <div class="col-md-3">
                                                                 <select class="form-control" id="line_id" name="line_id" required tabindex="22">
-                                                                    <option>Select Shipping Line</option>
+                                                                    <option value="">Select Shipping Line</option>
                                                                     <?php 
 
                                                           $q = mysqli_query($mycon,'SELECT line_id,short_form from line where status=1 ORDER BY line_id ');
@@ -489,7 +489,7 @@ date_default_timezone_set("Asia/Karachi");
                                                       </ul>
                                                     </td>
                                                     <td style="color: #000;"><?php echo $n ?></td>
-                                                    <td><?php echo $r['datee']; ?> </td>
+                                                    <td><?php echo $r['datee']; ?></td>
                                                     
                                                     <?php
                                                     $q1 = mysqli_query($mycon,"SELECT name from agent where agent_id=".$r['agent_id']);
@@ -518,11 +518,11 @@ date_default_timezone_set("Asia/Karachi");
                                                   if($r1 = mysqli_fetch_array($q1))
                                                   ?> <td id="<?php echo $r['to_yard_id']; ?>"><?php echo $r1['short_form']; ?> </td>
 
-                                                  <td><?php echo $r['bl_cro_number']; ?> </td>
-                                                  <td><?php echo $r['job_number']; ?> </td>
-                                                  <td><?php echo $r['container_number']; ?> </td>
-                                                  <td><?php echo $r['index_number']; ?> </td>
-                                                  <td><?php echo $r['container_size']; ?> </td>
+                                                  <td><?php echo $r['bl_cro_number']; ?></td>
+                                                  <td><?php echo $r['job_number']; ?></td>
+                                                  <td><?php echo $r['container_number']; ?></td>
+                                                  <td><?php echo $r['index_number']; ?></td>
+                                                  <td><?php echo $r['container_size']; ?></td>
                                                   
                                                   <?php $q1 = mysqli_query($mycon,"SELECT vehicle_number from vehicle where vehicle_id=".$r['vehicle_id']);
                                                   if($r1 = mysqli_fetch_array($q1))
@@ -646,6 +646,11 @@ include 'footer.php';
 
         var param = $(this).val();
 
+        if( $(this).val() == "" )
+        {
+          return;
+        }
+
         if( $(this).attr('id') == 'coa_id' )
         {
           var v = 'coa_id';
@@ -691,7 +696,21 @@ include 'footer.php';
                 
                 $.each(data,function(index,value){
 
-                    $('tbody').append('<tr class="odd gradeX">'+
+                  var c= '';
+                  if(value['color'] == 'red'){
+                    c = '#f36a5a';
+                  }
+
+                  else if( value['color'] == 'yellow' )
+                  {
+                    c = '#d5d82d';
+                   }
+
+                  else{
+                    c = '#26c281';
+                  }
+
+                    $('tbody').append('<tr class="odd gradeX" style="background-color:'+c+'; color: #fff;">'+
 
                             '<td>'+ 
                                 '<ul class="addremove">'+
@@ -704,29 +723,29 @@ include 'footer.php';
                                 '</ul>'+
                             '</td>'+                       
 
-                            '<td>'+n+'</td>'+
+                            '<td style="color:#000;">'+n+'</td>'+
                             '<td>'+value['datee']+'</td>'+
-                            '<td>'+value['agent_name']+'</td>'+
-                            '<td>'+value['coa']+'</td>'+
-                            '<td>'+value['consignee']+'</td>'+
+                            '<td id="'+value['agent_id']+'">'+value['agent_name']+'</td>'+
+                            '<td id="'+value['coa_id']+'">'+value['coa']+'</td>'+
+                            '<td id="'+value['consignee_id']+'">'+value['consignee']+'</td>'+
                             '<td>'+value['movement']+'</td>'+
-                            '<td>'+value['empty_terminal']+'</td>'+
-                            '<td>'+value['from_yard']+'</td>'+
-                            '<td>'+value['to_yard']+'</td>'+
+                            '<td id="'+value['empty_terminal_id']+'">'+value['empty_terminal']+'</td>'+
+                            '<td id="'+value['from_yard_id']+'">'+value['from_yard']+'</td>'+
+                            '<td id="'+value['to_yard_id']+'">'+value['to_yard']+'</td>'+
                             '<td>'+value['bl_cro_number']+'</td>'+
                             '<td>'+value['job_number']+'</td>'+
                             '<td>'+value['container_number']+'</td>'+
                             '<td>'+value['index_number']+'</td>'+
                             '<td>'+value['container_size']+'</td>'+
-                            '<td>'+value['vehicle_number']+'</td>'+
+                            '<td id="'+value['vehicle_id']+'">'+value['vehicle_number']+'</td>'+
                             '<td>'+value['advance']+'</td>'+
                             '<td>'+value['diesel']+'</td>'+
                             '<td>'+value['rent']+'</td>'+
                             '<td>'+value['balance']+'</td>'+
                             '<td>'+value['party_charges']+'</td>'+
-                            '<td>'+value['container_type']+'</td>'+
+                            '<td id="'+value['container_id']+'">'+value['container_type']+'</td>'+
                             '<td>'+value['lot_of']+'</td>'+
-                            '<td>'+value['line']+'</td>'+
+                            '<td id="'+value['line_id']+'">'+value['line']+'</td>'+
                             '<td>'+value['lolo_charges']+'</td>'+
                             '<td>'+value['weight_charges']+'</td>'+
                             '<td>'+value['color']+'</td>'+
@@ -741,6 +760,8 @@ include 'footer.php';
             error:function(){ alert("Failed Fetch Ajax Call.") }
         });
       }
+
+      // loadData();
 
       function add(datee,agent_id,coa_id,consignee_id,movement,empty_terminal_id,from_yard_id,to_yard_id,bl_cro_number,job_number,container_number,index_number,container_size,vehicle_id,advance,diesel,rent,balance,party_charges,container_id,lot_of,line_id,lolo_charges,weight_charges,color,mr_charges,remarks)
       {
@@ -815,8 +836,11 @@ include 'footer.php';
 
           $('form').removeClass('update_form');
 
-          $('input').val("");
-          $('select').val("").trigger('change');
+          $('form select').val("").trigger('change');
+          $('#movement').val('empty').trigger('change');
+          $('#container_size').val('20').trigger('change');
+          $('#color').val('red').trigger('change');
+          $('#btn_reset').trigger('click');
 
           $('#cm_id_div').addClass('hidden');
           $('#update_form_btn').addClass('hidden');
@@ -859,7 +883,7 @@ include 'footer.php';
           trr.addClass('selectedd');   
 
           $('#cm_id').val( cm_id );
-          $('#datee').val('1997-05-21'); //trr.find('td').eq(2).text()
+          $('#datee').val(trr.find('td').eq(2).text()); //trr.find('td').eq(2).text()
           $('#agent_id').val( trr.find('td').eq(3).attr('id') ).trigger('change');
           $('#coa_id').val( trr.find('td').eq(4).attr('id') ).trigger('change');
           $('#consignee_id').val( trr.find('td').eq(5).attr('id') ).trigger('change');

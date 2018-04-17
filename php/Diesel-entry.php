@@ -1,6 +1,9 @@
 <?php 
 include 'header.php';
 include 'nav.php';
+
+require 'connection.php';
+date_default_timezone_set("Asia/Karachi");
  ?>
 
     <!-- BEGIN CONTENT -->
@@ -22,19 +25,39 @@ include 'nav.php';
                             </div>
                         </div>
                         <div class="portlet-body form">
-                            <form class="form-horizontal" role="form">
+                            <form class="form-horizontal" role="form" method="post">
                                 <div class="form-body">
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <div id="_div" class="hidden">
+                                              <label class="col-md-2 control-label">ID:</label>
+                                              <div class="col-md-3">
+                                                <input type="text" class="form-control" id="" name="" required readonly >
+                                              </div>
+                                            </div>
+                                    
+                                        </div>
+                                        
+                                    </div>
                                     <div class="row"> 
                                         <div class="form-group">
-                                            <label class="control-label col-md-2">Date:</label>
+                                            <label class="col-md-2 control-label">Date:</label>
                                             <div class="col-md-3">
-                                                <input class="form-control form-control-inline input-medium date-picker" size="16" type="date-picker" value="" placeholder="Today Date" />
+                                              <input type="date-picker" class="form-control form-control-inline input-medium date-picker"  size="16" id="datee" name="datee" value="<?php echo date('m-d-Y'); ?>"  required tabindex="1">
                                             </div>
-                                            <label class="col-md-2 control-label">vehicle #:</label>
+                                            
+                                            <label class="col-md-2 control-label">vehicle#:</label>
                                             <div class="col-md-3">
-                                                <select class="form-control">
-                                                    <option>EN858</option>
-                                                    <option>EN956</option>
+                                                <select class="form-control" id="vehicle_id" name="vehicle_id" required tabindex="3">
+                                                    <option value="">Select Vehicle</option>
+                                                    <?php 
+
+                                                      $q = mysqli_query($mycon,'SELECT vehicle_id,vehicle_number from vehicle where status=1 ORDER BY vehicle_id DESC');
+
+                                                      while( $r = mysqli_fetch_array($q) )
+                                                        {?>
+                                                        <option value="<?php echo $r['vehicle_id']; ?>"><?php echo $r['vehicle_number']; ?></option>
+                                                  <?php } //END OF WHILE ?>
                                                 </select>
                                             </div>
                                         </div>
