@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 16, 2018 at 06:43 PM
+-- Generation Time: Apr 17, 2018 at 06:33 PM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 7.0.13
 
@@ -19,6 +19,23 @@ SET time_zone = "+00:00";
 --
 -- Database: `tms`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `accounts_entry`
+--
+
+CREATE TABLE `accounts_entry` (
+  `ae_id` int(11) NOT NULL,
+  `datee` varchar(20) NOT NULL,
+  `bank_id` int(11) NOT NULL,
+  `action` varchar(10) NOT NULL,
+  `method` varchar(10) NOT NULL,
+  `amount` decimal(13,2) NOT NULL,
+  `check_number` varchar(30) DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -130,15 +147,11 @@ CREATE TABLE `container` (
 --
 
 INSERT INTO `container` (`container_id`, `type`, `status`) VALUES
-(1, '20', 0),
-(2, '20', 0),
-(3, '20', 1),
-(4, '40', 1),
-(5, '60', 1),
-(6, 'Tanki', 1),
-(7, 'Dry Containers', 1),
-(8, 'Open Top Containers', 1),
-(9, 'Tunnel Container', 1);
+(1, 'Tanki', 1),
+(2, 'Dry Containers', 1),
+(3, 'Open Top Containers', 1),
+(4, 'Tunnel Container', 1),
+(12, 'Side Open Storage Container', 1);
 
 -- --------------------------------------------------------
 
@@ -178,6 +191,14 @@ CREATE TABLE `container_movement` (
   `status` tinyint(4) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `container_movement`
+--
+
+INSERT INTO `container_movement` (`cm_id`, `datee`, `agent_id`, `coa_id`, `consignee_id`, `movement`, `empty_terminal_id`, `from_yard_id`, `to_yard_id`, `bl_cro_number`, `job_number`, `container_number`, `index_number`, `container_size`, `vehicle_id`, `advance`, `diesel`, `rent`, `balance`, `party_charges`, `container_id`, `lot_of`, `line_id`, `lolo_charges`, `weight_charges`, `color`, `mr_charges`, `remarks`, `status`) VALUES
+(1, '2018-03-17', 1, 1, 1, 'export', 1, 2, 3, '12345', '1', 12, '1', 40, 1, 0, 0, 0, 0, 20000, 1, 0, 1, 0, 0, 'green', 0, 'remarks....', 1),
+(2, '2018-04-17', 2, 7, 2, 'import', 3, 2, 1, '1012121', '111', 2, '2', 20, 2, 0, 0, 0, 0, 0, 4, 0, 1, 0, 0, 'red', 0, '........', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -202,6 +223,24 @@ INSERT INTO `daily_description` (`dd_id`, `name`, `status`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `diesel_entry`
+--
+
+CREATE TABLE `diesel_entry` (
+  `de_id` int(11) NOT NULL,
+  `datee` varchar(20) NOT NULL,
+  `from_yard_id` int(11) NOT NULL,
+  `to_yard_id` int(11) NOT NULL,
+  `litre_rate` decimal(13,2) NOT NULL,
+  `extra_litres` decimal(13,2) NOT NULL,
+  `total` decimal(13,2) NOT NULL,
+  `description` text NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `diesel_limit`
 --
 
@@ -220,6 +259,31 @@ CREATE TABLE `diesel_limit` (
 INSERT INTO `diesel_limit` (`dl_id`, `from_yard`, `to_yard`, `limit_litre`, `status`) VALUES
 (1, 2, 1, 900, 1),
 (2, 1, 2, 1000, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `garage_entry`
+--
+
+CREATE TABLE `garage_entry` (
+  `ge_id` int(11) NOT NULL,
+  `datee` varchar(20) NOT NULL,
+  `vehicle_id` int(11) NOT NULL,
+  `amount` decimal(13,2) NOT NULL,
+  `description` text NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `garage_entry`
+--
+
+INSERT INTO `garage_entry` (`ge_id`, `datee`, `vehicle_id`, `amount`, `description`, `status`) VALUES
+(1, '04-17-2018', 2, '20000.00', 'details', 1),
+(2, '04-17-2018', 1, '1100.00', 'asdasd', 1),
+(3, '04/18/2018', 1, '8000.00', 'details.....', 1),
+(4, '04/10/2018', 1, '900.00', 'detailss...........', 1);
 
 -- --------------------------------------------------------
 
@@ -313,6 +377,12 @@ INSERT INTO `yard` (`yard_id`, `short_form`, `full_form`, `contact`, `location`,
 --
 
 --
+-- Indexes for table `accounts_entry`
+--
+ALTER TABLE `accounts_entry`
+  ADD PRIMARY KEY (`ae_id`);
+
+--
 -- Indexes for table `agent`
 --
 ALTER TABLE `agent`
@@ -355,10 +425,22 @@ ALTER TABLE `daily_description`
   ADD PRIMARY KEY (`dd_id`);
 
 --
+-- Indexes for table `diesel_entry`
+--
+ALTER TABLE `diesel_entry`
+  ADD PRIMARY KEY (`de_id`);
+
+--
 -- Indexes for table `diesel_limit`
 --
 ALTER TABLE `diesel_limit`
   ADD PRIMARY KEY (`dl_id`);
+
+--
+-- Indexes for table `garage_entry`
+--
+ALTER TABLE `garage_entry`
+  ADD PRIMARY KEY (`ge_id`);
 
 --
 -- Indexes for table `line`
@@ -389,6 +471,11 @@ ALTER TABLE `yard`
 --
 
 --
+-- AUTO_INCREMENT for table `accounts_entry`
+--
+ALTER TABLE `accounts_entry`
+  MODIFY `ae_id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `agent`
 --
 ALTER TABLE `agent`
@@ -412,22 +499,32 @@ ALTER TABLE `consignee`
 -- AUTO_INCREMENT for table `container`
 --
 ALTER TABLE `container`
-  MODIFY `container_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `container_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `container_movement`
 --
 ALTER TABLE `container_movement`
-  MODIFY `cm_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `cm_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `daily_description`
 --
 ALTER TABLE `daily_description`
   MODIFY `dd_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
+-- AUTO_INCREMENT for table `diesel_entry`
+--
+ALTER TABLE `diesel_entry`
+  MODIFY `de_id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `diesel_limit`
 --
 ALTER TABLE `diesel_limit`
   MODIFY `dl_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `garage_entry`
+--
+ALTER TABLE `garage_entry`
+  MODIFY `ge_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `line`
 --
