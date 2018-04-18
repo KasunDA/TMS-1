@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 17, 2018 at 06:33 PM
+-- Generation Time: Apr 18, 2018 at 06:32 PM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 7.0.13
 
@@ -176,7 +176,6 @@ CREATE TABLE `container_movement` (
   `container_size` tinyint(4) NOT NULL,
   `vehicle_id` int(11) NOT NULL,
   `advance` int(11) NOT NULL,
-  `diesel` int(11) NOT NULL,
   `rent` int(11) NOT NULL,
   `balance` int(11) NOT NULL,
   `party_charges` int(11) NOT NULL,
@@ -195,9 +194,9 @@ CREATE TABLE `container_movement` (
 -- Dumping data for table `container_movement`
 --
 
-INSERT INTO `container_movement` (`cm_id`, `datee`, `agent_id`, `coa_id`, `consignee_id`, `movement`, `empty_terminal_id`, `from_yard_id`, `to_yard_id`, `bl_cro_number`, `job_number`, `container_number`, `index_number`, `container_size`, `vehicle_id`, `advance`, `diesel`, `rent`, `balance`, `party_charges`, `container_id`, `lot_of`, `line_id`, `lolo_charges`, `weight_charges`, `color`, `mr_charges`, `remarks`, `status`) VALUES
-(1, '2018-03-17', 1, 1, 1, 'export', 1, 2, 3, '12345', '1', 12, '1', 40, 1, 0, 0, 0, 0, 20000, 1, 0, 1, 0, 0, 'green', 0, 'remarks....', 1),
-(2, '2018-04-17', 2, 7, 2, 'import', 3, 2, 1, '1012121', '111', 2, '2', 20, 2, 0, 0, 0, 0, 0, 4, 0, 1, 0, 0, 'red', 0, '........', 1);
+INSERT INTO `container_movement` (`cm_id`, `datee`, `agent_id`, `coa_id`, `consignee_id`, `movement`, `empty_terminal_id`, `from_yard_id`, `to_yard_id`, `bl_cro_number`, `job_number`, `container_number`, `index_number`, `container_size`, `vehicle_id`, `advance`, `rent`, `balance`, `party_charges`, `container_id`, `lot_of`, `line_id`, `lolo_charges`, `weight_charges`, `color`, `mr_charges`, `remarks`, `status`) VALUES
+(1, '2018-03-17', 1, 1, 1, 'export', 1, 2, 3, '12345', '1', 12, '1', 40, 1, 0, 0, 0, 20000, 1, 0, 1, 0, 0, 'green', 0, 'remarks....', 1),
+(2, '2018-04-17', 2, 7, 2, 'import', 3, 2, 1, '1012121', '111', 2, '2', 20, 2, 0, 0, 0, 0, 4, 0, 1, 0, 0, 'red', 0, '........', 1);
 
 -- --------------------------------------------------------
 
@@ -229,6 +228,7 @@ INSERT INTO `daily_description` (`dd_id`, `name`, `status`) VALUES
 CREATE TABLE `diesel_entry` (
   `de_id` int(11) NOT NULL,
   `datee` varchar(20) NOT NULL,
+  `vehicle_id` int(11) NOT NULL,
   `from_yard_id` int(11) NOT NULL,
   `to_yard_id` int(11) NOT NULL,
   `litre_rate` decimal(13,2) NOT NULL,
@@ -237,6 +237,14 @@ CREATE TABLE `diesel_entry` (
   `description` text NOT NULL,
   `status` int(11) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `diesel_entry`
+--
+
+INSERT INTO `diesel_entry` (`de_id`, `datee`, `vehicle_id`, `from_yard_id`, `to_yard_id`, `litre_rate`, `extra_litres`, `total`, `description`, `status`) VALUES
+(1, '04/16/2018', 2, 3, 2, '107.00', '77.00', '8239.00', 'details', 1),
+(2, '04/02/2018', 1, 3, 2, '300.00', '100.00', '30000.00', 'asdadssdasda..............', 1);
 
 -- --------------------------------------------------------
 
@@ -280,10 +288,11 @@ CREATE TABLE `garage_entry` (
 --
 
 INSERT INTO `garage_entry` (`ge_id`, `datee`, `vehicle_id`, `amount`, `description`, `status`) VALUES
-(1, '04-17-2018', 2, '20000.00', 'details', 1),
-(2, '04-17-2018', 1, '1100.00', 'asdasd', 1),
-(3, '04/18/2018', 1, '8000.00', 'details.....', 1),
-(4, '04/10/2018', 1, '900.00', 'detailss...........', 1);
+(1, '04/18/2018', 2, '20000.00', 'details', 1),
+(2, '04/18/2018', 1, '1100.00', 'asdasd', 1),
+(3, '04/19/2018', 2, '8990.00', 'detailsasdadadasd', 1),
+(4, '04/10/2018', 1, '900.00', 'detailss...........', 0),
+(5, '04/09/2018', 2, '9000000.00', 'descripton', 1);
 
 -- --------------------------------------------------------
 
@@ -514,7 +523,7 @@ ALTER TABLE `daily_description`
 -- AUTO_INCREMENT for table `diesel_entry`
 --
 ALTER TABLE `diesel_entry`
-  MODIFY `de_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `de_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `diesel_limit`
 --
@@ -524,7 +533,7 @@ ALTER TABLE `diesel_limit`
 -- AUTO_INCREMENT for table `garage_entry`
 --
 ALTER TABLE `garage_entry`
-  MODIFY `ge_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ge_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `line`
 --
