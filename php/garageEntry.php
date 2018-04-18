@@ -44,7 +44,7 @@ date_default_timezone_set("Asia/Karachi");
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">Date:</label>
                                             <div class="col-md-3">
-                                              <input type="date-picker" class="form-control form-control-inline input-medium date-picker"  size="16" id="datee" name="datee" value="<?php echo date('m-d-Y'); ?>"  required tabindex="1">
+                                              <input type="date-picker" class="form-control form-control-inline input-medium date-picker"  size="16" id="datee" name="datee" value="<?php echo date('m/d/Y'); ?>"  required tabindex="1">
                                             </div>
                                     
                                             <label class="col-md-2 control-label">Description:</label>
@@ -70,7 +70,7 @@ date_default_timezone_set("Asia/Karachi");
                                             </div>
                                             <label class="col-md-2 control-label">Amount #</label>
                                              <div class="col-md-3">
-                                               <input type="number" step="0.01" class="form-control" id="amount" name="amount" required tabindex="4" placeholder="58680">
+                                               <input type="number" step="0.01" min="0" class="form-control" id="amount" name="amount" required tabindex="4" placeholder="58680">
                                              </div>
                                           </div>  
                                       </div> 

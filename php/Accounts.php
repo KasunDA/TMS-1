@@ -43,7 +43,7 @@ date_default_timezone_set("Asia/Karachi");
                                         <div class="form-group">
                                             <label class="control-label col-md-2">Date:</label>
                                             <div class="col-md-3">
-                                                <input class="form-control form-control-inline input-medium date-picker" size="16" type="date-picker"  placeholder="Today Date" id="datee" name="datee" value="<?php echo date('m-d-Y'); ?>"  required tabindex="1" />
+                                                <input class="form-control form-control-inline input-medium date-picker" size="16" type="date-picker"  placeholder="Today Date" id="datee" name="datee" value="<?php echo date('m/d/Y'); ?>"  required tabindex="1" />
                                             </div>
                                             <label class="col-md-2 control-label">Bank:</label>
                                             <div class="col-md-4">
@@ -96,7 +96,7 @@ date_default_timezone_set("Asia/Karachi");
                                             
                                             <label class="col-md-2 control-label">Amount #</label>
                                              <div class="col-md-3">
-                                               <input type="number" step="0.01" class="form-control" id="amount" name="amount" required tabindex="7" placeholder="58680">
+                                               <input type="number" step="0.01" min="0" class="form-control" id="amount" name="amount" required tabindex="7" placeholder="58680">
                                              </div>
 
                                              <label class="col-md-2 control-label">Check #</label>
@@ -143,6 +143,7 @@ date_default_timezone_set("Asia/Karachi");
                              <table class="table table-striped table-bordered table-hover table-checkable order-column" id="sample_1">
                                  <thead>
                                      <tr>
+                                         <th> Actions </th>
                                          <th> # </th>
                                          <th> Date: </th>
                                          <th> Debit </th>
@@ -160,6 +161,18 @@ date_default_timezone_set("Asia/Karachi");
                                                 while($r = mysqli_fetch_array($q))
                                                 {?>
                                                     <tr class="odd gradeX">
+                                                    
+                                                    <td> 
+                                                      <ul class="addremove">
+                                                        <li> <button class="btn btn-xs green update_btn" id="<?php echo $r['ae_id']; ?>"  type="button">  
+                                                        <i class="fa fa-plus-square"></i>
+                                                        </button> </li>
+                                                        <li>  <button class="btn btn-xs red delete_btn" id="<?php echo $r['ae_id']; ?>" type="button">  
+                                                        <i class="fa fa-minus-square"></i>
+                                                        </button> </li>
+                                                      </ul>
+                                                    </td>
+
 
                                                     <td><?php echo $n ?></td>
                                                     <td><?php echo $r['datee']; ?></td>
@@ -176,9 +189,9 @@ date_default_timezone_set("Asia/Karachi");
                                                             echo '<td>'.$r['amount'].'</td>';
                                                         }
                                                     
-                                                     $q1 = mysqli_query($mycon,'SELECT vehicle_number from vehicle where vehicle_id='.$r['vehicle_id']);
+                                                    $q1 = mysqli_query($mycon,'SELECT short_form from bank where bank_id='.$r['bank_id']);
                                                     $r1 = mysqli_fetch_array($q1)?>
-                                                    <td id="<?php echo $r['vehicle_id']?>"><?php echo $r1['vehicle_number']; ?></td>
+                                                    <td id="<?php echo $r['bank_id']?>"><?php echo $r1['short_form']; ?></td>
                                                     <!-- <td><?php //echo $r['']; ?></td> -->
 
                                                 </tr>
@@ -189,7 +202,7 @@ date_default_timezone_set("Asia/Karachi");
 
 
                                              ?>
-                                     <tr class="odd gradeX">
+                                     <!-- <tr class="odd gradeX">
                                          <td> 15 </td>
                                          <td> 02/3/2018 </td>
                                          <td> 50000 </td>
@@ -197,7 +210,7 @@ date_default_timezone_set("Asia/Karachi");
                                          <td> 8555 </td>
                                          <td> 800000 </td>
                                          <td> 800000 </td>
-                                     </tr>
+                                     </tr> -->
                                  </tbody>
                              </table>
                          </div>

@@ -18,7 +18,6 @@
 	$container_size = $_GET['container_size'];
 	$vehicle_id = $_GET['vehicle_id'];
 	$advance = $_GET['advance'];
-	$diesel = $_GET['diesel'];
 	$rent = $_GET['rent'];
 	$balance = $_GET['balance'];
 	$party_charges = $_GET['party_charges'];
@@ -32,7 +31,7 @@
 	$remarks = $_GET['remarks'];
 
 
-	$q = mysqli_query($mycon,"UPDATE container_movement SET datee='$datee', agent_id= $agent_id,coa_id= $coa_id, consignee_id=$consignee_id,movement='$movement',empty_terminal_id=$empty_terminal_id,from_yard_id=$from_yard_id,to_yard_id=$to_yard_id,bl_cro_number='$bl_cro_number',job_number='$job_number',container_number='$container_number' , index_number='$index_number' , container_size=$container_size , vehicle_id=$vehicle_id , advance=$advance , diesel=$diesel , rent=$rent , balance=$balance , party_charges=$party_charges , container_id=$container_id , lot_of=$lot_of , line_id=$line_id , lolo_charges=$lolo_charges , weight_charges=$weight_charges , color='$color' , mr_charges=$mr_charges , remarks='$remarks'  WHERE cm_id=$cm_id ");
+	$q = mysqli_query($mycon,"UPDATE container_movement SET datee='$datee', agent_id= $agent_id,coa_id= $coa_id, consignee_id=$consignee_id,movement='$movement',empty_terminal_id=$empty_terminal_id,from_yard_id=$from_yard_id,to_yard_id=$to_yard_id,bl_cro_number='$bl_cro_number',job_number='$job_number',container_number='$container_number' , index_number='$index_number' , container_size=$container_size , vehicle_id=$vehicle_id , advance=$advance , rent=$rent , balance=$balance , party_charges=$party_charges , container_id=$container_id , lot_of=$lot_of , line_id=$line_id , lolo_charges=$lolo_charges , weight_charges=$weight_charges , color='$color' , mr_charges=$mr_charges , remarks='$remarks'  WHERE cm_id=$cm_id ");
 
 	if(mysqli_affected_rows($mycon))
 	{

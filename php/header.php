@@ -38,7 +38,7 @@ Like: www.facebook.com/logicsaint
         <!-- END GLOBAL MANDATORY STYLES -->
         <!-- BEGIN PAGE LEVEL PLUGINS -->
         <link href="../assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css" rel="stylesheet" type="text/css" />
-        <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/jquery-ui-git.css">
+        <link rel="stylesheet" type="text/css" href="../assets/global/css/jquery-ui-git.css">
         <link href="../assets/global/plugins/morris/morris.css" rel="stylesheet" type="text/css" />
         <link href="../assets/global/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
         <link href="../assets/global/plugins/jqvmap/jqvmap/jqvmap.css" rel="stylesheet" type="text/css" />

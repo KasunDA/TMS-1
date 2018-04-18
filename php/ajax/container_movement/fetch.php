@@ -69,7 +69,6 @@
 		}
 
 		$json[$n]['advance'] = $r['advance'];
-		$json[$n]['diesel'] = $r['diesel'];
 		$json[$n]['rent'] = $r['rent'];
 		$json[$n]['balance'] = $r['balance'];
 		$json[$n]['party_charges'] = $r['party_charges'];

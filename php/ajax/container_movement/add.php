@@ -17,7 +17,6 @@
 	$container_size = $_GET['container_size'];
 	$vehicle_id = $_GET['vehicle_id'];
 	$advance = $_GET['advance'];
-	$diesel = $_GET['diesel'];
 	$rent = $_GET['rent'];
 	$balance = $_GET['balance'];
 	$party_charges = $_GET['party_charges'];
@@ -31,7 +30,7 @@
 	$remarks = $_GET['remarks'];
 
 
-	$q = mysqli_query($mycon,"INSERT INTO container_movement(datee,agent_id,coa_id,consignee_id,movement,empty_terminal_id,from_yard_id,to_yard_id,bl_cro_number,job_number,container_number,index_number,container_size,vehicle_id,advance,diesel,rent,balance,party_charges,container_id,lot_of,line_id,lolo_charges,weight_charges,color,mr_charges,remarks) VALUES( '$datee',$agent_id,$coa_id,$consignee_id,'$movement',$empty_terminal_id,$from_yard_id,$to_yard_id,'$bl_cro_number','$job_number','$container_number','$index_number',$container_size,$vehicle_id,$advance,$diesel,$rent,$balance,$party_charges,$container_id,$lot_of,$line_id,$lolo_charges,$weight_charges,'$color',$mr_charges,'$remarks' ) ");
+	$q = mysqli_query($mycon,"INSERT INTO container_movement(datee,agent_id,coa_id,consignee_id,movement,empty_terminal_id,from_yard_id,to_yard_id,bl_cro_number,job_number,container_number,index_number,container_size,vehicle_id,advance,rent,balance,party_charges,container_id,lot_of,line_id,lolo_charges,weight_charges,color,mr_charges,remarks) VALUES( '$datee',$agent_id,$coa_id,$consignee_id,'$movement',$empty_terminal_id,$from_yard_id,$to_yard_id,'$bl_cro_number','$job_number','$container_number','$index_number',$container_size,$vehicle_id,$advance,$rent,$balance,$party_charges,$container_id,$lot_of,$line_id,$lolo_charges,$weight_charges,'$color',$mr_charges,'$remarks' ) ");
 
 	if(mysqli_affected_rows($mycon))
 	{
