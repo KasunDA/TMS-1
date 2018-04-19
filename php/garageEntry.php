@@ -95,7 +95,7 @@ date_default_timezone_set("Asia/Karachi");
                                     
                                     <div class="portlet-body">
                                  
-                                        <table class="table table-striped table-bordered table-hover table-checkable order-column" id="sample_1">
+                                        <table class="table table-striped table-bordered table-hover table-checkable order-column" id="mytable">
                                             <thead>
                                                 <tr>
                                                    
@@ -109,43 +109,6 @@ date_default_timezone_set("Asia/Karachi");
                                                 </tr>
                                             </thead>
                                             <tbody>
-
-                                                <?php 
-
-                                                $q = mysqli_query($mycon,'SELECT * FROM garage_entry WHERE status=1 ORDER BY ge_id DESC ');
-                                                $n  = 1;
-                                                while($r = mysqli_fetch_array($q))
-                                                {?>
-                                                    <tr class="odd gradeX">
-
-                                                    <td> 
-                                                      <ul class="addremove">
-                                                        <li> <button class="btn btn-xs green update_btn" id="<?php echo $r['ge_id']; ?>"  type="button">  
-                                                        <i class="fa fa-plus-square"></i>
-                                                        </button> </li>
-                                                        <li>  <button class="btn btn-xs red delete_btn" id="<?php echo $r['ge_id']; ?>" type="button">  
-                                                        <i class="fa fa-minus-square"></i>
-                                                        </button> </li>
-                                                      </ul>
-                                                    </td>
-                                                    <td><?php echo $n ?></td>
-                                                    <td><?php echo $r['datee']; ?></td>
-                                                    <td><?php echo $r['description']; ?></td>
-                                                    <?php  $q1 = mysqli_query($mycon,'SELECT vehicle_number from vehicle where vehicle_id='.$r['vehicle_id']);
-                                                    $r1 = mysqli_fetch_array($q1)?>
-                                                    <td id="<?php echo $r['vehicle_id']?>"><?php echo $r1['vehicle_number']; ?></td>
-                                                    <td><?php echo $r['amount']; ?></td>
-
-                                                </tr>
-
-                                                <?php 
-                                                    $n++;
-                                                }// END OF WHILE
-
-
-                                             ?>
-                                             
-                                                 
                                             </tbody>
                                         </table>
                                     </div>
@@ -177,6 +140,12 @@ include 'footer.php';
           width: 'resolve'
        });
 
+       function myDataTable()
+        {
+            var e=$("#mytable");
+            e.dataTable({language:{aria:{sortAscending:": activate to sort column ascending",sortDescending:": activate to sort column descending"},emptyTable:"No data available in table",info:"Showing _START_ to _END_ of _TOTAL_ records",infoEmpty:"No records found",infoFiltered:"(filtered1 from _MAX_ total records)",lengthMenu:"Show _MENU_",search:"Search:",zeroRecords:"No matching records found",paginate:{previous:"Prev",next:"Next",last:"Last",first:"First"}},bStateSave:!0,columnDefs:[{targets:0,orderable:!1,searchable:!1}],lengthMenu:[[5,15,20,-1],[5,15,20,"All"]],pageLength:5,pagingType:"bootstrap_full_number",columnDefs:[{orderable:!1,targets:[0]},{searchable:!1,targets:[0]}],order:[[1,"asc"]]});
+        }
+
         function loadData()
         {
             $.ajax({
@@ -184,11 +153,14 @@ include 'footer.php';
                 dataType:"JSON",
                 success:function(data){
                     var n = 1;
+                    var i = 0;
+
+                    $('#mytable').DataTable().destroy();
                     $('tbody').html("");
                     
                     $.each(data,function(index,value){
 
-                        $('tbody').append('<tr class="odd gradeX">'+
+                        $('tbody').append('<tr  index="'+i+'" class="odd gradeX">'+
 
                                 '<td>'+ 
                                     '<ul class="addremove">'+
@@ -208,14 +180,15 @@ include 'footer.php';
                                 '<td>'+value['amount']+'</td>'+
                                 '</tr>');
 
-                        n++;
-                    })
+                        n++; i++;
+                    }) 
+                    myDataTable();
                 },
                 error:function(){ alert("Failed Fetch Ajax Call.") }
             });
         }
 
-        // loadData();
+        loadData();
 
         function add(datee,description,vehicle_id,amount)
         {
@@ -243,14 +216,18 @@ include 'footer.php';
                 success:function(data){
                     if(data)
                     {
-                        var trr = $('.selectedd');
-
+                        var i = $('.selectedd').attr('index');
+                        var temp = $('#mytable').DataTable().row(i).data();
+                        
                         addNewClick();
 
-                        trr.find('td').eq(2).text(datee);
-                        trr.find('td').eq(3).text(description);
-                        trr.find('td').eq(4).text(vehicle_number);
-                        trr.find('td').eq(5).text(amount);
+                        temp[2] = datee;
+                        temp[3] = description;
+                        temp[4] = vehicle_number;
+                        temp[5] = amount;
+
+                        $('#mytable').DataTable().row(i).data(temp).draw();
+
                     }
                 },
                 error:function(){ alert("Error in Update Ajax Call.") }

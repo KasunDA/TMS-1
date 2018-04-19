@@ -104,7 +104,7 @@ require 'connection.php';
                                 <div class="portlet light bordered">
                                     
                                     <div class="portlet-body">
-                                        <table class="table table-striped table-bordered table-hover table-checkable order-column" id="sample_1">
+                                        <table class="table table-striped table-bordered table-hover table-checkable order-column" id="mytable">
                                             <thead>
                                                 <tr>
                                                    
@@ -117,57 +117,6 @@ require 'connection.php';
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php 
-
-                                                $q = mysqli_query($mycon,'SELECT * FROM diesel_limit WHERE status=1 ORDER BY dl_id DESC ');
-                                                $n  = 1;
-                                                while($r = mysqli_fetch_array($q))
-                                                {?>
-                                                    <tr class="odd gradeX">
-
-                                                    <td> 
-                                                      <ul class="addremove">
-                                                        <li> <button class="btn btn-xs green update_btn" id="<?php echo $r['dl_id']; ?>"  type="button">  
-                                                        <i class="fa fa-plus-square"></i>
-                                                        </button> </li>
-                                                        <li>  <button class="btn btn-xs red delete_btn" id="<?php echo $r['dl_id']; ?>" type="button">  
-                                                        <i class="fa fa-minus-square"></i>
-                                                        </button> </li>
-                                                      </ul>
-                                                    </td>
-                                                    <td><?php echo $n ?></td>
-                                                    <?php
-
-                                                        $fq = mysqli_query($mycon,'SELECT short_form,full_form from yard where yard_id ='.$r['from_yard']);
-
-                                                        if($fq)
-                                                        {
-                                                            $rfq = mysqli_fetch_array($fq);?>
-                                                            <td from_yard_id="<?php echo $r['from_yard'] ?>"><?php echo $rfq['short_form'].' ( '.$rfq['full_form'].')'; ?></td> ;
-                                                        
-                                                        <?php
-
-                                                        }
-
-                                                        $tq = mysqli_query($mycon,'SELECT short_form,full_form from yard where yard_id ='.$r['to_yard']);
-
-                                                        if($tq)
-                                                        {
-                                                            $rtq = mysqli_fetch_array($tq);?>
-                                                            <td to_yard_id="<?php echo $r['to_yard'] ?>"><?php echo $rtq['short_form'].' ( '.$rtq['full_form'].')'; ?></td>
-                                                        <?php    
-                                                        }
-                                                    ?>
-                                                    <td><?php echo $r['limit_litre']; ?></td>
-
-                                                </tr>
-
-                                                <?php 
-                                                    $n++;
-                                                }// END OF WHILE
-
-
-                                             ?>
                                             </tbody>
                                         </table>
                                     </div>
@@ -194,23 +143,6 @@ include 'footer.php';
      
      $(document).ready(function(){
 
-        // // initialize the Selectize control for from_yard
-        // var $fselect = $('#from_yard').selectize({
-        //   create: false
-        // });
-
-        // // fetch the instance
-        // var fselectize = $fselect[0].selectize;
-
-
-        // // initialize the Selectize control for to_yard
-        // var $tselect = $('#to_yard').selectize({
-        //   create: false
-        // });
-
-        // // fetch the instance
-        // var tselectize = $tselect[0].selectize;
-
         //Select2 from _yard
         $('#from_yard').select2({
             width: 'resolve'
@@ -221,26 +153,28 @@ include 'footer.php';
             width: 'resolve'
         });
 
+        function myDataTable()
+        {
+            var e=$("#mytable");
+            e.dataTable({language:{aria:{sortAscending:": activate to sort column ascending",sortDescending:": activate to sort column descending"},emptyTable:"No data available in table",info:"Showing _START_ to _END_ of _TOTAL_ records",infoEmpty:"No records found",infoFiltered:"(filtered1 from _MAX_ total records)",lengthMenu:"Show _MENU_",search:"Search:",zeroRecords:"No matching records found",paginate:{previous:"Prev",next:"Next",last:"Last",first:"First"}},bStateSave:!0,columnDefs:[{targets:0,orderable:!1,searchable:!1}],lengthMenu:[[5,15,20,-1],[5,15,20,"All"]],pageLength:5,pagingType:"bootstrap_full_number",columnDefs:[{orderable:!1,targets:[0]},{searchable:!1,targets:[0]}],order:[[1,"asc"]]});
+        }
+
         function loadData()
         {
-            // $.ajax({
-            //     url:'',
-            //     dataType:"JSON",
-            //     success:function(data){},
-            //     error:function(){}
-            // });
-
             $.ajax({
                 url:'ajax/diesel_limit/fetch.php',
                 dataType:"JSON",
                 success:function(data){
 
                     var n = 1;
+                    var i = 0;
+
+                    $('#mytable').DataTable().destroy();
                     $('tbody').html("");
                     
                     $.each(data,function(index,value){
 
-                        $('tbody').append('<tr class="odd gradeX">'+
+                        $('tbody').append('<tr index="'+i+'" class="odd gradeX">'+
 
                                 '<td>'+ 
                                     '<ul class="addremove">'+
@@ -260,14 +194,15 @@ include 'footer.php';
 
                                 '</tr>');
 
-                        n++;
+                        n++; i++;
                     })
+                    myDataTable();
                 },
                 error:function(){ alert("Failed Fetch Ajax Call.") }
             });
         }
 
-        //loadData();
+        loadData();
 
         function add(from_yard,to_yard,limit_litre)
         {
@@ -277,8 +212,6 @@ include 'footer.php';
                 success:function(data){
                     if(data)
                     {
-                        // fselectize.clear();
-                        // tselectize.clear();
                         $('#from_yard').val('').trigger('change');
                         $('#to_yard').val('').trigger('change');
                         $('#limit_litre').val("");
@@ -298,13 +231,16 @@ include 'footer.php';
                 success:function(data){
                     if(data)
                     {
-                        var trr = $('.selectedd');
-
+                        var i = $('.selectedd').attr('index');
+                        var temp = $('#mytable').DataTable().row(i).data();
+                        
                         addNewClick();
 
-                        trr.find('td').eq(2).text(from_yard_text);
-                        trr.find('td').eq(3).text(to_yard_text);
-                        trr.find('td').eq(4).text(limit_litre);
+                        temp[2] = from_yard_text;
+                        temp[3] = to_yard_text;
+                        temp[4] = limit_litre;
+
+                        $('#mytable').DataTable().row(i).data(temp).draw();
                         
                     }
                 },

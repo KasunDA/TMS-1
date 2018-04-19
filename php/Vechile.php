@@ -82,7 +82,7 @@ include 'nav.php';
                                     
                                     <div class="portlet-body">
                                     <!-- table table-striped table-bordered table-hover table-checkable order-column -->
-                                        <table class="table table-striped table-bordered table-hover table-checkable order-column" id="sample_1">
+                                        <table class="table table-striped table-bordered table-hover table-checkable order-column" id="mytable">
                                             <thead>
                                                 <tr>
                                                    
@@ -95,45 +95,7 @@ include 'nav.php';
                                                    
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                             <?php 
-
-                                                require 'connection.php';
-
-
-                                                $q = mysqli_query($mycon,'SELECT * FROM vehicle WHERE status=1 ORDER BY vehicle_id DESC ');
-                                                $n  = 1;
-                                                while($r = mysqli_fetch_array($q))
-                                                {?>
-                                                    <tr class="odd gradeX">
-
-                                                    <td> 
-                                                      <ul class="addremove">
-                                                        <li> <button class="btn btn-xs green update_btn" id="<?php echo $r['vehicle_id']; ?>"  type="button">  
-                                                        <i class="fa fa-plus-square"></i>
-                                                        </button> </li>
-                                                        <li>  <button class="btn btn-xs red delete_btn" id="<?php echo $r['vehicle_id']; ?>" type="button">  
-                                                        <i class="fa fa-minus-square"></i>
-                                                        </button> </li>
-                                                      </ul>
-                                                    </td>
-                                                    <td><?php echo $n ?></td>
-                                                    <td><?php echo $r['owner_name']; ?> </td>
-                                                    <td><?php echo $r['vehicle_number']; ?> </td>
-                                                    <td><?php echo $r['engine_number']; ?> </td>
-                                                    <td><?php echo $r['chassis_number']; ?> </td>
-
-                                                </tr>
-
-                                                <?php 
-                                                    $n++;
-                                                }// END OF WHILE
-
-
-                                             ?>                                             
-
-                                              
-                                                 
+                                            <tbody>    
                                             </tbody>
                                         </table>
                                     </div>
@@ -161,26 +123,28 @@ include 'footer.php';
      
      $(document).ready(function(){
 
+        function myDataTable()
+        {
+            var e=$("#mytable");
+            e.dataTable({language:{aria:{sortAscending:": activate to sort column ascending",sortDescending:": activate to sort column descending"},emptyTable:"No data available in table",info:"Showing _START_ to _END_ of _TOTAL_ records",infoEmpty:"No records found",infoFiltered:"(filtered1 from _MAX_ total records)",lengthMenu:"Show _MENU_",search:"Search:",zeroRecords:"No matching records found",paginate:{previous:"Prev",next:"Next",last:"Last",first:"First"}},bStateSave:!0,columnDefs:[{targets:0,orderable:!1,searchable:!1}],lengthMenu:[[5,15,20,-1],[5,15,20,"All"]],pageLength:5,pagingType:"bootstrap_full_number",columnDefs:[{orderable:!1,targets:[0]},{searchable:!1,targets:[0]}],order:[[1,"asc"]]});
+        }
+
         function loadData()
         {
-            // $.ajax({
-            //     url:'',
-            //     dataType:"JSON",
-            //     success:function(data){},
-            //     error:function(){}
-            // });
-
             $.ajax({
                 url:'ajax/vehicle/fetch.php',
                 dataType:"JSON",
                 success:function(data){
 
                     var n = 1;
+                    var i = 0;
+
+                    $('#mytable').DataTable().destroy();
                     $('tbody').html("");
                     
                     $.each(data,function(index,value){
 
-                        $('tbody').append('<tr class="odd gradeX">'+
+                        $('tbody').append('<tr index="'+i+'" class="odd gradeX">'+
 
                                 '<td>'+ 
                                     '<ul class="addremove">'+
@@ -201,14 +165,16 @@ include 'footer.php';
 
                                 '</tr>');
 
-                        n++;
+                        n++; i++;
                     })
+
+                    myDataTable();
                 },
                 error:function(){ alert("Failed Fetch Ajax Call.") }
             });
         }
 
-        //loadData();
+        loadData();
 
         function add(owner_name,vehicle_number,engine_number,chassis_number)
         {
@@ -238,14 +204,18 @@ include 'footer.php';
                 success:function(data){
                     if(data)
                     {
-                        var trr = $('.selectedd');
-
+                        var i = $('.selectedd').attr('index');
+                        var temp = $('#mytable').DataTable().row(i).data();
+                        
                         addNewClick();
 
-                        trr.find('td').eq(2).text(owner_name);
-                        trr.find('td').eq(3).text(vehicle_number);
-                        trr.find('td').eq(4).text(engine_number);
-                        trr.find('td').eq(5).text(chassis_number);
+                        temp[2] = owner_name;
+                        temp[3] = vehicle_number;
+                        temp[4] = engine_number;
+                        temp[5] = chassis_number;
+
+
+                        $('#mytable').DataTable().row(i).data(temp).draw();
                         
                     }
                 },

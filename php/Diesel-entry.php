@@ -154,7 +154,7 @@ date_default_timezone_set("Asia/Karachi");
                              </div>
                          </div>
                          <div class="portlet-body table-both-scroll" style="display: none;">
-                             <table class="table table-striped table-bordered table-hover table-checkable order-column" id="sample_1">
+                             <table class="table table-striped table-bordered table-hover table-checkable order-column" id="mytable">
                                  <thead>
                                      <tr>
                                          <th> Actions </th>
@@ -170,76 +170,6 @@ date_default_timezone_set("Asia/Karachi");
                                      </tr>
                                  </thead>
                                  <tbody>
-                                    <?php 
-
-                                                $q = mysqli_query($mycon,'SELECT * FROM diesel_entry WHERE status=1 ORDER BY de_id DESC ');
-                                                $n  = 1;
-                                                while($r = mysqli_fetch_array($q))
-                                                {?>
-                                                    <tr class="odd gradeX">
-
-                                                    <td> 
-                                                      <ul class="addremove">
-                                                        <li> <button class="btn btn-xs green update_btn" id="<?php echo $r['de_id']; ?>"  type="button">  
-                                                        <i class="fa fa-plus-square"></i>
-                                                        </button> </li>
-                                                        <li>  <button class="btn btn-xs red delete_btn" id="<?php echo $r['de_id']; ?>" type="button">  
-                                                        <i class="fa fa-minus-square"></i>
-                                                        </button> </li>
-                                                      </ul>
-                                                    </td>
-                                                    <td><?php echo $n ?></td>
-                                                    <td><?php echo $r['datee']; ?></td>
-                                                    <?php  $q1 = mysqli_query($mycon,'SELECT vehicle_number from vehicle where vehicle_id='.$r['vehicle_id']);
-                                                    $r1 = mysqli_fetch_array($q1)?>
-                                                    <td id="<?php echo $r['vehicle_id']?>"><?php echo $r1['vehicle_number']; ?></td>
-                                                    
-                                                    <?php
-
-                                                        $fq = mysqli_query($mycon,'SELECT short_form,full_form from yard where yard_id ='.$r['from_yard_id']);
-
-                                                        if($fq)
-                                                        {
-                                                            $rfq = mysqli_fetch_array($fq);?>
-                                                            <td id="<?php echo $r['from_yard_id'] ?>"><?php echo $rfq['short_form']; ?></td> ;
-                                                        
-                                                        <?php
-
-                                                        }
-
-                                                        $tq = mysqli_query($mycon,'SELECT short_form,full_form from yard where yard_id ='.$r['to_yard_id']);
-
-                                                        if($tq)
-                                                        {
-                                                            $rtq = mysqli_fetch_array($tq);?>
-                                                            <td id="<?php echo $r['to_yard_id'] ?>"><?php echo $rtq['short_form'];?></td>
-                                                        <?php    
-                                                        }
-                                                    ?>
-                                                    <td><?php echo $r['litre_rate']; ?></td>
-                                                    <td><?php echo $r['extra_litres']; ?></td>
-                                                    <td><?php echo $r['total']; ?></td>
-                                                    <td><?php echo $r['description']; ?></td>
-
-                                                </tr>
-
-                                                <?php 
-                                                    $n++;
-                                                }// END OF WHILE
-
-
-                                             ?>
-                                     <!-- <tr class="odd gradeX">
-                                         <td> 15 </td>
-                                         <td> 02/3/2018 </td>
-                                         <td> EN865 </td>
-                                         <td> Port Qasim </td>
-                                         <td> Agha Steel </td>
-                                         <td> 110 </td>
-                                         <td> Nil </td>
-                                         <td> Nil </td>
-                                         <td> 11000 </td>
-                                     </tr> -->
                                  </tbody>
                              </table>
                          </div>
@@ -310,6 +240,12 @@ include 'footer.php';
             width: 'resolve'
         });
 
+        function myDataTable()
+        {
+            var e=$("#mytable");
+            e.dataTable({language:{aria:{sortAscending:": activate to sort column ascending",sortDescending:": activate to sort column descending"},emptyTable:"No data available in table",info:"Showing _START_ to _END_ of _TOTAL_ records",infoEmpty:"No records found",infoFiltered:"(filtered1 from _MAX_ total records)",lengthMenu:"Show _MENU_",search:"Search:",zeroRecords:"No matching records found",paginate:{previous:"Prev",next:"Next",last:"Last",first:"First"}},bStateSave:!0,columnDefs:[{targets:0,orderable:!1,searchable:!1}],lengthMenu:[[5,15,20,-1],[5,15,20,"All"]],pageLength:5,pagingType:"bootstrap_full_number",columnDefs:[{orderable:!1,targets:[0]},{searchable:!1,targets:[0]}],order:[[1,"asc"]]});
+        }
+
         function loadData()
         {
             $.ajax({
@@ -318,11 +254,14 @@ include 'footer.php';
                 success:function(data){
 
                     var n = 1;
-                    $('tbody').html("");
+                    var i = 0;
+
+                    $('#mytable').DataTable().destroy();
+                    $('#mytable tbody').html("");
                     
                     $.each(data,function(index,value){
 
-                        $('tbody').append('<tr class="odd gradeX">'+
+                        $('#mytable tbody').append('<tr index="'+i+'" class="odd gradeX">'+
 
                                 '<td>'+ 
                                     '<ul class="addremove">'+
@@ -347,14 +286,15 @@ include 'footer.php';
 
                                 '</tr>');
 
-                        n++;
+                        n++; i++;
                     })
+                    myDataTable();
                 },
                 error:function(){ alert("Failed Fetch Ajax Call.") }
             });
         }
 
-        // loadData();
+        loadData();
 
         function add(datee,vehicle_id,from_yard_id,to_yard_id,litre_rate,extra_litres,total,description)
         {
@@ -382,19 +322,21 @@ include 'footer.php';
                 success:function(data){
                     if(data)
                     {
-                        var trr = $('.selectedd');
-
+                        var i = $('.selectedd').attr('index');
+                        var temp = $('#mytable').DataTable().row(i).data();
+                        
                         addNewClick();
 
-                        trr.find('td').eq(2).text(datee);
-                        trr.find('td').eq(3).text(vehicle_number);
-                        trr.find('td').eq(4).text(from_yard_text);
-                        trr.find('td').eq(5).text(to_yard_text);
-                        trr.find('td').eq(6).text(litre_rate);
-                        trr.find('td').eq(7).text(extra_litres);
-                        trr.find('td').eq(8).text(total);
-                        trr.find('td').eq(9).text(description);
-                        
+                        temp[2] = datee;
+                        temp[3] = vehicle_number;
+                        temp[4] = from_yard_text;
+                        temp[5] = to_yard_text;
+                        temp[6] = litre_rate;
+                        temp[7] = extra_litres;
+                        temp[8] = total;
+                        temp[9] = description;
+
+                        $('#mytable').DataTable().row(i).data(temp).draw();
                     }
                 },
                 error:function(){ alert("Error in Update Ajax Call.") }

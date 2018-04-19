@@ -30,7 +30,7 @@ date_default_timezone_set("Asia/Karachi");
                                 <div class="form-body">
                                     <div class="row">
                                         <div class="form-group">
-                                            <div id="ge_id_div" class="hidden">
+                                            <div id="ae_id_div" class="hidden">
                                               <label class="col-md-2 control-label">ID:</label>
                                               <div class="col-md-3">
                                                 <input type="text" class="form-control" id="" name="" required readonly >
@@ -82,11 +82,11 @@ date_default_timezone_set("Asia/Karachi");
                                             <div class="col-md-3">
                                                 <div class="mt-radio-list">
                                                     <label class="mt-radio">
-                                                        <input type="radio" id="method" name="method" required tabindex="5" value="check" checked> Check
+                                                        <input type="radio" id="method" name="method" required tabindex="6" value="cash" checked> Cash
                                                         <span></span>
                                                     </label>
                                                     <label class="mt-radio">
-                                                        <input type="radio" id="method" name="method" required tabindex="6" value="cash"> Cash
+                                                        <input type="radio" id="method" name="method" required tabindex="5" value="check" > Check
                                                         <span></span>
                                                     </label>
                                                 </div>
@@ -98,10 +98,12 @@ date_default_timezone_set("Asia/Karachi");
                                              <div class="col-md-3">
                                                <input type="number" step="0.01" min="0" class="form-control" id="amount" name="amount" required tabindex="7" placeholder="58680">
                                              </div>
-
-                                             <label class="col-md-2 control-label">Check #</label>
-                                             <div class="col-md-3">
-                                               <input type="text" class="form-control" id="check_number" name="check_number" required tabindex="8" placeholder="58680">
+                                            
+                                            <div id="check_number_div" class="hidden"> 
+                                                 <label class="col-md-2 control-label">Check #</label>
+                                                 <div class="col-md-3">
+                                                   <input type="text" class="form-control" id="check_number" name="check_number"  tabindex="8" placeholder="58680">
+                                                 </div>
                                              </div>
                                         </div>
                                         
@@ -140,12 +142,13 @@ date_default_timezone_set("Asia/Karachi");
                              </div>
                          </div>
                          <div class="portlet-body table-both-scroll">
-                             <table class="table table-striped table-bordered table-hover table-checkable order-column" id="sample_1">
+                             <table class="table table-striped table-bordered table-hover table-checkable order-column " id="mytable">
                                  <thead>
                                      <tr>
                                          <th> Actions </th>
                                          <th> # </th>
-                                         <th> Date: </th>
+                                         <th> Date </th>
+                                         <th> Bank </th>
                                          <th> Debit </th>
                                          <th> Credit </th>
                                          <th> Check # </th>
@@ -154,7 +157,7 @@ date_default_timezone_set("Asia/Karachi");
                                      </tr>
                                  </thead>
                                  <tbody>
-                                    <?php 
+                                    <!-- <?php 
 
                                                 $q = mysqli_query($mycon,'SELECT * FROM accounts_entry WHERE status=1 ORDER BY ae_id DESC ');
                                                 $n  = 1;
@@ -177,7 +180,11 @@ date_default_timezone_set("Asia/Karachi");
                                                     <td><?php echo $n ?></td>
                                                     <td><?php echo $r['datee']; ?></td>
                                                     <?php 
-
+                                                    $q1 = mysqli_query($mycon,'SELECT short_form from bank where bank_id='.$r['bank_id']);
+                                                    $r1 = mysqli_fetch_array($q1)?>
+                                                    <td id="<?php echo $r['bank_id']?>"><?php echo $r1['short_form']; ?></td>
+                                                    
+                                                    <?php
                                                         if( $r['action'] == 'debit' )
                                                         {
                                                             echo '<td>'.$r['amount'].'</td>';
@@ -187,12 +194,11 @@ date_default_timezone_set("Asia/Karachi");
                                                         {
                                                             echo '<td></td>';
                                                             echo '<td>'.$r['amount'].'</td>';
-                                                        }
+                                                        }?>
                                                     
-                                                    $q1 = mysqli_query($mycon,'SELECT short_form from bank where bank_id='.$r['bank_id']);
-                                                    $r1 = mysqli_fetch_array($q1)?>
-                                                    <td id="<?php echo $r['bank_id']?>"><?php echo $r1['short_form']; ?></td>
-                                                    <!-- <td><?php //echo $r['']; ?></td> -->
+                                                    <td><?php echo $r['check_number']; ?></td> 
+                                                    <td><?php echo $r['previous_balance']; ?></td> 
+                                                    <td><?php echo $r['current_balance']; ?></td> 
 
                                                 </tr>
 
@@ -201,16 +207,7 @@ date_default_timezone_set("Asia/Karachi");
                                                 }// END OF WHILE
 
 
-                                             ?>
-                                     <!-- <tr class="odd gradeX">
-                                         <td> 15 </td>
-                                         <td> 02/3/2018 </td>
-                                         <td> 50000 </td>
-                                         <td> Nil </td>
-                                         <td> 8555 </td>
-                                         <td> 800000 </td>
-                                         <td> 800000 </td>
-                                     </tr> -->
+                                             ?> -->
                                  </tbody>
                              </table>
                          </div>
@@ -271,30 +268,53 @@ include 'footer.php';
      
      $(document).ready(function(){
 
+        function myDataTable()
+        {
+            var e=$("#mytable");
+            e.dataTable({language:{aria:{sortAscending:": activate to sort column ascending",sortDescending:": activate to sort column descending"},emptyTable:"No data available in table",info:"Showing _START_ to _END_ of _TOTAL_ records",infoEmpty:"No records found",infoFiltered:"(filtered1 from _MAX_ total records)",lengthMenu:"Show _MENU_",search:"Search:",zeroRecords:"No matching records found",paginate:{previous:"Prev",next:"Next",last:"Last",first:"First"}},bStateSave:!0,columnDefs:[{targets:0,orderable:!1,searchable:!1}],lengthMenu:[[5,15,20,-1],[5,15,20,"All"]],pageLength:5,pagingType:"bootstrap_full_number",columnDefs:[{orderable:!1,targets:[0]},{searchable:!1,targets:[0]}],order:[[1,"asc"]]});
+        }
+
         //Select2
        $('#bank_id').select2({
           width: 'resolve'
        });
 
+       $('input[name="method"]').change(function(){
+
+            if( $(this).val() == 'check' )
+            {
+                $('#check_number').attr('required','required');
+                $('#check_number_div').removeClass('hidden');
+            }
+            else
+            {
+                $('#check_number').removeAttr('required');
+                $('#check_number_div').addClass('hidden');   
+            }
+
+       });
+
         function loadData()
         {
             $.ajax({
-                url:'ajax/garage_entry/fetch.php',
+                url:'ajax/accounts_entry/fetch.php',
                 dataType:"JSON",
                 success:function(data){
                     var n = 1;
-                    $('tbody').html("");
+                    
+                    $('#mytable').DataTable().destroy();
+                    $('#mytable tbody').html("");
                     
                     $.each(data,function(index,value){
 
-                        $('tbody').append('<tr class="odd gradeX">'+
+                        $('#mytable tbody').append('<tr class="odd gradeX">'+
 
                                 '<td>'+ 
                                     '<ul class="addremove">'+
-                                        '<li> <button class="btn btn-xs green update_btn" id="'+value['ge_id']+'" type="button">  '+
+                                        '<li> <button class="btn btn-xs green update_btn" id="'+value['ae_id']+'" type="button">  '+
                                         '<i class="fa fa-plus-square"></i>'+
                                         '</button> </li>'+
-                                        '<li>  <button class="btn btn-xs red delete_btn" id="'+value['ge_id']+'" type="button">  '+
+                                        '<li>  <button class="btn btn-xs red delete_btn" id="'+value['ae_id']+'" type="button">  '+
                                         '<i class="fa fa-minus-square"></i>'+
                                         '</button> </li>'+
                                     '</ul>'+
@@ -302,42 +322,49 @@ include 'footer.php';
 
                                 '<td>'+n+'</td>'+
                                 '<td>'+value['datee']+'</td>'+
-                                '<td>'+value['description']+'</td>'+
-                                '<td id="'+value['vehicle_id']+'">'+value['vehicle_number']+'</td>'+
-                                '<td>'+value['amount']+'</td>'+
+                                '<td id="'+value['bank_id']+'">'+value['short_form']+'</td>'+
+                                '<td>'+value['debit']+'</td>'+
+                                '<td>'+value['credit']+'</td>'+
+                                '<td>'+value['check_number']+'</td>'+
+                                '<td>'+value['previous_balance']+'</td>'+
+                                '<td>'+value['current_balance']+'</td>'+
                                 '</tr>');
 
                         n++;
                     })
+
+                    myDataTable();
                 },
                 error:function(){ alert("Failed Fetch Ajax Call.") }
             });
         }
 
-        // loadData();
 
-        function add(datee,description,vehicle_id,amount)
+        loadData(); 
+
+        function add(datee,bank_id,action,method,amount,check_number)
         {
             $.ajax({
-                url:'ajax/garage_entry/add.php?datee='+datee+'&description='+description+'&vehicle_id='+vehicle_id+'&amount='+amount,
+                url:'ajax/accounts_entry/add.php?datee='+datee+'&bank_id='+bank_id+'&action='+action+'&method='+method+'&amount='+amount+'&check_number='+check_number,
                 type:"POST",
                 success:function(data){
                     if(data)
                     {
-                        $('#vehicle_id').val("").trigger('change');
+                        $('#bank_id').val("").trigger('change');
                         $('#btn_reset').trigger('click');
                         
                         loadData();
+
                     }
                 },
                 error:function(){ alert("Error in Add Ajax Call.") }
             });
         }
 
-        function update(ge_id,datee,description,vehicle_id,amount,vehicle_number)
+        function update(ae_id,datee,bank_id,action,method,amount,check_number)
         {
             $.ajax({
-                url:'ajax/garage_entry/update.php?ge_id='+ge_id+'&datee='+datee+'&description='+description+'&vehicle_id='+vehicle_id+'&amount='+amount,
+                url:'ajax/accounts_entry/update.php?ae_id='+ae_id+'&datee='+datee+'&bank_id='+bank_id+'&action='+action+'&method='+method+'&amount='+amount+'&check_number='+check_number,
                 type:"POST",
                 success:function(data){
                     if(data)
@@ -347,8 +374,8 @@ include 'footer.php';
                         addNewClick();
 
                         trr.find('td').eq(2).text(datee);
-                        trr.find('td').eq(3).text(description);
-                        trr.find('td').eq(4).text(vehicle_number);
+                        trr.find('td').eq(3).text();
+                        trr.find('td').eq(4).text();
                         trr.find('td').eq(5).text(amount);
                     }
                 },
@@ -356,10 +383,10 @@ include 'footer.php';
             });
         }
 
-        function deletetr(trr,ge_id)
+        function deletetr(trr,ae_id)
         {
             $.ajax({
-                url:'ajax/garage_entry/delete.php?ge_id='+ge_id,
+                url:'ajax/accounts_entry/delete.php?ae_id='+ae_id,
                 type:"POST",
                 success:function(data){
                     trr.fadeOut(100,function(){
@@ -375,7 +402,7 @@ include 'footer.php';
 
             $('form').addClass('update_form');
 
-            $('#ge_id_div').removeClass('hidden');
+            $('#ae_id_div').removeClass('hidden');
             $('#update_form_btn').removeClass('hidden');
             $('#add_new').removeClass('hidden');
 
@@ -389,10 +416,10 @@ include 'footer.php';
 
             $('form').removeClass('update_form');
 
-            $('#vehicle_id').val('').trigger('change');
+            $('#bank_id').val('').trigger('change');
             $('#btn_reset').trigger('click');
 
-            $('#ge_id_div').addClass('hidden');
+            $('#ae_id_div').addClass('hidden');
             $('#update_form_btn').addClass('hidden');
             $('#add_new').addClass('hidden');
 
@@ -404,10 +431,10 @@ include 'footer.php';
         //DELETE 
         $(document).on('click','.delete_btn',function(){
 
-            var ge_id = $(this).attr('id'),
+            var ae_id = $(this).attr('id'),
                 trr = $(this).closest('tr');
 
-            deletetr(trr,ge_id);
+            deletetr(trr,ae_id);
         });
 
         //ADD NEW 
@@ -420,7 +447,7 @@ include 'footer.php';
 
             updateClick();
 
-            var ge_id = $(this).attr('id'),
+            var ae_id = $(this).attr('id'),
                 trr = $(this).closest('tr');
 
             $('tr').each(function(){
@@ -432,10 +459,10 @@ include 'footer.php';
 
             trr.addClass('selectedd');   
 
-            $('#ge_id').val( ge_id );
+            $('#ae_id').val( ae_id );
             $('#datee').val( trr.find('td').eq(2).text() );
-            $('#description').val( trr.find('td').eq(3).text() );
-            $('#vehicle_id').val( trr.find('td').eq(4).attr('id') ).trigger('change');
+            $('#bank_id').val( trr.find('td').eq(3).attr('id') ).trigger('change');
+            $('#').val( trr.find('td').eq(4).text() );
             $('#amount').val( trr.find('td').eq(5).text() );
 
         });
@@ -445,19 +472,21 @@ include 'footer.php';
            e.preventDefault();
            
            var datee = $('#datee').val() ,
-               description = $('#description').val() ,
-               vehicle_id = $('#vehicle_id').val() ,
-               vehicle_number = $('#vehicle_id option:selected').text() ,
+               bank_id = $('#bank_id').val() ,
+               short_form = $('#bank_id option:selected').text() ,
+               action= $('input[name="action"]:checked').val() ,
+               method= $('input[name="method"]:checked').val() ,
                amount = $('#amount').val() ,
-               ge_id =  $('#ge_id').val();
+               check_number = $('#check_number').val() ,
+               ae_id =  $('#ae_id').val();
 
            if( $(this).hasClass('update_form') ) 
            {
-                update(ge_id,datee,description,vehicle_id,amount,vehicle_number);
+                update(ae_id,datee,bank_id,action,method,amount,check_number);
            }
            else
            {
-                add(datee,description,vehicle_id,amount);
+                add(datee,bank_id,action,method,amount,check_number);
            }
         });
 
