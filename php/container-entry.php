@@ -4,6 +4,9 @@ include 'nav.php';
 
 require 'connection.php';
 date_default_timezone_set("Asia/Karachi");
+
+// $_SESSION['cm_id'] = 1;
+// $_SESSION['lot_of'] = 6;
  ?>
 
     <!-- BEGIN CONTENT -->
@@ -36,21 +39,21 @@ date_default_timezone_set("Asia/Karachi");
                             </div>
                         </div>
                         <div class="portlet-body form">
-                            <form class="form-horizontal" role="form" method="post">
+                            <form class="form-horizontal <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'add_entry_form' ?>" role="form" method="post">
                                 <div class="form-body">
                                    
                                     <div class="row"> 
                                         <div class="form-group">
-                                                <div id="cm_id_div" class="hidden">
+                                                <div id="ce_id_div" class="hidden">
                                                   <label class="col-md-2 control-label">Transaction ID:</label>
                                                   <div class="col-md-3">
-                                                    <input type="text" class="form-control" placeholder="E-1035" id="cm_id" name="cm_id" required readonly >
+                                                    <input type="text" class="form-control" placeholder="E-1035" id="ce_id" name="ce_id" required readonly >
                                                   </div>
                                                 </div>
                                     
-                                                  <label class="col-md-2 control-label">Transaction Date:</label>
+                                                <label class="col-md-2 control-label">Transaction Date:</label>
                                                 <div class="col-md-3">
-                                                  <input type="date" class="form-control" id="datee" name="datee" value="<?php echo date('Y-m-d'); ?>" required tabindex="1">
+                                                  <input type="date" class="form-control" id="datee" name="datee" value="<?php echo date('Y-m-d'); ?>" required tabindex="1" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'readonly' ?> />
                                                 </div>
                                          </div>  
                                      </div>
@@ -58,7 +61,7 @@ date_default_timezone_set("Asia/Karachi");
                                            <div class="form-group">
                                                  <label class="col-md-2 control-label"> Clearing Agent:</label>
                                                  <div class="col-md-3">
-                                                     <select class="form-control" name="agent_id" id="agent_id" required tabindex="2">
+                                                     <select class="form-control" name="agent_id" id="agent_id" required tabindex="2" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'disabled' ?> >
                                                          <option value="">Select Agent</option>
                                                          <?php 
 
@@ -78,7 +81,7 @@ date_default_timezone_set("Asia/Karachi");
                                           <div class="form-group">
                                                 <label class="col-md-2 control-label">On Account Of:</label>
                                                 <div class="col-md-3">
-                                                    <select class="form-control" id="coa_id" name="coa_id" required tabindex="3">
+                                                    <select class="form-control" id="coa_id" name="coa_id" required tabindex="3" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'disabled' ?> >
                                                         <option value="">Select Account</option>
                                                         <?php 
 
@@ -99,7 +102,7 @@ date_default_timezone_set("Asia/Karachi");
                                           <div class="form-group">
                                                 <label class="col-md-2 control-label">Consignee:</label>
                                                 <div class="col-md-3">
-                                                    <select class="form-control" id="consignee_id" name="consignee_id" required tabindex="4">
+                                                    <select class="form-control" id="consignee_id" name="consignee_id" required tabindex="4" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'disabled' ?> >
                                                         <option value="">Select Consignee</option>
                                                         <?php 
 
@@ -120,7 +123,7 @@ date_default_timezone_set("Asia/Karachi");
                                           <div class="form-group">
                                                 <label class="col-md-2 control-label"> Movement:</label>
                                                 <div class="col-md-3">
-                                                    <select class="form-control" id="movement" name="movement" tabindex="5">
+                                                    <select class="form-control" id="movement" name="movement" tabindex="5" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'disabled' ?> >
                                                         <option value="empty">Empty</option>
                                                         <option value="import">Import</option>
                                                         <option value="export">Export</option> 
@@ -133,7 +136,7 @@ date_default_timezone_set("Asia/Karachi");
                                             <div class="form-group">
                                                   <label class="col-md-2 control-label"> Empty Terminal:</label>
                                                   <div class="col-md-3">
-                                                      <select class="form-control" id="empty_terminal_id" name="empty_terminal_id" required tabindex="6">
+                                                      <select class="form-control" id="empty_terminal_id" name="empty_terminal_id" required tabindex="6" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'disabled' ?> >
                                                           <option value="">Select Terminal</option>
                                                           <?php 
 
@@ -154,7 +157,7 @@ date_default_timezone_set("Asia/Karachi");
                                               <div class="form-group">
                                                     <label class="col-md-2 control-label">From Yard:</label>
                                                     <div class="col-md-3">
-                                                        <select class="form-control" id="from_yard_id" name="from_yard_id" required tabindex="7">
+                                                        <select class="form-control" id="from_yard_id" name="from_yard_id" required tabindex="7" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'disabled' ?> >
                                                             <option value="">Select Yard</option>
                                                             <?php 
 
@@ -176,7 +179,7 @@ date_default_timezone_set("Asia/Karachi");
                                                 <div class="form-group">
                                                       <label class="col-md-2 control-label">To Yard:</label>
                                                       <div class="col-md-3">
-                                                          <select class="form-control" id="to_yard_id" name="to_yard_id" required tabindex="8">
+                                                          <select class="form-control" id="to_yard_id" name="to_yard_id" required tabindex="8" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'disabled' ?> >
                                                               <option value="">Select Yard</option>
                                                                 <?php 
 
@@ -223,7 +226,7 @@ date_default_timezone_set("Asia/Karachi");
                                                     
                                                       <div class="col-md-3 small-lab2">
                                                         <label class=" control-label">Container Size:</label>
-                                                          <select class="form-control" id="container_size" name="container_size" tabindex="13">
+                                                          <select class="form-control" id="container_size" name="container_size" tabindex="13" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'disabled' ?> >
                                                               <option value="20">20</option>
                                                               <option value="40">40</option>
                                                               <option value="45">45</option>
@@ -280,7 +283,7 @@ date_default_timezone_set("Asia/Karachi");
                                                               <label class="col-md-2 control-label">Party Rent:</label>
                                                                
                                                               <div class="col-md-3">
-                                                                <input type="number" min="0" class="form-control" placeholder="Party Chagers" id="party_charges" name="party_charges" required tabindex="19">
+                                                                <input type="number" min="0" class="form-control" placeholder="Party Chagers" id="party_charges" name="party_charges" required tabindex="19"  <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'readonly' ?> />
                                                               </div>
                                                              
                                                           </div> 
@@ -321,7 +324,7 @@ date_default_timezone_set("Asia/Karachi");
                                                           <label class="col-md-1 control-label">Lot Of :</label>
                                                            
                                                           <div class="col-md-4">
-                                                            <input type="number" min="0"  class="form-control" placeholder="Lot Of" id="lot_of" name="lot_of" required tabindex="21" >
+                                                            <input type="number" min="0"  class="form-control" placeholder="Lot Of" id="lot_of" name="lot_of" required tabindex="21" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'readonly' ?> />
                                                           </div>
                                                            
                                                       </div> 
@@ -330,7 +333,7 @@ date_default_timezone_set("Asia/Karachi");
                                                       <div class="form-group">
                                                             <label class="col-md-2 control-label">Shipping Line:</label>
                                                             <div class="col-md-3">
-                                                                <select class="form-control" id="line_id" name="line_id" required tabindex="22">
+                                                                <select class="form-control" id="line_id" name="line_id" required tabindex="22" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'disabled' ?> >
                                                                     <option value="">Select Shipping Line</option>
                                                                     <?php 
 
@@ -393,8 +396,13 @@ date_default_timezone_set("Asia/Karachi");
                                         <button type="submit" class="btn blue" id="btn_submit" tabindex="28">Submit (F2)</button> 
                                         <button type="reset" class="btn default" id="btn_reset" tabindex="29">Cancel</button>
 
-                                        <button type="submit" class="btn blue hidden" id="update_form_btn" tabindex="28">Update</button> 
+                                        <button type="submit" class="btn blue hidden" id="update_form_btn" tabindex="28">Update</button>
                                         <button type="button" class="btn default hidden"  id="add_new" tabindex="29">Add New</button>
+                                      <?php 
+                                        if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL )
+                                        {
+                                          echo '<a href="ajax/container_movement/destroy_cmid.php" class="btn default"  id="add_new_movement" tabindex="30">Add New Movement</a>';
+                                        } ?>
 
                                     </div>
                                 </div>
@@ -411,7 +419,7 @@ date_default_timezone_set("Asia/Karachi");
                                 
                                 <div class="portlet-body">
                   
-                                    <table class="table table-striped table-bordered table-hover table-checkable order-column" id="sample_1">
+                                    <table class="table table-striped table-bordered table-hover table-checkable order-column" id="mytable">
                                         <thead>
                                             <tr>
                                                
@@ -448,141 +456,6 @@ date_default_timezone_set("Asia/Karachi");
                                             </tr>
                                         </thead>
                                         <tbody>
-
-                                           <?php 
-                                                $q = mysqli_query($mycon,'SELECT * FROM container_movement WHERE status=1 ORDER BY cm_id DESC ');
-                                                $n  = 1;
-                                                while($r = mysqli_fetch_array($q))
-                                                {
-                                                  $c= '';
-                                                  if($r['color'] == 'red'){
-                                                    $c = '#f36a5a';
-                                                  }
-
-                                                  else if( $r['color'] == 'yellow' )
-                                                  {
-                                                    $c = '#d5d82d';
-                                                   }
-
-                                                  else{
-                                                    $c = '#26c281';
-                                                  }
-                                                  
-
-                                                  ?>
-                                                    <tr class="odd gradeX" style="background-color:<?php echo $c; ?> ; color: #fff;"  >
-
-                                                    <td> 
-                                                      <ul class="addremove">
-                                                        <li> <button class="btn btn-xs green update_btn" id="<?php echo $r['cm_id']; ?>"  type="button">  
-                                                        <i class="fa fa-plus-square"></i>
-                                                        </button> </li>
-                                                        <li>  <button class="btn btn-xs red delete_btn" id="<?php echo $r['cm_id']; ?>" type="button">  
-                                                        <i class="fa fa-minus-square"></i>
-                                                        </button> </li>
-                                                      </ul>
-                                                    </td>
-                                                    <td style="color: #000;"><?php echo $n ?></td>
-                                                    <td><?php echo $r['datee']; ?></td>
-                                                    
-                                                    <?php
-                                                    $q1 = mysqli_query($mycon,"SELECT name from agent where agent_id=".$r['agent_id']);
-                                                    if($r1 = mysqli_fetch_array($q1))
-                                                    ?><td id="<?php echo $r['agent_id']; ?>"><?php echo $r1['name']; ?> </td><?php
-                                                    
-                                                    $q1 = mysqli_query($mycon,"SELECT short_form from chart_of_account where coa_id=".$r['coa_id']);
-                                                    if($r1 = mysqli_fetch_array($q1))
-                                                    ?> <td id="<?php echo $r['coa_id']; ?>"><?php echo $r1['short_form']; ?> </td> <?php
-
-                                                    $q1 = mysqli_query($mycon,"SELECT short_form from consignee where consignee_id=".$r['consignee_id']);
-                                                    if($r1 = mysqli_fetch_array($q1))
-                                                     ?><td id="<?php echo $r['consignee_id']; ?>"><?php echo $r1['short_form']; ?> </td>
-                                                    
-                                                    <td><?php echo $r['movement']; ?></td>
-                                                    
-                                                  <?php $q1 = mysqli_query($mycon,"SELECT short_form from yard where yard_id=".$r['empty_terminal_id']);
-                                                    if($r1 = mysqli_fetch_array($q1))
-                                                     ?> <td id="<?php echo $r['empty_terminal_id']; ?>"><?php echo $r1['short_form']; ?> </td><?php
-                                                    
-                                                    $q1 = mysqli_query($mycon,"SELECT short_form from yard where yard_id=".$r['from_yard_id']);
-                                                    if($r1 = mysqli_fetch_array($q1))
-                                                    ?> <td id="<?php echo $r['from_yard_id']; ?>"><?php echo $r1['short_form']; ?> </td><?php
-                                                    
-                                                  $q1 = mysqli_query($mycon,"SELECT short_form from yard where yard_id=".$r['to_yard_id']);
-                                                  if($r1 = mysqli_fetch_array($q1))
-                                                  ?> <td id="<?php echo $r['to_yard_id']; ?>"><?php echo $r1['short_form']; ?> </td>
-
-                                                  <td><?php echo $r['bl_cro_number']; ?></td>
-                                                  <td><?php echo $r['job_number']; ?></td>
-                                                  <td><?php echo $r['container_number']; ?></td>
-                                                  <td><?php echo $r['index_number']; ?></td>
-                                                  <td><?php echo $r['container_size']; ?></td>
-                                                  
-                                                  <?php $q1 = mysqli_query($mycon,"SELECT vehicle_number from vehicle where vehicle_id=".$r['vehicle_id']);
-                                                  if($r1 = mysqli_fetch_array($q1))
-                                                  ?> <td id="<?php echo $r['vehicle_id']; ?>"><?php echo $r1['vehicle_number']; ?> </td>
-                                                  
-                                                  <td><?php echo $r['advance']; ?></td>
-                                                  <td><?php echo $r['rent']; ?></td>
-                                                  <td><?php echo $r['balance']; ?></td>
-                                                  <td><?php echo $r['party_charges']; ?></td>
-                                                  
-                                                <?php  $q1 = mysqli_query($mycon,"SELECT type from container where container_id=".$r['container_id']);
-                                                  if($r1 = mysqli_fetch_array($q1))
-                                                   ?><td id="<?php echo $r['container_id']; ?>"><?php echo $r1['type']; ?> </td>
-                              
-                                                  <td><?php echo $r['lot_of']; ?></td>
-                                                
-                                                  <?php $q1 = mysqli_query($mycon,"SELECT short_form from line where line_id=".$r['line_id']);
-                                                  if($r1 = mysqli_fetch_array($q1))?> 
-                                                  <td id="<?php echo $r['line_id']; ?>"><?php echo $r1['short_form']; ?></td>
-                                                  
-                                                  <td><?php echo $r['lolo_charges']; ?></td>
-                                                  <td><?php echo $r['weight_charges']; ?></td>
-                                                  <td><?php echo $r['color']; ?></td>
-                                                  <td><?php echo $r['mr_charges']; ?></td>
-                                                  <td><?php echo $r['remarks']; ?></td>
-
-                                                </tr>
-
-                                                <?php $n++; }// END OF WHILE ?>
-
-                                         
-<!--                                             <tr class="odd gradeX">
-                                                 
-                                                <td> 
-                                                  <ul class="addremove">
-                                                    <li> <button class="btn btn-xs green" type="button">  
-                                                    <i class="fa fa-plus-square"></i>
-                                                    </button> </li>
-                                                    <li>  <button class="btn btn-xs red" type="button">  
-                                                    <i class="fa fa-minus-square"></i>
-                                                    </button> </li>
-                                                  </ul>
-                                                   
-                                                  
-                                                </td>
-                                                 
-                                                <td> 1602365 </td>
-                                                <td> 02/3/2018 </td>
-                                                <td> EMPTY </td>
-                                                <td> DPWM-1 </td>
-                                                <td> QICT </td>
-                                                <td> PCT-PQ </td>
-                                                <td> MRKU4990688 </td>
-                                                <td> 40 </td>
-                                                <td> N/A </td>
-                                                <td> JT8685 </td>
-                                                <td> 500 </td>
-                                                <td> QICT </td>
-                                                <td> POS.PQ </td>
-                                                <td> N/A </td>
-
-                                            </tr>
-                                                     
- -->                                                       
-                                          
-                                             
                                         </tbody>
                                     </table>
                                 </div>
@@ -622,10 +495,19 @@ include 'footer.php';
           $('#balance').val($('#advance').val()-$('#rent').val());
         });
 
-      //Select2
-      $('#agent_id,#coa_id,#consignee_id,#empty_terminal_id,#movement,#vehicle_id,#container_id,#line_id,#color,#container_size,#from_yard_id,#to_yard_id').select2({
-          width: 'resolve'
-      });
+
+      <?php 
+        
+        //Select2
+
+        // if( !isset( $_SESSION['cm_id'] ) || $_SESSION['cm_id'] == NULL )
+        // {
+          echo " $('#agent_id,#coa_id,#consignee_id,#empty_terminal_id,#movement,#vehicle_id,#container_id,#line_id,#color,#container_size,#from_yard_id,#to_yard_id').select2({
+            width: 'resolve'
+          });";  
+        // }
+      ?>
+      
 
       function load_full_form(v,param)
       {
@@ -681,14 +563,26 @@ include 'footer.php';
 
       });
 
-      function loadData()
+
+      function myDataTable()
+        {
+            var e=$("#mytable");
+            e.dataTable({language:{aria:{sortAscending:": activate to sort column ascending",sortDescending:": activate to sort column descending"},emptyTable:"No data available in table",info:"Showing _START_ to _END_ of _TOTAL_ records",infoEmpty:"No records found",infoFiltered:"(filtered1 from _MAX_ total records)",lengthMenu:"Show _MENU_",search:"Search:",zeroRecords:"No matching records found",paginate:{previous:"Prev",next:"Next",last:"Last",first:"First"}},bStateSave:!0,columnDefs:[{targets:0,orderable:!1,searchable:!1}],lengthMenu:[[5,15,20,-1],[5,15,20,"All"]],pageLength:5,pagingType:"bootstrap_full_number",columnDefs:[{orderable:!1,targets:[0]},{searchable:!1,targets:[0]}],order:[[1,"asc"]]});
+        }
+
+      myDataTable();
+
+      function loadData(cm_id)
       {
         $.ajax({
-            url:'ajax/container_movement/fetch.php',
+            url:'ajax/container_entry/fetch.php?cm_id='+cm_id,
             dataType:"JSON",
             success:function(data){
 
                 var n = 1;
+                var i = 0;
+
+                $('#mytable').DataTable().destroy();
                 $('tbody').html("");
                 
                 $.each(data,function(index,value){
@@ -704,17 +598,17 @@ include 'footer.php';
                    }
 
                   else{
-                    c = '#26c281';
+                    c = '#26c281'; // green color
                   }
 
-                    $('tbody').append('<tr class="odd gradeX" style="background-color:'+c+'; color: #fff;">'+
+                    $('tbody').append('<tr index="'+i+'" class="odd gradeX" style="background-color:'+c+';">'+
 
                             '<td>'+ 
                                 '<ul class="addremove">'+
-                                    '<li> <button class="btn btn-xs green update_btn" id="'+value['cm_id']+'" type="button">  '+
+                                    '<li> <button class="btn btn-xs green update_btn" id="'+value['ce_id']+'" type="button">  '+
                                     '<i class="fa fa-plus-square"></i>'+
                                     '</button> </li>'+
-                                    '<li>  <button class="btn btn-xs red delete_btn" id="'+value['cm_id']+'" type="button">  '+
+                                    '<li>  <button class="btn btn-xs red delete_btn" id="'+value['ce_id']+'" type="button">  '+
                                     '<i class="fa fa-minus-square"></i>'+
                                     '</button> </li>'+
                                 '</ul>'+
@@ -750,59 +644,130 @@ include 'footer.php';
                             
                             '</tr>');
 
-                    n++;
+                    n++; i++;
                 })
+
+                myDataTable();
             },
             error:function(){ alert("Failed Fetch Ajax Call.") }
         });
       }
 
-      // loadData();
+      <?php 
 
-      function add(datee,agent_id,coa_id,consignee_id,movement,empty_terminal_id,from_yard_id,to_yard_id,bl_cro_number,job_number,container_number,index_number,container_size,vehicle_id,advance,rent,balance,party_charges,container_id,lot_of,line_id,lolo_charges,weight_charges,color,mr_charges,remarks)
+        if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL )
+        {
+          echo 'loadData("'.$_SESSION['cm_id'].'")';  
+        }
+
+      ?>
+
+      function add_entry(cm_id,bl_cro_number,job_number,container_number,index_number,vehicle_id,advance,rent,balance,container_id,lolo_charges,weight_charges,color,mr_charges,remarks)
       {
           $.ajax({
-              url:'ajax/container_movement/add.php?datee='+datee+'&agent_id='+agent_id+'&coa_id='+coa_id+'&consignee_id='+consignee_id+'&movement='+movement+'&empty_terminal_id='+empty_terminal_id+'&from_yard_id='+from_yard_id+'&to_yard_id='+to_yard_id+'&bl_cro_number='+bl_cro_number+'&job_number='+job_number+'&container_number='+container_number+'&index_number='+index_number+'&container_size='+container_size+'&vehicle_id='+vehicle_id+'&advance='+advance+'&rent='+rent+'&balance='+balance+'&party_charges='+party_charges+'&container_id='+container_id+'&lot_of='+lot_of+'&line_id='+line_id+'&lolo_charges='+lolo_charges+'&weight_charges='+weight_charges+'&color='+color+'&mr_charges='+mr_charges+'&remarks='+remarks,
+              url:'ajax/container_entry/add.php?cm_id='+cm_id+'&bl_cro_number='+bl_cro_number+'&job_number='+job_number+'&container_number='+container_number+'&index_number='+index_number+'&vehicle_id='+vehicle_id+'&advance='+advance+'&rent='+rent+'&balance='+balance+'&container_id='+container_id+'&lolo_charges='+lolo_charges+'&weight_charges='+weight_charges+'&color='+color+'&mr_charges='+mr_charges+'&remarks='+remarks,
               type:"POST",
+              dataType:'JSON',
               success:function(data){
-                  if(data)
+                  if(data['inserted'] == 'true')
                   {
-                      $('input').val("");
-                      $('select').val("").trigger('change');
+                      $('#bl_cro_number,#job_number,#container_number,#index_number,#advance,#rent,#balance,#lolo_charges,#weight_charges,#color,#mr_charges,#remarks').val("");
+                      $('#vehicle_id,#container_id').val("").trigger('change');
                       
-                      loadData();
+                      <?php 
+
+                        if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL )
+                        {
+                          echo 'loadData("'.$_SESSION['cm_id'].'")';  
+                        }
+                      ?>
+                  }
+                  else
+                  {
+                    alert(data['lot_of_limit']);
                   }
               },
               error:function(){ alert("Error in Add Ajax Call.") }
           });
       }
 
-      function update(cm_id,datee,agent_id,coa_id,consignee_id,movement,empty_terminal_id,from_yard_id,to_yard_id,bl_cro_number,job_number,container_number,index_number,container_size,vehicle_id,advance,rent,balance,party_charges,container_id,lot_of,line_id,lolo_charges,weight_charges,color,mr_charges,remarks)
+      function add(datee,agent_id,coa_id,consignee_id,movement,empty_terminal_id,from_yard_id,to_yard_id,bl_cro_number,job_number,container_number,index_number,container_size,vehicle_id,advance,rent,balance,party_charges,container_id,lot_of,line_id,lolo_charges,weight_charges,color,mr_charges,remarks)
       {
           $.ajax({
-              url:'ajax/container_movement/update.php?cm_id='+cm_id+'datee='+datee+'&agent_id='+agent_id+'&coa_id='+coa_id+'&consignee_id='+consignee_id+'&movement='+movement+'&empty_terminal_id='+empty_terminal_id+'&from_yard_id='+from_yard_id+'&to_yard_id='+to_yard_id+'&bl_cro_number='+bl_cro_number+'&job_number='+job_number+'&container_number='+container_number+'&index_number='+index_number+'&container_size='+container_size+'&vehicle_id='+vehicle_id+'&advance='+advance+'&rent='+rent+'&balance='+balance+'&party_charges='+party_charges+'&container_id='+container_id+'&lot_of='+lot_of+'&line_id='+line_id+'&lolo_charges='+lolo_charges+'&weight_charges='+weight_charges+'&color='+color+'&mr_charges='+mr_charges+'&remarks='+remarks,
+              url:'ajax/container_movement/add.php?datee='+datee+'&agent_id='+agent_id+'&coa_id='+coa_id+'&consignee_id='+consignee_id+'&movement='+movement+'&empty_terminal_id='+empty_terminal_id+'&from_yard_id='+from_yard_id+'&to_yard_id='+to_yard_id+'&container_size='+container_size+'&party_charges='+party_charges+'&lot_of='+lot_of+'&line_id='+line_id,
+              type:"POST",
+              dataType:'JSON',
+              success:function(data){
+                  if(data['inserted'])
+                  {
+                      // $('#datee,#agent_id,#coa_id,#consignee_id,#movement,#empty_terminal_id,#from_yard_id,#to_yard_id,#container_size,#party_charges,#lot_of,#line_id').attr('readonly', 'readonly');
+                      
+                      add_entry(data['cm_id'],bl_cro_number,job_number,container_number,index_number,vehicle_id,advance,rent,balance,container_id,lolo_charges,weight_charges,color,mr_charges,remarks);
+
+                      location.assign('container-entry.php');
+                  }
+              },
+              error:function(){ alert("Error in Add Ajax Call.") }
+          });
+      }
+
+      function update(ce_id,bl_cro_number,job_number,container_number,index_number,vehicle_id,vehicle_number,advance,rent,balance,container_id,container_type,lolo_charges,weight_charges,color,mr_charges,remarks)
+      {
+          $.ajax({
+              url:'ajax/container_entry/update.php?ce_id='+ce_id+'&bl_cro_number='+bl_cro_number+'&job_number='+job_number+'&container_number='+container_number+'&index_number='+index_number+'&vehicle_id='+vehicle_id+'&advance='+advance+'&rent='+rent+'&balance='+balance+'&container_id='+container_id+'&lolo_charges='+lolo_charges+'&weight_charges='+weight_charges+'&color='+color+'&mr_charges='+mr_charges+'&remarks='+remarks,
               type:"POST",
               success:function(data){
                   if(data)
                   {
-                      var trr = $('.selectedd');
-
+                      var i = $('.selectedd').attr('index');
+                      var temp = $('#mytable').DataTable().row(i).data();
+                      
                       addNewClick();
 
-                      trr.find('td').eq(2).text();
-                      trr.find('td').eq(3).text();
-                      trr.find('td').eq(4).text();
-                      trr.find('td').eq(5).text();
+                      temp[10] = bl_cro_number;
+                      temp[11] = job_number;
+                      temp[12] = container_number;
+                      temp[13] = index_number;
+                      temp[15] = vehicle_number;
+                      temp[16] = advance;
+                      temp[17] = rent;
+                      temp[18] = balance;
+                      temp[20] = container_type;
+                      temp[23] = lolo_charges;
+                      temp[24] = weight_charges;
+                      temp[25] = color;
+                      temp[26] = mr_charges;
+                      temp[27] = remarks;
+
+                      $('#mytable').DataTable().row(i).data(temp).draw();
+
+                    $('.selectedd').css('');
+
+                    if(color == 'red')
+                    {
+                      $('.selectedd').css('background-color','#f36a5a');
+                    }
+
+                    else if( color == 'yellow' )
+                    {
+                      $('.selectedd').css('background-color','#d5d82d');
+                    }
+
+                    else
+                    {
+                      $('.selectedd').css('background-color','#26c281'); // green color
+                    }
+
                   }
               },
               error:function(){ alert("Error in Update Ajax Call.") }
           });
       }
 
-      function deletetr(trr,cm_id)
+      function deletetr(trr,ce_id)
       {
           $.ajax({
-              url:'ajax/container_movement/delete.php?cm_id='+cm_id,
+              url:'ajax/container_entry/delete.php?ce_id='+ce_id,
               type:"POST",
               success:function(data){
                   trr.fadeOut(100,function(){
@@ -818,7 +783,7 @@ include 'footer.php';
 
           $('form').addClass('update_form');
 
-          $('#cm_id_div').removeClass('hidden');
+          $('#ce_id_div').removeClass('hidden');
           $('#update_form_btn').removeClass('hidden');
           $('#add_new').removeClass('hidden');
 
@@ -838,7 +803,7 @@ include 'footer.php';
           $('#color').val('red').trigger('change');
           $('#btn_reset').trigger('click');
 
-          $('#cm_id_div').addClass('hidden');
+          $('#ce_id_div').addClass('hidden');
           $('#update_form_btn').addClass('hidden');
           $('#add_new').addClass('hidden');
 
@@ -850,10 +815,10 @@ include 'footer.php';
       //DELETE 
       $(document).on('click','.delete_btn',function(){
 
-          var cm_id = $(this).attr('id'),
+          var ce_id = $(this).attr('id'),
               trr = $(this).closest('tr');
 
-          deletetr(trr,cm_id);
+          deletetr(trr,ce_id);
       });
 
       //ADD NEW 
@@ -866,7 +831,7 @@ include 'footer.php';
 
           updateClick();
 
-          var cm_id = $(this).attr('id'),
+          var ce_id = $(this).attr('id'),
               trr = $(this).closest('tr');
 
           $('tr').each(function(){
@@ -878,28 +843,28 @@ include 'footer.php';
 
           trr.addClass('selectedd');   
 
-          $('#cm_id').val( cm_id );
-          $('#datee').val(trr.find('td').eq(2).text()); //trr.find('td').eq(2).text()
-          $('#agent_id').val( trr.find('td').eq(3).attr('id') ).trigger('change');
-          $('#coa_id').val( trr.find('td').eq(4).attr('id') ).trigger('change');
-          $('#consignee_id').val( trr.find('td').eq(5).attr('id') ).trigger('change');
-          $('#movement').val( trr.find('td').eq(6).text() ).trigger('change');
-          $('#empty_terminal_id').val( trr.find('td').eq(7).attr('id') ).trigger('change');
-          $('#from_yard_id').val( trr.find('td').eq(8).attr('id') ).trigger('change');
-          $('#to_yard_id').val( trr.find('td').eq(9).attr('id') ).trigger('change');
+          $('#ce_id').val( ce_id );
+          // $('#datee').val(trr.find('td').eq(2).text()); //trr.find('td').eq(2).text()
+          // $('#agent_id').val( trr.find('td').eq(3).attr('id') ).trigger('change');
+          // $('#coa_id').val( trr.find('td').eq(4).attr('id') ).trigger('change');
+          // $('#consignee_id').val( trr.find('td').eq(5).attr('id') ).trigger('change');
+          // $('#movement').val( trr.find('td').eq(6).text() ).trigger('change');
+          // $('#empty_terminal_id').val( trr.find('td').eq(7).attr('id') ).trigger('change');
+          // $('#from_yard_id').val( trr.find('td').eq(8).attr('id') ).trigger('change');
+          // $('#to_yard_id').val( trr.find('td').eq(9).attr('id') ).trigger('change');
           $('#bl_cro_number').val( trr.find('td').eq(10).text() );
           $('#job_number').val( trr.find('td').eq(11).text() );
           $('#container_number').val( trr.find('td').eq(12).text() );
           $('#index_number').val( trr.find('td').eq(13).text() );
-          $('#container_size').val( trr.find('td').eq(14).text() ).trigger('change');
+          // $('#container_size').val( trr.find('td').eq(14).text() ).trigger('change');
           $('#vehicle_id').val( trr.find('td').eq(15).attr('id') ).trigger('change');
           $('#advance').val( trr.find('td').eq(16).text() );
           $('#rent').val( trr.find('td').eq(17).text() );
           $('#balance').val( trr.find('td').eq(18).text() );
-          $('#party_charges').val( trr.find('td').eq(19).text() );
+          // $('#party_charges').val( trr.find('td').eq(19).text() );
           $('#container_id').val( trr.find('td').eq(20).attr('id') ).trigger('change');
-          $('#lot_of').val( trr.find('td').eq(21).text() );
-          $('#line_id').val( trr.find('td').eq(22).attr('id') ).trigger('change');
+          // $('#lot_of').val( trr.find('td').eq(21).text() );
+          // $('#line_id').val( trr.find('td').eq(22).attr('id') ).trigger('change');
           $('#lolo_charges').val( trr.find('td').eq(23).text() );
           $('#weight_charges').val( trr.find('td').eq(24).text() );
           $('#color').val( trr.find('td').eq(25).text() ).trigger('change');
@@ -925,11 +890,13 @@ include 'footer.php';
              index_number = $('#index_number').val(),
              container_size = $('#container_size').val(),
              vehicle_id = $('#vehicle_id').val(),
+             vehicle_number = $('#vehicle_id option:selected').text(),
              advance = $('#advance').val(),
              rent = $('#rent').val(),
              balance = $('#balance').val(),
              party_charges = $('#party_charges').val(),
              container_id = $('#container_id').val(),
+             container_type = $('#container_id option:selected').text(),
              lot_of = $('#lot_of').val(),
              line_id = $('#line_id').val(),
              lolo_charges = $('#lolo_charges').val(),
@@ -937,19 +904,26 @@ include 'footer.php';
              color = $('#color').val(),
              mr_charges = $('#mr_charges').val(),
              remarks = $('#remarks').val(),
-             cm_id =  $('#cm_id').val();
+             ce_id =  $('#ce_id').val();
 
          if( $(this).hasClass('update_form') ) 
          {
-              update(cm_id,datee,agent_id,coa_id,consignee_id,movement,empty_terminal_id,from_yard_id,to_yard_id,bl_cro_number,job_number,container_number,index_number,container_size,vehicle_id,advance,rent,balance,party_charges,container_id,lot_of,line_id,lolo_charges,weight_charges,color,mr_charges,remarks);
+            update(ce_id,bl_cro_number,job_number,container_number,index_number,vehicle_id,vehicle_number,advance,rent,balance,container_id,container_type,lolo_charges,weight_charges,color,mr_charges,remarks);
+         }
+         else if( $(this).hasClass('add_entry_form') )
+         {  
+            <?php 
+              if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL )
+              {
+                echo 'add_entry('.$_SESSION['cm_id'].',bl_cro_number,job_number,container_number,index_number,vehicle_id,advance,rent,balance,container_id,lolo_charges,weight_charges,color,mr_charges,remarks)';  
+              }
+            ?>
          }
          else
          {
               add(datee,agent_id,coa_id,consignee_id,movement,empty_terminal_id,from_yard_id,to_yard_id,bl_cro_number,job_number,container_number,index_number,container_size,vehicle_id,advance,rent,balance,party_charges,container_id,lot_of,line_id,lolo_charges,weight_charges,color,mr_charges,remarks);
          }
       });
-
-
 
     });
  </script>

@@ -10,31 +10,31 @@
 	$empty_terminal_id = $_GET['empty_terminal_id'];
 	$from_yard_id = $_GET['from_yard_id'];
 	$to_yard_id = $_GET['to_yard_id'];
-	$bl_cro_number = $_GET['bl_cro_number'];
-	$job_number = $_GET['job_number'];
-	$container_number = $_GET['container_number'];
-	$index_number = $_GET['index_number'];
 	$container_size = $_GET['container_size'];
-	$vehicle_id = $_GET['vehicle_id'];
-	$advance = $_GET['advance'];
-	$rent = $_GET['rent'];
-	$balance = $_GET['balance'];
 	$party_charges = $_GET['party_charges'];
-	$container_id = $_GET['container_id'];
 	$lot_of= $_GET['lot_of'];
 	$line_id = $_GET['line_id'];
-	$lolo_charges = $_GET['lolo_charges'];
-	$weight_charges = $_GET['weight_charges'];
-	$color = $_GET['color'];
-	$mr_charges = $_GET['mr_charges'];
-	$remarks = $_GET['remarks'];
+	
+	$json;
 
-
-	$q = mysqli_query($mycon,"INSERT INTO container_movement(datee,agent_id,coa_id,consignee_id,movement,empty_terminal_id,from_yard_id,to_yard_id,bl_cro_number,job_number,container_number,index_number,container_size,vehicle_id,advance,rent,balance,party_charges,container_id,lot_of,line_id,lolo_charges,weight_charges,color,mr_charges,remarks) VALUES( '$datee',$agent_id,$coa_id,$consignee_id,'$movement',$empty_terminal_id,$from_yard_id,$to_yard_id,'$bl_cro_number','$job_number','$container_number','$index_number',$container_size,$vehicle_id,$advance,$rent,$balance,$party_charges,$container_id,$lot_of,$line_id,$lolo_charges,$weight_charges,'$color',$mr_charges,'$remarks' ) ");
+	$q = mysqli_query($mycon,"INSERT INTO container_movement(datee,agent_id,coa_id,consignee_id,movement,empty_terminal_id,from_yard_id,to_yard_id,container_size,party_charges,lot_of,line_id) VALUES( '$datee',$agent_id,$coa_id,$consignee_id,'$movement',$empty_terminal_id,$from_yard_id,$to_yard_id,$container_size,$party_charges,$lot_of,$line_id ) ");
 
 	if(mysqli_affected_rows($mycon))
 	{
-		echo "true";
+
+		$iq = mysqli_query($mycon,'SELECT cm_id,lot_of FROM container_movement ORDER BY cm_id DESC LIMIT 1');
+
+		$riq = mysqli_fetch_array($iq);
+
+		session_start();
+
+		$_SESSION['cm_id'] = $riq['cm_id'];
+		$_SESSION['lot_of'] = $riq['lot_of'];
+
+		$json['inserted'] = 'true';
+		$json['cm_id'] = $riq['cm_id'];
 	}
+
+	echo json_encode($json);
 
 ?>

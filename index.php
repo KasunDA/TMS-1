@@ -1,5 +1,11 @@
 <?php
+	session_start();
 	
+	if( isset( $_SESSION['login_id'] )  &&  $_SESSION['login_id'] != NULL  )
+	{
+		echo "<script>location.assign('php/index.php');</script>";
+	}
+
 	require 'php/connection.php';
 
 	$message = false;
@@ -13,7 +19,7 @@
 
 		if($r = mysqli_fetch_array($q) )
 		{
-			session_start();
+			
         	$_SESSION["login_id"] = $r["login_id"];
 			$_SESSION['username'] = $r['username'];
 
