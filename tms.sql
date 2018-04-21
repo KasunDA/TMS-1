@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 20, 2018 at 01:42 AM
+-- Generation Time: Apr 21, 2018 at 05:31 PM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 7.0.13
 
@@ -54,7 +54,7 @@ INSERT INTO `accounts_entry` (`ae_id`, `datee`, `bank_id`, `action`, `method`, `
 (8, '04/19/2018', 3, 'debit', 'cash', '500.00', '', '16500.00', '16000.00', 1),
 (9, '04/19/2018', 3, 'debit', 'cash', '500.00', '21346', '16000.00', '15500.00', 1),
 (10, '04/19/2018', 3, 'credit', 'cash', '500.00', '', '15500.00', '16000.00', 1),
-(11, '04/19/2018', 3, 'credit', 'cash', '500.00', '', '16000.00', '16500.00', 1),
+(11, '04/19/2018', 3, 'credit', 'cash', '500.00', '', '16000.00', '16500.00', 0),
 (12, '04/19/2018', 3, 'credit', 'cash', '500.00', '', '16500.00', '17000.00', 1),
 (13, '04/19/2018', 3, 'credit', 'cash', '500.00', '', '17000.00', '17500.00', 1),
 (14, '04/19/2018', 3, 'credit', 'cash', '400.00', '', '17500.00', '17900.00', 1),
@@ -183,6 +183,48 @@ INSERT INTO `container` (`container_id`, `type`, `status`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `container_entry`
+--
+
+CREATE TABLE `container_entry` (
+  `ce_id` int(11) NOT NULL,
+  `bl_cro_number` varchar(16) NOT NULL,
+  `job_number` varchar(16) NOT NULL,
+  `container_number` int(11) NOT NULL,
+  `index_number` varchar(15) NOT NULL,
+  `vehicle_id` int(11) NOT NULL,
+  `advance` int(11) NOT NULL,
+  `rent` int(11) NOT NULL,
+  `balance` int(11) NOT NULL,
+  `container_id` int(11) NOT NULL,
+  `lolo_charges` int(11) NOT NULL,
+  `weight_charges` int(11) NOT NULL,
+  `color` varchar(7) NOT NULL,
+  `mr_charges` int(11) NOT NULL,
+  `remarks` text NOT NULL,
+  `cm_id` int(11) NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `container_entry`
+--
+
+INSERT INTO `container_entry` (`ce_id`, `bl_cro_number`, `job_number`, `container_number`, `index_number`, `vehicle_id`, `advance`, `rent`, `balance`, `container_id`, `lolo_charges`, `weight_charges`, `color`, `mr_charges`, `remarks`, `cm_id`, `status`) VALUES
+(1, '123456', '123', 1, '1', 1, 0, 0, 0, 1, 0, 0, 'green', 0, 'remarks', 1, 1),
+(2, '165412', '156', 2, '2', 2, 0, 0, 0, 2, 0, 0, 'red', 0, 'asd...', 1, 1),
+(3, '3564', '2215', 3, '3', 2, 0, 0, 0, 2, 0, 0, 'green', 0, 'falana', 1, 1),
+(4, '56151', '65151', 4, '4', 1, 0, 0, 0, 2, 0, 0, 'green', 0, 'dhimaka', 1, 1),
+(5, '4894', '4984', 5, '5', 4, 0, 0, 0, 4, 0, 0, 'green', 0, 'emarkasasmdlasda', 1, 1),
+(6, '156516', '51616', 6, '6', 4, 0, 0, 0, 1, 0, 0, 'red', 0, 'ASDAS', 1, 1),
+(8, '123456', '123456', 1, '1', 2, 1, 1, 0, 4, 0, 0, 'green', 0, 'asdasd', 3, 1),
+(9, '56456', '654', 2, '2', 4, 1, 0, 1, 4, 0, 0, 'yellow', 0, 'asdad', 3, 1),
+(10, '6595', '595', 3, '3', 2, 0, 0, 0, 3, 0, 0, 'green', 0, '0asdas', 3, 1),
+(11, '654321', '654321', 2, '2', 4, 100, 50, 50, 12, 0, 5, 'red', 0, 'falana', 4, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `container_movement`
 --
 
@@ -196,24 +238,10 @@ CREATE TABLE `container_movement` (
   `empty_terminal_id` int(11) NOT NULL,
   `from_yard_id` int(11) NOT NULL,
   `to_yard_id` int(11) NOT NULL,
-  `bl_cro_number` varchar(15) NOT NULL,
-  `job_number` varchar(15) NOT NULL,
-  `container_number` int(11) NOT NULL,
-  `index_number` varchar(11) NOT NULL,
   `container_size` tinyint(4) NOT NULL,
-  `vehicle_id` int(11) NOT NULL,
-  `advance` int(11) NOT NULL,
-  `rent` int(11) NOT NULL,
-  `balance` int(11) NOT NULL,
   `party_charges` int(11) NOT NULL,
-  `container_id` int(11) NOT NULL,
   `lot_of` int(11) NOT NULL,
   `line_id` int(11) NOT NULL,
-  `lolo_charges` int(11) NOT NULL,
-  `weight_charges` int(11) NOT NULL,
-  `color` varchar(7) NOT NULL,
-  `mr_charges` int(11) NOT NULL,
-  `remarks` text NOT NULL,
   `status` tinyint(4) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -221,9 +249,10 @@ CREATE TABLE `container_movement` (
 -- Dumping data for table `container_movement`
 --
 
-INSERT INTO `container_movement` (`cm_id`, `datee`, `agent_id`, `coa_id`, `consignee_id`, `movement`, `empty_terminal_id`, `from_yard_id`, `to_yard_id`, `bl_cro_number`, `job_number`, `container_number`, `index_number`, `container_size`, `vehicle_id`, `advance`, `rent`, `balance`, `party_charges`, `container_id`, `lot_of`, `line_id`, `lolo_charges`, `weight_charges`, `color`, `mr_charges`, `remarks`, `status`) VALUES
-(1, '2018-03-17', 1, 1, 1, 'export', 1, 2, 3, '12345', '1', 12, '1', 40, 1, 0, 0, 0, 20000, 1, 0, 1, 0, 0, 'green', 0, 'remarks....', 1),
-(2, '2018-04-17', 2, 7, 2, 'import', 3, 2, 1, '1012121', '111', 2, '2', 20, 2, 0, 0, 0, 0, 4, 0, 1, 0, 0, 'red', 0, '........', 1);
+INSERT INTO `container_movement` (`cm_id`, `datee`, `agent_id`, `coa_id`, `consignee_id`, `movement`, `empty_terminal_id`, `from_yard_id`, `to_yard_id`, `container_size`, `party_charges`, `lot_of`, `line_id`, `status`) VALUES
+(1, '2018-03-17', 1, 1, 1, 'export', 1, 2, 3, 40, 20000, 6, 1, 1),
+(3, '2018-04-20', 2, 8, 3, 'import', 6, 3, 1, 20, 3000, 3, 1, 1),
+(4, '2018-04-21', 3, 7, 2, 'import', 6, 2, 3, 20, 200, 2, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -456,6 +485,12 @@ ALTER TABLE `container`
   ADD PRIMARY KEY (`container_id`);
 
 --
+-- Indexes for table `container_entry`
+--
+ALTER TABLE `container_entry`
+  ADD PRIMARY KEY (`ce_id`);
+
+--
 -- Indexes for table `container_movement`
 --
 ALTER TABLE `container_movement`
@@ -542,12 +577,17 @@ ALTER TABLE `consignee`
 -- AUTO_INCREMENT for table `container`
 --
 ALTER TABLE `container`
-  MODIFY `container_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `container_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+--
+-- AUTO_INCREMENT for table `container_entry`
+--
+ALTER TABLE `container_entry`
+  MODIFY `ce_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `container_movement`
 --
 ALTER TABLE `container_movement`
-  MODIFY `cm_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `cm_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `daily_description`
 --
