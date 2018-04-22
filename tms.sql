@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 21, 2018 at 05:31 PM
+-- Generation Time: Apr 22, 2018 at 06:53 PM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 7.0.13
 
@@ -289,6 +289,7 @@ CREATE TABLE `diesel_entry` (
   `from_yard_id` int(11) NOT NULL,
   `to_yard_id` int(11) NOT NULL,
   `litre_rate` decimal(13,2) NOT NULL,
+  `litres` decimal(13,2) NOT NULL,
   `extra_litres` decimal(13,2) NOT NULL,
   `total` decimal(13,2) NOT NULL,
   `description` text NOT NULL,
@@ -299,10 +300,13 @@ CREATE TABLE `diesel_entry` (
 -- Dumping data for table `diesel_entry`
 --
 
-INSERT INTO `diesel_entry` (`de_id`, `datee`, `vehicle_id`, `from_yard_id`, `to_yard_id`, `litre_rate`, `extra_litres`, `total`, `description`, `status`) VALUES
-(1, '04/16/2018', 2, 3, 2, '107.00', '77.00', '8239.00', 'details', 1),
-(2, '04/02/2018', 1, 3, 2, '300.00', '100.00', '30000.00', 'asdadssdasda..............', 1),
-(3, '04/20/2018', 4, 6, 3, '150.00', '6.00', '900.00', 'falana dhimaka', 1);
+INSERT INTO `diesel_entry` (`de_id`, `datee`, `vehicle_id`, `from_yard_id`, `to_yard_id`, `litre_rate`, `litres`, `extra_litres`, `total`, `description`, `status`) VALUES
+(1, '04/22/2018', 2, 3, 2, '107.00', '0.00', '77.00', '8239.00', 'details', 0),
+(2, '04/22/2018', 1, 3, 2, '300.00', '0.00', '100.00', '30000.00', 'asdadssdasda..............', 0),
+(3, '04/22/2018', 4, 6, 3, '150.00', '0.00', '6.00', '900.00', 'falana dhimaka', 0),
+(4, '04/22/2018', 4, 6, 3, '10.00', '1000.00', '7.00', '10070.00', 'aksmd', 1),
+(5, '04/22/2018', 2, 1, 2, '10.00', '900.00', '8.00', '9080.00', 'falana', 1),
+(6, '04/22/2018', 4, 1, 2, '10.00', '900.00', '90.00', '9900.00', 'dhimaka', 1);
 
 -- --------------------------------------------------------
 
@@ -324,8 +328,11 @@ CREATE TABLE `diesel_limit` (
 
 INSERT INTO `diesel_limit` (`dl_id`, `from_yard`, `to_yard`, `limit_litre`, `status`) VALUES
 (1, 2, 1, 900, 1),
-(2, 1, 2, 1000, 1),
-(3, 3, 6, 1000, 1);
+(2, 1, 2, 900, 1),
+(3, 3, 6, 1000, 1),
+(4, 6, 3, 1000, 1),
+(5, 1, 6, 500, 1),
+(6, 6, 1, 500, 1);
 
 -- --------------------------------------------------------
 
@@ -597,12 +604,12 @@ ALTER TABLE `daily_description`
 -- AUTO_INCREMENT for table `diesel_entry`
 --
 ALTER TABLE `diesel_entry`
-  MODIFY `de_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `de_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `diesel_limit`
 --
 ALTER TABLE `diesel_limit`
-  MODIFY `dl_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `dl_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `garage_entry`
 --
