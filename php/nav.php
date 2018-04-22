@@ -173,6 +173,11 @@
                             </a>
                         </li>
                         <li class="nav-item  ">
+                            <a href="container-movement-update.php" class="nav-link ">
+                                <span class="title">Update Container Movment</span>
+                            </a>
+                        </li>
+                        <li class="nav-item  ">
                             <a href="garageEntry.php" class="nav-link ">
                                 <span class="title">Repair & Maintenance </span>
                             </a>
