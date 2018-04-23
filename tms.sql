@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 22, 2018 at 06:53 PM
+-- Generation Time: Apr 23, 2018 at 07:05 PM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 7.0.13
 
@@ -220,7 +220,9 @@ INSERT INTO `container_entry` (`ce_id`, `bl_cro_number`, `job_number`, `containe
 (8, '123456', '123456', 1, '1', 2, 1, 1, 0, 4, 0, 0, 'green', 0, 'asdasd', 3, 1),
 (9, '56456', '654', 2, '2', 4, 1, 0, 1, 4, 0, 0, 'yellow', 0, 'asdad', 3, 1),
 (10, '6595', '595', 3, '3', 2, 0, 0, 0, 3, 0, 0, 'green', 0, '0asdas', 3, 1),
-(11, '654321', '654321', 2, '2', 4, 100, 50, 50, 12, 0, 5, 'red', 0, 'falana', 4, 1);
+(11, '654321', '654321', 2, '2', 4, 100, 50, 50, 12, 0, 5, 'red', 0, 'falana', 4, 1),
+(12, '231651', '2135165', 2, '2', 4, 0, 0, 0, 12, 0, 0, 'green', 0, 'asdad', 4, 1),
+(13, '54666', '61651', 3, '3', 1, 0, 0, 0, 1, 0, 0, 'null', 0, 'asasd', 4, 1);
 
 -- --------------------------------------------------------
 
@@ -252,7 +254,7 @@ CREATE TABLE `container_movement` (
 INSERT INTO `container_movement` (`cm_id`, `datee`, `agent_id`, `coa_id`, `consignee_id`, `movement`, `empty_terminal_id`, `from_yard_id`, `to_yard_id`, `container_size`, `party_charges`, `lot_of`, `line_id`, `status`) VALUES
 (1, '2018-03-17', 1, 1, 1, 'export', 1, 2, 3, 40, 20000, 6, 1, 1),
 (3, '2018-04-20', 2, 8, 3, 'import', 6, 3, 1, 20, 3000, 3, 1, 1),
-(4, '2018-04-21', 3, 7, 2, 'import', 6, 2, 3, 20, 200, 2, 3, 1);
+(4, '2018-04-21', 2, 8, 3, 'export', 3, 6, 2, 45, 20000, 3, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -271,10 +273,14 @@ CREATE TABLE `daily_description` (
 --
 
 INSERT INTO `daily_description` (`dd_id`, `name`, `status`) VALUES
-(1, 'breakfast', 1),
+(1, 'breakfast', 0),
 (2, 'lunch', 1),
-(3, 'dinner', 1),
-(4, 'dhimaka', 0);
+(3, 'dinner', 0),
+(4, 'dhimaka', 0),
+(5, 'Advance', 1),
+(6, 'Diesel', 1),
+(7, 'Bike Expenses', 1),
+(8, 'Driver Salary', 1);
 
 -- --------------------------------------------------------
 
@@ -337,6 +343,33 @@ INSERT INTO `diesel_limit` (`dl_id`, `from_yard`, `to_yard`, `limit_litre`, `sta
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `expenses`
+--
+
+CREATE TABLE `expenses` (
+  `expense_id` int(11) NOT NULL,
+  `datee` varchar(20) NOT NULL,
+  `dd_id` int(11) NOT NULL,
+  `method` varchar(10) NOT NULL,
+  `check_number` varchar(30) DEFAULT NULL,
+  `bank_id` int(11) DEFAULT NULL,
+  `amount` decimal(13,2) NOT NULL,
+  `vehicle_id` int(11) NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `description` text NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `expenses`
+--
+
+INSERT INTO `expenses` (`expense_id`, `datee`, `dd_id`, `method`, `check_number`, `bank_id`, `amount`, `vehicle_id`, `name`, `description`, `status`) VALUES
+(1, '2018-04-23', 8, 'cash', NULL, NULL, '20000.00', 4, 'jamal (Driver)', 'asdas', 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `garage_entry`
 --
 
@@ -360,6 +393,24 @@ INSERT INTO `garage_entry` (`ge_id`, `datee`, `vehicle_id`, `amount`, `descripti
 (4, '04/10/2018', 1, '900.00', 'detailss...........', 0),
 (5, '04/09/2018', 2, '9000000.00', 'descripton', 1),
 (6, '04/20/2018', 4, '9500.00', 'falana dhimaka', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `income`
+--
+
+CREATE TABLE `income` (
+  `income_id` int(11) NOT NULL,
+  `datee` varchar(20) NOT NULL,
+  `dd_id` int(11) NOT NULL,
+  `method` varchar(10) NOT NULL,
+  `check_number` varchar(30) DEFAULT NULL,
+  `bank_id` int(11) DEFAULT NULL,
+  `amount` decimal(13,2) NOT NULL,
+  `description` text NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -411,6 +462,7 @@ INSERT INTO `login` (`login_id`, `username`, `pass`) VALUES
 CREATE TABLE `vehicle` (
   `vehicle_id` int(11) NOT NULL,
   `owner_name` varchar(60) NOT NULL,
+  `driver_name` varchar(60) NOT NULL,
   `vehicle_number` varchar(30) NOT NULL,
   `engine_number` varchar(30) NOT NULL,
   `chassis_number` varchar(30) NOT NULL,
@@ -421,10 +473,11 @@ CREATE TABLE `vehicle` (
 -- Dumping data for table `vehicle`
 --
 
-INSERT INTO `vehicle` (`vehicle_id`, `owner_name`, `vehicle_number`, `engine_number`, `chassis_number`, `status`) VALUES
-(1, 'jutt bros ', '987654321', '987654321', '987654321', 1),
-(2, 'butt bros ', '1564868486', '1515151', '98745848548', 1),
-(4, 'Malik brothers', '549852', '256485', '154565', 1);
+INSERT INTO `vehicle` (`vehicle_id`, `owner_name`, `driver_name`, `vehicle_number`, `engine_number`, `chassis_number`, `status`) VALUES
+(1, 'jutt bros ', 'ahmed', '987654321', '987654321', '987654321', 1),
+(2, 'butt bros ', 'hasan', '1564868486', '1515151', '98745848548', 1),
+(4, 'Malik brothers', 'jamal', '549852', '256485', '154565', 1),
+(5, 'butt bros', 'tayyab', '123456', '123456', '123456', 1);
 
 -- --------------------------------------------------------
 
@@ -522,10 +575,22 @@ ALTER TABLE `diesel_limit`
   ADD PRIMARY KEY (`dl_id`);
 
 --
+-- Indexes for table `expenses`
+--
+ALTER TABLE `expenses`
+  ADD PRIMARY KEY (`expense_id`);
+
+--
 -- Indexes for table `garage_entry`
 --
 ALTER TABLE `garage_entry`
   ADD PRIMARY KEY (`ge_id`);
+
+--
+-- Indexes for table `income`
+--
+ALTER TABLE `income`
+  ADD PRIMARY KEY (`income_id`);
 
 --
 -- Indexes for table `line`
@@ -589,7 +654,7 @@ ALTER TABLE `container`
 -- AUTO_INCREMENT for table `container_entry`
 --
 ALTER TABLE `container_entry`
-  MODIFY `ce_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `ce_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `container_movement`
 --
@@ -599,7 +664,7 @@ ALTER TABLE `container_movement`
 -- AUTO_INCREMENT for table `daily_description`
 --
 ALTER TABLE `daily_description`
-  MODIFY `dd_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `dd_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `diesel_entry`
 --
@@ -611,10 +676,20 @@ ALTER TABLE `diesel_entry`
 ALTER TABLE `diesel_limit`
   MODIFY `dl_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
+-- AUTO_INCREMENT for table `expenses`
+--
+ALTER TABLE `expenses`
+  MODIFY `expense_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
 -- AUTO_INCREMENT for table `garage_entry`
 --
 ALTER TABLE `garage_entry`
   MODIFY `ge_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT for table `income`
+--
+ALTER TABLE `income`
+  MODIFY `income_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `line`
 --
@@ -629,7 +704,7 @@ ALTER TABLE `login`
 -- AUTO_INCREMENT for table `vehicle`
 --
 ALTER TABLE `vehicle`
-  MODIFY `vehicle_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `vehicle_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `yard`
 --
