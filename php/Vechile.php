@@ -34,7 +34,7 @@ include 'nav.php';
                                     </div>
                                     <div class="row"> 
                                         <div class="form-group">
-                                                  <label class="col-md-2 control-label">Owner Name:</label>
+                                                <label class="col-md-2 control-label">Owner Name:</label>
                                                 <div class="col-md-3">
                                                   <input type="text" class="form-control" id="owner_name" name="owner_name" required tabindex="1" placeholder="here">
                                                 </div>
@@ -57,17 +57,24 @@ include 'nav.php';
                                                    <input type="text" class="form-control" id="chassis_number" name="chassis_number" required tabindex="4" placeholder="here">
                                                  </div>
                                           </div>  
+                                      </div>
+
+                                      <div class="row"> 
+                                         <div class="form-group">
+                                                <label class="col-md-2 control-label">Driver Name:</label>
+                                                <div class="col-md-3">
+                                                  <input type="text" class="form-control" id="driver_name" name="driver_name" required tabindex="5" placeholder="here">
+                                                </div>
+                                          </div>  
                                       </div> 
-
-
                                         
                                      
                                     <div class="form-actions ">
-                                        <button type="submit" class="btn blue" id="btn_submit" tabindex="5">Submit</button> 
-                                        <button type="reset" class="btn default" id="btn_reset" tabindex="6">Cancel</button>
+                                        <button type="submit" class="btn blue" id="btn_submit" tabindex="6">Submit</button> 
+                                        <button type="reset" class="btn default" id="btn_reset" tabindex="7">Cancel</button>
 
-                                        <button type="submit" class="btn blue hidden" id="update_form_btn" tabindex="5">Update</button> 
-                                        <button type="button" class="btn default hidden"  id="add_new" tabindex="6">Add New</button>
+                                        <button type="submit" class="btn blue hidden" id="update_form_btn" tabindex="6">Update</button> 
+                                        <button type="button" class="btn default hidden"  id="add_new" tabindex="7">Add New</button>
                                     </div>
                                 </div>
                                 
@@ -92,7 +99,7 @@ include 'nav.php';
                                                     <th> Vechile Number # </th>
                                                     <th> EngineNumber # </th>
                                                     <th> Chassis Number # </th>
-                                                   
+                                                    <th> Driver Name </th>
                                                 </tr>
                                             </thead>
                                             <tbody>    
@@ -162,6 +169,7 @@ include 'footer.php';
                                 '<td>'+value['vehicle_number']+'</td>'+
                                 '<td>'+value['engine_number']+'</td>'+
                                 '<td>'+value['chassis_number']+'</td>'+
+                                '<td>'+value['driver_name']+'</td>'+
 
                                 '</tr>');
 
@@ -176,18 +184,15 @@ include 'footer.php';
 
         loadData();
 
-        function add(owner_name,vehicle_number,engine_number,chassis_number)
+        function add(owner_name,vehicle_number,engine_number,chassis_number,driver_name)
         {
             $.ajax({
-                url:'ajax/vehicle/add.php?owner_name='+owner_name+'&vehicle_number='+vehicle_number+'&engine_number='+engine_number+'&chassis_number='+chassis_number,
+                url:'ajax/vehicle/add.php?owner_name='+owner_name+'&vehicle_number='+vehicle_number+'&engine_number='+engine_number+'&chassis_number='+chassis_number+'&driver_name='+driver_name,
                 type:"POST",
                 success:function(data){
                     if(data)
                     {
-                        $('#owner_name').val("");
-                        $('#engine_number').val("");
-                        $('#vehicle_number').val("");
-                        $('#chassis_number').val("");
+                        $('#owner_name,#engine_number,#vehicle_number,#chassis_number,#driver_name').val("");
                         
                         loadData();
                     }
@@ -196,10 +201,10 @@ include 'footer.php';
             });
         }
 
-        function update(vehicle_id,owner_name,vehicle_number,engine_number,chassis_number)
+        function update(vehicle_id,owner_name,vehicle_number,engine_number,chassis_number,driver_name)
         {
             $.ajax({
-                url:'ajax/vehicle/update.php?vehicle_id='+vehicle_id+'&owner_name='+owner_name+'&vehicle_number='+vehicle_number+'&engine_number='+engine_number+'&chassis_number='+chassis_number,
+                url:'ajax/vehicle/update.php?vehicle_id='+vehicle_id+'&owner_name='+owner_name+'&vehicle_number='+vehicle_number+'&engine_number='+engine_number+'&chassis_number='+chassis_number+'&driver_name='+driver_name,
                 type:"POST",
                 success:function(data){
                     if(data)
@@ -213,6 +218,7 @@ include 'footer.php';
                         temp[3] = vehicle_number;
                         temp[4] = engine_number;
                         temp[5] = chassis_number;
+                        temp[6] = driver_name;
 
 
                         $('#mytable').DataTable().row(i).data(temp).draw();
@@ -256,11 +262,7 @@ include 'footer.php';
 
             $('form').removeClass('update_form');
 
-            $('#owner_name').val('');
-            $('#vehicle_number').val('');
-            $('#engine_number').val('');
-            $('#chassis_number').val('');
-
+            $('#owner_name,#engine_number,#vehicle_number,#chassis_number,#driver_name').val("");
 
             $('#vehicle_id_div').addClass('hidden');
             $('#update_form_btn').addClass('hidden');
@@ -307,6 +309,7 @@ include 'footer.php';
             $('#vehicle_number').val( trr.find('td').eq(3).text() );    
             $('#engine_number').val( trr.find('td').eq(4).text() );
             $('#chassis_number').val( trr.find('td').eq(5).text() );
+            $('#driver_name').val( trr.find('td').eq(6).text() );
 
         });
 
@@ -318,15 +321,16 @@ include 'footer.php';
                engine_number = $('#engine_number').val(),
                vehicle_number = $('#vehicle_number').val(),
                chassis_number = $('#chassis_number').val(),
+               driver_name = $('#driver_name').val(),
                vehicle_id =  $('#vehicle_id').val();
 
            if( $(this).hasClass('update_form') ) 
            {
-                update(vehicle_id,owner_name,vehicle_number,engine_number,chassis_number);
+                update(vehicle_id,owner_name,vehicle_number,engine_number,chassis_number,driver_name);
            }
            else
            {
-                add(owner_name,vehicle_number,engine_number,chassis_number);
+                add(owner_name,vehicle_number,engine_number,chassis_number,driver_name);
            }
         });
 

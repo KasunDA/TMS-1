@@ -7,9 +7,9 @@
 	$vehicle_number = $_GET['vehicle_number'];
 	$engine_number= $_GET['engine_number'];
 	$chassis_number = $_GET['chassis_number'];
+	$driver_name = $_GET['driver_name'];
 
-
-	$q = mysqli_query($mycon,"UPDATE vehicle SET owner_name='$owner_name', vehicle_number = '$vehicle_number' , engine_number = '$engine_number' , chassis_number= '$chassis_number'  WHERE vehicle_id=$vehicle_id ");
+	$q = mysqli_query($mycon,"UPDATE vehicle SET owner_name='$owner_name', vehicle_number = '$vehicle_number' , engine_number = '$engine_number' , chassis_number= '$chassis_number' , driver_name='$driver_name' WHERE vehicle_id=$vehicle_id ");
 
 	if(mysqli_affected_rows($mycon))
 	{

@@ -9,6 +9,12 @@
 	if(mysqli_affected_rows($mycon))
 	{
 		echo "true";
+
+		session_start();
+
+		$_SESSION['cm_id'] = "";
+		$_SESSION['lot_of'] = "";
+
 	}
 
 ?>

@@ -13,6 +13,7 @@
 		$json[$n]['vehicle_number'] = $r['vehicle_number'];
 		$json[$n]['engine_number'] = $r['engine_number'];
 		$json[$n]['chassis_number'] = $r['chassis_number'];
+		$json[$n]['driver_name'] = $r['driver_name'];
 
 		$n++;
 	}

@@ -491,7 +491,7 @@ include 'footer.php';
       function deletetr(trr,cm_id)
       {
           $.ajax({
-              url:'ajax/container_movement/delete.php?ce_id='+cm_id,
+              url:'ajax/container_movement/delete.php?cm_id='+cm_id,
               type:"POST",
               success:function(data){
                   trr.fadeOut(100,function(){
@@ -520,6 +520,7 @@ include 'footer.php';
           $('form select').val("").trigger('change');
           $('#movement').val('empty').trigger('change');
           $('#container_size').val('20').trigger('change');
+          $('#party_charges,#lot_of').val('');
 
           $('#cm_id_div').addClass('hidden');
           $('#update_form_btn').attr('disabled','disabled');
