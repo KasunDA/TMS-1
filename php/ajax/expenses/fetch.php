@@ -15,7 +15,7 @@
 		$q1 = mysqli_query($mycon,'SELECT name from daily_description where dd_id='.$r['dd_id']);
 		$r1 = mysqli_fetch_array($q1);
 		$json[$n]['dd_name'] = $r1['name'];
-
+		$json[$n]['method'] = $r['method'];
 		$json[$n]['check_number'] = $r['check_number'];
 		$json[$n]['bank_id'] = $r['bank_id'];
 		

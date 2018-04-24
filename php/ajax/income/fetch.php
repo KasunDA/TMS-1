@@ -16,16 +16,24 @@
 		$r1 = mysqli_fetch_array($q1);
 		$json[$n]['dd_name'] = $r1['name'];
 
+		$json[$n]['method'] = $r['method'];
 		$json[$n]['check_number'] = $r['check_number'];
 		$json[$n]['bank_id'] = $r['bank_id'];
 		
-		$q1 = mysqli_query($mycon,'SELECT short_form from bank where bank_id='.$r['bank_id']);
-		$r1 = mysqli_fetch_array($q1);
-		$json[$n]['bank_name'] = $r1['short_form'];
+		if( $r['bank_id'] != NULL )
+		{
+			$q1 = mysqli_query($mycon,'SELECT short_form from bank where bank_id='.$r['bank_id']);
+			$r1 = mysqli_fetch_array($q1);
+			$json[$n]['bank_name'] = $r1['short_form'];		
+		}
+		else
+		{
+			$json[$n]['bank_name'] = NULL;			
+		};
 		
 		$json[$n]['amount'] = $r['amount'];
 
-		$json[$n]['description'] = $r1['description'];
+		$json[$n]['description'] = $r['description'];
 		$n++;
 	}
 

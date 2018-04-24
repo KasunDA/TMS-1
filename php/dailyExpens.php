@@ -176,8 +176,8 @@ require 'connection.php';
                                     <div class="row">
                                         <div class="form-group">
                                             <div id="income_id_div" class="hidden">
-                                                  <label class="col-md-2 control-label">Transaction ID:</label>
-                                                  <div class="col-md-3">
+                                                  <label class="col-md-4 control-label">ID:</label>
+                                                  <div class="col-md-5">
                                                     <input type="text" class="form-control" id="income_id" name="income_id" required readonly >
                                                   </div>
                                             </div>
@@ -255,7 +255,7 @@ require 'connection.php';
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-md-4 control-label">Discription:</label>
+                                            <label class="col-md-4 control-label">Description:</label>
                                             <div class="col-md-5">   
                                                <textarea class="form-control" name="idescription" id="idescription" rows="4" required tabindex=""  placeholder="Text Here"></textarea>
                                             
@@ -303,6 +303,7 @@ require 'connection.php';
                                          <th> # </th>
                                          <th> Date </th>
                                          <th> Daily Description  </th>
+                                         <th> Method </th>
                                          <th> Check # </th>
                                          <th> Bank Name </th>
                                          <th> Amount </th>
@@ -349,6 +350,7 @@ require 'connection.php';
                                          <th> # </th>
                                          <th> Date </th>
                                          <th> Daily Description  </th>
+                                         <th> Method </th>
                                          <th> Check # </th>
                                          <th> Bank Name </th>
                                          <th> Amount </th>
@@ -539,6 +541,7 @@ include 'footer.php';
                             '<td>'+n+'</td>'+
                             '<td>'+value['datee']+'</td>'+
                             '<td id="'+value['dd_id']+'">'+value['dd_name']+'</td>'+
+                            '<td>'+value['method']+'</td>'+
                             '<td>'+value['check_number']+'</td>'+
                             '<td id="'+value['bank_id']+'">'+value['bank_name']+'</td>'+
                             '<td>'+value['amount']+'</td>'+
@@ -588,6 +591,7 @@ include 'footer.php';
                             '<td>'+n+'</td>'+
                             '<td>'+value['datee']+'</td>'+
                             '<td id="'+value['dd_id']+'">'+value['dd_name']+'</td>'+
+                            '<td>'+value['method']+'</td>'+
                             '<td>'+value['check_number']+'</td>'+
                             '<td id="'+value['bank_id']+'">'+value['bank_name']+'</td>'+
                             '<td>'+value['amount']+'</td>'+
@@ -649,7 +653,7 @@ include 'footer.php';
     function update(expense_id,datee,dd_id,dd_name,method,check_number,bank_id,bank_name,amount,vehicle_id,vehicle_number,name,description)
     {
         $.ajax({
-            url:'ajax/expenses/update.php?expense_id='+expense_id+'datee='+datee+'&dd_id='+dd_id+'&method='+method+'&check_number='+check_number+'&bank_id='+bank_id+'&amount='+amount+'&vehicle_id='+vehicle_id+'&='+name+'&description='+description,
+            url:'ajax/expenses/update.php?expense_id='+expense_id+'&datee='+datee+'&dd_id='+dd_id+'&method='+method+'&check_number='+check_number+'&bank_id='+bank_id+'&amount='+amount+'&vehicle_id='+vehicle_id+'&name='+name+'&description='+description,
             type:"POST",
             success:function(data){
                 if(data)
@@ -661,12 +665,13 @@ include 'footer.php';
 
                     temp[2] = datee;
                     temp[3] = dd_name;
-                    temp[4] = check_number;
-                    temp[5] = bank_name;
-                    temp[6] = amount;
-                    temp[7] = vehicle_number;
-                    temp[8] = name;
-                    temp[9] = description;
+                    temp[4] = method;
+                    temp[5] = check_number;
+                    temp[6] = bank_name;
+                    temp[7] = amount;
+                    temp[8] = vehicle_number;
+                    temp[9] = name;
+                    temp[10] = description;
 
                     $('#mytable').DataTable().row(i).data(temp).draw();
                 }
@@ -678,7 +683,7 @@ include 'footer.php';
     function iupdate(income_id,idatee,idd_id,idd_name,imethod,icheck_number,ibank_id,ibank_name,iamount,idescription)
     {
         $.ajax({
-            url:'ajax/income/update.php?income_id='+income_id+'datee='+idatee+'&dd_id='+idd_id+'&method='+imethod+'&check_number='+icheck_number+'&bank_id='+ibank_id+'&amount='+iamount+'&description='+idescription,
+            url:'ajax/income/update.php?income_id='+income_id+'&datee='+idatee+'&dd_id='+idd_id+'&method='+imethod+'&check_number='+icheck_number+'&bank_id='+ibank_id+'&amount='+iamount+'&description='+idescription,
             type:"POST",
             success:function(data){
                 if(data)
@@ -690,10 +695,11 @@ include 'footer.php';
 
                     temp[2] = idatee;
                     temp[3] = idd_name;
-                    temp[4] = icheck_number;
-                    temp[5] = ibank_name;
-                    temp[6] = iamount;
-                    temp[9] = idescription;
+                    temp[4] = imethod;
+                    temp[5] = icheck_number;
+                    temp[6] = ibank_name;
+                    temp[7] = iamount;
+                    temp[8] = idescription;
 
                     $('#imytable').DataTable().row(i).data(temp).draw();
                 }
@@ -815,7 +821,7 @@ include 'footer.php';
         var income_id = $(this).attr('id'),
             trr = $(this).closest('tr');
 
-        deletetr(trr,income_id);
+        ideletetr(trr,income_id);
     });
 
     //ADD NEW expense 
@@ -848,12 +854,13 @@ include 'footer.php';
         $('#expense_id').val( expense_id );
         $('#datee').val( trr.find('td').eq(2).text() );
         $('#dd_id').val( trr.find('td').eq(3).attr('id') ).trigger('change');
-        $('#check_number').val( trr.find('td').eq(4).text() );
-        $('#bank_id').val( trr.find('td').eq(5).attr('id') ).trigger('change');
-        $('#amount').val( trr.find('td').eq(6).text() );
-        $('#vehicle_id').val( trr.find('td').eq(7).attr('id') ).trigger('change');
-        $('#name').val( trr.find('td').eq(8).text() );
-        $('#description').val( trr.find('td').eq(9).text() );
+        $('#expense_form input[value="'+trr.find('td').eq(4).text()+'"]').prop('checked', true).trigger('change');
+        $('#check_number').val( trr.find('td').eq(5).text() );
+        $('#bank_id').val( trr.find('td').eq(6).attr('id') ).trigger('change');
+        $('#amount').val( trr.find('td').eq(7).text() );
+        $('#vehicle_id').val( trr.find('td').eq(8).attr('id') ).trigger('change');
+        $('#name').val( trr.find('td').eq(9).text() ).trigger('change');
+        $('#description').val( trr.find('td').eq(10).text() );
 
     });
 
@@ -877,10 +884,11 @@ include 'footer.php';
         $('#income_id').val( income_id );
         $('#idatee').val( trr.find('td').eq(2).text() );
         $('#idd_id').val( trr.find('td').eq(3).attr('id') ).trigger('change');
-        $('#icheck_number').val( trr.find('td').eq(4).text() );
-        $('#ibank_id').val( trr.find('td').eq(5).attr('id') ).trigger('change');
-        $('#iamount').val( trr.find('td').eq(6).text() );
-        $('#idescription').val( trr.find('td').eq(7).text() );
+        $('#income_form input[value="'+trr.find('td').eq(4).text()+'"]').prop('checked', true).trigger('change');
+        $('#icheck_number').val( trr.find('td').eq(5).text() );
+        $('#ibank_id').val( trr.find('td').eq(6).attr('id') ).trigger('change');
+        $('#iamount').val( trr.find('td').eq(7).text() );
+        $('#idescription').val( trr.find('td').eq(8).text() );
 
     });
 
@@ -891,7 +899,7 @@ include 'footer.php';
        var datee = $('#datee').val() ,
            dd_id = $('#dd_id').val() ,
            dd_name = $('#dd_id option:selected').text() ,
-           method = $('input[name="method"]').val() ,
+           method = $('input[name="method"]:checked').val() ,
            check_number = $('#check_number').val() ,
            bank_id = $('#bank_id').val() ,
            bank_name = $('#bank_id option:selected').text() ,
@@ -920,7 +928,7 @@ include 'footer.php';
        var idatee = $('#idatee').val() ,
            idd_id = $('#idd_id').val() ,
            idd_name = $('#idd_id option:selected').text() ,
-           imethod = $('input[name="imethod"]').val() ,
+           imethod = $('input[name="imethod"]:checked').val() ,
            icheck_number = $('#icheck_number').val() ,
            ibank_id = $('#ibank_id').val() ,
            ibank_name = $('#ibank_id option:selected').text() ,
@@ -930,11 +938,11 @@ include 'footer.php';
 
        if( $(this).hasClass('update_form') ) 
        {
-            update();
+            iupdate(income_id,idatee,idd_id,idd_name,imethod,icheck_number,ibank_id,ibank_name,iamount,idescription);
        }
        else
        {
-            add();
+            iadd(idatee,idd_id,imethod,icheck_number,ibank_id,iamount,idescription);
        }
     });
 
