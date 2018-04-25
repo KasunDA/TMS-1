@@ -2,7 +2,7 @@
 
 	require '../../connection.php';
 
-	$json;
+	$json=NULL;
 
 	$q = mysqli_query($mycon,'SELECT * FROM agent WHERE status=1 ORDER BY agent_id DESC ');
 	$n  = 0;

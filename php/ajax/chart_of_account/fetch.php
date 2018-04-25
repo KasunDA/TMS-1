@@ -2,7 +2,7 @@
 
 	require '../../connection.php';
 
-	$json;
+	$json=NULL;
 
 	$q = mysqli_query($mycon,'SELECT * FROM chart_of_account WHERE status=1 ORDER BY coa_id DESC ');
 	$n  = 0;

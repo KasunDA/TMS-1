@@ -2,7 +2,7 @@
 
 	require '../../connection.php';
 
-	$json;
+	$json=NULL;
 
 	$q = mysqli_query($mycon,'SELECT * FROM garage_entry WHERE status=1 ORDER BY ge_id DESC ');
 	$n  = 0;

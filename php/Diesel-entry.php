@@ -205,7 +205,7 @@ date_default_timezone_set("Asia/Karachi");
                                             <td id="total_litres">  </td>
                                         </tr>
                                         <tr class="uppercase">
-                                            <td> 1 </td>
+                                            <td> 2 </td>
                                             <td> Total Extra litres </td>
                                             <td id="total_extra_litres">  </td>
                                         </tr>

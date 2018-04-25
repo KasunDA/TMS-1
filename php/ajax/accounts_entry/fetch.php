@@ -1,10 +1,12 @@
 <?php 
 
 	require '../../connection.php';
+	date_default_timezone_set("Asia/Karachi");
 
-	$json;
+	$json=NULL;
+	$date = date('m/d/Y');
 
-	$q = mysqli_query($mycon,'SELECT * FROM accounts_entry WHERE status=1 ORDER BY ae_id DESC ');
+	$q = mysqli_query($mycon,"SELECT * FROM accounts_entry WHERE status=1 and datee='$date' ORDER BY ae_id DESC ");
 	$n  = 0;
 	while($r = mysqli_fetch_array($q))
 	{
