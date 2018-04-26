@@ -2,7 +2,7 @@
 
 	require '../../connection.php';
 
-	$json='';
+	$json=NULL;
 
 	$q = mysqli_query($mycon,'SELECT * FROM yard WHERE status=1 ORDER BY yard_id DESC ');
 	$n  = 0;
