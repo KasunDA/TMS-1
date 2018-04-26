@@ -2,7 +2,7 @@
 
 	require '../../connection.php';
 
-	$json='';
+	$json=NULL;
 
 	$q = mysqli_query($mycon,'SELECT * FROM daily_description WHERE status=1 ORDER BY dd_id DESC ');
 	$n  = 0;

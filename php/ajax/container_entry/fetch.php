@@ -2,7 +2,7 @@
 
 	require '../../connection.php';
 
-	$json="";
+	$json=NULL;
 	$id = $_GET['cm_id'];
 
 	$q = mysqli_query($mycon,'SELECT a.*,b.* FROM container_movement a , container_entry b WHERE a.cm_id = b.cm_id and a.cm_id='.$id.' and b.status=1 ORDER BY b.ce_id DESC ');

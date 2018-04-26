@@ -2,7 +2,7 @@
 
 	require '../../connection.php';
 
-	$json='';
+	$json=NULL;
 
 	$q = mysqli_query($mycon,'SELECT * FROM vehicle WHERE status=1 ORDER BY vehicle_id DESC ');
 	$n  = 0;
