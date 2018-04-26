@@ -265,15 +265,16 @@ date_default_timezone_set("Asia/Karachi");
                                                             </div>
 
                                                             <label class="col-md-1 control-label">Rent:</label>
-                                                             
                                                             <div class="col-md-2">
                                                               <input type="number" min="0" class="form-control" placeholder="Rent" id="rent" name="rent"  tabindex="17">
                                                             </div>
+
+                                                            <label class="col-md-1 control-label">Lolo Charges:</label>
+                                                            <div class="col-md-2">
+                                                              <input type="number" min="0" step="0.01" class="form-control" placeholder="lolo Charges" id="lolo_charges" name="lolo_charges" required tabindex="18">
+                                                            </div>
                                                               
-                                                              <label class="col-md-1 control-label">Balance:</label>
-                                                              <div class="col-md-2">
-                                                                <input type="number" class="form-control" placeholder="Balance" id="balance" name="balance" readonly tabindex="18">
-                                                              </div>
+                                                              
                                                         </div> 
 
                                                   </div>
@@ -285,8 +286,13 @@ date_default_timezone_set("Asia/Karachi");
                                                               <div class="col-md-3">
                                                                 <input type="number" min="0" class="form-control" placeholder="Party Chagers" id="party_charges" name="party_charges" required tabindex="19"  <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'readonly' ?> />
                                                               </div>
+                                                              <label class="col-md-1 control-label">Balance:</label>
+                                                              <div class="col-md-2">
+                                                                <input type="number" class="form-control" placeholder="Balance" id="balance" name="balance" readonly tabindex="20">
+                                                              </div>
                                                              
                                                           </div> 
+
 
                                                     </div>
 
@@ -295,7 +301,7 @@ date_default_timezone_set("Asia/Karachi");
                                                     <div class="form-group">
                                                           <label class="col-md-2 control-label">Container Type:</label>
                                                           <div class="col-md-3">
-                                                              <select class="form-control" id="container_id" name="container_id" required tabindex="20">
+                                                              <select class="form-control" id="container_id" name="container_id" required tabindex="21">
                                                                   <option value="">Select Container Type</option>
                                                                   <?php 
 
@@ -324,7 +330,7 @@ date_default_timezone_set("Asia/Karachi");
                                                           <label class="col-md-1 control-label">Lot Of :</label>
                                                            
                                                           <div class="col-md-4">
-                                                            <input type="number" min="0"  class="form-control" placeholder="Lot Of" id="lot_of" name="lot_of" required tabindex="21" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'readonly' ?> />
+                                                            <input type="number" min="0"  class="form-control" placeholder="Lot Of" id="lot_of" name="lot_of" required tabindex="22" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'readonly' ?> />
                                                           </div>
                                                            
                                                       </div> 
@@ -333,7 +339,7 @@ date_default_timezone_set("Asia/Karachi");
                                                       <div class="form-group">
                                                             <label class="col-md-2 control-label">Shipping Line:</label>
                                                             <div class="col-md-3">
-                                                                <select class="form-control" id="line_id" name="line_id" required tabindex="22" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'disabled' ?> >
+                                                                <select class="form-control" id="line_id" name="line_id" required tabindex="23" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'disabled' ?> >
                                                                     <option value="">Select Shipping Line</option>
                                                                     <?php 
 
@@ -354,10 +360,7 @@ date_default_timezone_set("Asia/Karachi");
                                                      
                                                       <div class="row"> 
                                                           <div class="form-group">
-                                                                    <label class="col-md-2 control-label">Lolo Charges:</label>
-                                                                  <div class="col-md-3">
-                                                                    <input type="number" min="0" step="0.01" class="form-control" placeholder="lolo Charges" id="lolo_charges" name="lolo_charges" required tabindex="23">
-                                                                  </div>
+                                                                  
                                                                   <label class="col-md-2 control-label">Weight Charges</label>
                                                                    
                                                                   <div class="col-md-3">
@@ -491,8 +494,9 @@ include 'footer.php';
        }
       }
 
-      $('#advance,#rent').on('keyup change',function(){
-          $('#balance').val($('#advance').val()-$('#rent').val());
+      $('#advance,#rent,#lolo_charges').on('keyup change',function(){
+          var a = $('#rent').val()/1 + $('#lolo_charges').val()/1; 
+          $('#balance').val( a - $('#advance').val() );
         });
 
 

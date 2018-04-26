@@ -145,7 +145,7 @@ date_default_timezone_set("Asia/Karachi");
                              <table class="table table-striped table-bordered table-hover table-checkable order-column " id="mytable">
                                  <thead>
                                      <tr>
-                                         <th> Actions </th>
+                                         <th> </th>
                                          <th> # </th>
                                          <th> Date </th>
                                          <th> Bank </th>
@@ -157,57 +157,6 @@ date_default_timezone_set("Asia/Karachi");
                                      </tr>
                                  </thead>
                                  <tbody>
-                                    <!-- <?php 
-
-                                                $q = mysqli_query($mycon,'SELECT * FROM accounts_entry WHERE status=1 ORDER BY ae_id DESC ');
-                                                $n  = 1;
-                                                while($r = mysqli_fetch_array($q))
-                                                {?>
-                                                    <tr class="odd gradeX">
-                                                    
-                                                    <td> 
-                                                      <ul class="addremove">
-                                                        <li> <button class="btn btn-xs green update_btn" id="<?php echo $r['ae_id']; ?>"  type="button">  
-                                                        <i class="fa fa-plus-square"></i>
-                                                        </button> </li>
-                                                        <li>  <button class="btn btn-xs red delete_btn" id="<?php echo $r['ae_id']; ?>" type="button">  
-                                                        <i class="fa fa-minus-square"></i>
-                                                        </button> </li>
-                                                      </ul>
-                                                    </td>
-
-
-                                                    <td><?php echo $n ?></td>
-                                                    <td><?php echo $r['datee']; ?></td>
-                                                    <?php 
-                                                    $q1 = mysqli_query($mycon,'SELECT short_form from bank where bank_id='.$r['bank_id']);
-                                                    $r1 = mysqli_fetch_array($q1)?>
-                                                    <td id="<?php echo $r['bank_id']?>"><?php echo $r1['short_form']; ?></td>
-                                                    
-                                                    <?php
-                                                        if( $r['action'] == 'debit' )
-                                                        {
-                                                            echo '<td>'.$r['amount'].'</td>';
-                                                            echo '<td></td>';
-                                                        }
-                                                        else
-                                                        {
-                                                            echo '<td></td>';
-                                                            echo '<td>'.$r['amount'].'</td>';
-                                                        }?>
-                                                    
-                                                    <td><?php echo $r['check_number']; ?></td> 
-                                                    <td><?php echo $r['previous_balance']; ?></td> 
-                                                    <td><?php echo $r['current_balance']; ?></td> 
-
-                                                </tr>
-
-                                                <?php 
-                                                    $n++;
-                                                }// END OF WHILE
-
-
-                                             ?> -->
                                  </tbody>
                              </table>
                          </div>
@@ -226,24 +175,24 @@ date_default_timezone_set("Asia/Karachi");
                                         <tr class="uppercase">
                                             <td> # </td>
                                             <td> Previous Balance</td>
-                                            <td> 900000 </td>
+                                            <td id="today_previous_balance"></td>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr class="uppercase">
                                             <td> 1 </td>
                                             <td> Today Debit </td>
-                                            <td> 9000 </td>
+                                            <td id="today_debit"></td>
                                         </tr>
                                         <tr>
                                             <td> 2 </td>
                                             <td> Today Credit </td>
-                                            <td> 80000 </td>
+                                            <td id="today_credit"></td>
                                         </tr>
                                         <tr>
                                             <td> 3 </td>
                                             <td> Current Balance </td>
-                                            <td> 810000 </td>
+                                            <td id="today_balance"></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -267,6 +216,27 @@ include 'footer.php';
  <script type="text/javascript">
      
      $(document).ready(function(){
+
+      function dt()
+        {
+            $.ajax({
+                url:'ajax/accounts_entry/fetch_details.php',
+                dataType:"JSON",
+                success:function(data){
+
+                    $.each(data,function(index,value){
+
+                        // $('#today_previous_balance').html(value['today_previous_balance']);
+                        $('#today_debit').html(value['total_debit']);
+                        $('#today_credit').html(value['total_credit']);
+                        // $('#today_balance').html(value['']);
+                    });
+                },
+                error:function(){ alert("Failed Fetch Details Ajax Call.") }   
+            });    
+        }
+
+        dt();
 
         function myDataTable()
         {
@@ -309,17 +279,17 @@ include 'footer.php';
 
                         $('#mytable tbody').append('<tr class="odd gradeX">'+
 
-                                '<td>'+ 
-                                    '<ul class="addremove">'+
-                                        '<li> <button class="btn btn-xs green update_btn" id="'+value['ae_id']+'" type="button">  '+
-                                        '<i class="fa fa-plus-square"></i>'+
-                                        '</button> </li>'+
-                                        '<li>  <button class="btn btn-xs red delete_btn" id="'+value['ae_id']+'" type="button">  '+
-                                        '<i class="fa fa-minus-square"></i>'+
-                                        '</button> </li>'+
-                                    '</ul>'+
-                                '</td>'+                       
-
+                                // '<td>'+ 
+                                //     '<ul class="addremove">'+
+                                //         '<li> <button class="btn btn-xs green update_btn" id="'+value['ae_id']+'" type="button">  '+
+                                //         '<i class="fa fa-plus-square"></i>'+
+                                //         '</button> </li>'+
+                                //         '<li>  <button class="btn btn-xs red delete_btn" id="'+value['ae_id']+'" type="button">  '+
+                                //         '<i class="fa fa-minus-square"></i>'+
+                                //         '</button> </li>'+
+                                //     '</ul>'+
+                                // '</td>'+                       
+                                '<td></td>'+
                                 '<td>'+n+'</td>'+
                                 '<td>'+value['datee']+'</td>'+
                                 '<td id="'+value['bank_id']+'">'+value['short_form']+'</td>'+
@@ -334,6 +304,7 @@ include 'footer.php';
                     })
 
                     myDataTable();
+                    dt();
                 },
                 error:function(){ alert("Failed Fetch Ajax Call.") }
             });
@@ -377,6 +348,8 @@ include 'footer.php';
                         trr.find('td').eq(3).text();
                         trr.find('td').eq(4).text();
                         trr.find('td').eq(5).text(amount);
+
+                        dt();
                     }
                 },
                 error:function(){ alert("Error in Update Ajax Call.") }
@@ -392,6 +365,7 @@ include 'footer.php';
                     trr.fadeOut(100,function(){
                        trr.remove(); 
                     });
+                    dt();
                 },
                 error:function(){ alert("Error in Delete ajax Call.") }
             });

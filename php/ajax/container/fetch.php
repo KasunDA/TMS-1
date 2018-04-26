@@ -2,7 +2,7 @@
 
 	require '../../connection.php';
 
-	$json;
+	$json=NULL;
 
 	$q = mysqli_query($mycon,'SELECT * FROM container WHERE status=1 ORDER BY container_id DESC ');
 	$n  = 0;

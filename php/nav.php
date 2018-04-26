@@ -127,6 +127,11 @@
                             </a>
                         </li>
                         <li class="nav-item  ">
+                            <a href="bike.php" class="nav-link ">
+                                <span class="title">Bike</span>
+                            </a>
+                        </li>
+                        <li class="nav-item  ">
                             <a href="Yard.php" class="nav-link ">
                                 <span class="title">Yard</span>
                             </a>

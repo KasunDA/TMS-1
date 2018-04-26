@@ -113,10 +113,27 @@ require 'connection.php';
                                                <input type="number" min="0.01" step="0.01" name="amount" id="amount" required tabindex="7" class="form-control" placeholder="58680">
                                             </div>
                                         </div>
-                                        <div class="form-group">
+                                        <div class="form-group hidden" id="bike_id_div">
+                                            <label class="col-md-4 control-label">Bike #:</label>
+                                            <div class="col-md-5">
+                                                <select class="form-control" id="bike_id" name="bike_id"  tabindex="8" >
+                                                    <option value="">Select Bike</option>
+                                                      <?php 
+
+                                              $q = mysqli_query($mycon,'SELECT bike_id,bike_number from bike where status=1 ORDER BY bike_id DESC');
+
+                                              while( $r = mysqli_fetch_array($q) )
+                                                {?>
+                                                  <option value="<?php echo $r['bike_id']; ?>"><?php echo $r['bike_number']; ?></option>
+                                              <?php } //END OF WHILE ?>
+                                                  </select>
+                                            </div>
+                                        </div>
+                                    
+                                        <div class="form-group hidden" id="vn_div">
                                             <label class="col-md-4 control-label">Vehicle #:</label>
                                             <div class="col-md-5">
-                                                <select class="form-control" id="vehicle_id" name="vehicle_id" required tabindex="8" >
+                                                <select class="form-control" id="vehicle_id" name="vehicle_id"  tabindex="8" >
                                                     <option value="">Select Vehicle</option>
                                                       <?php 
 
@@ -129,13 +146,16 @@ require 'connection.php';
                                                   </select>
                                             </div>
                                         </div>
-                                        <div class="form-group">
+                                    
+                                    
+                                        <div class="form-group hidden" id="name_div">
                                             <label class="col-md-4 control-label">Name:</label>
                                             <div class="col-md-5">
-                                                <select class="form-control" id="name" name="name" required tabindex="9">
+                                                <select class="form-control" id="name" name="name"  tabindex="9">
                                                 </select>
                                             </div>
                                         </div>
+                                    
                                         <div class="form-group">
                                             <label class="col-md-4 control-label">Description:</label>
                                             <div class="col-md-5">
@@ -309,6 +329,7 @@ require 'connection.php';
                                          <th> Amount </th>
                                          <th> Vehicle # </th>
                                          <th> Name </th>
+                                         <th> Bike # </th>
                                          <th> Description </th>    
                                      </tr>
                                  </thead>
@@ -431,6 +452,105 @@ include 'footer.php';
  
  $(document).ready(function(){
 
+    function bikeshow()
+    {
+        $('#bike_id_div').removeClass('hidden');
+        $('#bike_id').attr('required', 'required');
+    }
+
+    function bikehide()
+    {
+        $('#bike_id_div').addClass('hidden');  
+        $('#bike_id').removeAttr('required'); 
+        $('#bike_id').val('').trigger('change'); 
+    }
+
+    function vehicleshow()
+    {
+        $('#vn_div').removeClass('hidden');
+        $('#vehicle_id').attr('required', 'required');
+    }
+
+    function vehiclehide()
+    {
+        $('#vn_div').addClass('hidden');   
+        $('#vehicle_id').removeAttr('required');
+        $('#vehicle_id').val('').trigger('change');
+    }
+
+    function nameshow()
+    {
+        $('#name_div').removeClass('hidden');   
+        $('#name').attr('required', 'required');
+    }
+
+    function namehide()
+    {
+        $('#name_div').addClass('hidden');   
+        $('#name').removeAttr('required');
+        $('#name').val('').trigger('change');
+    }
+
+    function allshow()
+    {
+        $('#name_div,#vn_div').removeClass('hidden'); 
+        $('#vehicle_id,#name').attr('required', 'required');  
+    }
+
+    function allhide()
+    {
+        $('#name_div,#vn_div').addClass('hidden');      
+        $('#vehicle_id,#name').removeAttr('required'); 
+        $('#vehicle_id,#name').val('').trigger('change'); 
+    }
+
+    function bcshow()
+    {
+        $('#check_number,#bank_id').attr('required','required');
+        $('#check_number_div').removeClass('hidden');
+    }
+
+    function bchide()
+    {
+        $('#check_number,#bank_id').removeAttr('required');
+        $('#check_number').val('');
+        $('#bank_id').val('').trigger('change');
+        $('#check_number_div').addClass('hidden'); 
+    }
+
+    $('#dd_id').change(function(){
+
+        var dd_id = $(this).val();
+
+        if( dd_id == 1 )
+        {
+            allhide();
+            bikehide();
+        }
+        else if( dd_id == 2 )
+        {
+            allshow();
+            bikehide();
+        }
+        else if( dd_id == 3 )
+        {
+            bikeshow();
+            allhide();
+        }
+        else if( dd_id == 4 )
+        {
+            vehicleshow();
+            namehide();
+            bikehide();
+        }
+        else
+        {
+            allhide();
+            bikehide();
+        }
+         
+    });
+
     $('#vehicle_id').change(function(){
 
         var vehicle_id = $(this).val();
@@ -471,7 +591,7 @@ include 'footer.php';
     }
 
     //Select2
-   $('#dd_id,#idd_id,#bank_id,#ibank_id,#vehicle_id,#name').select2({
+   $('#dd_id,#idd_id,#bank_id,#ibank_id,#vehicle_id,#name,#bike_id').select2({
       width: 'resolve'
    });
 
@@ -481,15 +601,11 @@ include 'footer.php';
         {
             if( $(this).val() == 'check' )
             {
-                $('#check_number').attr('required','required');
-                $('#bank_id').attr('required','required');
-                $('#check_number_div').removeClass('hidden');
+                bcshow();
             }
             else
             {
-                $('#check_number').removeAttr('required');
-                $('#bank_id').removeAttr('required');
-                $('#check_number_div').addClass('hidden');   
+                bchide();
             }
         }
         else
@@ -502,8 +618,8 @@ include 'footer.php';
             }
             else
             {
-                $('#icheck_number').removeAttr('required');
-                $('#ibank_id').removeAttr('required');
+                $('#icheck_number,#ibank_id').removeAttr('required');
+                $('#icheck_number,#ibank_id').val('').trigger('change');
                 $('#icheck_number_div').addClass('hidden');   
             }
         }
@@ -547,6 +663,7 @@ include 'footer.php';
                             '<td>'+value['amount']+'</td>'+
                             '<td id="'+value['vehicle_id']+'">'+value['vehicle_number']+'</td>'+
                             '<td>'+value['name']+'</td>'+
+                            '<td id="'+value['bike_id']+'">'+value['bike_number']+'</td>'+
                             '<td>'+value['description']+'</td>'+
                             '</tr>');
 
@@ -561,7 +678,7 @@ include 'footer.php';
 
     loadData();
 
-   function iloadData()
+    function iloadData()
     {
         $.ajax({
             url:'ajax/income/fetch.php',
@@ -609,19 +726,19 @@ include 'footer.php';
 
     iloadData();
 
-    function add(datee,dd_id,method,check_number,bank_id,amount,vehicle_id,name,description)
+    function add(datee,dd_id,method,check_number,bank_id,amount,vehicle_id,name,bike_id,description)
     {
         $.ajax({
-            url:'ajax/expenses/add.php?datee='+datee+'&dd_id='+dd_id+'&method='+method+'&check_number='+check_number+'&bank_id='+bank_id+'&amount='+amount+'&vehicle_id='+vehicle_id+'&name='+name+'&description='+description,
+            url:'ajax/expenses/add.php?datee='+datee+'&dd_id='+dd_id+'&method='+method+'&check_number='+check_number+'&bank_id='+bank_id+'&amount='+amount+'&vehicle_id='+vehicle_id+'&name='+name+'&bike_id='+bike_id+'&description='+description,
             type:"POST",
             success:function(data){
                 if(data)
                 {
                     $('#btn_reset').trigger('click');
-                    $('#dd_id,#bank_id,#vehicle_id').val("").trigger('change');
-                    $('#check_number').removeAttr('required');
-                    $('#bank_id').removeAttr('required');
-                    $('#check_number_div').addClass('hidden');   
+                    $('#dd_id').val("").trigger('change');
+                    bchide();
+                    allhide();
+                    bikehide();
                     
                     loadData();
                 }
@@ -650,10 +767,10 @@ include 'footer.php';
         });
     }
 
-    function update(expense_id,datee,dd_id,dd_name,method,check_number,bank_id,bank_name,amount,vehicle_id,vehicle_number,name,description)
+    function update(expense_id,datee,dd_id,dd_name,method,check_number,bank_id,bank_name,amount,vehicle_id,vehicle_number,name,bike_id,bike_number,description)
     {
         $.ajax({
-            url:'ajax/expenses/update.php?expense_id='+expense_id+'&datee='+datee+'&dd_id='+dd_id+'&method='+method+'&check_number='+check_number+'&bank_id='+bank_id+'&amount='+amount+'&vehicle_id='+vehicle_id+'&name='+name+'&description='+description,
+            url:'ajax/expenses/update.php?expense_id='+expense_id+'&datee='+datee+'&dd_id='+dd_id+'&method='+method+'&check_number='+check_number+'&bank_id='+bank_id+'&amount='+amount+'&vehicle_id='+vehicle_id+'&name='+name+'&bike_id='+bike_id+'&description='+description,
             type:"POST",
             success:function(data){
                 if(data)
@@ -671,7 +788,8 @@ include 'footer.php';
                     temp[7] = amount;
                     temp[8] = vehicle_number;
                     temp[9] = name;
-                    temp[10] = description;
+                    temp[10] = bike_number;
+                    temp[11] = description;
 
                     $('#mytable').DataTable().row(i).data(temp).draw();
                 }
@@ -770,11 +888,10 @@ include 'footer.php';
         $('#expense_form').removeClass('update_form');
 
         $('#btn_reset').trigger('click');
-        $('#dd_id,#bank_id,#vehicle_id').val("").trigger('change');
-        $('#check_number').removeAttr('required');
-        $('#bank_id').removeAttr('required');
-        $('#check_number_div').addClass('hidden');   
-
+        $('#dd_id').val("").trigger('change');
+        bchide();
+        allhide();
+        bikehide();
 
         $('#expense_id_div').addClass('hidden');
         $('#update_form_btn').addClass('hidden');
@@ -860,7 +977,8 @@ include 'footer.php';
         $('#amount').val( trr.find('td').eq(7).text() );
         $('#vehicle_id').val( trr.find('td').eq(8).attr('id') ).trigger('change');
         $('#name').val( trr.find('td').eq(9).text() ).trigger('change');
-        $('#description').val( trr.find('td').eq(10).text() );
+        $('#bike_id').val( trr.find('td').eq(10).attr('id') ).trigger('change');
+        $('#description').val( trr.find('td').eq(11).text() );
 
     });
 
@@ -907,17 +1025,43 @@ include 'footer.php';
            vehicle_id = $('#vehicle_id').val() ,
            vehicle_number = $('#vehicle_id option:selected').text() ,
            name = $('#name').val() ,
+           bike_id = $('#bike_id').val() ,
+           bike_number = $('#bike_id option:selected').text() ,
            description = $('#description').val() ,
-
            expense_id =  $('#expense_id').val();
+
+           if( check_number == '' )
+           {
+                check_number = null;
+               
+           }
+           if( bank_id == '' )
+           {
+                bank_name = null;
+                bank_id = null;
+           }
+
+           if( vehicle_id == '' )
+           {
+                vehicle_id = null;
+           }
+           if( name == '' )
+           {
+                name = null;
+           }
+           if( bike_id == '' )
+           {
+                bike_id = null;
+                bike_number = null;
+           }
 
        if( $(this).hasClass('update_form') ) 
        {
-            update(expense_id,datee,dd_id,dd_name,method,check_number,bank_id,bank_name,amount,vehicle_id,vehicle_number,name,description);
+            update(expense_id,datee,dd_id,dd_name,method,check_number,bank_id,bank_name,amount,vehicle_id,vehicle_number,name,bike_id,bike_number,description);
        }
        else
        {
-            add(datee,dd_id,method,check_number,bank_id,amount,vehicle_id,name,description);
+            add(datee,dd_id,method,check_number,bank_id,amount,vehicle_id,name,bike_id,description);
        }
     });
 
@@ -935,6 +1079,12 @@ include 'footer.php';
            iamount = $('#iamount').val() ,
            idescription = $('#idescription').val() ,
            income_id =  $('#income_id').val();
+
+           if( icheck_number == '' && ibank_id == '' )
+           {
+                icheck_number = null;
+                ibank_name = null;
+           }
 
        if( $(this).hasClass('update_form') ) 
        {
