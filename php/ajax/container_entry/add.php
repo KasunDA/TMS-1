@@ -36,13 +36,13 @@
 		if(mysqli_affected_rows($mycon))
 		{
 
-			if( $mr_charges != 0 || $mr_charges != NULL )
+			if( $mr_charges != 0 && $mr_charges != NULL )
 			{
 				$dq = mysqli_query($mycon,'SELECT datee from container_movement where cm_id='.$cm_id);
 				$rdq = mysqli_fetch_array($dq);
 				$datee = $rdq['datee'];
 
-				$q = mysqli_query($mycon,"INSERT INTO garage_entry(datee,vehicle_id,amount,description) VALUES ( '$datee',$vehicle_id,'NILL') ");				
+				$qg = mysqli_query($mycon,"INSERT INTO garage_entry(datee,vehicle_id,amount,description) VALUES ( '$datee',$vehicle_id,$mr_charges,'NILL') ");				
 			}
 
 			$json['inserted'] = "true";

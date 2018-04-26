@@ -22,14 +22,25 @@
 	if(mysqli_affected_rows($mycon))
 	{
 
-		$iq = mysqli_query($mycon,'SELECT cm_id,lot_of FROM container_movement ORDER BY cm_id DESC LIMIT 1');
+		$iq = mysqli_query($mycon,'SELECT * FROM container_movement ORDER BY cm_id DESC LIMIT 1');
 
 		$riq = mysqli_fetch_array($iq);
 
 		session_start();
 
 		$_SESSION['cm_id'] = $riq['cm_id'];
+		$_SESSION['datee'] = $riq['datee'];
 		$_SESSION['lot_of'] = $riq['lot_of'];
+		$_SESSION['agent_id'] = $riq['agent_id'];
+		$_SESSION['coa_id'] = $riq['coa_id'];
+		$_SESSION['consignee_id'] = $riq['consignee_id'];
+		$_SESSION['movement'] = $riq['movement'];
+		$_SESSION['empty_terminal_id'] = $riq['empty_terminal_id'];
+		$_SESSION['from_yard_id'] = $riq['from_yard_id'];
+		$_SESSION['to_yard_id'] = $riq['to_yard_id'];
+		$_SESSION['container_size'] = $riq['container_size'];
+		$_SESSION['party_charges'] = $riq['party_charges'];
+		$_SESSION['line_id'] = $riq['line_id'];
 
 		$json['inserted'] = 'true';
 		$json['cm_id'] = $riq['cm_id'];

@@ -5,8 +5,20 @@ include 'nav.php';
 require 'connection.php';
 date_default_timezone_set("Asia/Karachi");
 
-// $_SESSION['cm_id'] = 1;
-// $_SESSION['lot_of'] = 6;
+// $_SESSION['cm_id'] = 4;
+// $_SESSION['lot_of'] = 3;
+// $_SESSION['datee'] = '2018-04-21';
+// $_SESSION['agent_id'] = 2;
+// $_SESSION['coa_id'] = 8;
+// $_SESSION['consignee_id'] = 3;
+// $_SESSION['movement'] = 'export';
+// $_SESSION['empty_terminal_id'] = 3;
+// $_SESSION['from_yard_id'] = 6;
+// $_SESSION['to_yard_id'] = 2;
+// $_SESSION['container_size'] = 45;
+// $_SESSION['party_charges'] = 20000;
+// $_SESSION['line_id'] = 2;
+
  ?>
 
     <!-- BEGIN CONTENT -->
@@ -44,16 +56,17 @@ date_default_timezone_set("Asia/Karachi");
                                    
                                     <div class="row"> 
                                         <div class="form-group">
-                                                <div id="ce_id_div" class="hidden">
+                                                <!-- id="ce_id_div" class="hidden" -->
+                                                <div  >
                                                   <label class="col-md-2 control-label">Transaction ID:</label>
                                                   <div class="col-md-3">
-                                                    <input type="text" class="form-control" placeholder="E-1035" id="ce_id" name="ce_id" required readonly >
+                                                    <input type="text" class="form-control" id="ce_id" name="ce_id" required readonly >
                                                   </div>
                                                 </div>
                                     
                                                 <label class="col-md-2 control-label">Transaction Date:</label>
                                                 <div class="col-md-3">
-                                                  <input type="date" class="form-control" id="datee" name="datee" value="<?php echo date('Y-m-d'); ?>" required tabindex="1" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'readonly' ?> />
+                                                  <input type="date" class="form-control" id="datee" name="datee" required tabindex="1" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) { echo 'value="'.$_SESSION['datee'].'" readonly';} else{ echo 'value="'.date('Y-m-d').'"'; } ?>  />
                                                 </div>
                                          </div>  
                                      </div>
@@ -500,17 +513,26 @@ include 'footer.php';
         });
 
 
-      <?php 
-        
         //Select2
-
-        // if( !isset( $_SESSION['cm_id'] ) || $_SESSION['cm_id'] == NULL )
-        // {
-          echo " $('#agent_id,#coa_id,#consignee_id,#empty_terminal_id,#movement,#vehicle_id,#container_id,#line_id,#color,#container_size,#from_yard_id,#to_yard_id').select2({
+      $('#agent_id,#coa_id,#consignee_id,#empty_terminal_id,#movement,#vehicle_id,#container_id,#line_id,#color,#container_size,#from_yard_id,#to_yard_id').select2({
             width: 'resolve'
-          });";  
-        // }
-      ?>
+          });
+
+      function getId()
+      {
+        $.ajax({
+          url :'ajax/container_movement/fetchid.php',
+          dataType:'JSON',
+          success: function(data)
+          {
+              $('#ce_id').val(data['ce_id']);
+          },
+          error: function(){ alert('Error in get id Ajax.') }
+
+        })
+      }
+
+      getId();
       
 
       function load_full_form(v,param)
@@ -661,10 +683,22 @@ include 'footer.php';
 
         if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL )
         {
-          echo 'loadData("'.$_SESSION['cm_id'].'")';  
-        }
+          echo 'loadData("'.$_SESSION['cm_id'].'");';  
+          ?>
+          $('#datee').val('<?php echo $_SESSION['datee'] ?>');
+          $('#agent_id').val(<?php echo $_SESSION['agent_id'] ?>).trigger('change');
+          $('#coa_id').val(<?php echo $_SESSION['coa_id'] ?>).trigger('change');
+          $('#consignee_id').val(<?php echo $_SESSION['consignee_id'] ?>).trigger('change');
+          $('#movement').val('<?php echo $_SESSION['movement'] ?>').trigger('change');
+          $('#empty_terminal_id').val(<?php echo $_SESSION['empty_terminal_id'] ?>).trigger('change');
+          $('#from_yard_id').val(<?php echo $_SESSION['from_yard_id'] ?>).trigger('change');
+          $('#to_yard_id').val(<?php echo $_SESSION['to_yard_id'] ?>).trigger('change');
+          $('#container_size').val(<?php echo $_SESSION['container_size'] ?>).trigger('change');
+          $('#party_charges').val(<?php echo $_SESSION['party_charges'] ?>);
+          $('#lot_of').val(<?php echo $_SESSION['lot_of'] ?>);
+          $('#line_id').val(<?php echo $_SESSION['line_id'] ?>).trigger('change');
 
-      ?>
+        <?php }// END oF IF ?>
 
       function add_entry(cm_id,bl_cro_number,job_number,container_number,index_number,vehicle_id,advance,rent,balance,container_id,lolo_charges,weight_charges,color,mr_charges,remarks)
       {
@@ -690,6 +724,7 @@ include 'footer.php';
                   {
                     alert(data['lot_of_limit']);
                   }
+                  getId();
               },
               error:function(){ alert("Error in Add Ajax Call.") }
           });
@@ -762,6 +797,7 @@ include 'footer.php';
                       $('.selectedd').css('background-color','#26c281'); // green color
                     }
 
+                    getId();
                   }
               },
               error:function(){ alert("Error in Update Ajax Call.") }
@@ -813,6 +849,8 @@ include 'footer.php';
 
           $('#btn_submit').removeClass('hidden');
           $('#btn_reset').removeClass('hidden');
+
+          getId();
 
       }
 

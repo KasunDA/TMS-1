@@ -195,7 +195,7 @@ include 'footer.php';
         function add(short_form,full_form,contact,address)
         {
             $.ajax({
-                url:'ajax/chart_of_account/add.php?short_form='+short_form+'&full_form='+full_form+'&contact='+contact+'&address='+address,
+                url:'ajax/chart_of_account/add.php?short_form='+encodeURIComponent(short_form)+'&full_form='+encodeURIComponent(full_form)+'&contact='+contact+'&address='+encodeURIComponent(address),
                 type:"POST",
                 success:function(data){
                     if(data)
@@ -215,7 +215,7 @@ include 'footer.php';
         function update(coa_id,short_form,full_form,contact,address)
         {
             $.ajax({
-                url:'ajax/chart_of_account/update.php?coa_id='+coa_id+'&short_form='+short_form+'&full_form='+full_form+'&contact='+contact+'&address='+address,
+                url:'ajax/chart_of_account/update.php?coa_id='+coa_id+'&short_form='+encodeURIComponent(short_form)+'&full_form='+encodeURIComponent(full_form)+'&contact='+contact+'&address='+encodeURIComponent(address),
                 type:"POST",
                 success:function(data){
                     if(data)
