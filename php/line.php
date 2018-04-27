@@ -172,7 +172,7 @@ include 'footer.php';
         function add(short_form,full_form)
         {
             $.ajax({
-                url:'ajax/line/add.php?short_form='+short_form+'&full_form='+full_form,
+                url:'ajax/line/add.php?short_form='+encodeURIComponent(short_form)+'&full_form='+encodeURIComponent(full_form),
                 type:"POST",
                 success:function(data){
                     if(data)
@@ -190,7 +190,7 @@ include 'footer.php';
         function update(line_id,short_form,full_form)
         {
             $.ajax({
-                url:'ajax/line/update.php?line_id='+line_id+'&short_form='+short_form+'&full_form='+full_form,
+                url:'ajax/line/update.php?line_id='+line_id+'&short_form='+encodeURIComponent(short_form)+'&full_form='+encodeURIComponent(full_form),
                 type:"POST",
                 success:function(data){
                     if(data)

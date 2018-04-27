@@ -187,7 +187,7 @@ include 'footer.php';
         function add(name,contact,address)
         {
             $.ajax({
-                url:'ajax/agent/add.php?name='+name+'&contact='+contact+'&address='+address,
+                url:'ajax/agent/add.php?name='+encodeURIComponent(name)+'&contact='+contact+'&address='+encodeURIComponent(address),
                 type:"POST",
                 success:function(data){
                     if(data)
@@ -206,7 +206,7 @@ include 'footer.php';
         function update(agent_id,name,contact,address)
         {
             $.ajax({
-                url:'ajax/agent/update.php?agent_id='+agent_id+'&name='+name+'&contact='+contact+'&address='+address,
+                url:'ajax/agent/update.php?agent_id='+agent_id+'&name='+encodeURIComponent(name)+'&contact='+contact+'&address='+encodeURIComponent(address),
                 type:"POST",
                 success:function(data){
                     if(data)

@@ -703,7 +703,7 @@ include 'footer.php';
       function add_entry(cm_id,bl_cro_number,job_number,container_number,index_number,vehicle_id,advance,rent,balance,container_id,lolo_charges,weight_charges,color,mr_charges,remarks)
       {
           $.ajax({
-              url:'ajax/container_entry/add.php?cm_id='+cm_id+'&bl_cro_number='+bl_cro_number+'&job_number='+job_number+'&container_number='+container_number+'&index_number='+index_number+'&vehicle_id='+vehicle_id+'&advance='+advance+'&rent='+rent+'&balance='+balance+'&container_id='+container_id+'&lolo_charges='+lolo_charges+'&weight_charges='+weight_charges+'&color='+color+'&mr_charges='+mr_charges+'&remarks='+remarks,
+              url:'ajax/container_entry/add.php?cm_id='+cm_id+'&bl_cro_number='+bl_cro_number+'&job_number='+job_number+'&container_number='+container_number+'&index_number='+index_number+'&vehicle_id='+vehicle_id+'&advance='+advance+'&rent='+rent+'&balance='+balance+'&container_id='+container_id+'&lolo_charges='+lolo_charges+'&weight_charges='+weight_charges+'&color='+color+'&mr_charges='+mr_charges+'&remarks='+encodeURIComponent(remarks),
               type:"POST",
               dataType:'JSON',
               success:function(data){
@@ -733,7 +733,7 @@ include 'footer.php';
       function add(datee,agent_id,coa_id,consignee_id,movement,empty_terminal_id,from_yard_id,to_yard_id,bl_cro_number,job_number,container_number,index_number,container_size,vehicle_id,advance,rent,balance,party_charges,container_id,lot_of,line_id,lolo_charges,weight_charges,color,mr_charges,remarks)
       {
           $.ajax({
-              url:'ajax/container_movement/add.php?datee='+datee+'&agent_id='+agent_id+'&coa_id='+coa_id+'&consignee_id='+consignee_id+'&movement='+movement+'&empty_terminal_id='+empty_terminal_id+'&from_yard_id='+from_yard_id+'&to_yard_id='+to_yard_id+'&container_size='+container_size+'&party_charges='+party_charges+'&lot_of='+lot_of+'&line_id='+line_id,
+              url:'ajax/container_movement/add.php?datee='+encodeURIComponent(datee)+'&agent_id='+agent_id+'&coa_id='+coa_id+'&consignee_id='+consignee_id+'&movement='+encodeURIComponent(movement)+'&empty_terminal_id='+empty_terminal_id+'&from_yard_id='+from_yard_id+'&to_yard_id='+to_yard_id+'&container_size='+container_size+'&party_charges='+party_charges+'&lot_of='+lot_of+'&line_id='+line_id,
               type:"POST",
               dataType:'JSON',
               success:function(data){
@@ -753,7 +753,7 @@ include 'footer.php';
       function update(ce_id,bl_cro_number,job_number,container_number,index_number,vehicle_id,vehicle_number,advance,rent,balance,container_id,container_type,lolo_charges,weight_charges,color,mr_charges,remarks)
       {
           $.ajax({
-              url:'ajax/container_entry/update.php?ce_id='+ce_id+'&bl_cro_number='+bl_cro_number+'&job_number='+job_number+'&container_number='+container_number+'&index_number='+index_number+'&vehicle_id='+vehicle_id+'&advance='+advance+'&rent='+rent+'&balance='+balance+'&container_id='+container_id+'&lolo_charges='+lolo_charges+'&weight_charges='+weight_charges+'&color='+color+'&mr_charges='+mr_charges+'&remarks='+remarks,
+              url:'ajax/container_entry/update.php?ce_id='+ce_id+'&bl_cro_number='+bl_cro_number+'&job_number='+job_number+'&container_number='+container_number+'&index_number='+index_number+'&vehicle_id='+vehicle_id+'&advance='+advance+'&rent='+rent+'&balance='+balance+'&container_id='+container_id+'&lolo_charges='+lolo_charges+'&weight_charges='+weight_charges+'&color='+color+'&mr_charges='+mr_charges+'&remarks='+encodeURIComponent(remarks),
               type:"POST",
               success:function(data){
                   if(data)

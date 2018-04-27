@@ -361,7 +361,7 @@ include 'footer.php';
         function add(datee,vehicle_id,from_yard_id,to_yard_id,litre_rate,litres,extra_litres,total,description)
         {
             $.ajax({
-                url:'ajax/diesel_entry/add.php?datee='+datee+'&vehicle_id='+vehicle_id+'&from_yard_id='+from_yard_id+'&to_yard_id='+to_yard_id+'&litre_rate='+litre_rate+'&litres='+litres+'&extra_litres='+extra_litres+'&total='+total+'&description='+description,
+                url:'ajax/diesel_entry/add.php?datee='+datee+'&vehicle_id='+vehicle_id+'&from_yard_id='+from_yard_id+'&to_yard_id='+to_yard_id+'&litre_rate='+litre_rate+'&litres='+litres+'&extra_litres='+extra_litres+'&total='+total+'&description='+encodeURIComponent(description),
                 type:"POST",
                 success:function(data){
                     if(data)
@@ -380,7 +380,7 @@ include 'footer.php';
         function update(de_id,datee,vehicle_id,vehicle_number,from_yard_id,from_yard_text,to_yard_id,to_yard_text,litre_rate,litres,extra_litres,total,description)
         {
             $.ajax({
-                url:'ajax/diesel_entry/update.php?de_id='+de_id+'&datee='+datee+'&vehicle_id='+vehicle_id+'&from_yard_id='+from_yard_id+'&to_yard_id='+to_yard_id+'&litre_rate='+litre_rate+'&litres='+litres+'&extra_litres='+extra_litres+'&total='+total+'&description='+description,
+                url:'ajax/diesel_entry/update.php?de_id='+de_id+'&datee='+datee+'&vehicle_id='+vehicle_id+'&from_yard_id='+from_yard_id+'&to_yard_id='+to_yard_id+'&litre_rate='+litre_rate+'&litres='+litres+'&extra_litres='+extra_litres+'&total='+total+'&description='+encodeURIComponent(description),
                 type:"POST",
                 success:function(data){
                     if(data)

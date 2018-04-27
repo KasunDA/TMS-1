@@ -187,7 +187,7 @@ include 'footer.php';
         function add(owner_name,vehicle_number,engine_number,chassis_number,driver_name)
         {
             $.ajax({
-                url:'ajax/vehicle/add.php?owner_name='+owner_name+'&vehicle_number='+vehicle_number+'&engine_number='+engine_number+'&chassis_number='+chassis_number+'&driver_name='+driver_name,
+                url:'ajax/vehicle/add.php?owner_name='+encodeURIComponent(owner_name)+'&vehicle_number='+encodeURIComponent(vehicle_number)+'&engine_number='+encodeURIComponent(engine_number)+'&chassis_number='+encodeURIComponent(chassis_number)+'&driver_name='+encodeURIComponent(driver_name),
                 type:"POST",
                 success:function(data){
                     if(data)
@@ -204,7 +204,7 @@ include 'footer.php';
         function update(vehicle_id,owner_name,vehicle_number,engine_number,chassis_number,driver_name)
         {
             $.ajax({
-                url:'ajax/vehicle/update.php?vehicle_id='+vehicle_id+'&owner_name='+owner_name+'&vehicle_number='+vehicle_number+'&engine_number='+engine_number+'&chassis_number='+chassis_number+'&driver_name='+driver_name,
+                url:'ajax/vehicle/update.php?vehicle_id='+vehicle_id+'&owner_name='+encodeURIComponent(owner_name)+'&vehicle_number='+encodeURIComponent(vehicle_number)+'&engine_number='+encodeURIComponent(engine_number)+'&chassis_number='+encodeURIComponent(chassis_number)+'&driver_name='+encodeURIComponent(driver_name),
                 type:"POST",
                 success:function(data){
                     if(data)

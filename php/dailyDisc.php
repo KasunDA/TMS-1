@@ -179,7 +179,7 @@ include 'footer.php';
         function add(name)
         {
             $.ajax({
-                url:'ajax/daily_description/add.php?name='+name,
+                url:'ajax/daily_description/add.php?name='+encodeURIComponent(name),
                 type:"POST",
                 success:function(data){
                     if(data)
@@ -196,7 +196,7 @@ include 'footer.php';
         function update(dd_id,name)
         {
             $.ajax({
-                url:'ajax/daily_description/update.php?dd_id='+dd_id+'&name='+name,
+                url:'ajax/daily_description/update.php?dd_id='+dd_id+'&name='+encodeURIComponent(name),
                 type:"POST",
                 success:function(data){
                     if(data)

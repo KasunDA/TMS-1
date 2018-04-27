@@ -193,7 +193,7 @@ include 'footer.php';
         function add(datee,description,vehicle_id,amount)
         {
             $.ajax({
-                url:'ajax/garage_entry/add.php?datee='+datee+'&description='+description+'&vehicle_id='+vehicle_id+'&amount='+amount,
+                url:'ajax/garage_entry/add.php?datee='+encodeURIComponent(datee)+'&description='+encodeURIComponent(description)+'&vehicle_id='+vehicle_id+'&amount='+amount,
                 type:"POST",
                 success:function(data){
                     if(data)
@@ -211,7 +211,7 @@ include 'footer.php';
         function update(ge_id,datee,description,vehicle_id,amount,vehicle_number)
         {
             $.ajax({
-                url:'ajax/garage_entry/update.php?ge_id='+ge_id+'&datee='+datee+'&description='+description+'&vehicle_id='+vehicle_id+'&amount='+amount,
+                url:'ajax/garage_entry/update.php?ge_id='+ge_id+'&datee='+encodeURIComponent(datee)+'&description='+encodeURIComponent(description)+'&vehicle_id='+vehicle_id+'&amount='+amount,
                 type:"POST",
                 success:function(data){
                     if(data)

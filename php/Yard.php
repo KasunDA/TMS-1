@@ -190,7 +190,7 @@ include 'footer.php';
         function add(short_form,full_form,contact,location)
         {
             $.ajax({
-                url:'ajax/yard/add.php?short_form='+short_form+'&full_form='+full_form+'&contact='+contact+'&location='+location,
+                url:'ajax/yard/add.php?short_form='+encodeURIComponent(short_form)+'&full_form='+encodeURIComponent(full_form)+'&contact='+contact+'&location='+encodeURIComponent(location),
                 type:"POST",
                 success:function(data){
                     if(data)
@@ -210,7 +210,7 @@ include 'footer.php';
         function update(yard_id,short_form,full_form,contact,location)
         {
             $.ajax({
-                url:'ajax/yard/update.php?yard_id='+yard_id+'&short_form='+short_form+'&full_form='+full_form+'&contact='+contact+'&location='+location,
+                url:'ajax/yard/update.php?yard_id='+yard_id+'&short_form='+encodeURIComponent(short_form)+'&full_form='+encodeURIComponent(full_form)+'&contact='+contact+'&location='+encodeURIComponent(location),
                 type:"POST",
                 success:function(data){
                     if(data)

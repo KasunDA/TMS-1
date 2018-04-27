@@ -162,7 +162,7 @@ include 'footer.php';
         function add(type)
         {
             $.ajax({
-                url:'ajax/container/add.php?type='+type,
+                url:'ajax/container/add.php?type='+encodeURIComponent(type),
                 type:"POST",
                 success:function(data){
                     if(data)
@@ -179,7 +179,7 @@ include 'footer.php';
         function update(container_id,type)
         {
             $.ajax({
-                url:'ajax/container/update.php?container_id='+container_id+'&type='+type,
+                url:'ajax/container/update.php?container_id='+container_id+'&type='+encodeURIComponent(type),
                 type:"POST",
                 success:function(data){
                     if(data)

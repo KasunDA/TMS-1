@@ -161,7 +161,7 @@ include 'footer.php';
         function add(bike_number)
         {
             $.ajax({
-                url:'ajax/bike/add.php?bike_number='+bike_number,
+                url:'ajax/bike/add.php?bike_number='+encodeURIComponent(bike_number),
                 type:"POST",
                 success:function(data){
                     if(data)
@@ -178,7 +178,7 @@ include 'footer.php';
         function update(bike_id,bike_number)
         {
             $.ajax({
-                url:'ajax/bike/update.php?bike_id='+bike_id+'&bike_number='+bike_number,
+                url:'ajax/bike/update.php?bike_id='+bike_id+'&bike_number='+encodeURIComponent(bike_number),
                 type:"POST",
                 success:function(data){
                     if(data)

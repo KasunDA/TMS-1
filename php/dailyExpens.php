@@ -729,7 +729,7 @@ include 'footer.php';
     function add(datee,dd_id,method,check_number,bank_id,amount,vehicle_id,name,bike_id,description)
     {
         $.ajax({
-            url:'ajax/expenses/add.php?datee='+datee+'&dd_id='+dd_id+'&method='+method+'&check_number='+check_number+'&bank_id='+bank_id+'&amount='+amount+'&vehicle_id='+vehicle_id+'&name='+name+'&bike_id='+bike_id+'&description='+description,
+            url:'ajax/expenses/add.php?datee='+datee+'&dd_id='+dd_id+'&method='+method+'&check_number='+check_number+'&bank_id='+bank_id+'&amount='+amount+'&vehicle_id='+vehicle_id+'&name='+name+'&bike_id='+bike_id+'&description='+encodeURIComponent(description),
             type:"POST",
             success:function(data){
                 if(data)
@@ -750,7 +750,7 @@ include 'footer.php';
     function iadd(idatee,idd_id,imethod,icheck_number,ibank_id,iamount,idescription)
     {
         $.ajax({
-            url:'ajax/income/add.php?datee='+idatee+'&dd_id='+idd_id+'&method='+imethod+'&check_number='+icheck_number+'&bank_id='+ibank_id+'&amount='+iamount+'&description='+idescription,
+            url:'ajax/income/add.php?datee='+idatee+'&dd_id='+idd_id+'&method='+imethod+'&check_number='+icheck_number+'&bank_id='+ibank_id+'&amount='+iamount+'&description='+encodeURIComponent(idescription),
             type:"POST",
             success:function(data){
                 if(data)
@@ -770,7 +770,7 @@ include 'footer.php';
     function update(expense_id,datee,dd_id,dd_name,method,check_number,bank_id,bank_name,amount,vehicle_id,vehicle_number,name,bike_id,bike_number,description)
     {
         $.ajax({
-            url:'ajax/expenses/update.php?expense_id='+expense_id+'&datee='+datee+'&dd_id='+dd_id+'&method='+method+'&check_number='+check_number+'&bank_id='+bank_id+'&amount='+amount+'&vehicle_id='+vehicle_id+'&name='+name+'&bike_id='+bike_id+'&description='+description,
+            url:'ajax/expenses/update.php?expense_id='+expense_id+'&datee='+datee+'&dd_id='+dd_id+'&method='+method+'&check_number='+check_number+'&bank_id='+bank_id+'&amount='+amount+'&vehicle_id='+vehicle_id+'&name='+name+'&bike_id='+bike_id+'&description='+encodeURIComponent(description),
             type:"POST",
             success:function(data){
                 if(data)
@@ -801,7 +801,7 @@ include 'footer.php';
     function iupdate(income_id,idatee,idd_id,idd_name,imethod,icheck_number,ibank_id,ibank_name,iamount,idescription)
     {
         $.ajax({
-            url:'ajax/income/update.php?income_id='+income_id+'&datee='+idatee+'&dd_id='+idd_id+'&method='+imethod+'&check_number='+icheck_number+'&bank_id='+ibank_id+'&amount='+iamount+'&description='+idescription,
+            url:'ajax/income/update.php?income_id='+income_id+'&datee='+idatee+'&dd_id='+idd_id+'&method='+imethod+'&check_number='+icheck_number+'&bank_id='+ibank_id+'&amount='+iamount+'&description='+encodeURIComponent(idescription),
             type:"POST",
             success:function(data){
                 if(data)

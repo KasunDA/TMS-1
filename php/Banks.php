@@ -193,7 +193,7 @@ include 'footer.php';
         function add(short_form,full_form,account_title,account_number,balance,address)
         {
             $.ajax({
-                url:'ajax/bank/add.php?short_form='+short_form+'&full_form='+full_form+'&account_title='+account_title+'&account_number='+account_number+'&balance='+balance+'&address='+address,
+                url:'ajax/bank/add.php?short_form='+encodeURIComponent(short_form)+'&full_form='+encodeURIComponent(full_form)+'&account_title='+encodeURIComponent(account_title)+'&account_number='+encodeURIComponent(account_number)+'&balance='+balance+'&address='+encodeURIComponent(address),
                 type:"POST",
                 success:function(data){
                     if(data)
@@ -215,7 +215,7 @@ include 'footer.php';
         function update(bank_id,short_form,full_form,account_title,account_number,address)
         {
             $.ajax({
-                url:'ajax/bank/update.php?bank_id='+bank_id+'&short_form='+short_form+'&full_form='+full_form+'&account_title='+account_title+'&account_number='+account_number+'&address='+address,
+                url:'ajax/bank/update.php?bank_id='+bank_id+'&short_form='+encodeURIComponent(short_form)+'&full_form='+encodeURIComponent(full_form)+'&account_title='+encodeURIComponent(account_title)+'&account_number='+encodeURIComponent(account_number)+'&address='+encodeURIComponent(address),
                 type:"POST",
                 success:function(data){
                     if(data)
