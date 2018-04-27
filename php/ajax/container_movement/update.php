@@ -26,6 +26,17 @@
 
 		$_SESSION['cm_id'] = $cm_id;
 		$_SESSION['lot_of'] = $lot_of;
+		$_SESSION['datee'] = $datee;
+		$_SESSION['agent_id'] = $agent_id;
+		$_SESSION['coa_id'] = $coa_id;
+		$_SESSION['consignee_id'] = $consignee_id;
+		$_SESSION['movement'] = $movement;
+		$_SESSION['empty_terminal_id'] = $empty_terminal_id;
+		$_SESSION['from_yard_id'] = $from_yard_id;
+		$_SESSION['to_yard_id'] = $to_yard_id;
+		$_SESSION['container_size'] = $container_size;
+		$_SESSION['party_charges'] = $party_charges;
+		$_SESSION['line_id'] = $line_id;
 
 	}
 

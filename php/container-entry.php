@@ -388,6 +388,7 @@ date_default_timezone_set("Asia/Karachi");
                                                             <label class="col-md-2 control-label">Special Transaction Color:</label>
                                                             <div class="col-md-3">
                                                                 <select class="form-control" id="color" name="color" tabindex="25">
+                                                                    <option value="white">White</option>
                                                                     <option value="red">Red</option>
                                                                     <option value="green">Green</option>
                                                                     <option value="yellow">Yellow</option> 
@@ -526,8 +527,8 @@ include 'footer.php';
           success: function(data)
           {
               $('#ce_id').val(data['ce_id']);
-          },
-          error: function(){ alert('Error in get id Ajax.') }
+          }
+          // error: function(){ alert('Error in get id Ajax.') }
 
         })
       }
@@ -623,8 +624,13 @@ include 'footer.php';
                     c = '#d5d82d';
                    }
 
+                   else if( value['color'] == 'green' )
+                  {
+                    c = '#26c281';
+                   }
+
                   else{
-                    c = '#26c281'; // green color
+                    c = '#fff'; // White Color
                   }
 
                     $('tbody').append('<tr index="'+i+'" class="odd gradeX" style="background-color:'+c+';">'+
@@ -792,9 +798,14 @@ include 'footer.php';
                       $('.selectedd').css('background-color','#d5d82d');
                     }
 
-                    else
+                    else if( color == 'green' )
                     {
                       $('.selectedd').css('background-color','#26c281'); // green color
+                    }
+
+                    else 
+                    {
+                      $('.selectedd').css('background-color','#fff');
                     }
 
                     getId();
