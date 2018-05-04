@@ -31,9 +31,21 @@
 		else
 		{
 			$json[$n]['bank_name'] = NULL;			
-		};
+		}
 		
 		$json[$n]['amount'] = $r['amount'];
+
+		$json[$n]['cmp_id'] = $r['cmp_id'];
+		if( $r['cmp_id'] != NULL )
+		{
+			$q1 = mysqli_query($mycon,'SELECT name from company where cmp_id='.$r['cmp_id']);
+			$r1 = mysqli_fetch_array($q1);
+			$json[$n]['cmp_name'] = $r1['name'];		
+		}
+		else
+		{
+			$json[$n]['cmp_name'] = NULL;			
+		}
 
 		$json[$n]['description'] = $r['description'];
 		$n++;

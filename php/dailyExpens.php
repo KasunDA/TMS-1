@@ -159,7 +159,7 @@ require 'connection.php';
                                         <div class="form-group">
                                             <label class="col-md-4 control-label">Description:</label>
                                             <div class="col-md-5">
-                                               <textarea class="form-control" name="description" id="description" rows="4" required tabindex="10"  placeholder="Text Here"></textarea>
+                                               <textarea class="form-control" name="description" id="description" rows="4" tabindex="10"  placeholder="Text Here"></textarea>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -274,10 +274,27 @@ require 'connection.php';
                                                <input type="number" min="0.01" step="0.01" name="iamount" id="iamount" required tabindex="" class="form-control" placeholder="58680">
                                             </div>
                                         </div>
+                                        <div class="form-group" style="display: none;" id="cmp_id_div">
+                                            <label class="col-md-4 control-label">Company</label>
+                                            <div class="col-md-5">
+                                               <select class="form-control" id="cmp_id" name="cmp_id" tabindex="">
+                                                    <option value="">Select Company</option>
+                                                    <?php 
+
+                                                      $q = mysqli_query($mycon,'SELECT * from company where status=1 ORDER BY cmp_id DESC');
+
+                                                      while( $r = mysqli_fetch_array($q) )
+                                                        {?>
+                                                        <option value="<?php echo $r['cmp_id']; ?>"><?php echo $r['name']; ?></option>
+                                                  <?php } //END OF WHILE ?>
+                                                    
+                                                </select>
+                                            </div>
+                                        </div>
                                         <div class="form-group">
                                             <label class="col-md-4 control-label">Description:</label>
                                             <div class="col-md-5">   
-                                               <textarea class="form-control" name="idescription" id="idescription" rows="4" required tabindex=""  placeholder="Text Here"></textarea>
+                                               <textarea class="form-control" name="idescription" id="idescription" rows="4" tabindex=""  placeholder="Text Here"></textarea>
                                             
                                             </div>
                                         </div>
@@ -375,22 +392,11 @@ require 'connection.php';
                                          <th> Check # </th>
                                          <th> Bank Name </th>
                                          <th> Amount </th>
+                                         <th> Company Name </th>
                                          <th> Description </th>    
                                      </tr>
                                  </thead>
                                  <tbody>
-                                     <!-- <tr class="odd gradeX">
-                                         <td> 15 </td>
-                                         <td> 02/3/2018 </td>
-                                         <td> DPWM-1 </td>
-                                         <td> QICT </td>
-                                         <td> EMPTY </td>
-                                         <td> PCT-PQ </td>
-                                         <td> MRKU4990688 </td>
-                                         <td> 40 </td>
-                                         <td> N/A </td>
-                                         <td> JT8685 </td>
-                                     </tr> -->
                                  </tbody>
                              </table>
                          </div>
@@ -551,6 +557,32 @@ include 'footer.php';
          
     });
 
+    function cmpshow()
+    {
+      $('#cmp_id_div').show();
+      $('#cmp_id').attr('required','required'); 
+    }
+
+    function cmphide()
+    {
+      $('#cmp_id_div').hide();
+      $('#cmp_id').val('').trigger('change');
+      $('#cmp_id').removeAttr('required');
+    }
+
+     $('#idd_id').change(function(){
+        var idd_id = $(this).val();
+
+        if( idd_id == 2 )
+        {
+          cmpshow();
+        }
+        else
+        {
+          cmphide();
+        }
+     });
+
     $('#vehicle_id').change(function(){
 
         var vehicle_id = $(this).val();
@@ -591,7 +623,7 @@ include 'footer.php';
     }
 
     //Select2
-   $('#dd_id,#idd_id,#bank_id,#ibank_id,#vehicle_id,#name,#bike_id').select2({
+   $('#dd_id,#idd_id,#bank_id,#ibank_id,#vehicle_id,#name,#bike_id,#cmp_id').select2({
       width: 'resolve'
    });
 
@@ -712,6 +744,7 @@ include 'footer.php';
                             '<td>'+value['check_number']+'</td>'+
                             '<td id="'+value['bank_id']+'">'+value['bank_name']+'</td>'+
                             '<td>'+value['amount']+'</td>'+
+                            '<td id="'+value['cmp_id']+'">'+value['cmp_name']+'</td>'+
                             '<td>'+value['description']+'</td>'+
                             '</tr>');
 
@@ -747,10 +780,10 @@ include 'footer.php';
         });
     }
 
-    function iadd(idatee,idd_id,imethod,icheck_number,ibank_id,iamount,idescription)
+    function iadd(idatee,idd_id,imethod,icheck_number,ibank_id,iamount,cmp_id,idescription)
     {
         $.ajax({
-            url:'ajax/income/add.php?datee='+idatee+'&dd_id='+idd_id+'&method='+imethod+'&check_number='+icheck_number+'&bank_id='+ibank_id+'&amount='+iamount+'&description='+encodeURIComponent(idescription),
+            url:'ajax/income/add.php?datee='+idatee+'&dd_id='+idd_id+'&method='+imethod+'&check_number='+icheck_number+'&bank_id='+ibank_id+'&amount='+iamount+'&cmp_id='+cmp_id+'&description='+encodeURIComponent(idescription),
             type:"POST",
             success:function(data){
                 if(data)
@@ -758,7 +791,9 @@ include 'footer.php';
                     $('#ibtn_reset').trigger('click');
                     $('#idd_id,#ibank_id').val("").trigger('change');
                     $('#icheck_number,#ibank_id').removeAttr('required');
-                    $('#icheck_number_div').addClass('hidden');   
+                    $('#icheck_number_div').addClass('hidden'); 
+
+                    cmphide();  
                     
                     iloadData();
                 }
@@ -798,15 +833,15 @@ include 'footer.php';
         });
     }
 
-    function iupdate(income_id,idatee,idd_id,idd_name,imethod,icheck_number,ibank_id,ibank_name,iamount,idescription)
+    function iupdate(income_id,idatee,idd_id,idd_name,imethod,icheck_number,ibank_id,ibank_name,iamount,cmp_id,cmp_name,idescription)
     {
         $.ajax({
-            url:'ajax/income/update.php?income_id='+income_id+'&datee='+idatee+'&dd_id='+idd_id+'&method='+imethod+'&check_number='+icheck_number+'&bank_id='+ibank_id+'&amount='+iamount+'&description='+encodeURIComponent(idescription),
+            url:'ajax/income/update.php?income_id='+income_id+'&datee='+idatee+'&dd_id='+idd_id+'&method='+imethod+'&check_number='+icheck_number+'&bank_id='+ibank_id+'&amount='+iamount+'&cmp_id='+cmp_id+'&description='+encodeURIComponent(idescription),
             type:"POST",
             success:function(data){
                 if(data)
                 {
-                   var i = $('.selectedd').attr('index');
+                   var i = $('.iselectedd').attr('index');
                     var temp = $('#imytable').DataTable().row(i).data();
                     
                     iaddNewClick();
@@ -817,7 +852,8 @@ include 'footer.php';
                     temp[5] = icheck_number;
                     temp[6] = ibank_name;
                     temp[7] = iamount;
-                    temp[8] = idescription;
+                    temp[8] = cmp_name;
+                    temp[9] = idescription;
 
                     $('#imytable').DataTable().row(i).data(temp).draw();
                 }
@@ -1006,7 +1042,8 @@ include 'footer.php';
         $('#icheck_number').val( trr.find('td').eq(5).text() );
         $('#ibank_id').val( trr.find('td').eq(6).attr('id') ).trigger('change');
         $('#iamount').val( trr.find('td').eq(7).text() );
-        $('#idescription').val( trr.find('td').eq(8).text() );
+        $('#cmp_id').val( trr.find('td').eq(8).attr('id') ).trigger('change');
+        $('#idescription').val( trr.find('td').eq(9).text() );
 
     });
 
@@ -1077,6 +1114,8 @@ include 'footer.php';
            ibank_id = $('#ibank_id').val() ,
            ibank_name = $('#ibank_id option:selected').text() ,
            iamount = $('#iamount').val() ,
+           cmp_id = $('#cmp_id').val();
+           cmp_name = $('#cmp_id option:selected').text() ,
            idescription = $('#idescription').val() ,
            income_id =  $('#income_id').val();
 
@@ -1088,11 +1127,11 @@ include 'footer.php';
 
        if( $(this).hasClass('update_form') ) 
        {
-            iupdate(income_id,idatee,idd_id,idd_name,imethod,icheck_number,ibank_id,ibank_name,iamount,idescription);
+            iupdate(income_id,idatee,idd_id,idd_name,imethod,icheck_number,ibank_id,ibank_name,iamount,cmp_id,cmp_name,idescription);
        }
        else
        {
-            iadd(idatee,idd_id,imethod,icheck_number,ibank_id,iamount,idescription);
+            iadd(idatee,idd_id,imethod,icheck_number,ibank_id,iamount,cmp_id,idescription);
        }
     });
 

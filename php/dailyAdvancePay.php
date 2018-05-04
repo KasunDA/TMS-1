@@ -162,7 +162,7 @@ $name = $_GET['name'];
                         </div>
                         <!-- Form ends -->
                         <hr>
-                    <div class="row">
+            <div class="row">
                  <div class="col-md-6">
                      <!-- BEGIN EXAMPLE TABLE PORTLET-->
                      <div class="portlet light bordered">
@@ -181,7 +181,7 @@ $name = $_GET['name'];
                                      <tr>
                                          <th> # </th>
                                          <th> Date </th>
-                                         <th> Name </th>
+                                         <!-- <th> Name </th> -->
                                          <th> Description </th>    
                                          <th> Amount </th>
                                          
@@ -354,7 +354,7 @@ include 'footer.php';
 
                                 '<td>'+n+'</td>'+
                                 '<td>'+value['datee']+'</td>'+
-                                '<td>'+value['name']+'</td>'+
+                                // '<td>'+value['name']+'</td>'+
                                 '<td>'+value['description']+'</td>'+
                                 '<td name="total">'+value['amount']+'</td>'+
                                 '</tr>');

@@ -49,7 +49,7 @@ date_default_timezone_set("Asia/Karachi");
                                     
                                             <label class="col-md-2 control-label">Description:</label>
                                             <div class="col-md-3">
-                                              <textarea  id="description" name="description" class="form-control" required placeholder="Details" tabindex="2"></textarea> </div>
+                                              <textarea  id="description" name="description" class="form-control" placeholder="Details" tabindex="2"></textarea> </div>
                                             </div>
                                          </div>    
                                      <div class="row"> 

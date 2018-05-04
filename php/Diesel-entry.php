@@ -122,7 +122,7 @@ date_default_timezone_set("Asia/Karachi");
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">Description:</label>
                                             <div class="col-md-8">
-                                               <textarea class="form-control" placeholder="Why extra Litres" rows="4" id="description" name="description" required tabindex="7" ></textarea>
+                                               <textarea class="form-control" placeholder="Why extra Litres" rows="4" id="description" name="description" tabindex="7" ></textarea>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -366,6 +366,7 @@ include 'footer.php';
                 success:function(data){
                     if(data)
                     {
+                        $('#btn_reset').trigger('click');
                         $('form select').val('').trigger('change');
                         $('#extra_litres,#description').val('');
                         

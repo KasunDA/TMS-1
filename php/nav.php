@@ -153,6 +153,11 @@
                                 <span class="title">Daily description</span>
                             </a>
                         </li>
+                        <li class="nav-item  ">
+                            <a href="company.php" class="nav-link ">
+                                <span class="title">Company</span>
+                            </a>
+                        </li>
                        <li class="nav-item  ">
                            <a href="Banks.php" class="nav-link ">
                                <span class="title">Banks</span>
