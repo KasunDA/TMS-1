@@ -164,8 +164,34 @@ date_default_timezone_set("Asia/Karachi");
                  </div>
             </div>
             <div class="row">
-                <div class="col-md-6 col-md-push-6">
+                <div class="col-md-12">
                     <!-- BEGIN BORDERED TABLE PORTLET-->
+                    <div class="portlet light portlet-fit bordered ">
+                        
+                        <div class="portlet-body ">
+                            <div class="table-scrollable  table-scrollable-borderless">
+                                <table class="table table-hover table-light" id="table_balance">
+                                    <thead>
+                                        <tr class="uppercase">
+                                            <td> # </td>
+                                            <td> Bank Name </td>
+                                            <td> Prevoius Balance </td>
+                                            <td> Today Debit</td>
+                                            <td> Today Credit</td>
+                                            <td> Current Balance </td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END BORDERED TABLE PORTLET-->
+                </div>
+                <!-- col-md-push-6 
+                 <div class="col-md-6 ">
+                     BEGIN BORDERED TABLE PORTLET
                     <div class="portlet light portlet-fit bordered ">
                         
                         <div class="portlet-body ">
@@ -184,7 +210,7 @@ date_default_timezone_set("Asia/Karachi");
                                             <td> Today Debit </td>
                                             <td id="today_debit"></td>
                                         </tr>
-                                        <tr>
+                                        <tr class="uppercase">
                                             <td> 2 </td>
                                             <td> Today Credit </td>
                                             <td id="today_credit"></td>
@@ -199,8 +225,8 @@ date_default_timezone_set("Asia/Karachi");
                             </div>
                         </div>
                     </div>
-                    <!-- END BORDERED TABLE PORTLET-->
-                </div>
+                    <!-- END BORDERED TABLE PORTLET
+                </div> -->
             </div>
             <!-- END PAGE BASE CONTENT -->
         </div>
@@ -217,26 +243,51 @@ include 'footer.php';
      
      $(document).ready(function(){
 
-      function dt()
+
+        function loadPreviousBalance()
         {
             $.ajax({
                 url:'ajax/accounts_entry/fetch_details.php',
                 dataType:"JSON",
                 success:function(data){
-
+                    var n = 1;
+                    
+                    $('#table_balance tbody').html("");
+                    
                     $.each(data,function(index,value){
+                          
+                        $('#table_balance tbody').append('<tr class="odd gradeX">'+
 
-                        // $('#today_previous_balance').html(value['today_previous_balance']);
-                        $('#today_debit').html(value['total_debit']);
-                        $('#today_credit').html(value['total_credit']);
-                        // $('#today_balance').html(value['']);
+                                '<td>'+n+'</td>'+
+                                '<td id="'+value['bank_id']+'">'+value['bank_name']+'</td>'+
+                                '<td>'+value['previous_balance']+'</td>'+
+                                '<td>'+value['total_debit']+'</td>'+
+                                '<td>'+value['total_credit']+'</td>'+
+                                '<td>'+value['balance']+'</td>'+
+                                '</tr>');
+                        n++;
                     });
                 },
-                error:function(){ alert("Failed Fetch Details Ajax Call.") }   
-            });    
+                error:function(){ alert("Failed Previous Balance Fetch Ajax Call.") }
+            });
         }
 
-        dt();
+        function getTotal(name)
+        {
+          var sum = 0,
+              value = null;
+
+          $('td[name="'+name+'"]').each(function(){
+              value = $(this).text()/1;
+
+              if( !isNaN(value) && value != null )
+              {
+                  sum +=value; 
+              }
+          });
+
+          return sum;
+        }
 
         function myDataTable()
         {
@@ -269,14 +320,29 @@ include 'footer.php';
             $.ajax({
                 url:'ajax/accounts_entry/fetch.php',
                 dataType:"JSON",
+                //async:false,
                 success:function(data){
-                    var n = 1;
+                    var n = 1,
+                        old_bank_id = [],
+                        nameAttr = '';
+
+
                     
                     $('#mytable').DataTable().destroy();
                     $('#mytable tbody').html("");
                     
                     $.each(data,function(index,value){
-
+                          
+                          if( !old_bank_id.includes(value['bank_id']) )
+                          {
+                            old_bank_id.push(value['bank_id']);
+                            nameAttr = 'name="today_previous_balance"';
+                          }
+                          else
+                          {
+                            nameAttr = '';
+                          }
+                        
                         $('#mytable tbody').append('<tr class="odd gradeX">'+
 
                                 // '<td>'+ 
@@ -293,10 +359,10 @@ include 'footer.php';
                                 '<td>'+n+'</td>'+
                                 '<td>'+value['datee']+'</td>'+
                                 '<td id="'+value['bank_id']+'">'+value['short_form']+'</td>'+
-                                '<td>'+value['debit']+'</td>'+
-                                '<td>'+value['credit']+'</td>'+
+                                '<td name="today_debit">'+value['debit']+'</td>'+
+                                '<td name="today_credit">'+value['credit']+'</td>'+
                                 '<td>'+value['check_number']+'</td>'+
-                                '<td>'+value['previous_balance']+'</td>'+
+                                '<td '+nameAttr+'>'+value['previous_balance']+'</td>'+
                                 '<td>'+value['current_balance']+'</td>'+
                                 '</tr>');
 
@@ -304,7 +370,17 @@ include 'footer.php';
                     })
 
                     myDataTable();
-                    dt();
+                    loadPreviousBalance();
+
+                    // var today_previous_balance = getTotal('today_previous_balance');
+                    //     today_debit = getTotal('today_debit'),
+                    //     today_credit = getTotal('today_credit'),
+                    //     today_balance = today_previous_balance + today_credit;
+
+                    // $('#today_previous_balance').html(today_previous_balance);
+                    // $('#today_debit').html(today_debit);
+                    // $('#today_credit').html(today_credit);
+                    // $('#today_balance').html(today_balance-today_debit);
                 },
                 error:function(){ alert("Failed Fetch Ajax Call.") }
             });

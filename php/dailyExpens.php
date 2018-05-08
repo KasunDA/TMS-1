@@ -336,7 +336,7 @@ require 'connection.php';
                              <table class="table table-striped table-bordered table-hover table-checkable order-column" id="mytable">
                                  <thead>
                                      <tr>
-                                         <th> Actions </th>
+                                         <th></th>
                                          <th> # </th>
                                          <th> Date </th>
                                          <th> Daily Description  </th>
@@ -384,7 +384,7 @@ require 'connection.php';
                              <table class="table table-striped table-bordered table-hover table-checkable order-column" id="imytable">
                                  <thead>
                                      <tr>
-                                         <th> Actions </th>
+                                         <th></th>
                                          <th> # </th>
                                          <th> Date </th>
                                          <th> Daily Description  </th>
@@ -415,24 +415,24 @@ require 'connection.php';
                                         <tr class="uppercase">
                                             <td> # </td>
                                             <td> Last Balance</td>
-                                            <td> 900000 </td>
+                                            <th id="previous_balance"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr class="uppercase">
                                             <td> 1 </td>
                                             <td> Today Income </td>
-                                            <td> 9000 </td>
+                                            <td id="total_income"></td>
                                         </tr>
                                         <tr>
                                             <td> 2 </td>
                                             <td> Today Expenses </td>
-                                            <td> 80000 </td>
+                                            <td id="total_expense"></td>
                                         </tr>
                                         <tr>
                                             <td> 3 </td>
                                             <td> Balance </td>
-                                            <td> 810000 </td>
+                                            <td id="balance"></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -457,6 +457,26 @@ include 'footer.php';
 <script type="text/javascript">
  
  $(document).ready(function(){
+
+    function getPreviousBalance()
+    {
+       $.ajax({
+            url:'ajax/get_previous_balance.php',
+            dataType:"JSON",
+            success:function(data){
+                
+                $.each(data,function(index,value){
+
+                    $('#previous_balance').html(value['previous_balance']);
+                    $('#total_income').html(value['total_income']);
+                    $('#total_expense').html(value['total_expense']);
+                    $('#balance').html(value['balance']);
+
+                })
+            },
+            error:function(){ alert("Failed Get Previous Balance Fetch Ajax Call.") }
+        });
+    }
 
     function bikeshow()
     {
@@ -675,17 +695,18 @@ include 'footer.php';
 
                     $('#mytable tbody').append('<tr index="'+i+'" class="odd gradeX">'+
 
-                            '<td>'+ 
-                                '<ul class="addremove">'+
-                                    '<li> <button class="btn btn-xs green update_btn" id="'+value['expense_id']+'" type="button">  '+
-                                    '<i class="fa fa-plus-square"></i>'+
-                                    '</button> </li>'+
-                                    '<li>  <button class="btn btn-xs red delete_btn" id="'+value['expense_id']+'" type="button">  '+
-                                    '<i class="fa fa-minus-square"></i>'+
-                                    '</button> </li>'+
-                                '</ul>'+
-                            '</td>'+                       
+                            // '<td>'+ 
+                            //     '<ul class="addremove">'+
+                            //         '<li> <button class="btn btn-xs green update_btn" id="'+value['expense_id']+'" type="button">  '+
+                            //         '<i class="fa fa-plus-square"></i>'+
+                            //         '</button> </li>'+
+                            //         '<li>  <button class="btn btn-xs red delete_btn" id="'+value['expense_id']+'" type="button">  '+
+                            //         '<i class="fa fa-minus-square"></i>'+
+                            //         '</button> </li>'+
+                            //     '</ul>'+
+                            // '</td>'+                       
 
+                            '<td></td>'+
                             '<td>'+n+'</td>'+
                             '<td>'+value['datee']+'</td>'+
                             '<td id="'+value['dd_id']+'">'+value['dd_name']+'</td>'+
@@ -703,6 +724,7 @@ include 'footer.php';
                 })
 
                 myDataTable();
+                getPreviousBalance();
             },
             error:function(){ alert("Failed Fetch Ajax Call.") }
         });
@@ -726,17 +748,17 @@ include 'footer.php';
 
                     $('#imytable tbody').append('<tr index="'+i+'" class="odd gradeX">'+
 
-                            '<td>'+ 
-                                '<ul class="addremove">'+
-                                    '<li> <button class="btn btn-xs green iupdate_btn" id="'+value['income_id']+'" type="button">  '+
-                                    '<i class="fa fa-plus-square"></i>'+
-                                    '</button> </li>'+
-                                    '<li>  <button class="btn btn-xs red idelete_btn" id="'+value['income_id']+'" type="button">  '+
-                                    '<i class="fa fa-minus-square"></i>'+
-                                    '</button> </li>'+
-                                '</ul>'+
-                            '</td>'+                       
-
+                            // '<td>'+ 
+                            //     '<ul class="addremove">'+
+                            //         '<li> <button class="btn btn-xs green iupdate_btn" id="'+value['income_id']+'" type="button">  '+
+                            //         '<i class="fa fa-plus-square"></i>'+
+                            //         '</button> </li>'+
+                            //         '<li>  <button class="btn btn-xs red idelete_btn" id="'+value['income_id']+'" type="button">  '+
+                            //         '<i class="fa fa-minus-square"></i>'+
+                            //         '</button> </li>'+
+                            //     '</ul>'+
+                            // '</td>'+                       
+                            '<td></td>'+
                             '<td>'+n+'</td>'+
                             '<td>'+value['datee']+'</td>'+
                             '<td id="'+value['dd_id']+'">'+value['dd_name']+'</td>'+
@@ -752,6 +774,7 @@ include 'footer.php';
                 })
 
                 imyDataTable();
+                getPreviousBalance();
             },
             error:function(){ alert("Failed iFetch Ajax Call.") }
         });

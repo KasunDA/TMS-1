@@ -4,12 +4,14 @@
 	date_default_timezone_set("Asia/Karachi");
 
 	$json=NULL;
-	$date = date('m/d/Y');
-	//$date = '05/07/2018';
-	$ydate = date('m/d/Y',strtotime("-1 days"));	
+	$from_datee = $_GET['from_datee'];
+	$to_datee = $_GET['to_datee'];
+	//$ = date(,strtotime("-1 days"));
+	$newdate = strtotime ( "-1 days" , strtotime ( $from_datee ) ) ;
+	$ydate = date ( 'm/d/Y' , $newdate );
 	$n=0;
 	
-	//echo '<script>alert("-1 ='.$ydate.'")</script>';
+	//echo '<script>alert("From Date='.$date.' and -1 ='.$ydate.'")</script>';
 
 	$bank_ids_q = mysqli_query($mycon,"SELECT bank_id,balance,short_form FROM bank WHERE status=1");
 	while($bank_ids = mysqli_fetch_array($bank_ids_q))
@@ -25,7 +27,7 @@
 		}
 		else
 		{
-			$q1 = mysqli_query($mycon,"SELECT current_balance from accounts_entry Where datee<'$date' and bank_id=".$bank_ids[0]." ORDER BY ae_id DESC limit 1");
+			$q1 = mysqli_query($mycon,"SELECT current_balance from accounts_entry Where  datee<'$ydate' AND bank_id=".$bank_ids[0]." ORDER BY ae_id DESC limit 1");
 
 			if( $r1 = mysqli_fetch_array($q1) )
 			{
@@ -38,7 +40,7 @@
 			}
 		}
 
-		$total_debit_q = mysqli_query($mycon,"SELECT SUM(amount) from accounts_entry where action='debit' and datee='$date' and bank_id=".$bank_ids[0]);
+		$total_debit_q = mysqli_query($mycon,"SELECT SUM(amount) from accounts_entry where action='debit' and datee BETWEEN '$from_datee' AND '$to_datee' and bank_id=".$bank_ids[0]);
 
 		if( $r_total_debit = mysqli_fetch_array($total_debit_q) )
 		{
@@ -49,7 +51,7 @@
 			$json[$n]['total_debit'] = '0';
 		}
 
-		$total_credit_q = mysqli_query($mycon,"SELECT SUM(amount) from accounts_entry where action='credit' and datee='$date' and bank_id=".$bank_ids[0]);
+		$total_credit_q = mysqli_query($mycon,"SELECT SUM(amount) from accounts_entry where action='credit' and datee BETWEEN '$from_datee' AND '$to_datee' and bank_id=".$bank_ids[0]);
 
 		if( $r_total_credit = mysqli_fetch_array($total_credit_q) )
 		{

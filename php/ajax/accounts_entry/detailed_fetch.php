@@ -1,13 +1,27 @@
 <?php 
 
 	require '../../connection.php';
-	date_default_timezone_set("Asia/Karachi");
 
 	$json=NULL;
-	$date = date('m/d/Y');
+	$sql='';
+	$from_datee = $_GET['from_datee'];
+	$to_datee = $_GET['to_datee']; //date('Y-m-d', strtotime(
+	
 
-	$q = mysqli_query($mycon,"SELECT * FROM accounts_entry WHERE status=1 and datee='$date' "); //ORDER BY ae_id DESC
+	if( isset($_GET['bank_id']) && $_GET['bank_id'] != NULL )
+	{
+		$bank_id = $_GET['bank_id'];
+		$sql = "SELECT * FROM accounts_entry WHERE status=1 and datee BETWEEN '$from_datee' AND '$to_datee' and bank_id=$bank_id ";
+	}
+	else
+	{
+		$sql = "SELECT * FROM accounts_entry WHERE status=1 and datee BETWEEN '$from_datee' AND '$to_datee' ";
+	}
+
+	$q = mysqli_query($mycon,$sql);
+	
 	$n  = 0;
+	
 	while($r = mysqli_fetch_array($q))
 	{
 		$json[$n]['ae_id'] = $r['ae_id'];  

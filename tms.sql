@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 04, 2018 at 07:08 PM
+-- Generation Time: May 08, 2018 at 04:57 PM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 7.0.13
 
@@ -60,7 +60,19 @@ INSERT INTO `accounts_entry` (`ae_id`, `datee`, `bank_id`, `action`, `method`, `
 (14, '04/19/2018', 3, 'credit', 'cash', '400.00', '', '17500.00', '17900.00', 1),
 (15, '04/19/2018', 3, 'credit', 'cash', '100.00', '', '17900.00', '18000.00', 1),
 (16, '04/25/2018', 4, 'debit', 'cash', '5555.00', '', '50000.00', '44445.00', 1),
-(17, '05/03/2018', 4, 'credit', 'cash', '500.00', '', '44445.00', '44945.00', 1);
+(17, '05/03/2018', 4, 'credit', 'cash', '500.00', '', '44445.00', '44945.00', 1),
+(18, '05/07/2018', 4, 'credit', 'cash', '200.00', '', '44945.00', '45145.00', 1),
+(19, '05/07/2018', 4, 'credit', 'cash', '300.00', '', '45145.00', '45445.00', 1),
+(20, '05/07/2018', 3, 'debit', 'cash', '300.00', '', '18000.00', '17700.00', 1),
+(21, '05/07/2018', 3, 'debit', 'cash', '200.00', '', '17700.00', '17500.00', 1),
+(22, '05/07/2018', 4, 'debit', 'cash', '500.00', '', '45445.00', '44945.00', 1),
+(23, '05/07/2018', 3, 'credit', 'cash', '5000.00', '', '17500.00', '22500.00', 1),
+(24, '05/07/2018', 4, 'debit', 'cash', '500.00', '', '44945.00', '44445.00', 1),
+(25, '05/07/2018', 4, 'debit', 'cash', '500.00', '', '44445.00', '43945.00', 1),
+(26, '05/06/2018', 1, 'debit', 'cash', '200.00', NULL, '10000.00', '9800.00', 1),
+(27, '05/08/2018', 3, 'debit', 'cash', '500.00', '', '22500.00', '22000.00', 1),
+(28, '05/08/2018', 4, 'debit', 'cash', '3945.00', '', '43945.00', '40000.00', 1),
+(29, '05/08/2018', 3, 'credit', 'cash', '1000.00', '', '22000.00', '23000.00', 1);
 
 -- --------------------------------------------------------
 
@@ -107,7 +119,7 @@ CREATE TABLE `bank` (
 --
 
 INSERT INTO `bank` (`bank_id`, `short_form`, `full_form`, `account_title`, `account_number`, `address`, `balance`, `status`) VALUES
-(1, 'HBL', 'habib bank', 'butt bros', '1080-0000-25464-52-4', 'address', '10000.00', 1),
+(1, 'hbl ', 'habib bank', 'butt bros', '1080-0000-25464-52-4', 'address', '10000.00', 1),
 (2, 'BAHL', 'Bank Al-Habib  ', 'Butt Brothers Transport', '1080-5555-12345-21-7', 'port qasim', '20000.00', 1),
 (3, 'HBL', 'Habib Bank ', 'Butt Bros', '1080-2568-96325-96-1', 'steel town', '20000.00', 1),
 (4, 'Mb', 'mezaan bank', 'butt bros', '1080-5515-51545-55-5', 'quadabad', '50000.00', 1);
@@ -294,6 +306,7 @@ CREATE TABLE `container_movement` (
   `party_charges` int(11) NOT NULL,
   `lot_of` int(11) NOT NULL,
   `line_id` int(11) NOT NULL,
+  `paid_status` tinyint(4) NOT NULL DEFAULT '0',
   `status` tinyint(4) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -301,11 +314,11 @@ CREATE TABLE `container_movement` (
 -- Dumping data for table `container_movement`
 --
 
-INSERT INTO `container_movement` (`cm_id`, `datee`, `agent_id`, `coa_id`, `consignee_id`, `movement`, `empty_terminal_id`, `from_yard_id`, `to_yard_id`, `container_size`, `party_charges`, `lot_of`, `line_id`, `status`) VALUES
-(1, '2018-03-17', 1, 1, 1, 'export', 1, 2, 3, 40, 20000, 6, 1, 1),
-(3, '2018-04-20', 2, 8, 3, 'import', 6, 3, 1, 20, 3000, 3, 1, 1),
-(4, '2018-04-21', 2, 8, 3, 'export', 3, 6, 2, 45, 20000, 3, 2, 1),
-(5, '2018-04-27', 3, 8, 1, 'export', 6, 3, 2, 40, 20000, 4, 1, 1);
+INSERT INTO `container_movement` (`cm_id`, `datee`, `agent_id`, `coa_id`, `consignee_id`, `movement`, `empty_terminal_id`, `from_yard_id`, `to_yard_id`, `container_size`, `party_charges`, `lot_of`, `line_id`, `paid_status`, `status`) VALUES
+(1, '2018-03-17', 1, 1, 1, 'export', 1, 2, 3, 40, 20000, 6, 1, 0, 1),
+(3, '2018-04-20', 2, 8, 3, 'import', 6, 3, 1, 20, 3000, 3, 1, 0, 1),
+(4, '2018-04-21', 2, 8, 3, 'export', 3, 6, 2, 45, 20000, 3, 2, 0, 1),
+(5, '2018-04-27', 3, 8, 1, 'export', 6, 3, 2, 40, 20000, 4, 1, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -392,6 +405,33 @@ INSERT INTO `diesel_limit` (`dl_id`, `from_yard`, `to_yard`, `limit_litre`, `sta
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `exin`
+--
+
+CREATE TABLE `exin` (
+  `exin_id` int(11) NOT NULL,
+  `expense_id` int(11) DEFAULT NULL,
+  `income_id` int(11) DEFAULT NULL,
+  `datee` varchar(30) NOT NULL,
+  `previous_balance` bigint(20) NOT NULL,
+  `current_balance` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `exin`
+--
+
+INSERT INTO `exin` (`exin_id`, `expense_id`, `income_id`, `datee`, `previous_balance`, `current_balance`) VALUES
+(1, NULL, NULL, '2018-04-23', 200000, 200000),
+(2, 1, NULL, '2018-04-23', 200000, 180000),
+(3, NULL, 17, '2018-05-08', 180000, 180100),
+(4, 27, NULL, '2018-05-08', 180100, 179600),
+(5, 28, NULL, '2018-05-08', 179600, 179400),
+(6, NULL, 18, '2018-05-08', 179400, 179600);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `expenses`
 --
 
@@ -442,7 +482,9 @@ INSERT INTO `expenses` (`expense_id`, `datee`, `dd_id`, `method`, `check_number`
 (23, '2018-05-04', 1, 'cash', 'null', NULL, '300.00', NULL, 'null', NULL, 0, NULL, '', 1),
 (24, '2018-05-04', 5, 'cash', 'null', NULL, '700.00', NULL, 'null', NULL, 0, NULL, '', 1),
 (25, '2018-05-04', 2, 'cash', '', NULL, '100.00', NULL, NULL, NULL, 0, 2, '', 1),
-(26, '2018-05-04', 2, 'check', '123546', 3, '500.00', NULL, NULL, NULL, 0, 2, '', 1);
+(26, '2018-05-04', 2, 'check', '123546', 3, '500.00', NULL, NULL, NULL, 0, 2, '', 1),
+(27, '2018-05-08', 1, 'cash', 'null', NULL, '500.00', NULL, 'null', NULL, 0, NULL, '', 1),
+(28, '2018-05-08', 1, 'cash', 'null', NULL, '200.00', NULL, 'null', NULL, 0, NULL, '', 1);
 
 -- --------------------------------------------------------
 
@@ -470,8 +512,8 @@ INSERT INTO `garage_entry` (`ge_id`, `datee`, `vehicle_id`, `amount`, `descripti
 (4, '04/10/2018', 1, '900.00', 'detailss...........', 0),
 (5, '04/09/2018', 2, '9000000.00', 'descripton', 1),
 (6, '04/20/2018', 4, '9500.00', 'falana dhimaka', 1),
-(7, '2018-04-27', 4, '10000.00', 'NILL', 1),
-(8, '2018-04-27', 4, '600.00', 'NILL', 1),
+(7, '04/27/2018', 4, '10000.00', 'NILL', 1),
+(8, '04/27/2018', 4, '600.00', 'NILL', 1),
 (9, '05/04/2018', 1, '5200.00', '', 1);
 
 -- --------------------------------------------------------
@@ -515,7 +557,9 @@ INSERT INTO `income` (`income_id`, `datee`, `dd_id`, `method`, `check_number`, `
 (13, '2018-05-04', 2, 'cash', '', NULL, '500.00', 1, NULL, NULL, '', 1),
 (14, '2018-05-04', 5, 'cash', '', NULL, '699.98', NULL, NULL, NULL, '', 1),
 (15, '2018-05-04', 2, 'cash', '', NULL, '700.00', 2, NULL, NULL, '', 1),
-(16, '2018-05-04', 2, 'cash', '', NULL, '300.00', 2, NULL, NULL, '', 1);
+(16, '2018-05-04', 2, 'cash', '', NULL, '300.00', 2, NULL, NULL, '', 1),
+(17, '2018-05-08', 1, 'cash', '', NULL, '100.00', NULL, NULL, NULL, '', 1),
+(18, '2018-05-08', 1, 'cash', '', NULL, '200.00', NULL, NULL, NULL, '', 1);
 
 -- --------------------------------------------------------
 
@@ -692,6 +736,12 @@ ALTER TABLE `diesel_limit`
   ADD PRIMARY KEY (`dl_id`);
 
 --
+-- Indexes for table `exin`
+--
+ALTER TABLE `exin`
+  ADD PRIMARY KEY (`exin_id`);
+
+--
 -- Indexes for table `expenses`
 --
 ALTER TABLE `expenses`
@@ -741,7 +791,7 @@ ALTER TABLE `yard`
 -- AUTO_INCREMENT for table `accounts_entry`
 --
 ALTER TABLE `accounts_entry`
-  MODIFY `ae_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `ae_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 --
 -- AUTO_INCREMENT for table `agent`
 --
@@ -803,10 +853,15 @@ ALTER TABLE `diesel_entry`
 ALTER TABLE `diesel_limit`
   MODIFY `dl_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
+-- AUTO_INCREMENT for table `exin`
+--
+ALTER TABLE `exin`
+  MODIFY `exin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
 -- AUTO_INCREMENT for table `expenses`
 --
 ALTER TABLE `expenses`
-  MODIFY `expense_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `expense_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 --
 -- AUTO_INCREMENT for table `garage_entry`
 --
@@ -816,7 +871,7 @@ ALTER TABLE `garage_entry`
 -- AUTO_INCREMENT for table `income`
 --
 ALTER TABLE `income`
-  MODIFY `income_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `income_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT for table `line`
 --

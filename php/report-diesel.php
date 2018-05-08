@@ -1,6 +1,8 @@
 <?php 
 include 'header.php';
 include 'nav.php';
+require 'connection.php';
+date_default_timezone_set("Asia/Karachi");
  ?>
 
 <!-- BEGIN CONTENT -->
@@ -22,40 +24,48 @@ include 'nav.php';
                             </div>
                         </div>
                         <div class="portlet-body form">
-                            <form class="form-horizontal" role="form">
-                                <div class="form-body">
-                                    <div class="row"> 
-                                        <div class="form-group">
-                                            <label class="control-label col-md-2">Date Range</label>
-                                            <div class="col-md-3">
-                                                <div class="input-group input-large date-picker input-daterange" data-date="10/11/2012" data-date-format="mm/dd/yyyy">
-                                                    <input type="text" class="form-control" name="from" placeholder="mm/dd/yyyy">
-                                                    <span class="input-group-addon"> to </span>
-                                                    <input type="text" class="form-control" name="to" placeholder="mm/dd/yyyy"> </div>
-                                                <!-- /input-group -->
-                                            </div>
-                                            <label class="col-md-2 control-label">Select Vehicle:</label>
-                                            <div class="col-md-3">
-                                                <select class="form-control">
-                                                    <option>All</option>
-                                                    <option>KP9076</option>
-                                                </select>
-                                            </div>
+                        <form class="form-horizontal" role="form" method="post">
+                            <div class="form-body">
+                                <div class="row"> 
+                                    <div class="form-group">
+                                        <label class="control-label col-md-2">Date Range</label>
+                                        <div class="col-md-3">
+                                            <div class="input-group input-large date-picker input-daterange">
+                                                <input type="text" class="form-control"  id="from_datee" name="from_datee" required tabindex="1" <?php echo 'value="'.date('m/d/Y').'"'; ?> placeholder="mm/dd/yyyy">
+                                                <span class="input-group-addon"> to </span>
+                                                <input type="text" class="form-control" id="to_datee" name="to_datee" required tabindex="2" <?php echo 'value="'.date('m/d/Y').'"'; ?> placeholder="mm/dd/yyyy"> </div>
+                                            <!-- /input-group -->
                                         </div>
-                                        <div class="form-group">
-                                            
+                                        <label class="col-md-2 control-label">Select Type:</label>
+                                        <div class="col-md-3">
+                                             <select class="form-control" name="vehicle_id" id="vehicle_id" tabindex="3">
+                                                         <option value="">Select Vehicle</option>
+                                                         <?php 
+
+                                                          $q = mysqli_query($mycon,'SELECT vehicle_id,vehicle_number from vehicle where status=1 ORDER BY vehicle_id DESC');
+
+                                                          while( $r = mysqli_fetch_array($q) )
+                                                            {?>
+                                                              <option value="<?php echo $r['vehicle_id']; ?>"><?php echo $r['vehicle_number']; ?></option>
+                                                          <?php } //END OF WHILE ?>
+                                                          
+                                                     </select>
                                         </div>
-                                        <div class="form-group">
-                                            <div class="col-md-9 col-md-push-2">
-                                                <div class="">
-                                                    <button type="submit" class="btn blue">Check</button> 
-                                                    <button type="button" class="btn default">Cancel</button>
-                                                </div>
+                                    </div>
+                                    <div class="form-group">
+                                        
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-9 col-md-push-2">
+                                            <div class="">
+                                                <button type="submit" class="btn blue" id="btn_submit" tabindex="4">Check</button>
+                                                <!-- <button type="button" class="btn default">Cancel</button> -->
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
+                        </form>
                         </div>
                         <!-- Form ends -->
                         
@@ -78,32 +88,23 @@ include 'nav.php';
                              </div>
                          </div>
                          <div class="portlet-body table-both-scroll">
-                             <table class="table table-striped table-bordered table-hover table-checkable order-column" id="sample_1">
+                             <table class="table table-striped table-bordered table-hover table-checkable order-column" id="mytable">
                                  <thead>
                                      <tr>
-                                        <th> ID: </th>
-                                         <th> Date: </th>
-                                         <th> Vehicle #: </th>
-                                         <th> From: </th>
-                                         <th> To: </th>
-                                         <th> 1 Litter Rate: </th>
-                                         <th> Extra Litters: </th>   
-                                         <th> Discription: </th>   
-                                         <th> Total Price: </th>   
+                                         <th></th>
+                                         <th> # </th>
+                                         <th> Date </th>
+                                         <th> Vehicle # </th>
+                                         <th> From </th>
+                                         <th> To </th>
+                                         <th> 1 Litre Rate </th>
+                                         <th> Litres </th>  
+                                         <th> Extra Litres </th>   
+                                         <th> Total Price </th>   
+                                         <th> Description </th> 
                                      </tr>
                                  </thead>
                                  <tbody>
-                                     <tr class="odd gradeX">
-                                         <td> 15 </td>
-                                         <td> 02/3/2018 </td>
-                                         <td> EN865 </td>
-                                         <td> Port Qasim </td>
-                                         <td> Agha Steel </td>
-                                         <td> 110 </td>
-                                         <td> Nil </td>
-                                         <td> Nil </td>
-                                         <td> 11000 </td>
-                                     </tr>
                                  </tbody>
                              </table>
                          </div>
@@ -118,28 +119,22 @@ include 'nav.php';
                         <div class="portlet-body ">
                             <div class="table-scrollable  table-scrollable-borderless">
                                 <table class="table table-hover table-light">
-                                    <thead>
-                                        <tr class="uppercase">
-                                            <td> # </td>
-                                            <td> One litter Price</td>
-                                            <td> 110, 100, 105</td>
-                                        </tr>
-                                    </thead>
+                                    
                                     <tbody>
                                         <tr class="uppercase">
                                             <td> 1 </td>
                                             <td> Total Litters </td>
-                                            <td> 120 </td>
+                                            <td id="total_litres"></td>
                                         </tr>
                                         <tr>
                                             <td> 2 </td>
                                             <td> Extra Litters </td>
-                                            <td> 20 </td>
+                                            <td id="extra_litres"></td>
                                         </tr>
                                         <tr>
                                             <td> 3 </td>
                                             <td> Total Price </td>
-                                            <td> 15400 </td>
+                                            <td id="total_price"></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -157,3 +152,97 @@ include 'nav.php';
 <?php 
 include 'footer.php';
  ?>
+
+<script src="../assets/global/scripts/select2.full.min.js"></script>
+<script type="text/javascript">
+ 
+ $(document).ready(function(){
+
+    //Select2
+   $('#vehicle_id').select2({
+      width: 'resolve'
+   });
+
+    function myDataTable()
+    {
+        var e=$("#mytable");
+        e.dataTable({language:{aria:{sortAscending:": activate to sort column ascending",sortDescending:": activate to sort column descending"},emptyTable:"No data available in table",info:"Showing _START_ to _END_ of _TOTAL_ records",infoEmpty:"No records found",infoFiltered:"(filtered1 from _MAX_ total records)",lengthMenu:"Show _MENU_",search:"Search:",zeroRecords:"No matching records found",paginate:{previous:"Prev",next:"Next",last:"Last",first:"First"}},bStateSave:!0,columnDefs:[{targets:0,orderable:!1,searchable:!1}],lengthMenu:[[5,15,20,-1],[5,15,20,"All"]],pageLength:5,pagingType:"bootstrap_full_number",columnDefs:[{orderable:!1,targets:[0]},{searchable:!1,targets:[0]}],order:[[1,"asc"]]});
+    }
+
+    myDataTable();
+
+    function loadData(from_datee,to_datee,vehicle_id)
+    {
+        $.ajax({
+            url:'ajax/diesel_entry/detailed_fetch.php?from_datee='+from_datee+'&to_datee='+to_datee+'&vehicle_id='+vehicle_id,
+            dataType:"JSON",
+            //async:false,
+            success:function(data){
+                var n = 1;
+
+                $('#mytable').DataTable().destroy();
+                $('#mytable tbody').html("");
+                
+                $.each(data,function(index,value){
+
+                    $('#mytable tbody').append('<tr class="odd gradeX">'+
+
+                            '<td></td>'+                       
+
+                            '<td>'+n+'</td>'+
+                            '<td>'+value['datee']+'</td>'+
+                            '<td id="'+value['vehicle_id']+'">'+value['vehicle_number']+'</td>'+
+                            '<td id="'+value['from_yard_id']+'">'+value['from_yard']+'</td>'+
+                            '<td id="'+value['to_yard_id']+'">'+value['to_yard']+'</td>'+
+                            '<td name="litre_rate">'+value['litre_rate']+'</td>'+
+                            '<td name="litres">'+value['litres']+'</td>'+
+                            '<td name="extra_litres">'+value['extra_litres']+'</td>'+
+                            '<td name="total_price">'+value['total']+'</td>'+
+                            '<td>'+value['description']+'</td>'+
+                            '</tr>');
+
+                    n++; 
+                })
+
+                myDataTable();
+                $('#total_litres').text( getTotal('litres') );
+                $('#extra_litres').text( getTotal('extra_litres') );
+                $('#total_price').text( getTotal('total_price') );
+
+            },
+            error:function(){ alert("Failed Fetch Ajax Call.") }
+        });
+    }
+
+    function getTotal(name)
+    {
+        var sum = 0,
+            value = null;
+
+        $('td[name="'+name+'"]').each(function(){
+            value = $(this).text()/1;
+
+            if( !isNaN(value) && value != null )
+            {
+                sum +=value; 
+            }
+        });
+
+        return sum;
+    }
+    
+    //Add & Update expense 
+    $('form').submit(function(e){
+       e.preventDefault();
+       
+       var from_datee = $('#from_datee').val() ,
+           to_datee = $('#to_datee').val() ,
+           vehicle_id = $('#vehicle_id').val();
+
+        loadData(from_datee,to_datee,vehicle_id);
+
+
+    });
+
+ });
+</script>

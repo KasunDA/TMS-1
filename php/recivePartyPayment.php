@@ -1,6 +1,8 @@
 <?php 
 include 'header.php';
 include 'nav.php';
+require 'connection.php';
+date_default_timezone_set("Asia/Karachi");
  ?>
 
     <!-- BEGIN CONTENT -->
@@ -21,24 +23,32 @@ include 'nav.php';
                         </div>
                     </div>
                     <div class="portlet-body form">
-                        <form class="form-horizontal" role="form">
+                        <form class="form-horizontal" role="form" method="post">
                             <div class="form-body">
                                 <div class="row"> 
                                     <div class="form-group">
                                         <label class="control-label col-md-2">Date Range</label>
                                         <div class="col-md-3">
-                                            <div class="input-group input-large date-picker input-daterange" data-date="10/11/2012" data-date-format="mm/dd/yyyy">
-                                                <input type="text" class="form-control" name="from" placeholder="mm/dd/yyyy">
+                                            <div class="input-group input-large date-picker input-daterange">
+                                                <input type="text" class="form-control"  id="from_datee" name="from_datee" required tabindex="1" <?php echo 'value="'.date('m/d/Y').'"'; ?> placeholder="mm/dd/yyyy">
                                                 <span class="input-group-addon"> to </span>
-                                                <input type="text" class="form-control" name="to" placeholder="mm/dd/yyyy"> </div>
+                                                <input type="text" class="form-control" id="to_datee" name="to_datee" required tabindex="2" <?php echo 'value="'.date('m/d/Y').'"'; ?> placeholder="mm/dd/yyyy"> </div>
                                             <!-- /input-group -->
                                         </div>
-                                        <label class="col-md-2 control-label">Select Party:</label>
+                                        <label class="col-md-2 control-label">Select Type:</label>
                                         <div class="col-md-3">
-                                            <select class="form-control">
-                                                <option>Agha Steel</option>
-                                                <option>All</option>
-                                            </select>
+                                             <select class="form-control" name="vehicle_id" id="vehicle_id" tabindex="3">
+                                                         <option value="">Select Vehicle</option>
+                                                         <?php 
+
+                                                          $q = mysqli_query($mycon,'SELECT vehicle_id,vehicle_number from vehicle where status=1 ORDER BY vehicle_id DESC');
+
+                                                          while( $r = mysqli_fetch_array($q) )
+                                                            {?>
+                                                              <option value="<?php echo $r['vehicle_id']; ?>"><?php echo $r['vehicle_number']; ?></option>
+                                                          <?php } //END OF WHILE ?>
+                                                          
+                                                     </select>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -47,8 +57,8 @@ include 'nav.php';
                                     <div class="form-group">
                                         <div class="col-md-9 col-md-push-2">
                                             <div class="">
-                                                <button type="submit" class="btn blue">Check</button> 
-                                                <button type="button" class="btn default">Cancel</button>
+                                                <button type="submit" class="btn blue" id="btn_submit" tabindex="4">Check</button>
+                                                <!-- <button type="button" class="btn default">Cancel</button> -->
                                             </div>
                                         </div>
                                     </div>
