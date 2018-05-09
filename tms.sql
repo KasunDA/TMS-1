@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 08, 2018 at 04:57 PM
+-- Generation Time: May 09, 2018 at 01:43 PM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 7.0.13
 
@@ -246,17 +246,10 @@ INSERT INTO `container` (`container_id`, `type`, `status`) VALUES
 
 CREATE TABLE `container_entry` (
   `ce_id` int(11) NOT NULL,
-  `bl_cro_number` varchar(16) NOT NULL,
-  `job_number` varchar(16) NOT NULL,
   `container_number` int(11) NOT NULL,
-  `index_number` varchar(15) NOT NULL,
   `vehicle_id` int(11) NOT NULL,
   `advance` int(11) NOT NULL,
-  `rent` int(11) NOT NULL,
   `balance` int(11) NOT NULL,
-  `container_id` int(11) NOT NULL,
-  `lolo_charges` int(11) NOT NULL,
-  `weight_charges` int(11) NOT NULL,
   `color` varchar(7) NOT NULL,
   `mr_charges` int(11) NOT NULL,
   `remarks` text,
@@ -268,23 +261,10 @@ CREATE TABLE `container_entry` (
 -- Dumping data for table `container_entry`
 --
 
-INSERT INTO `container_entry` (`ce_id`, `bl_cro_number`, `job_number`, `container_number`, `index_number`, `vehicle_id`, `advance`, `rent`, `balance`, `container_id`, `lolo_charges`, `weight_charges`, `color`, `mr_charges`, `remarks`, `cm_id`, `status`) VALUES
-(1, '123456', '123', 1, '1', 1, 0, 0, 0, 1, 0, 0, 'white', 0, 'remarks', 1, 1),
-(2, '165412', '156', 2, '2', 2, 0, 0, 0, 2, 0, 0, 'red', 0, 'asd...', 1, 1),
-(3, '3564', '2215', 3, '3', 2, 0, 0, 0, 2, 0, 0, 'green', 0, 'falana', 1, 1),
-(4, '56151', '65151', 4, '4', 1, 0, 0, 0, 2, 0, 0, 'green', 0, 'dhimaka', 1, 1),
-(5, '4894', '4984', 5, '5', 4, 0, 0, 0, 4, 0, 0, 'green', 0, 'emarkasasmdlasda', 1, 1),
-(6, '156516', '51616', 6, '6', 4, 0, 0, 0, 1, 0, 0, 'red', 0, 'ASDAS', 1, 1),
-(8, '123456', '123456', 1, '1', 2, 1, 1, 0, 4, 0, 0, 'green', 0, 'asdasd', 3, 1),
-(9, '56456', '654', 2, '2', 4, 1, 0, 1, 4, 0, 0, 'yellow', 0, 'asdad', 3, 1),
-(10, '6595', '595', 3, '3', 2, 0, 0, 0, 3, 0, 0, 'green', 0, '0asdas', 3, 1),
-(11, '654321', '654321', 2, '2', 4, 100, 50, 50, 12, 0, 5, 'red', 0, 'falana', 4, 1),
-(12, '231651', '2135165', 3, '2', 4, 0, 0, 0, 12, 0, 0, 'green', 0, 'asdad', 4, 1),
-(13, '54666', '61651', 3, '3', 1, 0, 0, 0, 1, 0, 0, 'null', 0, 'asasd', 4, 1),
-(14, '12345', '123', 12, '12', 5, 1200, 4500, 3400, 12, 100, 300, 'green', 100, 'ok', 5, 1),
-(15, '12', '56', 123, '31', 2, 100, 100, 200, 2, 200, 100, 'red', 1000, 'asdads', 5, 1),
-(16, '0321', '61', 161, '216', 4, 200, 1000, 1000, 1, 200, 200, 'white', 10000, 'sdasd', 5, 1),
-(17, '12346', '1315', 213, '132', 4, 200, 500, 400, 4, 100, 200, 'white', 600, 'asdads', 5, 1);
+INSERT INTO `container_entry` (`ce_id`, `container_number`, `vehicle_id`, `advance`, `balance`, `color`, `mr_charges`, `remarks`, `cm_id`, `status`) VALUES
+(1, 1, 1, 200, 200, 'white', 200, '', 1, 1),
+(2, 420, 2, 150, 250, 'red', 100, 'ok........', 1, 1),
+(3, 100, 1, 150, 250, 'white', 0, '', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -306,6 +286,13 @@ CREATE TABLE `container_movement` (
   `party_charges` int(11) NOT NULL,
   `lot_of` int(11) NOT NULL,
   `line_id` int(11) NOT NULL,
+  `bl_cro_number` varchar(16) NOT NULL,
+  `job_number` varchar(16) NOT NULL,
+  `index_number` varchar(15) NOT NULL,
+  `rent` int(11) NOT NULL,
+  `container_id` int(11) NOT NULL,
+  `lolo_charges` int(11) NOT NULL,
+  `weight_charges` int(11) NOT NULL,
   `paid_status` tinyint(4) NOT NULL DEFAULT '0',
   `status` tinyint(4) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -314,11 +301,8 @@ CREATE TABLE `container_movement` (
 -- Dumping data for table `container_movement`
 --
 
-INSERT INTO `container_movement` (`cm_id`, `datee`, `agent_id`, `coa_id`, `consignee_id`, `movement`, `empty_terminal_id`, `from_yard_id`, `to_yard_id`, `container_size`, `party_charges`, `lot_of`, `line_id`, `paid_status`, `status`) VALUES
-(1, '2018-03-17', 1, 1, 1, 'export', 1, 2, 3, 40, 20000, 6, 1, 0, 1),
-(3, '2018-04-20', 2, 8, 3, 'import', 6, 3, 1, 20, 3000, 3, 1, 0, 1),
-(4, '2018-04-21', 2, 8, 3, 'export', 3, 6, 2, 45, 20000, 3, 2, 0, 1),
-(5, '2018-04-27', 3, 8, 1, 'export', 6, 3, 2, 40, 20000, 4, 1, 0, 1);
+INSERT INTO `container_movement` (`cm_id`, `datee`, `agent_id`, `coa_id`, `consignee_id`, `movement`, `empty_terminal_id`, `from_yard_id`, `to_yard_id`, `container_size`, `party_charges`, `lot_of`, `line_id`, `bl_cro_number`, `job_number`, `index_number`, `rent`, `container_id`, `lolo_charges`, `weight_charges`, `paid_status`, `status`) VALUES
+(1, '2018-05-09', 3, 8, 3, 'import', 1, 3, 2, 20, 50000, 3, 1, '42053', '365', '1506', 300, 3, 300, 200, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -514,7 +498,9 @@ INSERT INTO `garage_entry` (`ge_id`, `datee`, `vehicle_id`, `amount`, `descripti
 (6, '04/20/2018', 4, '9500.00', 'falana dhimaka', 1),
 (7, '04/27/2018', 4, '10000.00', 'NILL', 1),
 (8, '04/27/2018', 4, '600.00', 'NILL', 1),
-(9, '05/04/2018', 1, '5200.00', '', 1);
+(9, '05/04/2018', 1, '5200.00', '', 1),
+(10, '2018-05-09', 1, '200.00', 'NILL', 1),
+(11, '2018-05-09', 2, '100.00', 'NILL', 1);
 
 -- --------------------------------------------------------
 
@@ -831,12 +817,12 @@ ALTER TABLE `container`
 -- AUTO_INCREMENT for table `container_entry`
 --
 ALTER TABLE `container_entry`
-  MODIFY `ce_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `ce_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `container_movement`
 --
 ALTER TABLE `container_movement`
-  MODIFY `cm_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `cm_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `daily_description`
 --
@@ -866,7 +852,7 @@ ALTER TABLE `expenses`
 -- AUTO_INCREMENT for table `garage_entry`
 --
 ALTER TABLE `garage_entry`
-  MODIFY `ge_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `ge_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `income`
 --
