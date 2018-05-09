@@ -214,12 +214,12 @@ date_default_timezone_set("Asia/Karachi");
                                                 <div class="form-group">
                                                           <label class="col-md-2 control-label">B/L OR CRO No:</label>
                                                         <div class="col-md-3">
-                                                          <input type="text" class="form-control" placeholder="E-1035" id="bl_cro_number" name="bl_cro_number" required tabindex="9">
+                                                          <input type="text" class="form-control" placeholder="E-1035" id="bl_cro_number" name="bl_cro_number" required tabindex="9" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) { echo 'value="'.$_SESSION['bl_cro_number'].'" readonly';}?> >
                                                         </div>
                                             
                                                           <label class="col-md-1 control-label">Job No:</label>
                                                         <div class="col-md-4">
-                                                          <input type="text" class="form-control" placeholder="E-1035" id="job_number" name="job_number" required tabindex="10">
+                                                          <input type="text" class="form-control" placeholder="E-1035" id="job_number" name="job_number" required tabindex="10" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) { echo 'value="'.$_SESSION['job_number'].'" readonly';}?>>
                                                         </div>
                                                  </div>  
                                              </div>
@@ -234,7 +234,7 @@ date_default_timezone_set("Asia/Karachi");
                                                            
                                                          <div class="col-md-2 small-lab">
                                                           <label class=" control-label">Index No</label>
-                                                           <input type="text" class="form-control" placeholder="E-1035" id="index_number" name="index_number" required tabindex="12">
+                                                           <input type="text" class="form-control" placeholder="E-1035" id="index_number" name="index_number" required tabindex="12" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) { echo 'value="'.$_SESSION['index_number'].'" readonly';}?>>
                                                          </div>
                                                     
                                                       <div class="col-md-3 small-lab2">
@@ -279,12 +279,12 @@ date_default_timezone_set("Asia/Karachi");
 
                                                             <label class="col-md-1 control-label">Rent:</label>
                                                             <div class="col-md-2">
-                                                              <input type="number" min="0" class="form-control" placeholder="Rent" id="rent" name="rent"  tabindex="17">
+                                                              <input type="number" min="0" class="form-control" placeholder="Rent" id="rent" name="rent"  tabindex="17" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) { echo 'value="'.$_SESSION['rent'].'" readonly';}?>>
                                                             </div>
 
                                                             <label class="col-md-1 control-label">Lolo Charges:</label>
                                                             <div class="col-md-2">
-                                                              <input type="number" min="0" step="0.01" class="form-control" placeholder="lolo Charges" id="lolo_charges" name="lolo_charges" required tabindex="18">
+                                                              <input type="number" min="0" step="0.01" class="form-control" placeholder="lolo Charges" id="lolo_charges" name="lolo_charges" required tabindex="18" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) { echo 'value="'.$_SESSION['lolo_charges'].'" readonly';}?>>
                                                             </div>
                                                               
                                                               
@@ -314,7 +314,7 @@ date_default_timezone_set("Asia/Karachi");
                                                     <div class="form-group">
                                                           <label class="col-md-2 control-label">Container Type:</label>
                                                           <div class="col-md-3">
-                                                              <select class="form-control" id="container_id" name="container_id" required tabindex="21">
+                                                              <select class="form-control" id="container_id" name="container_id" required tabindex="21" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'disabled' ?> >
                                                                   <option value="">Select Container Type</option>
                                                                   <?php 
 
@@ -377,7 +377,7 @@ date_default_timezone_set("Asia/Karachi");
                                                                   <label class="col-md-2 control-label">Weight Charges</label>
                                                                    
                                                                   <div class="col-md-3">
-                                                                    <input type="number" min="0" step="0.01" class="form-control" placeholder="Weight Charges" id="weight_charges" name="weight_charges" required tabindex="24">
+                                                                    <input type="number" min="0" step="0.01" class="form-control" placeholder="Weight Charges" id="weight_charges" name="weight_charges" required tabindex="24" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) { echo 'value="'.$_SESSION['weight_charges'].'" readonly';}?>>
                                                                   </div>
                                                       
                                                                    
@@ -396,7 +396,7 @@ date_default_timezone_set("Asia/Karachi");
                                                             </div>
                                                                      <label class="col-md-2 control-label">Maintinace & Repair Charges:</label>
                                                                    <div class="col-md-3">
-                                                                     <input type="number" min="0" step="0.01" class="form-control" placeholder="Charges" id="mr_charges" name="mr_charges"  tabindex="26">
+                                                                     <input type="number" min="0" step="0.01" value="0" class="form-control" placeholder="Charges" id="mr_charges" name="mr_charges"  tabindex="26">
                                                                    </div>
                                                             </div>  
                                                         </div>
@@ -411,7 +411,7 @@ date_default_timezone_set("Asia/Karachi");
                                                         </div>                                     
                                     <div class="form-actions ">
                                         <button type="submit" class="btn blue" id="btn_submit" tabindex="28">Submit (F2)</button> 
-                                        <button type="reset" class="btn default" id="btn_reset" tabindex="29">Cancel</button>
+                                        <!-- <button type="reset" class="btn default" id="btn_reset" tabindex="29">Cancel</button> -->
 
                                         <button type="submit" class="btn blue hidden" id="update_form_btn" tabindex="28">Update</button>
                                         <button type="button" class="btn default hidden"  id="add_new" tabindex="29">Add New</button>
@@ -508,9 +508,10 @@ include 'footer.php';
        }
       }
 
-      $('#advance,#rent,#lolo_charges').on('keyup change',function(){
-          var a = $('#rent').val()/1 + $('#lolo_charges').val()/1; 
-          $('#balance').val( a - $('#advance').val() );
+      $('#advance,#rent,#lolo_charges,#weight_charges').on('keyup change',function(){
+          var a = $('#rent').val()/1 + $('#lolo_charges').val()/1,
+              b = $('#advance').val()/1 + $('#weight_charges').val()/1; 
+          $('#balance').val( a - b );
         });
 
 
@@ -703,20 +704,23 @@ include 'footer.php';
           $('#party_charges').val(<?php echo $_SESSION['party_charges'] ?>);
           $('#lot_of').val(<?php echo $_SESSION['lot_of'] ?>);
           $('#line_id').val(<?php echo $_SESSION['line_id'] ?>).trigger('change');
+          $('#container_id').val(<?php echo $_SESSION['container_id'] ?>).trigger('change');
 
         <?php }// END oF IF ?>
 
-      function add_entry(cm_id,bl_cro_number,job_number,container_number,index_number,vehicle_id,advance,rent,balance,container_id,lolo_charges,weight_charges,color,mr_charges,remarks)
+      function add_entry(cm_id,container_number,vehicle_id,advance,balance,color,mr_charges,remarks)
       {
           $.ajax({
-              url:'ajax/container_entry/add.php?cm_id='+cm_id+'&bl_cro_number='+bl_cro_number+'&job_number='+job_number+'&container_number='+container_number+'&index_number='+index_number+'&vehicle_id='+vehicle_id+'&advance='+advance+'&rent='+rent+'&balance='+balance+'&container_id='+container_id+'&lolo_charges='+lolo_charges+'&weight_charges='+weight_charges+'&color='+color+'&mr_charges='+mr_charges+'&remarks='+encodeURIComponent(remarks),
+              url:'ajax/container_entry/add.php?cm_id='+cm_id+'&container_number='+container_number+'&vehicle_id='+vehicle_id+'&advance='+advance+'&balance='+balance+'&color='+color+'&mr_charges='+mr_charges+'&remarks='+encodeURIComponent(remarks),
               type:"POST",
               dataType:'JSON',
               success:function(data){
                   if(data['inserted'] == 'true')
                   {
-                      $('#bl_cro_number,#job_number,#container_number,#index_number,#advance,#rent,#balance,#lolo_charges,#weight_charges,#color,#mr_charges,#remarks').val("");
-                      $('#vehicle_id,#container_id').val("").trigger('change');
+                      $('#container_number,#advance,#balance,#remarks').val("");
+                      $('#mr_charges').val("0");
+                      $('#color').val('white').trigger('change');
+                      $('#vehicle_id').val("").trigger('change');
                       
                       <?php 
 
@@ -739,7 +743,7 @@ include 'footer.php';
       function add(datee,agent_id,coa_id,consignee_id,movement,empty_terminal_id,from_yard_id,to_yard_id,bl_cro_number,job_number,container_number,index_number,container_size,vehicle_id,advance,rent,balance,party_charges,container_id,lot_of,line_id,lolo_charges,weight_charges,color,mr_charges,remarks)
       {
           $.ajax({
-              url:'ajax/container_movement/add.php?datee='+encodeURIComponent(datee)+'&agent_id='+agent_id+'&coa_id='+coa_id+'&consignee_id='+consignee_id+'&movement='+encodeURIComponent(movement)+'&empty_terminal_id='+empty_terminal_id+'&from_yard_id='+from_yard_id+'&to_yard_id='+to_yard_id+'&container_size='+container_size+'&party_charges='+party_charges+'&lot_of='+lot_of+'&line_id='+line_id,
+              url:'ajax/container_movement/add.php?datee='+encodeURIComponent(datee)+'&agent_id='+agent_id+'&coa_id='+coa_id+'&consignee_id='+consignee_id+'&movement='+encodeURIComponent(movement)+'&empty_terminal_id='+empty_terminal_id+'&from_yard_id='+from_yard_id+'&to_yard_id='+to_yard_id+'&container_size='+container_size+'&party_charges='+party_charges+'&lot_of='+lot_of+'&line_id='+line_id+'&bl_cro_number='+bl_cro_number+'&job_number='+job_number+'&index_number='+index_number+'&rent='+rent+'&container_id='+container_id+'&lolo_charges='+lolo_charges+'&weight_charges='+weight_charges,
               type:"POST",
               dataType:'JSON',
               success:function(data){
@@ -747,7 +751,7 @@ include 'footer.php';
                   {
                       // $('#datee,#agent_id,#coa_id,#consignee_id,#movement,#empty_terminal_id,#from_yard_id,#to_yard_id,#container_size,#party_charges,#lot_of,#line_id').attr('readonly', 'readonly');
                       
-                      add_entry(data['cm_id'],bl_cro_number,job_number,container_number,index_number,vehicle_id,advance,rent,balance,container_id,lolo_charges,weight_charges,color,mr_charges,remarks);
+                      add_entry(data['cm_id'],container_number,vehicle_id,advance,balance,color,mr_charges,remarks);
 
                       location.assign('container-entry.php');
                   }
@@ -756,10 +760,10 @@ include 'footer.php';
           });
       }
 
-      function update(ce_id,bl_cro_number,job_number,container_number,index_number,vehicle_id,vehicle_number,advance,rent,balance,container_id,container_type,lolo_charges,weight_charges,color,mr_charges,remarks)
+      function update(ce_id,container_number,vehicle_id,vehicle_number,advance,balance,color,mr_charges,remarks)
       {
           $.ajax({
-              url:'ajax/container_entry/update.php?ce_id='+ce_id+'&bl_cro_number='+bl_cro_number+'&job_number='+job_number+'&container_number='+container_number+'&index_number='+index_number+'&vehicle_id='+vehicle_id+'&advance='+advance+'&rent='+rent+'&balance='+balance+'&container_id='+container_id+'&lolo_charges='+lolo_charges+'&weight_charges='+weight_charges+'&color='+color+'&mr_charges='+mr_charges+'&remarks='+encodeURIComponent(remarks),
+              url:'ajax/container_entry/update.php?ce_id='+ce_id+'&container_number='+container_number+'&vehicle_id='+vehicle_id+'&advance='+advance+'&balance='+balance+'&color='+color+'&mr_charges='+mr_charges+'&remarks='+encodeURIComponent(remarks),
               type:"POST",
               success:function(data){
                   if(data)
@@ -769,17 +773,10 @@ include 'footer.php';
                       
                       addNewClick();
 
-                      temp[10] = bl_cro_number;
-                      temp[11] = job_number;
                       temp[12] = container_number;
-                      temp[13] = index_number;
                       temp[15] = vehicle_number;
                       temp[16] = advance;
-                      temp[17] = rent;
                       temp[18] = balance;
-                      temp[20] = container_type;
-                      temp[23] = lolo_charges;
-                      temp[24] = weight_charges;
                       temp[25] = color;
                       temp[26] = mr_charges;
                       temp[27] = remarks;
@@ -848,11 +845,11 @@ include 'footer.php';
 
           $('form').removeClass('update_form');
 
-          $('form select').val("").trigger('change');
-          $('#movement').val('empty').trigger('change');
-          $('#container_size').val('20').trigger('change');
-          $('#color').val('red').trigger('change');
-          $('#btn_reset').trigger('click');
+          $('#container_number,#advance,#remarks').val("");
+          $('#mr_charges').val("0"); 
+          $('#color').val('white').trigger('change');
+          $('#vehicle_id').val('').trigger('change');
+//          $('#btn_reset').trigger('click');
 
           $('#ce_id_div').addClass('hidden');
           $('#update_form_btn').addClass('hidden');
@@ -905,21 +902,21 @@ include 'footer.php';
           // $('#empty_terminal_id').val( trr.find('td').eq(7).attr('id') ).trigger('change');
           // $('#from_yard_id').val( trr.find('td').eq(8).attr('id') ).trigger('change');
           // $('#to_yard_id').val( trr.find('td').eq(9).attr('id') ).trigger('change');
-          $('#bl_cro_number').val( trr.find('td').eq(10).text() );
-          $('#job_number').val( trr.find('td').eq(11).text() );
+          // $('#bl_cro_number').val( trr.find('td').eq(10).text() );
+          // $('#job_number').val( trr.find('td').eq(11).text() );
           $('#container_number').val( trr.find('td').eq(12).text() );
-          $('#index_number').val( trr.find('td').eq(13).text() );
+          // $('#index_number').val( trr.find('td').eq(13).text() );
           // $('#container_size').val( trr.find('td').eq(14).text() ).trigger('change');
           $('#vehicle_id').val( trr.find('td').eq(15).attr('id') ).trigger('change');
           $('#advance').val( trr.find('td').eq(16).text() );
-          $('#rent').val( trr.find('td').eq(17).text() );
+          // $('#rent').val( trr.find('td').eq(17).text() );
           $('#balance').val( trr.find('td').eq(18).text() );
           // $('#party_charges').val( trr.find('td').eq(19).text() );
-          $('#container_id').val( trr.find('td').eq(20).attr('id') ).trigger('change');
+          // $('#container_id').val( trr.find('td').eq(20).attr('id') ).trigger('change');
           // $('#lot_of').val( trr.find('td').eq(21).text() );
           // $('#line_id').val( trr.find('td').eq(22).attr('id') ).trigger('change');
-          $('#lolo_charges').val( trr.find('td').eq(23).text() );
-          $('#weight_charges').val( trr.find('td').eq(24).text() );
+          // $('#lolo_charges').val( trr.find('td').eq(23).text() );
+          // $('#weight_charges').val( trr.find('td').eq(24).text() );
           $('#color').val( trr.find('td').eq(25).text() ).trigger('change');
           $('#mr_charges').val( trr.find('td').eq(26).text() );
           $('#remarks').val( trr.find('td').eq(27).text() );
@@ -961,14 +958,14 @@ include 'footer.php';
 
          if( $(this).hasClass('update_form') ) 
          {
-            update(ce_id,bl_cro_number,job_number,container_number,index_number,vehicle_id,vehicle_number,advance,rent,balance,container_id,container_type,lolo_charges,weight_charges,color,mr_charges,remarks);
+            update(ce_id,container_number,vehicle_id,vehicle_number,advance,balance,color,mr_charges,remarks);
          }
          else if( $(this).hasClass('add_entry_form') )
          {  
             <?php 
               if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL )
               {
-                echo 'add_entry('.$_SESSION['cm_id'].',bl_cro_number,job_number,container_number,index_number,vehicle_id,advance,rent,balance,container_id,lolo_charges,weight_charges,color,mr_charges,remarks)';  
+                echo 'add_entry('.$_SESSION['cm_id'].',container_number,vehicle_id,advance,balance,color,mr_charges,remarks)';  
               }
             ?>
          }

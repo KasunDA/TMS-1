@@ -16,7 +16,15 @@
 	$lot_of= $_GET['lot_of'];
 	$line_id = $_GET['line_id'];
 
-	$q = mysqli_query($mycon,"UPDATE container_movement SET datee='$datee', agent_id= $agent_id , coa_id= $coa_id, consignee_id=$consignee_id , movement='$movement', empty_terminal_id=$empty_terminal_id , from_yard_id=$from_yard_id , to_yard_id=$to_yard_id , container_size=$container_size , party_charges=$party_charges , lot_of=$lot_of , line_id=$line_id WHERE cm_id=$cm_id ");
+	$bl_cro_number = $_GET['bl_cro_number'];
+	$job_number = $_GET['job_number'];
+	$index_number = $_GET['index_number'];
+	$rent = $_GET['rent'];
+	$container_id = $_GET['container_id'];
+	$lolo_charges = $_GET['lolo_charges'];
+	$weight_charges = $_GET['weight_charges'];
+
+	$q = mysqli_query($mycon,"UPDATE container_movement SET datee='$datee', agent_id= $agent_id , coa_id= $coa_id, consignee_id=$consignee_id , movement='$movement', empty_terminal_id=$empty_terminal_id , from_yard_id=$from_yard_id , to_yard_id=$to_yard_id , container_size=$container_size , party_charges=$party_charges , lot_of=$lot_of , line_id=$line_id , bl_cro_number='$bl_cro_number',job_number='$job_number', index_number='$index_number' , rent=$rent , container_id=$container_id , lolo_charges=$lolo_charges , weight_charges=$weight_charges WHERE cm_id=$cm_id ");
 
 	if(mysqli_affected_rows($mycon))
 	{
@@ -37,6 +45,14 @@
 		$_SESSION['container_size'] = $container_size;
 		$_SESSION['party_charges'] = $party_charges;
 		$_SESSION['line_id'] = $line_id;
+
+		$_SESSION['bl_cro_number'] = $riq['bl_cro_number'];
+		$_SESSION['job_number'] = $riq['job_number'];
+		$_SESSION['index_number'] = $riq['index_number'];
+		$_SESSION['rent'] = $riq['rent'];
+		$_SESSION['container_id'] = $riq['container_id'];
+		$_SESSION['lolo_charges'] = $riq['lolo_charges'];
+		$_SESSION['weight_charges'] = $riq['weight_charges'];
 
 	}
 

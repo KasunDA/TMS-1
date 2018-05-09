@@ -36,10 +36,10 @@ date_default_timezone_set("Asia/Karachi");
                                                 <input type="text" class="form-control" id="to_datee" name="to_datee" required tabindex="2" <?php echo 'value="'.date('m/d/Y').'"'; ?> placeholder="mm/dd/yyyy"> </div>
                                             <!-- /input-group -->
                                         </div>
-                                        <label class="col-md-2 control-label">Select Type:</label>
+                                        <label class="col-md-2 control-label">Select Bank:</label>
                                         <div class="col-md-3">
                                              <select class="form-control" name="bank_id" id="bank_id" tabindex="3">
-                                                         <option value="">Select Bank</option>
+                                                         <option value="">All</option>
                                                          <?php 
 
                                                           $q = mysqli_query($mycon,'SELECT bank_id,short_form from bank where status=1 ORDER BY bank_id DESC');

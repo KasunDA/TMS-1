@@ -36,10 +36,10 @@ date_default_timezone_set("Asia/Karachi");
                                                 <input type="text" class="form-control" id="to_datee" name="to_datee" required tabindex="2" <?php echo 'value="'.date('m/d/Y').'"'; ?> placeholder="mm/dd/yyyy"> </div>
                                             <!-- /input-group -->
                                         </div>
-                                        <label class="col-md-2 control-label">Select Type:</label>
+                                        <label class="col-md-2 control-label">Select Vehicle:</label>
                                         <div class="col-md-3">
                                              <select class="form-control" name="vehicle_id" id="vehicle_id" tabindex="3">
-                                                         <option value="">Select Vehicle</option>
+                                                         <option value="">All</option>
                                                          <?php 
 
                                                           $q = mysqli_query($mycon,'SELECT vehicle_id,vehicle_number from vehicle where status=1 ORDER BY vehicle_id DESC');

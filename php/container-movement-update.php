@@ -242,12 +242,73 @@ date_default_timezone_set("Asia/Karachi");
                                                             </div>
                                                         </div> 
                                                   </div>
+
+                                                <div class="row"> 
+                                                <div class="form-group">
+                                                          <label class="col-md-2 control-label">B/L OR CRO No:</label>
+                                                        <div class="col-md-3">
+                                                          <input type="text" class="form-control" placeholder="E-1035" id="bl_cro_number" name="bl_cro_number" required tabindex="13">
+                                                        </div>
+                                            
+                                                          <label class="col-md-1 control-label">Job No:</label>
+                                                        <div class="col-md-4">
+                                                          <input type="text" class="form-control" placeholder="E-1035" id="job_number" name="job_number" required tabindex="14">
+                                                        </div>
+                                                 </div>  
+                                             </div>
+                                      
+                                             <div class="row"> 
+                                                 <div class="form-group">
+                                                          
+                                                         <label class="col-md-1 control-label">Index No</label> 
+                                                         <div class="col-md-2"> 
+                                                           <input type="text" class="form-control" placeholder="E-1035" id="index_number" name="index_number" required tabindex="15">
+                                                         </div>
+             
+                                                          <label class="col-md-1 control-label">Rent:</label>
+                                                            <div class="col-md-2">
+                                                              <input type="number" min="0" class="form-control" placeholder="Rent" id="rent" name="rent"  tabindex="16">
+                                                            </div>
+
+                                                            <label class="col-md-2 control-label">Lolo Charges:</label>
+                                                            <div class="col-md-2">
+                                                              <input type="number" min="0" step="0.01" class="form-control" placeholder="lolo Charges" id="lolo_charges" name="lolo_charges" required tabindex="17">
+                                                            </div>
+     
+                                                  </div>  
+                                              </div> 
+
+                                              <div class="row"> 
+                                                    <div class="form-group">
+                                                          <label class="col-md-2 control-label">Container Type:</label>
+                                                          <div class="col-md-3">
+                                                              <select class="form-control" id="container_id" name="container_id" required tabindex="18" >
+                                                                  <option value="">Select Container Type</option>
+                                                                  <?php 
+
+                                                          $q = mysqli_query($mycon,'SELECT container_id,type from container where status=1 ORDER BY container_id DESC');
+
+                                                          while( $r = mysqli_fetch_array($q) )
+                                                            {?>
+                                                              <option value="<?php echo $r['container_id']; ?>"><?php echo $r['type']; ?></option>
+                                                          <?php } //END OF WHILE ?>
+                                                              </select>
+                                                          </div>
+  
+                                                          <label class="col-md-2 control-label">Weight Charges</label>
+                                                                   
+                                                          <div class="col-md-3">
+                                                            <input type="number" min="0" step="0.01" class="form-control" placeholder="Weight Charges" id="weight_charges" name="weight_charges" required tabindex="19">
+                                                          </div>
+
+                                                      </div> 
+                                                </div> 
                               
                                     <div class="form-actions ">
                                         <!-- <button type="submit" class="btn blue" id="btn_submit" tabindex="13">Submit (F2)</button>  -->
                                         
 
-                                        <button type="submit" class="btn blue" id="update_form_btn" disabled tabindex="13">Update</button>
+                                        <button type="submit" class="btn blue" id="update_form_btn" disabled tabindex="20">Update</button>
                                         <!-- <button type="reset" class="btn default" id="btn_reset" tabindex="14">Cancel</button> -->
                                         <!-- <button type="button" class="btn default hidden"  id="add_new" tabindex="14">Add New</button> -->
                                     </div>
@@ -285,6 +346,14 @@ date_default_timezone_set("Asia/Karachi");
                                                 <th> Party Charges </th>
                                                 <th> Lot Of </th>
                                                 <th> Line </th>
+                                                <th> BL_CRO_Number </th>
+                                                <th> Job # </th>
+                                                <th> Index # </th>
+                                                <th> Rent </th>
+                                                <th> Container Type </th>
+                                                <th> Lolo Charges </th>
+                                                <th> Weight Charges </th>
+
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -329,7 +398,7 @@ include 'footer.php';
 
 
       
-      $('#agent_id,#coa_id,#consignee_id,#empty_terminal_id,#movement,#vehicle_id,#line_id,#container_size,#from_yard_id,#to_yard_id').select2({
+      $('#agent_id,#coa_id,#consignee_id,#empty_terminal_id,#movement,#vehicle_id,#line_id,#container_size,#from_yard_id,#to_yard_id,#container_id').select2({
             width: 'resolve'
           });  
       
@@ -440,6 +509,14 @@ include 'footer.php';
                             '<td>'+value['lot_of']+'</td>'+
                             '<td id="'+value['line_id']+'">'+value['line']+'</td>'+
 
+                            '<td>'+value['bl_cro_number']+'</td>'+
+                            '<td>'+value['job_number']+'</td>'+
+                            '<td>'+value['index_number']+'</td>'+
+                            '<td>'+value['rent']+'</td>'+
+                            '<td id="'+value['container_id']+'">'+value['container_type']+'</td>'+
+                            '<td>'+value['lolo_charges']+'</td>'+
+                            '<td>'+value['weight_charges']+'</td>'+
+
                             '</tr>');
 
                     n++; i++;
@@ -453,10 +530,10 @@ include 'footer.php';
 
       loadData();
 
-      function update(cm_id,datee,agent_id,agent_name,coa_id,coa,consignee_id,consignee,movement,empty_terminal_id,empty_terminal,from_yard_id,from_yard,to_yard_id,to_yard,container_size,party_charges,lot_of,line_id,line)
+      function update(cm_id,datee,agent_id,agent_name,coa_id,coa,consignee_id,consignee,movement,empty_terminal_id,empty_terminal,from_yard_id,from_yard,to_yard_id,to_yard,container_size,party_charges,lot_of,line_id,line,bl_cro_number,job_number,index_number,rent,container_id,container_type,lolo_charges,weight_charges)
       {
           $.ajax({
-              url:'ajax/container_movement/update.php?cm_id='+cm_id+'&datee='+encodeURIComponent(datee)+'&agent_id='+agent_id+'&coa_id='+coa_id+'&consignee_id='+consignee_id+'&movement='+movement+'&empty_terminal_id='+empty_terminal_id+'&from_yard_id='+from_yard_id+'&to_yard_id='+to_yard_id+'&container_size='+container_size+'&party_charges='+party_charges+'&lot_of='+lot_of+'&line_id='+line_id,
+              url:'ajax/container_movement/update.php?cm_id='+cm_id+'&datee='+encodeURIComponent(datee)+'&agent_id='+agent_id+'&coa_id='+coa_id+'&consignee_id='+consignee_id+'&movement='+movement+'&empty_terminal_id='+empty_terminal_id+'&from_yard_id='+from_yard_id+'&to_yard_id='+to_yard_id+'&container_size='+container_size+'&party_charges='+party_charges+'&lot_of='+lot_of+'&line_id='+line_id+'&bl_cro_number='+bl_cro_number+'&job_number='+job_number+'&index_number='+index_number+'&rent='+rent+'&container_id='+container_id+'&lolo_charges='+lolo_charges+'&weight_charges='+weight_charges,
               type:"POST",
               success:function(data){
                   if(data)
@@ -478,6 +555,14 @@ include 'footer.php';
                       temp[12] = party_charges;
                       temp[13] = lot_of;
                       temp[14] = line;
+
+                      temp[15] = bl_cro_number;
+                      temp[16] = job_number
+                      temp[17] = index_number
+                      temp[18] = rent
+                      temp[19] = container_type
+                      temp[20] = lolo_charges
+                      temp[21] = weight_charges
 
                       $('#mytable').DataTable().row(i).data(temp).draw();
 
@@ -520,7 +605,7 @@ include 'footer.php';
           $('form select').val("").trigger('change');
           $('#movement').val('empty').trigger('change');
           $('#container_size').val('20').trigger('change');
-          $('#party_charges,#lot_of').val('');
+          $('#party_charges,#lot_of,#bl_cro_number,#job_number,#index_number,#rent,#lolo_charges,#weight_charges').val('');
 
           $('#cm_id_div').addClass('hidden');
           $('#update_form_btn').attr('disabled','disabled');
@@ -570,6 +655,14 @@ include 'footer.php';
           $('#party_charges').val( trr.find('td').eq(12).text() );
           $('#lot_of').val( trr.find('td').eq(13).text() );
           $('#line_id').val( trr.find('td').eq(14).attr('id') ).trigger('change');
+
+          $('#bl_cro_number').val( trr.find('td').eq(15).text() );
+          $('#job_number').val( trr.find('td').eq(16).text() );
+          $('#index_number').val( trr.find('td').eq(17).text() );
+          $('#rent').val( trr.find('td').eq(18).text() );
+          $('#container_id').val( trr.find('td').eq(19).attr('id') ).trigger('change');
+          $('#lolo_charges').val( trr.find('td').eq(20).text() );
+          $('#weight_charges').val( trr.find('td').eq(21).text() );
       });
 
       //Update
@@ -595,11 +688,21 @@ include 'footer.php';
              lot_of = $('#lot_of').val(),
              line_id = $('#line_id').val(),
              line = $('#line_id option:selected').text(),
+
+             bl_cro_number = $('#bl_cro_number').val(),
+             job_number = $('#job_number').val(),
+             index_number = $('#index_number').val(),
+             rent = $('#rent').val(),
+             container_id = $('#container_id').val(),
+             container_type = $('#container_id option:selected').text(),
+             lolo_charges = $('#lolo_charges').val(),
+             weight_charges = $('#weight_charges').val(),
+             
              cm_id =  $('#cm_id').val();
 
          if( $(this).hasClass('update_form') ) 
          {
-            update(cm_id,datee,agent_id,agent_name,coa_id,coa,consignee_id,consignee,movement,empty_terminal_id,empty_terminal,from_yard_id,from_yard,to_yard_id,to_yard,container_size,party_charges,lot_of,line_id,line);
+            update(cm_id,datee,agent_id,agent_name,coa_id,coa,consignee_id,consignee,movement,empty_terminal_id,empty_terminal,from_yard_id,from_yard,to_yard_id,to_yard,container_size,party_charges,lot_of,line_id,line,bl_cro_number,job_number,index_number,rent,container_id,container_type,lolo_charges,weight_charges);
          }
          else
          {

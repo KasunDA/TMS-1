@@ -15,23 +15,16 @@
 	{
 
 		$cm_id = $_GET['cm_id'];
-		$bl_cro_number = $_GET['bl_cro_number'];
-		$job_number = $_GET['job_number'];
 		$container_number = $_GET['container_number'];
-		$index_number = $_GET['index_number'];
 		$vehicle_id = $_GET['vehicle_id'];
 		$advance = $_GET['advance'];
-		$rent = $_GET['rent'];
 		$balance = $_GET['balance'];
-		$container_id = $_GET['container_id'];
-		$lolo_charges = $_GET['lolo_charges'];
-		$weight_charges = $_GET['weight_charges'];
 		$color = $_GET['color'];
 		$mr_charges = $_GET['mr_charges'];
 		$remarks = $_GET['remarks'];
 
 
-		$q = mysqli_query($mycon,"INSERT INTO container_entry(cm_id,bl_cro_number,job_number,container_number,index_number,vehicle_id,advance,rent,balance,container_id,lolo_charges,weight_charges,color,mr_charges,remarks) VALUES( $cm_id,'$bl_cro_number','$job_number','$container_number','$index_number',$vehicle_id,$advance,$rent,$balance,$container_id,$lolo_charges,$weight_charges,'$color',$mr_charges,'$remarks' ) ");
+		$q = mysqli_query($mycon,"INSERT INTO container_entry(cm_id,container_number,vehicle_id,advance,balance,color,mr_charges,remarks) VALUES( $cm_id,'$container_number',$vehicle_id,$advance,$balance,'$color',$mr_charges,'$remarks' ) ");
 
 		if(mysqli_affected_rows($mycon))
 		{

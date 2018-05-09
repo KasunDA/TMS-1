@@ -14,10 +14,18 @@
 	$party_charges = $_GET['party_charges'];
 	$lot_of= $_GET['lot_of'];
 	$line_id = $_GET['line_id'];
+
+	$bl_cro_number = $_GET['bl_cro_number'];
+	$job_number = $_GET['job_number'];
+	$index_number = $_GET['index_number'];
+	$rent = $_GET['rent'];
+	$container_id = $_GET['container_id'];
+	$lolo_charges = $_GET['lolo_charges'];
+	$weight_charges = $_GET['weight_charges'];
 	
 	$json;
 
-	$q = mysqli_query($mycon,"INSERT INTO container_movement(datee,agent_id,coa_id,consignee_id,movement,empty_terminal_id,from_yard_id,to_yard_id,container_size,party_charges,lot_of,line_id) VALUES( '$datee',$agent_id,$coa_id,$consignee_id,'$movement',$empty_terminal_id,$from_yard_id,$to_yard_id,$container_size,$party_charges,$lot_of,$line_id ) ");
+	$q = mysqli_query($mycon,"INSERT INTO container_movement(datee,agent_id,coa_id,consignee_id,movement,empty_terminal_id,from_yard_id,to_yard_id,container_size,party_charges,lot_of,line_id,bl_cro_number,job_number,index_number,rent,container_id,lolo_charges,weight_charges) VALUES( '$datee',$agent_id,$coa_id,$consignee_id,'$movement',$empty_terminal_id,$from_yard_id,$to_yard_id,$container_size,$party_charges,$lot_of,$line_id,'$bl_cro_number','$job_number','$index_number',$rent,$container_id,$lolo_charges,$weight_charges ) ");
 
 	if(mysqli_affected_rows($mycon))
 	{
@@ -41,6 +49,14 @@
 		$_SESSION['container_size'] = $riq['container_size'];
 		$_SESSION['party_charges'] = $riq['party_charges'];
 		$_SESSION['line_id'] = $riq['line_id'];
+
+		$_SESSION['bl_cro_number'] = $riq['bl_cro_number'];
+		$_SESSION['job_number'] = $riq['job_number'];
+		$_SESSION['index_number'] = $riq['index_number'];
+		$_SESSION['rent'] = $riq['rent'];
+		$_SESSION['container_id'] = $riq['container_id'];
+		$_SESSION['lolo_charges'] = $riq['lolo_charges'];
+		$_SESSION['weight_charges'] = $riq['weight_charges'];
 
 		$json['inserted'] = 'true';
 		$json['cm_id'] = $riq['cm_id'];
