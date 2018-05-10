@@ -42,7 +42,7 @@ date_default_timezone_set("Asia/Karachi");
                                                          <option value="">All</option>
                                                          <?php 
 
-                                                          $q = mysqli_query($mycon,'SELECT dd_id,name from daily_description where status=1 ORDER BY dd_id DESC');
+                                                          $q = mysqli_query($mycon,'SELECT dd_id,name from daily_description where status=1 and dd_id!=6 ORDER BY dd_id DESC');
 
                                                           while( $r = mysqli_fetch_array($q) )
                                                             {?>
