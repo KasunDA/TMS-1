@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 09, 2018 at 01:43 PM
+-- Generation Time: May 10, 2018 at 08:59 PM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 7.0.13
 
@@ -72,7 +72,8 @@ INSERT INTO `accounts_entry` (`ae_id`, `datee`, `bank_id`, `action`, `method`, `
 (26, '05/06/2018', 1, 'debit', 'cash', '200.00', NULL, '10000.00', '9800.00', 1),
 (27, '05/08/2018', 3, 'debit', 'cash', '500.00', '', '22500.00', '22000.00', 1),
 (28, '05/08/2018', 4, 'debit', 'cash', '3945.00', '', '43945.00', '40000.00', 1),
-(29, '05/08/2018', 3, 'credit', 'cash', '1000.00', '', '22000.00', '23000.00', 1);
+(29, '05/08/2018', 3, 'credit', 'cash', '1000.00', '', '22000.00', '23000.00', 1),
+(31, '05/10/2018', 3, 'credit', 'check', '150000.00', '003245', '23000.00', '173000.00', 1);
 
 -- --------------------------------------------------------
 
@@ -169,9 +170,7 @@ INSERT INTO `chart_of_account` (`coa_id`, `short_form`, `full_form`, `address`, 
 (2, 'jbt', 'JUTT BROTHER TRA', 'Port Qasim', '03030355003', 1),
 (7, 'mbt ', 'Malik Bros Transport', 'gulshan e hadeed', '03030561651', 1),
 (8, 'AST', 'Agha Steel', 'address', '03006548949', 1),
-(9, 'P', 'pak g', 'aasdasdasd', '03030303032', 1),
-(10, '"P', '"asdad"', '"asasd"', '"03000000000"', 1),
-(11, 'P&G', 'a&%787', 'asad(*U(*&T^T', '03333333333', 1);
+(9, 'P&G', 'a&%787', 'asad(*U(*&T^T', '03333333333', 1);
 
 -- --------------------------------------------------------
 
@@ -262,7 +261,7 @@ CREATE TABLE `container_entry` (
 --
 
 INSERT INTO `container_entry` (`ce_id`, `container_number`, `vehicle_id`, `advance`, `balance`, `color`, `mr_charges`, `remarks`, `cm_id`, `status`) VALUES
-(1, 1, 1, 200, 200, 'white', 200, '', 1, 1),
+(1, 1, 4, 200, 200, 'white', 200, '', 1, 1),
 (2, 420, 2, 150, 250, 'red', 100, 'ok........', 1, 1),
 (3, 100, 1, 150, 250, 'white', 0, '', 1, 1);
 
@@ -302,7 +301,7 @@ CREATE TABLE `container_movement` (
 --
 
 INSERT INTO `container_movement` (`cm_id`, `datee`, `agent_id`, `coa_id`, `consignee_id`, `movement`, `empty_terminal_id`, `from_yard_id`, `to_yard_id`, `container_size`, `party_charges`, `lot_of`, `line_id`, `bl_cro_number`, `job_number`, `index_number`, `rent`, `container_id`, `lolo_charges`, `weight_charges`, `paid_status`, `status`) VALUES
-(1, '2018-05-09', 3, 8, 3, 'import', 1, 3, 2, 20, 50000, 3, 1, '42053', '365', '1506', 300, 3, 300, 200, 0, 1);
+(1, '2018-05-09', 3, 8, 3, 'import', 1, 3, 2, 20, 50000, 3, 1, '42053', '365', '1506', 300, 3, 300, 200, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -325,7 +324,8 @@ INSERT INTO `daily_description` (`dd_id`, `name`, `status`) VALUES
 (2, 'Advance', 1),
 (3, 'Bike Expenses', 1),
 (4, 'Driver Salary', 1),
-(5, 'breakfast', 1);
+(5, 'breakfast', 1),
+(6, 'Party Payment', 1);
 
 -- --------------------------------------------------------
 
@@ -411,7 +411,10 @@ INSERT INTO `exin` (`exin_id`, `expense_id`, `income_id`, `datee`, `previous_bal
 (3, NULL, 17, '2018-05-08', 180000, 180100),
 (4, 27, NULL, '2018-05-08', 180100, 179600),
 (5, 28, NULL, '2018-05-08', 179600, 179400),
-(6, NULL, 18, '2018-05-08', 179400, 179600);
+(6, NULL, 18, '2018-05-08', 179400, 179600),
+(18, NULL, 19, '2018-05-10', 179600, 329600),
+(21, NULL, 21, '2018-05-10', 329600, 479600),
+(22, 30, NULL, '2018-05-10', 479600, 329600);
 
 -- --------------------------------------------------------
 
@@ -468,7 +471,8 @@ INSERT INTO `expenses` (`expense_id`, `datee`, `dd_id`, `method`, `check_number`
 (25, '2018-05-04', 2, 'cash', '', NULL, '100.00', NULL, NULL, NULL, 0, 2, '', 1),
 (26, '2018-05-04', 2, 'check', '123546', 3, '500.00', NULL, NULL, NULL, 0, 2, '', 1),
 (27, '2018-05-08', 1, 'cash', 'null', NULL, '500.00', NULL, 'null', NULL, 0, NULL, '', 1),
-(28, '2018-05-08', 1, 'cash', 'null', NULL, '200.00', NULL, 'null', NULL, 0, NULL, '', 1);
+(28, '2018-05-08', 1, 'cash', 'null', NULL, '200.00', NULL, 'null', NULL, 0, NULL, '', 1),
+(30, '2018-05-10', 6, 'check', '003245', 3, '150000.00', NULL, NULL, NULL, 0, NULL, 'Party Payment Received.', 1);
 
 -- --------------------------------------------------------
 
@@ -545,7 +549,8 @@ INSERT INTO `income` (`income_id`, `datee`, `dd_id`, `method`, `check_number`, `
 (15, '2018-05-04', 2, 'cash', '', NULL, '700.00', 2, NULL, NULL, '', 1),
 (16, '2018-05-04', 2, 'cash', '', NULL, '300.00', 2, NULL, NULL, '', 1),
 (17, '2018-05-08', 1, 'cash', '', NULL, '100.00', NULL, NULL, NULL, '', 1),
-(18, '2018-05-08', 1, 'cash', '', NULL, '200.00', NULL, NULL, NULL, '', 1);
+(18, '2018-05-08', 1, 'cash', '', NULL, '200.00', NULL, NULL, NULL, '', 1),
+(21, '2018-05-10', 6, 'check', '003245', 3, '150000.00', NULL, NULL, NULL, 'Party Payment Received.', 1);
 
 -- --------------------------------------------------------
 
@@ -609,10 +614,34 @@ CREATE TABLE `vehicle` (
 --
 
 INSERT INTO `vehicle` (`vehicle_id`, `owner_name`, `driver_name`, `vehicle_number`, `engine_number`, `chassis_number`, `status`) VALUES
-(1, 'jutt bros ', 'ahmed', '987654321', '987654321', '987654321', 1),
-(2, 'butt bros ', 'hasan', '1564868486', '1515151', '98745848548', 1),
-(4, 'Malik brothers', 'jamal', '549852', '256485', '154565', 1),
-(5, 'butt bros', 'tayyab', '123456', '123456', '123456', 1);
+(1, 'jutt bros ', 'ahmed', 'EF1234', '987654321', '987654321', 1),
+(2, 'butt bros ', 'hasan', 'AZ3215', '1515151', '98745848548', 1),
+(4, 'Malik brothers', 'jamal', 'FK5495', '256485', '154565', 1),
+(5, 'butt bros', 'tayyab', 'ER1234', '123456', '123456', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `voucher`
+--
+
+CREATE TABLE `voucher` (
+  `voucher_number` int(11) NOT NULL,
+  `datee` varchar(30) NOT NULL,
+  `method` varchar(10) NOT NULL,
+  `check_number` varchar(30) DEFAULT NULL,
+  `bank_id` int(11) DEFAULT NULL,
+  `amount` bigint(20) NOT NULL,
+  `cm_id` int(11) DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `voucher`
+--
+
+INSERT INTO `voucher` (`voucher_number`, `datee`, `method`, `check_number`, `bank_id`, `amount`, `cm_id`, `status`) VALUES
+(1, '2018-05-10', 'check', '003245', 3, 150000, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -764,6 +793,12 @@ ALTER TABLE `vehicle`
   ADD PRIMARY KEY (`vehicle_id`);
 
 --
+-- Indexes for table `voucher`
+--
+ALTER TABLE `voucher`
+  ADD PRIMARY KEY (`voucher_number`);
+
+--
 -- Indexes for table `yard`
 --
 ALTER TABLE `yard`
@@ -777,7 +812,7 @@ ALTER TABLE `yard`
 -- AUTO_INCREMENT for table `accounts_entry`
 --
 ALTER TABLE `accounts_entry`
-  MODIFY `ae_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `ae_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 --
 -- AUTO_INCREMENT for table `agent`
 --
@@ -827,7 +862,7 @@ ALTER TABLE `container_movement`
 -- AUTO_INCREMENT for table `daily_description`
 --
 ALTER TABLE `daily_description`
-  MODIFY `dd_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `dd_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `diesel_entry`
 --
@@ -842,12 +877,12 @@ ALTER TABLE `diesel_limit`
 -- AUTO_INCREMENT for table `exin`
 --
 ALTER TABLE `exin`
-  MODIFY `exin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `exin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 --
 -- AUTO_INCREMENT for table `expenses`
 --
 ALTER TABLE `expenses`
-  MODIFY `expense_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `expense_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 --
 -- AUTO_INCREMENT for table `garage_entry`
 --
@@ -857,7 +892,7 @@ ALTER TABLE `garage_entry`
 -- AUTO_INCREMENT for table `income`
 --
 ALTER TABLE `income`
-  MODIFY `income_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `income_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 --
 -- AUTO_INCREMENT for table `line`
 --
@@ -873,6 +908,11 @@ ALTER TABLE `login`
 --
 ALTER TABLE `vehicle`
   MODIFY `vehicle_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT for table `voucher`
+--
+ALTER TABLE `voucher`
+  MODIFY `voucher_number` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `yard`
 --
