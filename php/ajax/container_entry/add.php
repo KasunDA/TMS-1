@@ -33,7 +33,7 @@
 			{
 				$dq = mysqli_query($mycon,'SELECT datee from container_movement where cm_id='.$cm_id);
 				$rdq = mysqli_fetch_array($dq);
-				$datee = $rdq['datee'];
+				$datee =   date('m/d/Y', strtotime($rdq['datee']));
 
 				$qg = mysqli_query($mycon,"INSERT INTO garage_entry(datee,vehicle_id,amount,description) VALUES ( '$datee',$vehicle_id,$mr_charges,'NILL') ");				
 			}

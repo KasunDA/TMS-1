@@ -25,7 +25,7 @@ date_default_timezone_set("Asia/Karachi");
                         </div>
                     </div>
                     <div class="portlet-body form">
-                        <form class="form-horizontal" role="form" method="post">
+                        <form class="form-horizontal" role="form" method="post" id="form">
                             <div class="form-body">
                                 <div class="row"> 
                                     <div class="form-group">
@@ -92,45 +92,27 @@ date_default_timezone_set("Asia/Karachi");
                         <table class="table table-striped table-bordered table-hover table-checkable order-column" id="mytable">
                                         <thead>
                                             <tr>
-                                               <th> Transaction ID: </th>
+                                                <th></th>
+                                                <th> # </th>
+                                                <th> Transaction ID: </th>
                                                 <th> Date </th>
+                                                <th> Chart Of Account  </th>
+                                                <th> Empty Terminal </th>
                                                 <th> From  </th>
                                                 <th> To </th>
                                                 <th> Movement </th>
-                                                <th> Empty Terminal </th>
-                                                <th> Container No </th>
-                                                <th> Size </th>
+                                                <th> Container # </th>
+                                                <th> Container Size </th>
                                                 <th> Line </th>
-                                                <th> Vehcle No </th>
+                                                <th> Vehicle # </th>
+                                                <th> Driver Name </th>
+                                                <th> Owner Name </th>
                                                 <th> Advance </th>
-                                                <th> Account  </th>
-                                                <th> Name </th>
-                                                <th> Remarks: No </th>
+                                                <th> Balance </th>
+                                                <th> Remarks </th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                         
-                                            <tr class="odd gradeX">
-                                                <td> 1602365 </td>
-                                                <td> 02/3/2018 </td>
-                                                <td> DPWM-1 </td>
-                                                <td> QICT </td>
-                                                <td> EMPTY </td>
-                                                <td> PCT-PQ </td>
-                                                <td> MRKU4990688 </td>
-                                                <td> 40 </td>
-                                                <td> N/A </td>
-                                                <td> JT8685 </td>
-                                                <td> 500 </td>
-                                                <td> QICT </td>
-                                                <td> POS.PQ </td>
-                                                <td> N/A </td>
-
-                                            </tr>
-                                                     
-                                                       
-                                          
-                                             
                                         </tbody>
                                     </table>
                     </div>
@@ -149,44 +131,49 @@ date_default_timezone_set("Asia/Karachi");
                                     <tr class="uppercase">
                                         <td> # </td>
                                         <td> Total Trips </td>
-                                        <td> 90 </td>
+                                        <td id="total_trips"></td>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="uppercase">
+                                    <tr>
                                         <td> 1 </td>
-                                        <td> Advance Taken </td>
-                                        <td> 9000 </td>
+                                        <td> Advance Taken (Driver) or (All) </td>
+                                        <td id="advance_taken"></td>
                                     </tr>
                                     <tr>
                                         <td> 2 </td>
-                                        <td> Balance (Total of all trips) </td>
-                                        <td> 80000 </td>
+                                        <td> Advance Taken Owner</td>
+                                        <td id="advance_taken_owner"></td>
                                     </tr>
                                     <tr>
                                         <td> 3 </td>
-                                        <td> Diesle </td>
-                                        <td> 6000 </td>
+                                        <td> Balance (Total of all trips) </td>
+                                        <td id="balance_trips"></td>
                                     </tr>
                                     <tr>
                                         <td> 4 </td>
-                                        <td> Repair & Maintenance </td>
-                                        <td> 20000</td>
+                                        <td> Diesel </td>
+                                        <td id="total_diesel"></td>
                                     </tr>
                                     <tr>
                                         <td> 5 </td>
-                                        <td> Driver Salary</td>
-                                        <td> 20000</td>
+                                        <td> Repair & Maintenance </td>
+                                        <td id="total_rm"></td>
                                     </tr>
                                     <tr>
                                         <td> 6 </td>
-                                        <td> Paid </td>
-                                        <td> 0</td>
+                                        <td> Driver Salary</td>
+                                        <td id="driver_salary"></td>
                                     </tr>
                                     <tr>
                                         <td> 7 </td>
+                                        <td> Paid </td>
+                                        <td id="paid_salary"></td>
+                                    </tr>
+                                    <tr>
+                                        <td> 8 </td>
                                         <td> Total Balance </td>
-                                        <td> 40000</td>
+                                        <td id="total_balance"></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -195,7 +182,7 @@ date_default_timezone_set("Asia/Karachi");
                 </div>
                 <!-- END BORDERED TABLE PORTLET-->
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6" id="voucher_div" style="display: none;">
                 <div class="portlet light bordered">
                     <div class="portlet-title">
                         <div class="caption font-red-sunglo">
@@ -204,59 +191,82 @@ date_default_timezone_set("Asia/Karachi");
                         </div>
                     </div>
                     <div class="portlet-body form">
-                        <form class="form-horizontal" role="form">
-                            <div class="form-body">
-                                <div class="row"> 
-                                    <div class="form-group">
-                                        <label class="col-md-4 control-label">voucher #:</label>
-                                        <div class="col-md-5">
-                                           <input type="text" class="form-control" placeholder="58680">
+                        <form class="form-horizontal" role="form" id="voucher_form" method="post">
+                                <div class="form-body">
+                                    <div class="row">
+                                        <div class="form-group">
+                                          <label class="col-md-4 control-label">Voucher #:</label>
+                                          <div class="col-md-5">
+                                            <input type="text" class="form-control" id="voucher_number" name="voucher_number" required readonly >
+                                          </div>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="col-md-4 control-label">Payment Method</label>
-                                        <div class="col-md-5">
-                                            <div class="mt-radio-list">
-                                                <label class="mt-radio">
-                                                    <input type="radio" name="optionsRadios" id="optionsRadios22" value="option1" checked> Check
-                                                    <span></span>
-                                                </label>
-                                                <label class="mt-radio">
-                                                    <input type="radio" name="optionsRadios" id="optionsRadios23" value="option2" checked> Cash
-                                                    <span></span>
-                                                </label>
+                                    <div class="row"> 
+                                        <div class="form-group">  
+                                            <label class="col-md-4 control-label">Date:</label>
+                                            <div class="col-md-5">
+                                              <input type="date" class="form-control" id="datee" name="datee"  value="<?php echo date('Y-m-d'); ?>" required tabindex="1" />
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-4 control-label">Check #</label>
-                                        <div class="col-md-5">
-                                           <input type="text" class="form-control" placeholder="58680">
+                                        
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label">Payment Method</label>
+                                            <div class="col-md-5">
+                                                <div class="mt-radio-list">
+                                                    <label class="mt-radio">
+                                                        <input type="radio" name="method" id="optionsRadios22" value="cash" checked tabindex="2"> Cash 
+                                                        <span></span>
+                                                    </label>
+                                                    <label class="mt-radio">
+                                                        <input type="radio" name="method" id="optionsRadios23" value="check" tabindex="3"> Check
+                                                        <span></span>
+                                                    </label>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-4 control-label">Bank Name</label>
-                                        <div class="col-md-5">
-                                           <input type="text" class="form-control" placeholder="HBL">
+                                        <div class="hidden" id="check_number_div">
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label">Check No.</label>
+                                            <div class="col-md-5">
+                                               <input type="number" name="check_number" min="0" id="check_number" tabindex="4" class="form-control" placeholder="5033554">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-4 control-label">Amount</label>
-                                        <div class="col-md-5">
-                                           <input type="text" class="form-control" placeholder="58680">
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label">Bank Name</label>
+                                            <div class="col-md-5">
+                                               <select class="form-control" id="bank_id" name="bank_id" tabindex="5">
+                                                    <option value="">Select Bank</option>
+                                                    <?php 
+
+                                                      $q = mysqli_query($mycon,'SELECT bank_id,short_form from bank where status=1 ORDER BY bank_id DESC');
+
+                                                      while( $r = mysqli_fetch_array($q) )
+                                                        {?>
+                                                        <option value="<?php echo $r['bank_id']; ?>"><?php echo $r['short_form']; ?></option>
+                                                  <?php } //END OF WHILE ?>
+                                                    
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-md-5 col-md-push-4">
-                                            <div class="">
-                                                <button type="submit" class="btn blue">Submit</button> 
-                                                <button type="button" class="btn default">Cancel</button>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label">Amount</label>
+                                            <div class="col-md-5">
+                                               <input type="number" min="1"  name="amount" id="amount" required tabindex="6" class="form-control" placeholder="58680">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-md-5 col-md-push-4">
+                                                <div class="">
+                                                    <button type="submit" class="btn blue" id="btn_submit" tabindex="7">Submit</button> 
+                                                    <button type="reset" class="btn default" id="btn_reset" tabindex="8">Cancel</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
+                            </form>
                     </div>
                     <!-- Form ends -->
                     <!-- end table -->
@@ -279,6 +289,57 @@ include 'footer.php';
  
  $(document).ready(function(){
 
+      //RESET BUTTON CODE
+    $(document).on('click','#btn_reset',function(){
+        bchide();
+        getId();
+    });
+
+    function bcshow()
+    {
+        $('#check_number,#bank_id').attr('required','required');
+        $('#check_number_div').removeClass('hidden');
+    }
+
+    function bchide()
+    {
+        $('#check_number,#bank_id').removeAttr('required');
+        $('#check_number').val('');
+        $('#bank_id').val('').trigger('change');
+        $('#check_number_div').addClass('hidden'); 
+    }
+
+
+    $('input[name="method"]').change(function(){
+
+        if( $(this).val() == 'check' )
+        {
+            bcshow();
+        }
+        else
+        {
+            bchide();
+        }      
+
+   });
+
+
+    function getId()
+    {
+        $.ajax({
+          url :'ajax/voucher/fetchid_voucher.php',
+          dataType:'JSON',
+          success: function(data)
+          {
+              $('#voucher_number').val(data['voucher_number']);
+          }
+          // error: function(){ alert('Error in get id Ajax.') }
+
+        })
+    }
+
+    getId();
+
     //Select2
    $('#vehicle_id').select2({
       width: 'resolve'
@@ -295,10 +356,11 @@ include 'footer.php';
     function loadData(from_datee,to_datee,vehicle_id)
     {
         $.ajax({
-            url:'ajax/garage_entry/detailed_fetch.php?from_datee='+from_datee+'&to_datee='+to_datee+'&vehicle_id='+vehicle_id,
+            url:'ajax/vehicle/detailed_fetch.php?from_datee='+from_datee+'&to_datee='+to_datee+'&vehicle_id='+vehicle_id,
             dataType:"JSON",
             success:function(data){
-                var n = 1;
+                var n = 1,
+                    total_trips = 0;
 
                 $('#mytable').DataTable().destroy();
                 $('#mytable tbody').html("");
@@ -310,17 +372,55 @@ include 'footer.php';
                             '<td></td>'+                       
 
                             '<td>'+n+'</td>'+
+                            '<td>'+value['transaction_id']+'</td>'+
                             '<td>'+value['datee']+'</td>'+
-                            '<td>'+value['description']+'</td>'+
+                            '<td id="'+value['coa_id']+'">'+value['coa']+'</td>'+
+                            '<td id="'+value['empty_terminal_id']+'">'+value['empty_terminal']+'</td>'+
+                            '<td id="'+value['from_yard_id']+'">'+value['from_yard']+'</td>'+
+                            '<td id="'+value['to_yard_id']+'">'+value['to_yard']+'</td>'+
+                            '<td>'+value['movement']+'</td>'+
+                            '<td>'+value['container_number']+'</td>'+
+                            '<td>'+value['container_size']+'</td>'+
+                            '<td id="'+value['line_id']+'">'+value['line']+'</td>'+
                             '<td id="'+value['vehicle_id']+'">'+value['vehicle_number']+'</td>'+
-                            '<td name="total_amount">'+value['amount']+'</td>'+
+                            '<td>'+value['driver_name']+'</td>'+
+                            '<td id="owner_name">'+value['owner_name']+'</td>'+
+                            '<td>'+value['advance']+'</td>'+
+                            '<td name="balance_trips">'+value['balance']+'</td>'+
+                            '<td>'+value['remarks']+'</td>'+
                             '</tr>');
 
-                    n++; 
+                    n++; total_trips++;
                 })
 
                 myDataTable();
-                $('#total_amount').html(getTotal('total_amount')); 
+                // $('#total_amount').html(getTotal('total_amount'));
+
+                $('#total_trips').html(total_trips);
+                $('#balance_trips').html(getTotal('balance_trips'));
+
+                getRecords(from_datee,to_datee,vehicle_id);
+
+                //Voucher Form
+                if( data !=null && vehicle_id!=0 )
+                {
+
+                    if( $('#owner_name').html() == 'butt brothers' )
+                    {
+                        $('#voucher_div').hide();
+                    }
+                    else
+                    {
+                        $('#voucher_div').show();
+                    }
+                }
+                else
+                {
+                    $('#voucher_div').hide();
+                }
+
+                $('#total_balance').html( $('#advance_taken_owner').html()/1 + $('#advance_taken').html()/1 + $('#total_diesel').html()/1 + $('#total_rm').html()/1 - $('#balance_trips').html()/1  );
+
             },
             error:function(){ alert("Failed Fetch Ajax Call.") }
         });
@@ -342,16 +442,69 @@ include 'footer.php';
 
         return sum;
     }
+
+    function getRecords(from_datee,to_datee,vehicle_id)
+    {
+        $.ajax({
+            url:'ajax/vehicle/vehicle_records.php?from_datee='+from_datee+'&to_datee='+to_datee+'&vehicle_id='+vehicle_id,
+            dataType:"JSON",
+            success: function(data){
+                
+                $.each(data,function(index,value){
+                    $('#advance_taken').html(value['total_remaining_advance']);
+                    $('#advance_taken_owner').html(value['total_remaining_advance_owner']);
+                    $('#total_diesel').html(value['total_de_amount']);
+                    $('#total_rm').html(value['total_rm_amount']);
+                    $('#driver_salary').html(value['total_driver_salary']);
+                    $('#paid_salary').html(value['total_paid_salary']);
+                });
+            },
+            error: function(){ alert("Failed Fetch Records.") }, 
+        });
+    }
+
+    function add(vehicle_id,datee,method,check_number,bank_id,amount)
+    {
+        $.ajax({
+            url:'ajax/vehicle/voucher_add.php?vehicle_id='+vehicle_id+'&datee='+datee+'&method='+method+'&check_number='+check_number+'&bank_id='+bank_id+'&amount='+amount,
+            type:"POST",
+            success:function(data){
+                if(data)
+                {
+                    $('#btn_reset').trigger('click');
+                    
+                    $('#form').trigger('submit');
+                }
+            },
+            error:function(){ alert("Error in Add Ajax Call.") }
+        });
+    }
     
     //Add & Update expense 
-    $('form').submit(function(e){
+    $('#form').submit(function(e){
        e.preventDefault();
        
        var from_datee = $('#from_datee').val() ,
            to_datee = $('#to_datee').val() ,
            vehicle_id = $('#vehicle_id').val();
 
+
         loadData(from_datee,to_datee,vehicle_id);
+
+    });
+
+    //Add & Update expense 
+    $('#voucher_form').submit(function(e){
+       e.preventDefault();
+       
+       var datee = $('#datee').val() ,
+           method = $('input[name="method"]:checked').val() ,
+           check_number = $('#check_number').val() ,
+           bank_id = $('#bank_id').val() ,
+           amount = $('#amount').val(),
+           vehicle_id = $('#vehicle_id').val();
+
+        add(vehicle_id,datee,method,check_number,bank_id,amount);   
 
     });
 
