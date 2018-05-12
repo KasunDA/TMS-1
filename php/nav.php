@@ -256,6 +256,11 @@
                             </a>
                         </li>
                         <li class="nav-item  ">
+                            <a href="report-vehicle-voucher.php" class="nav-link ">
+                                <span class="title">Voucher Vehicle Report</span>
+                            </a>
+                        </li>
+                        <li class="nav-item  ">
                             <a href="reportAccounts.php" class="nav-link ">
                                 <span class="title">Accounts Report</span>
                             </a>

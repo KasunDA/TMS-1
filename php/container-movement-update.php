@@ -567,6 +567,8 @@ include 'footer.php';
                       $('#mytable').DataTable().row(i).data(temp).draw();
 
                     $('.selectedd').css('');
+
+                    location.assign('container-entry.php');
                   }
               },
               error:function(){ alert("Error in Update Ajax Call.") }

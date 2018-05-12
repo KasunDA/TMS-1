@@ -50,8 +50,8 @@ include 'nav.php';
                                             </div>
                                             <label class="col-md-2 control-label">Account #:</label>
                                             <div class="col-md-4">
-                                               <input type="text" class="form-control" id="account_number" name="account_number" required pattern="[\d]{4}-[\d]{4}-[\d]{5}-[\d]{2}-[\d]{1}" maxlength="20" tabindex="4" placeholder="1080-0081-00381-01-9">
-                                            </div>
+                                               <input type="text" class="form-control" id="account_number" name="account_number" required  maxlength="25" tabindex="4" placeholder="1080-0081-00381-01-9">
+                                            </div> <!-- pattern="[\d]{4}-[\d]{4}-[\d]{5}-[\d]{2}-[\d]{1}" -->
                                         </div>
                                         <div class="form-group">
                                             <div id="balance_div"> 
