@@ -4,18 +4,18 @@
 
 	$json=NULL;
 	$sql='';
-	$from_datee = $_GET['from_datee'];
-	$to_datee = $_GET['to_datee'];
+	$from_datee = date('Y-m-d' , strtotime($_GET['from_datee']));
+	$to_datee = date('Y-m-d' , strtotime($_GET['to_datee']));
 	
 	if(isset($_GET['vehicle_id']) && $_GET['vehicle_id'] != NULL)
 	{
 		$vehicle_id = $_GET['vehicle_id'];
 		
-		$sql = "SELECT a.* ,b.short_form FROM voucher a , bank b , vehicle c  WHERE a.status=1 and a.bank_id= b.bank_id and a.vehicle_id=c.vehicle_id  and datee BETWEEN '$from_datee' AND '$to_datee' and vehicle_id=$vehicle_id";
+		$sql = "SELECT * FROM voucher  WHERE status=1 and datee BETWEEN '$from_datee' AND '$to_datee' and vehicle_id=$vehicle_id";
 	}
 	else
 	{
-		$sql = "SELECT a.* ,b.short_form FROM voucher a , bank b , vehicle c  WHERE a.status=1 and a.bank_id= b.bank_id and a.vehicle_id=c.vehicle_id  and datee BETWEEN '$from_datee' AND '$to_datee' ";
+		$sql = "SELECT *  FROM voucher  WHERE status=1 and datee BETWEEN '$from_datee' AND '$to_datee' ";
 	}
 
 
@@ -30,8 +30,25 @@
 		$json[$n]['datee'] = $r['datee'];
 		$json[$n]['method'] = $r['method'];
 		$json[$n]['check_number'] = $r['check_number'];
-		$json[$n]['bank_name'] = $r['short_form'];
-		$json[$n]['vehicle_number'] = $r['vehicle_number'];
+
+		if($r['bank_id'] != NULL)
+		{
+			$q1 = mysqli_query($mycon,"SELECT short_form from bank WHERE bank_id=".$r['bank_id']);
+			$r1 = mysqli_fetch_array($q1);
+
+			$json[$n]['bank_name'] = $r1['short_form'];
+		}
+		else
+		{
+			$json[$n]['bank_name'] = NULL;
+		}
+		
+
+		$q1 = mysqli_query($mycon,"SELECT vehicle_number from vehicle WHERE vehicle_id=".$r['vehicle_id']);
+		$r1 = mysqli_fetch_array($q1);
+
+		$json[$n]['vehicle_number'] = $r1['vehicle_number'];
+
 		$json[$n]['amount'] = $r['amount'];
 
 		$n++;
