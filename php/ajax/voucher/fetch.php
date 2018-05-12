@@ -7,7 +7,7 @@
 	$cm_id = $_GET['cm_id'];
 	
 
-	$sql = "SELECT a.* ,b.short_form FROM voucher a , bank b  WHERE a.status=1 and a.bank_id= b.bank_id and a.cm_id=$cm_id";
+	$sql = "SELECT * FROM voucher  WHERE status=1 and cm_id=$cm_id";
 
 	$q = mysqli_query($mycon,$sql);
 	
@@ -20,7 +20,11 @@
 		$json[$n]['datee'] = $r['datee'];
 		$json[$n]['method'] = $r['method'];
 		$json[$n]['check_number'] = $r['check_number'];
-		$json[$n]['bank_name'] = $r['short_form'];
+
+		$q1 = mysqli_query($mycon,"SELECT short_form from bank WHERE bank_id=".$r['bank_id']);
+		$r1 = mysqli_fetch_array($q1);
+
+		$json[$n]['bank_name'] = $r1['short_form'];
 		$json[$n]['amount'] = $r['amount'];
 
 		$n++;
