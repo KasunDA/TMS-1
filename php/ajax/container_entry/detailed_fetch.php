@@ -7,7 +7,7 @@
 	$cm_id = $_GET['cm_id'];
 	
 
-	$sql = "SELECT a.vehicle_id ,b.container_size,b.index_number FROM container_entry a , container_movement b WHERE a.status=1 and a.vehicle_id= c.vehicle_id and a.cm_id=$cm_id and b.cm_id=$cm_id";
+	$sql = "SELECT a.vehicle_id ,b.container_size,b.index_number FROM container_entry a , container_movement b WHERE a.status=1 and a.cm_id=$cm_id and b.cm_id=$cm_id";
 
 	$q = mysqli_query($mycon,$sql);
 	
