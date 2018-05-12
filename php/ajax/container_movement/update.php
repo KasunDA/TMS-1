@@ -46,13 +46,13 @@
 		$_SESSION['party_charges'] = $party_charges;
 		$_SESSION['line_id'] = $line_id;
 
-		$_SESSION['bl_cro_number'] = $riq['bl_cro_number'];
-		$_SESSION['job_number'] = $riq['job_number'];
-		$_SESSION['index_number'] = $riq['index_number'];
-		$_SESSION['rent'] = $riq['rent'];
-		$_SESSION['container_id'] = $riq['container_id'];
-		$_SESSION['lolo_charges'] = $riq['lolo_charges'];
-		$_SESSION['weight_charges'] = $riq['weight_charges'];
+		$_SESSION['bl_cro_number'] = $bl_cro_number;
+		$_SESSION['job_number'] = $job_number;
+		$_SESSION['index_number'] = $index_number;
+		$_SESSION['rent'] = $rent;
+		$_SESSION['container_id'] = $container_id;
+		$_SESSION['lolo_charges'] = $lolo_charges;
+		$_SESSION['weight_charges'] = $weight_charges;
 
 	}
 
