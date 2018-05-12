@@ -35,7 +35,7 @@ $cm_id = $_GET['cm_id'];
                                 $party_name_q = mysqli_query($mycon,"SELECT full_form FROM chart_of_account WHERE coa_id=".$r_coa_id['coa_id']);
                                 $r_party_name = mysqli_fetch_array($party_name_q);
                             ?>
-                            <span class="caption-subject bold uppercase">M/S : <?php echo $r_party_name['full_form'] ?></span>
+                            <span class="caption-subject bold uppercase">Party : <?php echo $r_party_name['full_form'] ?></span>
                         </div>
                         <div class="tools">
                             <a href="" class="collapse"> </a>
