@@ -318,7 +318,7 @@ CREATE TABLE `exin` (
 --
 -- Dumping data for table `exin`
 --
-
+INSERT INTO `exin` ( `datee`, `previous_balance`, `current_balance`) VALUES ('2018-01-01', '500000', '500000');
 -- --------------------------------------------------------
 
 --

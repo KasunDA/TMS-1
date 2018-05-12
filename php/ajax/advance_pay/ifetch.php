@@ -6,7 +6,7 @@
 	$vehicle_id =  $_GET['vehicle_id'];
 	$name =  $_GET['name'];
 
-	$q = mysqli_query($mycon,"SELECT * FROM income WHERE dd_id=2 and vehicle_id=".$vehicle_id." and name='".$name."' and status=1 ORDER BY income_id DESC ");
+	$q = mysqli_query($mycon,"SELECT * FROM income WHERE dd_id=2 and vehicle_id=$vehicle_id and name='$name' and status=1 ORDER BY income_id DESC ");
 	$n  = 0;
 	while($r = mysqli_fetch_array($q))
 	{

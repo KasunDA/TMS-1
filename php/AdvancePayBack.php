@@ -2,6 +2,7 @@
 include 'header.php';
 include 'nav.php';
 require 'connection.php';
+date_default_timezone_set("Asia/Karachi");
 
 if( !isset( $_GET['cmp_id']) ||  $_GET['cmp_id'] == NULL || !isset( $_GET['name']) ||  $_GET['name'] == NULL )
 {
@@ -377,14 +378,13 @@ include 'footer.php';
                 dataType:"JSON",
                 success:function(data){
                     var n = 1;
-                    var i = 0;
 
                     $('#imytable').DataTable().destroy();
                     $('#imytable tbody').html("");
                     
-                    $.each(data,function(index,value){
+                    var loop = $.each(data,function(index,value){
 
-                        $('#imytable tbody').append('<tr index="'+i+'" class="odd gradeX">'+
+                        $('#imytable tbody').append('<tr class="odd gradeX">'+
 
                                 '<td>'+n+'</td>'+
                                 '<td>'+value['datee']+'</td>'+
@@ -395,11 +395,14 @@ include 'footer.php';
                                 '<td>'+value['description']+'</td>'+
                                 '</tr>');
 
-                        n++; i++;
-                    })
+                        n++;
+                    });
 
-                    imyDataTable();
-                    calculateSumPA();
+                    $.when(loop).done(function(x){
+                        imyDataTable();
+                        calculateSumPA();
+                    });
+
                 },
                 error:function(){ alert("Failed iFetch Ajax Call.") }
             });
@@ -419,7 +422,7 @@ include 'footer.php';
                         $('#bank_id').val("").trigger('change');
                         $('#amount,#check_number,#description').val("");
                         
-                        loadData();
+                        // loadData();
                         iloadData();
                     }
                 },

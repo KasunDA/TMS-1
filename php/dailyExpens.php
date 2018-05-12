@@ -3,6 +3,7 @@ include 'header.php';
 include 'nav.php';
 
 require 'connection.php';
+date_default_timezone_set("Asia/Karachi");
  ?>
 
     <!-- BEGIN CONTENT -->
