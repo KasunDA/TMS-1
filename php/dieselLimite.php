@@ -38,7 +38,7 @@ require 'connection.php';
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">From:</label>
                                             <div class="col-md-3">
-                                                <select class="form-control" id="from_yard" name="from_yard" required tabindex="1" style="width: 100%;">
+                                                <select class="form-control select" id="from_yard" name="from_yard" required tabindex="1" style="width: 100%;">
                                                     <option value="">Select Yard</option>
                                                     <?php
 
@@ -144,14 +144,12 @@ include 'footer.php';
      $(document).ready(function(){
 
         //Select2 from _yard
-        $('#from_yard').select2({
+        $('#from_yard,#to_yard').select2({
             width: 'resolve'
         });
 
-        //Select2 to_yard
-        $('#to_yard').select2({
-            width: 'resolve'
-        });
+        $('.select2-selection').addClass('select');
+
 
         function myDataTable()
         {

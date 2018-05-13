@@ -68,6 +68,14 @@ Like: www.facebook.com/logicsaint
             background-color: #000;
             /*color: #fff;*/
         }
+
+        .select
+        {
+            background-color: white;
+            border: 1px solid #aaa;
+            border-radius: 4px;
+            cursor: text;
+        }
     </style>
     </head>
     <!-- END HEAD -->

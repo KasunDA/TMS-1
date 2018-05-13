@@ -171,6 +171,10 @@ include 'footer.php';
 
     myDataTable();
 
+    var total_litres =  0,
+        extra_litres =  0,
+        total_price  =  0;
+
     function loadData(from_datee,to_datee,vehicle_id)
     {
         $.ajax({
@@ -179,11 +183,18 @@ include 'footer.php';
             //async:false,
             success:function(data){
                 var n = 1;
+                    total_litres =  0;
+                    extra_litres =  0;
+                    total_price  =  0;
 
                 $('#mytable').DataTable().destroy();
                 $('#mytable tbody').html("");
                 
                 $.each(data,function(index,value){
+
+                    total_litres +=  value['litres']/1,
+                    extra_litres +=  value['extra_litres']/1,
+                    total_price  +=  value['total']/1;
 
                     $('#mytable tbody').append('<tr class="odd gradeX">'+
 
@@ -205,9 +216,9 @@ include 'footer.php';
                 })
 
                 myDataTable();
-                $('#total_litres').text( getTotal('litres') );
-                $('#extra_litres').text( getTotal('extra_litres') );
-                $('#total_price').text( getTotal('total_price') );
+                $('#total_litres').text(total_litres);
+                $('#extra_litres').text(extra_litres);
+                $('#total_price').text(total_price);
 
             },
             error:function(){ alert("Failed Fetch Ajax Call.") }

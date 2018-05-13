@@ -335,23 +335,26 @@ include 'footer.php';
             e.dataTable({language:{aria:{sortAscending:": activate to sort column ascending",sortDescending:": activate to sort column descending"},emptyTable:"No data available in table",info:"Showing _START_ to _END_ of _TOTAL_ records",infoEmpty:"No records found",infoFiltered:"(filtered1 from _MAX_ total records)",lengthMenu:"Show _MENU_",search:"Search:",zeroRecords:"No matching records found",paginate:{previous:"Prev",next:"Next",last:"Last",first:"First"}},bStateSave:!0,columnDefs:[{targets:0,orderable:!1,searchable:!1}],lengthMenu:[[5,15,20,-1],[5,15,20,"All"]],pageLength:5,pagingType:"bootstrap_full_number",columnDefs:[{orderable:!1,targets:[0]},{searchable:!1,targets:[0]}],order:[[1,"asc"]]});
         }
 
+        var total_advance = 0,
+            total_advance_pay = 0;
+
         function loadData(vehicle_id,name)
         {
             $.ajax({
-                url:'ajax/advance_pay/fetch_details.php?vehicle_id='+<?php echo $vehicle_id; ?>+'&name='+<?php echo '"'.$name.'"';?>,
+                url:'ajax/advance_pay/fetch_details.php?vehicle_id='+vehicle_id+'&name='+name,
                 dataType:"JSON",
                 success:function(data){
                     var n = 1;
-                    var i = 0;
+                    total_advance = 0;
 
                     $('#mytable').DataTable().destroy();
                     $('tbody').html("");
                     
                     $.each(data,function(index,value){
 
-                        $('#mytable tbody').append('<tr index="'+i+'" class="odd gradeX">'+
+                        total_advance+= value['amount']/1;
 
-                                                  
+                        $('#mytable tbody').append('<tr class="odd gradeX">'+
 
                                 '<td>'+n+'</td>'+
                                 '<td>'+value['datee']+'</td>'+
@@ -360,7 +363,7 @@ include 'footer.php';
                                 '<td name="total">'+value['amount']+'</td>'+
                                 '</tr>');
 
-                        n++; i++;
+                        n++;
                     })
 
                     myDataTable();
@@ -369,20 +372,26 @@ include 'footer.php';
             });
         }
 
-        loadData();
+        loadData(<?php echo $vehicle_id.',"'.$name.'"';?>);
 
-        function iloadData()
+
+        //<?php// echo $vehicle_id; ?> <?php //echo '"'.$name.'"';?>
+
+        function iloadData(vehicle_id,name)
         {
             $.ajax({
-                url:'ajax/advance_pay/ifetch.php?vehicle_id='+<?php echo $vehicle_id; ?>+'&name='+<?php echo '"'.$name.'"';?>,
+                url:'ajax/advance_pay/ifetch.php?vehicle_id='+vehicle_id+'&name='+name,
                 dataType:"JSON",
                 success:function(data){
                     var n = 1;
+                    total_advance_pay = 0;
 
                     $('#imytable').DataTable().destroy();
                     $('#imytable tbody').html("");
                     
                     var loop =  $.each(data,function(index,value){
+
+                        total_advance_pay += value['amount']/1;
 
                         $('#imytable tbody').append('<tr class="odd gradeX">'+
                                 '<td>'+n+'</td>'+
@@ -393,13 +402,17 @@ include 'footer.php';
                                 '<td name="paid_amount">'+value['amount']+'</td>'+
                                 '<td>'+value['description']+'</td>'+
                                 '</tr>');
-
                         n++;
                     });
 
                     $.when(loop).done(function(x){
                         imyDataTable();
-                        calculateSumPA();
+
+                        var total = total_advance-total_advance_pay;
+
+                        $('#total_amount').val(total);
+                        $('#amount').attr('max', total);
+                        
                     });
 
                 },
@@ -407,7 +420,7 @@ include 'footer.php';
             });
         }
 
-        iloadData();
+        iloadData(<?php echo $vehicle_id.',"'.$name.'"';?>);
 
         function add(datee,method,check_number,bank_id,amount,vehicle_id,name,description)
         {
@@ -422,7 +435,7 @@ include 'footer.php';
                         $('#amount,#check_number,#description').val("");
                         
                         // loadData();
-                        iloadData();
+                        iloadData(<?php echo $vehicle_id.',"'.$name.'"';?>);
                     }
                 },
                 error:function(){ alert("Error in Add Ajax Call.") }

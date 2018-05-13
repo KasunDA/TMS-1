@@ -280,6 +280,14 @@ include 'footer.php';
             width: 'resolve'
         });
 
+        // Reset Button Code
+        $('#btn_reset').click(function(e){
+            
+            $('form select').val('').trigger('change');
+            $('#extra_litres').val('0'); 
+        
+        });
+
         function dt()
         {
             $.ajax({
@@ -367,11 +375,12 @@ include 'footer.php';
                     if(data)
                     {
                         $('#btn_reset').trigger('click');
-                        $('form select').val('').trigger('change');
-                        $('#extra_litres,#description').val('');
+                        
                         
                         loadData();
                         dt();
+
+                        $('#litre_rate').val(litre_rate);
                     }
                 },
                 error:function(){ alert("Error in Add Ajax Call.") }
@@ -404,6 +413,8 @@ include 'footer.php';
                         $('#mytable').DataTable().row(i).data(temp).draw();
 
                         dt();
+
+                        $('#litre_rate').val(litre_rate);
                     }
                 },
                 error:function(){ alert("Error in Update Ajax Call.") }
@@ -444,8 +455,7 @@ include 'footer.php';
 
             $('form').removeClass('update_form');
 
-            $('form select').val('').trigger('change');
-            $('#extra_litres,#description').val('');
+            $('#btn_reset').trigger('click');
 
             $('#de_id_div').addClass('hidden');
             $('#update_form_btn').addClass('hidden');

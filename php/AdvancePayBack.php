@@ -336,31 +336,34 @@ include 'footer.php';
             e.dataTable({language:{aria:{sortAscending:": activate to sort column ascending",sortDescending:": activate to sort column descending"},emptyTable:"No data available in table",info:"Showing _START_ to _END_ of _TOTAL_ records",infoEmpty:"No records found",infoFiltered:"(filtered1 from _MAX_ total records)",lengthMenu:"Show _MENU_",search:"Search:",zeroRecords:"No matching records found",paginate:{previous:"Prev",next:"Next",last:"Last",first:"First"}},bStateSave:!0,columnDefs:[{targets:0,orderable:!1,searchable:!1}],lengthMenu:[[5,15,20,-1],[5,15,20,"All"]],pageLength:5,pagingType:"bootstrap_full_number",columnDefs:[{orderable:!1,targets:[0]},{searchable:!1,targets:[0]}],order:[[1,"asc"]]});
         }
 
+        var total_advance = 0,
+            total_advance_pay = 0;
+
         function loadData(cmp_id)
         {
             $.ajax({
-                url:'ajax/advance_taken/fetch_details.php?cmp_id='+<?php echo $cmp_id; ?>,
+                url:'ajax/advance_taken/fetch_details.php?cmp_id='+cmp_id,
                 dataType:"JSON",
                 success:function(data){
                     var n = 1;
-                    var i = 0;
+                    total_advance = 0;
 
                     $('#mytable').DataTable().destroy();
                     $('tbody').html("");
                     
                     $.each(data,function(index,value){
 
-                        $('#mytable tbody').append('<tr index="'+i+'" class="odd gradeX">'+
+                        total_advance+= value['amount']/1;
 
+                        $('#mytable tbody').append('<tr class="odd gradeX">'+
                                                   
-
                                 '<td>'+n+'</td>'+
                                 '<td>'+value['datee']+'</td>'+
                                 '<td>'+value['description']+'</td>'+
                                 '<td name="total">'+value['amount']+'</td>'+
                                 '</tr>');
 
-                        n++; i++;
+                        n++;
                     })
 
                     myDataTable();
@@ -369,20 +372,23 @@ include 'footer.php';
             });
         }
 
-        loadData();
+        loadData(<?php echo $cmp_id; ?>);
 
-        function iloadData()
+        function iloadData(cmp_id)
         {
             $.ajax({
-                url:'ajax/advance_taken/ifetch.php?cmp_id='+<?php echo $cmp_id; ?>,
+                url:'ajax/advance_taken/ifetch.php?cmp_id='+cmp_id,
                 dataType:"JSON",
                 success:function(data){
                     var n = 1;
+                    total_advance_pay = 0;
 
                     $('#imytable').DataTable().destroy();
                     $('#imytable tbody').html("");
                     
                     var loop = $.each(data,function(index,value){
+
+                        total_advance_pay += value['amount']/1;
 
                         $('#imytable tbody').append('<tr class="odd gradeX">'+
 
@@ -400,7 +406,12 @@ include 'footer.php';
 
                     $.when(loop).done(function(x){
                         imyDataTable();
-                        calculateSumPA();
+                        
+                        var total = total_advance-total_advance_pay;
+
+                        $('#total_amount').val(total);
+                        $('#amount').attr('max', total);
+
                     });
 
                 },
@@ -408,7 +419,7 @@ include 'footer.php';
             });
         }
 
-        iloadData();
+        iloadData(<?php echo $cmp_id; ?>);
 
         function add(datee,method,check_number,bank_id,amount,cmp_id,description)
         {
@@ -423,7 +434,7 @@ include 'footer.php';
                         $('#amount,#check_number,#description').val("");
                         
                         // loadData();
-                        iloadData();
+                        iloadData(<?php echo $cmp_id; ?>);
                     }
                 },
                 error:function(){ alert("Error in Add Ajax Call.") }

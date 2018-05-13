@@ -144,6 +144,8 @@ include 'footer.php';
 
     myDataTable();
 
+    var total_amount = 0;
+
     function loadData(from_datee,to_datee,vehicle_id)
     {
         $.ajax({
@@ -151,11 +153,14 @@ include 'footer.php';
             dataType:"JSON",
             success:function(data){
                 var n = 1;
+                    total_amount = 0;
 
                 $('#mytable').DataTable().destroy();
                 $('#mytable tbody').html("");
                 
                 $.each(data,function(index,value){
+
+                  total_amount += value['amount']/1;
 
                     $('#mytable tbody').append('<tr class="odd gradeX">'+
 
@@ -172,7 +177,7 @@ include 'footer.php';
                 })
 
                 myDataTable();
-                $('#total_amount').html(getTotal('total_amount')); 
+                $('#total_amount').html(total_amount); 
             },
             error:function(){ alert("Failed Fetch Ajax Call.") }
         });

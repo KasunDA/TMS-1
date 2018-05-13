@@ -360,12 +360,15 @@ include 'footer.php';
             dataType:"JSON",
             success:function(data){
                 var n = 1,
-                    total_trips = 0;
+                    total_trips = 0,
+                    balance_trips = 0;
 
                 $('#mytable').DataTable().destroy();
                 $('#mytable tbody').html("");
                 
                 $.each(data,function(index,value){
+
+                    balance_trips +=  value['balance']/1;
 
                     $('#mytable tbody').append('<tr class="odd gradeX">'+
 
@@ -397,7 +400,7 @@ include 'footer.php';
                 // $('#total_amount').html(getTotal('total_amount'));
 
                 $('#total_trips').html(total_trips);
-                $('#balance_trips').html(getTotal('balance_trips'));
+                $('#balance_trips').html(balance_trips);
 
                 getRecords(from_datee,to_datee,vehicle_id);
 

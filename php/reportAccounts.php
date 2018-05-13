@@ -293,15 +293,15 @@ include 'footer.php';
 
                 myDataTable();
 
-                var today_previous_balance = getTotal('today_previous_balance');
-                        today_debit = getTotal('today_debit'),
-                        today_credit = getTotal('today_credit'),
-                        today_balance = today_previous_balance + today_credit;
+                // var today_previous_balance = getTotal('today_previous_balance');
+                //         today_debit = getTotal('today_debit'),
+                //         today_credit = getTotal('today_credit'),
+                //         today_balance = today_previous_balance + today_credit;
 
-                    $('#today_previous_balance').html(today_previous_balance);
-                    $('#today_debit').html(today_debit);
-                    $('#today_credit').html(today_credit);
-                    $('#today_balance').html(today_balance-today_debit);
+                //     $('#today_previous_balance').html(today_previous_balance);
+                //     $('#today_debit').html(today_debit);
+                //     $('#today_credit').html(today_credit);
+                //     $('#today_balance').html(today_balance-today_debit);
             },
             error:function(){ alert("Failed Fetch Ajax Call.") }
         });
