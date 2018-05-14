@@ -229,10 +229,10 @@ date_default_timezone_set("Asia/Karachi");
                                       
                                              <div class="row"> 
                                                  <div class="form-group">
-                                                     <label class="col-md-2 control-label">Container No:</label>
-                                                         <div class="col-md-3">
-                                                           <input type="text" class="form-control" placeholder="E-1035" id="container_number" name="container_number" required tabindex="11">
-                                                         </div>
+                                                    <label class="col-md-2 control-label">Container No:</label>
+                                                    <div class="col-md-3">
+                                                      <input type="text" class="form-control" placeholder="E-1035" id="container_number" name="container_number" required tabindex="11">
+                                                    </div>
 
                                                            
                                                          <div class="col-md-2 small-lab">

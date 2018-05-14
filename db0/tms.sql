@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 11, 2018 at 09:28 PM
+-- Generation Time: May 14, 2018 at 03:44 PM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 7.0.13
 
@@ -39,11 +39,6 @@ CREATE TABLE `accounts_entry` (
   `status` tinyint(4) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `accounts_entry`
---
-
-
 -- --------------------------------------------------------
 
 --
@@ -57,10 +52,6 @@ CREATE TABLE `agent` (
   `contact` varchar(15) NOT NULL,
   `status` tinyint(4) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `agent`
---
 
 -- --------------------------------------------------------
 
@@ -79,10 +70,6 @@ CREATE TABLE `bank` (
   `status` tinyint(4) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `bank`
---
-
 -- --------------------------------------------------------
 
 --
@@ -94,10 +81,6 @@ CREATE TABLE `bike` (
   `bike_number` varchar(30) NOT NULL,
   `status` tinyint(4) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `bike`
---
 
 -- --------------------------------------------------------
 
@@ -113,10 +96,6 @@ CREATE TABLE `chart_of_account` (
   `contact` varchar(15) NOT NULL,
   `status` tinyint(4) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `chart_of_account`
---
 
 -- --------------------------------------------------------
 
@@ -134,7 +113,6 @@ CREATE TABLE `company` (
 -- Dumping data for table `company`
 --
 
-
 -- --------------------------------------------------------
 
 --
@@ -147,10 +125,6 @@ CREATE TABLE `consignee` (
   `full_form` varchar(100) NOT NULL,
   `status` tinyint(4) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `consignee`
---
 
 -- --------------------------------------------------------
 
@@ -194,10 +168,6 @@ CREATE TABLE `container_entry` (
   `status` tinyint(4) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `container_entry`
---
-
 -- --------------------------------------------------------
 
 --
@@ -228,10 +198,6 @@ CREATE TABLE `container_movement` (
   `paid_status` tinyint(4) NOT NULL DEFAULT '0',
   `status` tinyint(4) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `container_movement`
---
 
 -- --------------------------------------------------------
 
@@ -318,7 +284,10 @@ CREATE TABLE `exin` (
 --
 -- Dumping data for table `exin`
 --
-INSERT INTO `exin` ( `datee`, `previous_balance`, `current_balance`) VALUES ('2018-01-01', '500000', '500000');
+
+INSERT INTO `exin` (`exin_id`, `expense_id`, `income_id`, `datee`, `previous_balance`, `current_balance`) VALUES
+(1, NULL, NULL, '2018-01-01', 500000, 500000);
+
 -- --------------------------------------------------------
 
 --
@@ -346,7 +315,6 @@ CREATE TABLE `expenses` (
 -- Dumping data for table `expenses`
 --
 
-
 -- --------------------------------------------------------
 
 --
@@ -365,6 +333,7 @@ CREATE TABLE `garage_entry` (
 --
 -- Dumping data for table `garage_entry`
 --
+
 
 -- --------------------------------------------------------
 
@@ -391,6 +360,7 @@ CREATE TABLE `income` (
 -- Dumping data for table `income`
 --
 
+
 -- --------------------------------------------------------
 
 --
@@ -404,9 +374,6 @@ CREATE TABLE `line` (
   `status` tinyint(4) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `line`
---
 -- --------------------------------------------------------
 
 --
@@ -424,7 +391,9 @@ CREATE TABLE `login` (
 --
 
 INSERT INTO `login` (`login_id`, `username`, `pass`) VALUES
-(1, 'admin', '0192023a7bbd73250516f069df18b500');
+(1, 'ahsan', '3d68b18bd9042ad3dc79643bde1ff351'),
+(2, 'rashid', '2e7b988d682cb0f860e7a8eb863f4a3b'),
+(3, 'sajad', '406210a311f8fdb08aa8c2e363200b6f');
 
 -- --------------------------------------------------------
 
@@ -464,9 +433,6 @@ CREATE TABLE `voucher` (
   `status` tinyint(4) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `voucher`
---
 -- --------------------------------------------------------
 
 --
@@ -485,6 +451,7 @@ CREATE TABLE `yard` (
 --
 -- Dumping data for table `yard`
 --
+
 
 --
 -- Indexes for dumped tables
@@ -630,37 +597,37 @@ ALTER TABLE `yard`
 -- AUTO_INCREMENT for table `accounts_entry`
 --
 ALTER TABLE `accounts_entry`
-  MODIFY `ae_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `ae_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `agent`
 --
 ALTER TABLE `agent`
-  MODIFY `agent_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `agent_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `bank`
 --
 ALTER TABLE `bank`
-  MODIFY `bank_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `bank_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `bike`
 --
 ALTER TABLE `bike`
-  MODIFY `bike_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `bike_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `chart_of_account`
 --
 ALTER TABLE `chart_of_account`
-  MODIFY `coa_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `coa_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `company`
 --
 ALTER TABLE `company`
-  MODIFY `cmp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `cmp_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `consignee`
 --
 ALTER TABLE `consignee`
-  MODIFY `consignee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `consignee_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `container`
 --
@@ -670,12 +637,12 @@ ALTER TABLE `container`
 -- AUTO_INCREMENT for table `container_entry`
 --
 ALTER TABLE `container_entry`
-  MODIFY `ce_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `ce_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `container_movement`
 --
 ALTER TABLE `container_movement`
-  MODIFY `cm_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `cm_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `daily_description`
 --
@@ -685,57 +652,57 @@ ALTER TABLE `daily_description`
 -- AUTO_INCREMENT for table `diesel_entry`
 --
 ALTER TABLE `diesel_entry`
-  MODIFY `de_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `de_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `diesel_limit`
 --
 ALTER TABLE `diesel_limit`
-  MODIFY `dl_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `dl_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `exin`
 --
 ALTER TABLE `exin`
-  MODIFY `exin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `exin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `expenses`
 --
 ALTER TABLE `expenses`
-  MODIFY `expense_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `expense_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `garage_entry`
 --
 ALTER TABLE `garage_entry`
-  MODIFY `ge_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `ge_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `income`
 --
 ALTER TABLE `income`
-  MODIFY `income_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `income_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `line`
 --
 ALTER TABLE `line`
-  MODIFY `line_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `line_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `login`
 --
 ALTER TABLE `login`
-  MODIFY `login_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `login_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `vehicle`
 --
 ALTER TABLE `vehicle`
-  MODIFY `vehicle_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `vehicle_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `voucher`
 --
 ALTER TABLE `voucher`
-  MODIFY `voucher_number` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `voucher_number` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `yard`
 --
 ALTER TABLE `yard`
-  MODIFY `yard_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `yard_id` int(11) NOT NULL AUTO_INCREMENT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

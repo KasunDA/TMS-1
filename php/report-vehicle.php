@@ -29,42 +29,229 @@ date_default_timezone_set("Asia/Karachi");
                             <div class="form-body">
                                 <div class="row"> 
                                     <div class="form-group">
-                                        <label class="control-label col-md-2">Date Range</label>
+                                        <label class="control-label col-md-2">Date From:</label>
                                         <div class="col-md-3">
-                                            <div class="input-group input-large date-picker input-daterange">
-                                                <input type="text" class="form-control"  id="from_datee" name="from_datee" required tabindex="1" <?php echo 'value="'.date('m/d/Y').'"'; ?> placeholder="mm/dd/yyyy">
-                                                <span class="input-group-addon"> to </span>
-                                                <input type="text" class="form-control" id="to_datee" name="to_datee" required tabindex="2" <?php echo 'value="'.date('m/d/Y').'"'; ?> placeholder="mm/dd/yyyy"> </div>
-                                            <!-- /input-group -->
+                                            <input type="text" class="form-control date-picker"  id="from_datee" name="from_datee" required tabindex="1" <?php echo 'value="'.date('m/d/Y').'"'; ?> placeholder="mm/dd/yyyy">
                                         </div>
-                                        <label class="col-md-2 control-label">Select Vehicle:</label>
-                                        <div class="col-md-3">
-                                             <select class="form-control" name="vehicle_id" id="vehicle_id" tabindex="3">
-                                                         <option value="">All</option>
-                                                         <?php 
 
-                                                          $q = mysqli_query($mycon,'SELECT vehicle_id,vehicle_number from vehicle where status=1 ORDER BY vehicle_id DESC');
-
-                                                          while( $r = mysqli_fetch_array($q) )
-                                                            {?>
-                                                              <option value="<?php echo $r['vehicle_id']; ?>"><?php echo $r['vehicle_number']; ?></option>
-                                                          <?php } //END OF WHILE ?>
-                                                          
-                                                     </select>
+                                        <label class="control-label col-md-2">Date To:</label>
+                                        <div class="col-md-3"> 
+                                            <input type="text" class="form-control date-picker" id="to_datee" name="to_datee" required tabindex="2" <?php echo 'value="'.date('m/d/Y').'"'; ?> placeholder="mm/dd/yyyy"> 
                                         </div>
-                                    </div>
-                                    <div class="form-group">
                                         
                                     </div>
+                                   
+                                </div>
+                                
+                                <div class="row"> 
+                                      <div class="form-group">
+                                            <label class="col-md-2 control-label">From Destination:</label>
+                                            <div class="col-md-3">
+                                                <select class="form-control" id="from_yard_id" name="from_yard_id" tabindex="3" >
+                                                    <option value="">Select Destination</option>
+                                                    <?php 
+
+                                                  $q = mysqli_query($mycon,'SELECT yard_id,short_form from yard where status=1 ORDER BY yard_id DESC');
+
+                                                  while( $r = mysqli_fetch_array($q) )
+                                                    {?>
+                                                      <option value="<?php echo $r['yard_id']; ?>"><?php echo $r['short_form']; ?></option>
+                                                  <?php } //END OF WHILE ?>
+                                                    
+                                                </select>
+                                            </div>
+                                            
+                                            <label class="col-md-2 control-label">To Destination:</label>
+                                            <div class="col-md-3">
+                                              <select class="form-control" id="to_yard_id" name="to_yard_id" tabindex="4"  >
+                                                  <option value="">Select Destination</option>
+                                                    <?php 
+
+                                              $q = mysqli_query($mycon,'SELECT yard_id,short_form from yard where status=1 ORDER BY yard_id DESC');
+
+                                              while( $r = mysqli_fetch_array($q) )
+                                                {?>
+                                                  <option value="<?php echo $r['yard_id']; ?>"><?php echo $r['short_form']; ?></option>
+                                              <?php } //END OF WHILE ?>
+                                                  
+                                              </select>
+                                            </div>
+
+                                        </div> 
+                                </div>
+                                
+                                <div class="row"> 
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label">On Account Of:</label>
+                                        <div class="col-md-3">
+                                            <select class="form-control" id="coa_id" name="coa_id"  tabindex="5" >
+                                                <option value="">Select Account</option>
+                                                <?php 
+
+                                                  $q = mysqli_query($mycon,'SELECT coa_id,short_form from chart_of_account where status=1 ORDER BY coa_id DESC');
+
+                                                  while( $r = mysqli_fetch_array($q) )
+                                                    {?>
+                                                      <option value="<?php echo $r['coa_id']; ?>"><?php echo $r['short_form']; ?></option>
+                                                  <?php } //END OF WHILE ?>
+                                            </select>
+                                        </div>
+                                        
+                                        <label class="col-md-2 control-label">Consignee:</label>
+                                        <div class="col-md-3">
+                                            <select class="form-control" id="consignee_id" name="consignee_id"  tabindex="6">
+                                                <option value="">Select Consignee</option>
+                                                <?php 
+
+                                                  $q = mysqli_query($mycon,'SELECT consignee_id,short_form from consignee where status=1 ORDER BY consignee_id DESC');
+
+                                                  while( $r = mysqli_fetch_array($q) )
+                                                    {?>
+                                                      <option value="<?php echo $r['consignee_id']; ?>"><?php echo $r['short_form']; ?></option>
+                                                  <?php } //END OF WHILE ?>
+                                            </select>
+                                        </div>
+                                    </div> 
+                                </div>
+                                
+                                <div class="row"> 
+                                  <div class="form-group">
+                                        <label class="col-md-2 control-label"> Movement:</label>
+                                        <div class="col-md-3">
+                                            <select class="form-control" id="movement" name="movement" tabindex="7" >
+                                                <option value="empty">Empty</option>
+                                                <option value="import">Import</option>
+                                                <option value="export">Export</option> 
+                                            </select>
+                                        </div>
+                                        
+                                        <label class="col-md-2 control-label"> Empty Terminal:</label>
+                                          <div class="col-md-3">
+                                              <select class="form-control" id="empty_terminal_id" name="empty_terminal_id" tabindex="8" >
+                                                  <option value="">Select Terminal</option>
+                                                  <?php 
+
+                                                  $q = mysqli_query($mycon,'SELECT yard_id,short_form from yard where status=1 ORDER BY yard_id DESC');
+
+                                                  while( $r = mysqli_fetch_array($q) )
+                                                    {?>
+                                                      <option value="<?php echo $r['yard_id']; ?>"><?php echo $r['short_form']; ?></option>
+                                                  <?php } //END OF WHILE ?>
+                                              </select>
+                                          </div>
+                                    </div> 
+                                </div>
+                                
+                                <div class="row"> 
+                                    <div class="form-group">
+                                        
+                                        <label class="col-md-2 control-label">Container No:</label>
+                                        <div class="col-md-3">
+                                          <input type="text" class="form-control" placeholder="APZU4846408" id="container_number" name="container_number" tabindex="9">
+                                        </div>
+
+                                        <label class="col-md-2 control-label">B/L OR CRO No:</label>
+                                        <div class="col-md-3">
+                                          <input type="text" class="form-control" placeholder="0898664" id="bl_cro_number" name="bl_cro_number"  tabindex="10">
+                                        </div>
+                                    
+                                    </div>  
+                                </div>
+
+                                <div class="row"> 
+                                    <div class="form-group">
+                                        
+                                        <label class="col-md-2 control-label">Container Size:</label>
+                                        <div class="col-md-3">
+                                            <select class="form-control" id="container_size" name="container_size" tabindex="11">
+                                              <option value="20">20</option>
+                                              <option value="40">40</option>
+                                              <option value="45">45</option>
+                                            </select>
+                                        </div>
+
+                                        <label class="col-md-2 control-label">Container Type:</label>
+                                        <div class="col-md-3">
+                                            <select class="form-control" id="container_id" name="container_id" tabindex="12" >
+                                              <option value="">Select Container Type</option>
+                                              <?php 
+
+                                                 $q = mysqli_query($mycon,'SELECT container_id,type from container where status=1 ORDER BY container_id DESC');
+
+                                                while( $r = mysqli_fetch_array($q) )
+                                                {?>
+                                                <option value="<?php echo $r['container_id']; ?>"><?php echo $r['type']; ?></option>
+                                                <?php } //END OF WHILE ?>
+                                            </select>
+                                        </div>
+                                    </div>  
+                                </div>
+
+                                <div class="row"> 
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label">Select Vehicle:</label>
+                                        <div class="col-md-3">
+                                            <select class="form-control" name="vehicle_id" id="vehicle_id" tabindex="13">
+                                                <option value="">All</option>
+                                                <?php 
+
+                                                    $q = mysqli_query($mycon,'SELECT vehicle_id,vehicle_number from vehicle where status=1 ORDER BY vehicle_id DESC');
+
+                                                    while( $r = mysqli_fetch_array($q) )
+                                                    {?>
+                                                        <option value="<?php echo $r['vehicle_id']; ?>"><?php echo $r['vehicle_number']; ?></option>
+                                                    <?php } //END OF WHILE ?>         
+                                            </select>
+                                        </div>
+
+                                        <label class="col-md-2 control-label">Owner Name:</label>
+                                        <div class="col-md-3">
+                                            <select class="form-control" id="owner_name" name="owner_name" tabindex="14">
+                                                <option value="">All</option>
+                                                <?php 
+
+                                                    $q = mysqli_query($mycon,'SELECT owner_name from vehicle where status=1 GROUP BY owner_name');
+
+                                                    while( $r = mysqli_fetch_array($q) )
+                                                    {?>
+                                                        <option value="<?php echo $r['owner_name']; ?>"><?php echo $r['owner_name']; ?></option>
+                                                    <?php } //END OF WHILE ?>         
+                                            </select>
+                                        </div>                                        
+                                    
+                                    </div>  
+                                </div>
+
+                                <div class="row"> 
+                                    <div class="form-group">
+                                        
+                                        <label class="col-md-2 control-label">Shipping Line:</label>
+                                            <div class="col-md-3">
+                                                <select class="form-control" id="line_id" name="line_id"  tabindex="15" >
+                                                    <option value="">Select Shipping Line</option>
+                                                        <?php 
+
+                                                        $q = mysqli_query($mycon,'SELECT line_id,short_form from line where status=1 ORDER BY line_id ');
+
+                                                        while( $r = mysqli_fetch_array($q) )
+                                                            {?>
+                                                              <option value="<?php echo $r['line_id']; ?>"><?php echo $r['short_form']; ?></option>
+                                                          <?php } //END OF WHILE ?>
+                                                </select>
+                                            </div>                                     
+                                    </div>  
+                                </div>
+                                
+                                <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-9 col-md-push-2">
                                             <div class="">
-                                                <button type="submit" class="btn blue" id="btn_submit" tabindex="4">Check</button>
+                                                <button type="submit" class="btn blue" id="btn_submit" tabindex="16">Check</button>
                                                 <!-- <button type="button" class="btn default">Cancel</button> -->
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div>                                            
                             </div>
                         </form>
                     </div>
@@ -103,7 +290,9 @@ date_default_timezone_set("Asia/Karachi");
                                                 <th> Movement </th>
                                                 <th> Container # </th>
                                                 <th> Container Size </th>
+                                                <th> Type </th>
                                                 <th> Line </th>
+                                                <th> B/L OR CRO NO. </th>
                                                 <th> Vehicle # </th>
                                                 <th> Driver Name </th>
                                                 <th> Owner Name </th>
@@ -345,7 +534,7 @@ include 'footer.php';
     getId();
 
     //Select2
-   $('#vehicle_id').select2({
+   $('#from_yard_id,#to_yard_id,#coa_id,#consignee_id,#movement,#empty_terminal_id,#container_size,#container_id,#line_id,#vehicle_id,#owner_name').select2({
       width: 'resolve'
    });
 
@@ -357,10 +546,10 @@ include 'footer.php';
 
     myDataTable();
 
-    function loadData(from_datee,to_datee,vehicle_id)
+    function loadData(from_datee,to_datee,from_yard_id,to_yard_id,coa_id,consignee_id,movement,empty_terminal_id,container_number,bl_cro_number,container_size,container_id,vehicle_id,owner_name,line_id)
     {
         $.ajax({
-            url:'ajax/vehicle/detailed_fetch.php?from_datee='+from_datee+'&to_datee='+to_datee+'&vehicle_id='+vehicle_id,
+            url:'ajax/vehicle/detailed_fetch.php?from_datee='+from_datee+'&to_datee='+to_datee+'&from_yard_id='+from_yard_id+'&to_yard_id='+to_yard_id+'&coa_id='+coa_id+'&consignee_id='+consignee_id+'&movement='+movement+'&empty_terminal_id='+empty_terminal_id+'&container_number='+container_number+'&bl_cro_number='+bl_cro_number+'&container_size='+container_size+'&container_id='+container_id+'&vehicle_id='+vehicle_id+'&owner_name='+owner_name+'&line_id='+line_id,
             dataType:"JSON",
             success:function(data){
                 var n = 1,
@@ -388,7 +577,9 @@ include 'footer.php';
                             '<td>'+value['movement']+'</td>'+
                             '<td>'+value['container_number']+'</td>'+
                             '<td>'+value['container_size']+'</td>'+
+                            '<td>'+value['container_type']+'</td>'+
                             '<td id="'+value['line_id']+'">'+value['line']+'</td>'+
+                            '<td>'+value['bl_cro_number']+'</td>'+
                             '<td id="'+value['vehicle_id']+'">'+value['vehicle_number']+'</td>'+
                             '<td>'+value['driver_name']+'</td>'+
                             '<td id="owner_name">'+value['owner_name']+'</td>'+
@@ -491,12 +682,24 @@ include 'footer.php';
     $('#form').submit(function(e){
        e.preventDefault();
        
-       var from_datee = $('#from_datee').val() ,
-           to_datee = $('#to_datee').val() ,
-           vehicle_id = $('#vehicle_id').val();
+        var from_datee = $('#from_datee').val() ,
+            to_datee = $('#to_datee').val() ,
+            from_yard_id = $('#from_yard_id').val(),
+            to_yard_id = $('#to_yard_id').val(),
+            coa_id = $('#coa_id').val(),
+            consignee_id = $('#consignee_id').val(),
+            movement = $('#movement').val(),
+            empty_terminal_id = $('#empty_terminal_id').val(),
+            container_number = $('#container_number').val(),
+            bl_cro_number = $('#bl_cro_number').val(),
+            container_size = $('#container_size').val(),
+            container_id = $('#container_id').val(),
+            vehicle_id = $('#vehicle_id').val(),
+            owner_name = $('#owner_name').val(),
+            line_id = $('#line_id').val();
 
 
-        loadData(from_datee,to_datee,vehicle_id);
+        loadData(from_datee,to_datee,from_yard_id,to_yard_id,coa_id,consignee_id,movement,empty_terminal_id,container_number,bl_cro_number,container_size,container_id,vehicle_id,owner_name,line_id);
 
     });
 

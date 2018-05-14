@@ -98,7 +98,7 @@ date_default_timezone_set("Asia/Karachi");
                                                 </div>
                                             </div> 
                                       </div>
-                                          <div class="row"> 
+                                    <div class="row"> 
                                           <div class="form-group">
                                                 <label class="col-md-2 control-label">Consignee:</label>
                                                 <div class="col-md-3">
@@ -246,7 +246,7 @@ date_default_timezone_set("Asia/Karachi");
                                                         </div> 
                                                   </div>
 
-                                                <div class="row"> 
+                                            <div class="row"> 
                                                 <div class="form-group">
                                                           <label class="col-md-2 control-label">B/L OR CRO No:</label>
                                                         <div class="col-md-3">
@@ -258,7 +258,7 @@ date_default_timezone_set("Asia/Karachi");
                                                           <input type="text" class="form-control" placeholder="E-1035" id="job_number" name="job_number" required tabindex="14">
                                                         </div>
                                                  </div>  
-                                             </div>
+                                            </div>
                                       
                                              <div class="row"> 
                                                  <div class="form-group">

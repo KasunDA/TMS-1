@@ -52,12 +52,12 @@ include 'nav.php';
                                          <div class="form-group">
                                                    <label class="col-md-2 control-label">Engine Number </label>
                                                  <div class="col-md-3">
-                                                   <input type="text" class="form-control"  id="engine_number" name="engine_number" required tabindex="3" placeholder="here">
+                                                   <input type="text" class="form-control"  id="engine_number" name="engine_number"  tabindex="3" placeholder="here">
                                                  </div>
                                      
                                                    <label class="col-md-2 control-label">Chassis Number </label>
                                                  <div class="col-md-3">
-                                                   <input type="text" class="form-control" id="chassis_number" name="chassis_number" required tabindex="4" placeholder="here">
+                                                   <input type="text" class="form-control" id="chassis_number" name="chassis_number"  tabindex="4" placeholder="here">
                                                  </div>
                                           </div>  
                                       </div>
