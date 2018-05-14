@@ -21,10 +21,13 @@ date_default_timezone_set("Asia/Karachi");
                         <div class="portlet-title">
                             <div class="caption font-red-sunglo">
                                 <i class="icon-settings font-red-sunglo"></i>
-                                <span class="caption-subject bold uppercase">Garage Entry</span>
+                                <span class="caption-subject bold uppercase"><?php $text = isset($_SESSION['disable_btn'])?'View':'Add New'; echo $text; ?> Garage Entry</span>
                             </div>
                         </div>
                         <div class="portlet-body form">
+                            <?php
+                                if(!isset($_SESSION['disable_btn']) )
+                                {?>
                             <form class="form-horizontal" role="form" method="post">
                                 <div class="form-body">
                                     <div class="row">
@@ -54,7 +57,7 @@ date_default_timezone_set("Asia/Karachi");
                                          </div>    
                                      <div class="row"> 
                                          <div class="form-group">
-                                            <label class="col-md-2 control-label">vehicle#:</label>
+                                            <label class="col-md-2 control-label">vehicle #:</label>
                                             <div class="col-md-3">
                                                 <select class="form-control" id="vehicle_id" name="vehicle_id" required tabindex="3">
                                                     <option value="">Select Vehicle</option>
@@ -68,7 +71,7 @@ date_default_timezone_set("Asia/Karachi");
                                                   <?php } //END OF WHILE ?>
                                                 </select>
                                             </div>
-                                            <label class="col-md-2 control-label">Amount #</label>
+                                            <label class="col-md-2 control-label">Amount</label>
                                              <div class="col-md-3">
                                                <input type="number" step="0.01" min="0" class="form-control" id="amount" name="amount" required tabindex="4" placeholder="58680">
                                              </div>
@@ -85,6 +88,7 @@ date_default_timezone_set("Asia/Karachi");
                                 </div>
                                 
                             </form>
+                            <?php }//END OF IF?>
                         </div>
                         <!-- Form ends -->
                         <hr>
@@ -162,6 +166,9 @@ include 'footer.php';
 
                         $('tbody').append('<tr  index="'+i+'" class="odd gradeX">'+
 
+                            <?php
+                                if(!isset($_SESSION['disable_btn']) )
+                                {?>
                                 '<td>'+ 
                                     '<ul class="addremove">'+
                                         '<li> <button class="btn btn-xs green update_btn" id="'+value['ge_id']+'" type="button">  '+
@@ -171,7 +178,11 @@ include 'footer.php';
                                         '<i class="fa fa-minus-square"></i>'+
                                         '</button> </li>'+
                                     '</ul>'+
-                                '</td>'+                       
+                                '</td>'+    
+                                <?php }//END OF If
+                                else{?>
+                                    '<td></td>'+
+                                <?php }//END OF ELSE ?>                   
 
                                 '<td>'+n+'</td>'+
                                 '<td>'+value['datee']+'</td>'+

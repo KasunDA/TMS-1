@@ -20,10 +20,13 @@ require 'connection.php';
                         <div class="portlet-title">
                             <div class="caption font-red-sunglo">
                                 <i class="icon-settings font-red-sunglo"></i>
-                                <span class="caption-subject bold uppercase">Add New Diesel Limit:</span>
+                                <span class="caption-subject bold uppercase"><?php $text = isset($_SESSION['disable_btn'])?'View':'Add New'; echo $text; ?> Diesel Limit:</span>
                             </div>
                         </div>
                         <div class="portlet-body form">
+                            <?php
+                                if(!isset($_SESSION['disable_btn']) )
+                                {?>
                             <form class="form-horizontal" role="form" method="post">
                                 <div class="form-body">
                                     <div class="row hidden" id="dl_id_div"> 
@@ -36,10 +39,10 @@ require 'connection.php';
                                     </div>
                                     <div class="row"> 
                                         <div class="form-group">
-                                            <label class="col-md-2 control-label">From:</label>
+                                            <label class="col-md-2 control-label">From Destination:</label>
                                             <div class="col-md-3">
                                                 <select class="form-control select" id="from_yard" name="from_yard" required tabindex="1" style="width: 100%;">
-                                                    <option value="">Select Yard</option>
+                                                    <option value="">Select Destination</option>
                                                     <?php
 
                                                     $q = mysqli_query($mycon,'SELECT * FROM yard WHERE status=1 ORDER BY yard_id DESC ');
@@ -56,10 +59,10 @@ require 'connection.php';
                                                 </select>
                                             </div>
                                     
-                                            <label class="col-md-2 control-label">To:</label>
+                                            <label class="col-md-2 control-label">To Destination:</label>
                                             <div class="col-md-3">
                                                 <select class="" id="to_yard" name="to_yard" required tabindex="2" style="width: 100%;">
-                                                    <option value="" >Select Yard</option>
+                                                    <option value="" >Select Destination</option>
                                                     <?php
 
                                                     $q = mysqli_query($mycon,'SELECT * FROM yard WHERE status=1 ORDER BY yard_id DESC ');
@@ -77,7 +80,7 @@ require 'connection.php';
                                             </div>
                                          </div>    
                                          <div class="form-group">
-                                            <label class="col-md-2 control-label">Diesel in Litters:</label>
+                                            <label class="col-md-2 control-label">Diesel in Liters:</label>
                                             <div class="col-md-3">
                                                 <input type="number" class="form-control" placeholder="10" id="limit_litre" name="limit_litre" required tabindex="3" min="0">
                                             </div>
@@ -95,6 +98,7 @@ require 'connection.php';
                                     </div>
                                 </div>
                             </form>
+                            <?php }//END OF IF?>
                         </div>
                         <!-- Form ends -->
                         <hr>
@@ -112,7 +116,7 @@ require 'connection.php';
                                                     <th> # </th>
                                                     <th> From </th>
                                                     <th> To </th>
-                                                    <th> Diesel in Litters </th>
+                                                    <th> Diesel in Liters </th>
                                                    
                                                 </tr>
                                             </thead>
@@ -173,7 +177,9 @@ include 'footer.php';
                     $.each(data,function(index,value){
 
                         $('tbody').append('<tr index="'+i+'" class="odd gradeX">'+
-
+                            <?php
+                                if(!isset($_SESSION['disable_btn']) )
+                                {?>
                                 '<td>'+ 
                                     '<ul class="addremove">'+
                                         '<li> <button class="btn btn-xs green update_btn" id="'+value['dl_id']+'" type="button">  '+
@@ -183,7 +189,11 @@ include 'footer.php';
                                         '<i class="fa fa-minus-square"></i>'+
                                         '</button> </li>'+
                                     '</ul>'+
-                                '</td>'+                       
+                                '</td>'+            
+                                <?php }//END OF If
+                                else{?>
+                                    '<td></td>'+
+                                <?php }//END OF ELSE ?>           
 
                                 '<td>'+n+'</td>'+
                                 '<td from_yard_id="'+value['from_yard_id']+'">'+value['from_yard']+' ('+value['from_yard_full']+') </td>'+

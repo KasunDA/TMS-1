@@ -29,10 +29,13 @@ include 'nav.php';
                         <div class="portlet-title">
                             <div class="caption font-red-sunglo">
                                 <i class="icon-settings font-red-sunglo"></i>
-                                <span class="caption-subject bold uppercase"> Add New Shipping Line</span>
+                                <span class="caption-subject bold uppercase"> <?php $text = isset($_SESSION['disable_btn'])?'View':'Add New'; echo $text; ?> Shipping Line</span>
                             </div>
                         </div>
                         <div class="portlet-body form">
+                            <?php
+                                if(!isset($_SESSION['disable_btn']) )
+                                {?>
                             <form class="form-horizontal" role="form" method="post">
                                 <div class="form-body">
                                     <div class="row hidden" id="line_id_div"> 
@@ -70,6 +73,7 @@ include 'nav.php';
                                 </div>
                                 
                             </form>
+                            <?php }//END OF IF?> 
                         </div>
                         <!-- Form ends -->
                         <hr>
@@ -141,6 +145,9 @@ include 'footer.php';
 
                         $('tbody').append('<tr index="'+i+'" class="odd gradeX">'+
 
+                            <?php
+                                if(!isset($_SESSION['disable_btn']) )
+                                {?>
                                 '<td>'+ 
                                     '<ul class="addremove">'+
                                         '<li> <button class="btn btn-xs green update_btn" id="'+value['line_id']+'" type="button">  '+
@@ -150,7 +157,11 @@ include 'footer.php';
                                         '<i class="fa fa-minus-square"></i>'+
                                         '</button> </li>'+
                                     '</ul>'+
-                                '</td>'+                       
+                                '</td>'+      
+                                <?php }//END OF If
+                                else{?>
+                                    '<td></td>'+
+                                <?php }//END OF ELSE ?>                  
 
                                 '<td>'+n+'</td>'+
                                 '<td>'+value['short_form']+'</td>'+

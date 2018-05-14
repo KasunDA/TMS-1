@@ -25,7 +25,7 @@
                     <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
                     <li class="dropdown dropdown-user dropdown-dark">
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                            <span class="username username-hide-on-mobile"> <?php echo $_SESSION['username']; ?></span>
+                            <span class="username username-hide-on-mobile" style="text-transform: capitalize;"> <?php echo $_SESSION['username']; ?></span>
                             <!-- DOC: Do not remove below empty space(&nbsp;) as its purposely used -->
                             <img alt="" class="img-circle" src="../assets/layouts/layout4/img/avatar.png" /> </a>
                         <ul class="dropdown-menu dropdown-menu-default">
@@ -66,15 +66,15 @@
             <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
             <!-- DOC: Set data-keep-expand="true" to keep the submenues expanded -->
             <!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
-            <ul class="page-sidebar-menu   " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
-                <li class="nav-item start active open">
+            <ul class="page-sidebar-menu page-sidebar-menu-closed" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+                <!-- <li class="nav-item start active open">
                     <a href="javascript:;" class="nav-link nav-toggle">
                         <i class="icon-home"></i>
                         <span class="title">Dashboard</span>
                         <span class="selected"></span>
                     </a>
-                </li>
-                <!-- <li class="nav-item  ">
+                </li> 
+                <li class="nav-item  ">
                     <a href="javascript:;" class="nav-link nav-toggle">
                         <i class="icon-diamond"></i>
                         <span class="title">Container Entry</span>
@@ -97,181 +97,214 @@
 <!--                 <li class="heading">
                     <h3 class="uppercase">Definations</h3>
                 </li> -->
-                
-                <li class="nav-item  ">
-                    <a href="javascript:;" class="nav-link nav-toggle">
-                        <i class="icon-diamond"></i>
-                        <span class="title">Definations</span>
-                        <span class="arrow"></span>
-                    </a>
-                    <ul class="sub-menu">
+                <?php
+                    // session_start();
+
+                    if($_SESSION['username'] == 'sajad')
+                    {?>
                         <li class="nav-item  ">
-                            <a href="Chart_Of_Account.php" class="nav-link ">
-                                <span class="title">Chart Of Account</span>
+                            <a href="javascript:;" class="nav-link nav-toggle">
+                                <i class="icon-pie-chart"></i>
+                                <span class="title">Reports</span>
+                                <span class="arrow"></span>
                             </a>
+                            <ul class="sub-menu">
+                                
+                                <li class="nav-item  ">
+                                    <a href="report-vehicle.php" class="nav-link ">
+                                        <span class="title">Vehicle Report</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item  ">
+                                    <a href="report-vehicle-voucher.php" class="nav-link ">
+                                        <span class="title">Voucher Vehicle Report</span>
+                                    </a>
+                                </li>
+                                
+                                <li class="nav-item  ">
+                                    <a href="recivePartyPayment.php" class="nav-link ">
+                                        <span class="title">Receive Party Payment</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    <?php   } 
+                    else{?>
+                        <li class="nav-item  ">
+                            <a href="javascript:;" class="nav-link nav-toggle">
+                                <i class="fa fa-database"></i>
+                                <span class="title">Definitions</span>
+                                <span class="arrow"></span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li class="nav-item  ">
+                                    <a href="Chart_Of_Account.php" class="nav-link ">
+                                        <span class="title">Chart Of Account</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item  ">
+                                    <a href="clearingAgent.php" class="nav-link ">
+                                        <span class="title">Clearing Agent</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item  ">
+                                    <a href="container_type.php" class="nav-link ">
+                                        <span class="title">Container Type</span>
+                                    </a>
+                                </li>
+                             
+                                <li class="nav-item  ">
+                                    <a href="Vechile.php" class="nav-link ">
+                                        <span class="title">Vehicle</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item  ">
+                                    <a href="bike.php" class="nav-link ">
+                                        <span class="title">Bike</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item  ">
+                                    <a href="Yard.php" class="nav-link ">
+                                        <span class="title">Destination</span>
+                                    </a>
+                                </li>
+                                
+                                <li class="nav-item  ">
+                                    <a href="line.php" class="nav-link ">
+                                        <span class="title">Line</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item  ">
+                                    <a href="consignee.php" class="nav-link ">
+                                        <span class="title">Consignee</span>
+                                    </a>
+                                </li>
+                                 
+                                <li class="nav-item  ">
+                                    <a href="dailyDisc.php" class="nav-link ">
+                                        <span class="title">Daily description</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item  ">
+                                    <a href="company.php" class="nav-link ">
+                                        <span class="title">Company</span>
+                                    </a>
+                                </li>
+                               <li class="nav-item  ">
+                                   <a href="Banks.php" class="nav-link ">
+                                       <span class="title">Banks</span>
+                                   </a>
+                               </li>
+                               <li class="nav-item  ">
+                                   <a href="dieselLimite.php" class="nav-link ">
+                                       <span class="title">Diesel Limit</span>
+                                   </a>
+                               </li>
+                            </ul>
                         </li>
                         <li class="nav-item  ">
-                            <a href="clearingAgent.php" class="nav-link ">
-                                <span class="title">Clearing Agent</span>
+                            <a href="javascript:;" class="nav-link nav-toggle">
+                                <i class="fa fa-exchange"></i>
+                                <span class="title">Transactions</span>
+                                <span class="arrow"></span>
                             </a>
+                            <ul class="sub-menu">
+                                <li class="nav-item  ">
+                                    <a href="container-entry.php" class="nav-link ">
+                                        <span class="title">Container Movement</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item  ">
+                                    <a href="container-movement-update.php" class="nav-link ">
+                                        <span class="title">Update Container Movement</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item  ">
+                                    <a href="garageEntry.php" class="nav-link ">
+                                        <span class="title">Repair & Maintenance </span>
+                                    </a>
+                                </li>
+                                <li class="nav-item  ">
+                                    <a href="Accounts.php" class="nav-link ">
+                                        <span class="title">Accounts</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item  ">
+                                    <a href="Diesel-entry.php" class="nav-link ">
+                                        <span class="title">Diesel</span>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="nav-item  ">
-                            <a href="container_type.php" class="nav-link ">
-                                <span class="title">Container Type</span>
+                            <a href="javascript:;" class="nav-link nav-toggle">
+                                <i class="icon-notebook"></i>
+                                <span class="title">Daily Book</span>
+                                <span class="arrow"></span>
                             </a>
-                        </li>
-                     
-                        <li class="nav-item  ">
-                            <a href="Vechile.php" class="nav-link ">
-                                <span class="title">Vehicle</span>
-                            </a>
-                        </li>
-                        <li class="nav-item  ">
-                            <a href="bike.php" class="nav-link ">
-                                <span class="title">Bike</span>
-                            </a>
-                        </li>
-                        <li class="nav-item  ">
-                            <a href="Yard.php" class="nav-link ">
-                                <span class="title">Yard</span>
-                            </a>
-                        </li>
-                        
-                        <li class="nav-item  ">
-                            <a href="line.php" class="nav-link ">
-                                <span class="title">Line</span>
-                            </a>
+                            <ul class="sub-menu">
+                                <li class="nav-item  ">
+                                    <a href="dailyExpens.php" class="nav-link ">
+                                        <span class="title">Daily Expenses</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item  ">
+                                    <a href="dailyAdvanceRecover.php" class="nav-link ">
+                                        <span class="title">Advance Recover</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item  ">
+                                    <a href="AdvanceTaken.php" class="nav-link ">
+                                        <span class="title">Advance Pay</span>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="nav-item  ">
-                            <a href="consignee.php" class="nav-link ">
-                                <span class="title">Consignee</span>
+                            <a href="javascript:;" class="nav-link nav-toggle">
+                                <i class="icon-pie-chart"></i>
+                                <span class="title">Reports</span>
+                                <span class="arrow"></span>
                             </a>
+                            <ul class="sub-menu">
+                                <li class="nav-item  ">
+                                    <a href="report-detailed-daily.php" class="nav-link ">
+                                        <span class="title">Daily Detailed Report</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item  ">
+                                    <a href="report-garage.php" class="nav-link ">
+                                        <span class="title">Repair & Maintenance</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item  ">
+                                    <a href="report-diesel.php" class="nav-link ">
+                                        <span class="title">Diesel Report</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item  ">
+                                    <a href="report-vehicle.php" class="nav-link ">
+                                        <span class="title">Vehicle Report</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item  ">
+                                    <a href="report-vehicle-voucher.php" class="nav-link ">
+                                        <span class="title">Voucher Vehicle Report</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item  ">
+                                    <a href="reportAccounts.php" class="nav-link ">
+                                        <span class="title">Accounts Report</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item  ">
+                                    <a href="recivePartyPayment.php" class="nav-link ">
+                                        <span class="title">Receive Party Payment</span>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
-                         
-                        <li class="nav-item  ">
-                            <a href="dailyDisc.php" class="nav-link ">
-                                <span class="title">Daily description</span>
-                            </a>
-                        </li>
-                        <li class="nav-item  ">
-                            <a href="company.php" class="nav-link ">
-                                <span class="title">Company</span>
-                            </a>
-                        </li>
-                       <li class="nav-item  ">
-                           <a href="Banks.php" class="nav-link ">
-                               <span class="title">Banks</span>
-                           </a>
-                       </li>
-                       <li class="nav-item  ">
-                           <a href="dieselLimite.php" class="nav-link ">
-                               <span class="title">Diesel Limit</span>
-                           </a>
-                       </li>
-                    </ul>
-                </li>
-                <li class="nav-item  ">
-                    <a href="javascript:;" class="nav-link nav-toggle">
-                        <i class="icon-diamond"></i>
-                        <span class="title">Transactions</span>
-                        <span class="arrow"></span>
-                    </a>
-                    <ul class="sub-menu">
-                        <li class="nav-item  ">
-                            <a href="container-entry.php" class="nav-link ">
-                                <span class="title">Container Movment</span>
-                            </a>
-                        </li>
-                        <li class="nav-item  ">
-                            <a href="container-movement-update.php" class="nav-link ">
-                                <span class="title">Update Container Movment</span>
-                            </a>
-                        </li>
-                        <li class="nav-item  ">
-                            <a href="garageEntry.php" class="nav-link ">
-                                <span class="title">Repair & Maintenance </span>
-                            </a>
-                        </li>
-                        <li class="nav-item  ">
-                            <a href="Accounts.php" class="nav-link ">
-                                <span class="title">Accounts</span>
-                            </a>
-                        </li>
-                        <li class="nav-item  ">
-                            <a href="Diesel-entry.php" class="nav-link ">
-                                <span class="title">Diesel</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item  ">
-                    <a href="javascript:;" class="nav-link nav-toggle">
-                        <i class="icon-notebook"></i>
-                        <span class="title">Daily Book</span>
-                        <span class="arrow"></span>
-                    </a>
-                    <ul class="sub-menu">
-                        <li class="nav-item  ">
-                            <a href="dailyExpens.php" class="nav-link ">
-                                <span class="title">Daily Expensis</span>
-                            </a>
-                        </li>
-                        <li class="nav-item  ">
-                            <a href="dailyAdvanceRecover.php" class="nav-link ">
-                                <span class="title">Advance Recover</span>
-                            </a>
-                        </li>
-                        <li class="nav-item  ">
-                            <a href="AdvanceTaken.php" class="nav-link ">
-                                <span class="title">Advance Pay</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item  ">
-                    <a href="javascript:;" class="nav-link nav-toggle">
-                        <i class="icon-pie-chart"></i>
-                        <span class="title">Reports</span>
-                        <span class="arrow"></span>
-                    </a>
-                    <ul class="sub-menu">
-                        <li class="nav-item  ">
-                            <a href="report-detailed-daily.php" class="nav-link ">
-                                <span class="title">Daily Detailed Report</span>
-                            </a>
-                        </li>
-                        <li class="nav-item  ">
-                            <a href="report-garage.php" class="nav-link ">
-                                <span class="title">Repair & Maintenance</span>
-                            </a>
-                        </li>
-                        <li class="nav-item  ">
-                            <a href="report-diesel.php" class="nav-link ">
-                                <span class="title">Diesel Report</span>
-                            </a>
-                        </li>
-                        <li class="nav-item  ">
-                            <a href="report-vehicle.php" class="nav-link ">
-                                <span class="title">Vehicle Report</span>
-                            </a>
-                        </li>
-                        <li class="nav-item  ">
-                            <a href="report-vehicle-voucher.php" class="nav-link ">
-                                <span class="title">Voucher Vehicle Report</span>
-                            </a>
-                        </li>
-                        <li class="nav-item  ">
-                            <a href="reportAccounts.php" class="nav-link ">
-                                <span class="title">Accounts Report</span>
-                            </a>
-                        </li>
-                        <li class="nav-item  ">
-                            <a href="recivePartyPayment.php" class="nav-link ">
-                                <span class="title">Recive Party Payment</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                    <?php } // END OF ELSE?>   
             </ul>
             <!-- END SIDEBAR MENU -->
         </div>

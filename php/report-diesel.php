@@ -97,9 +97,9 @@ date_default_timezone_set("Asia/Karachi");
                                          <th> Vehicle # </th>
                                          <th> From </th>
                                          <th> To </th>
-                                         <th> 1 Litre Rate </th>
-                                         <th> Litres </th>  
-                                         <th> Extra Litres </th>   
+                                         <th> 1 Liter Rate </th>
+                                         <th> Liters </th>  
+                                         <th> Extra Liters </th>   
                                          <th> Total Price </th>   
                                          <th> Description </th> 
                                      </tr>
@@ -123,12 +123,12 @@ date_default_timezone_set("Asia/Karachi");
                                     <tbody>
                                         <tr class="uppercase">
                                             <td> 1 </td>
-                                            <td> Total Litters </td>
+                                            <td> Total Liters </td>
                                             <td id="total_litres"></td>
                                         </tr>
                                         <tr>
                                             <td> 2 </td>
-                                            <td> Extra Litters </td>
+                                            <td> Extra Liters </td>
                                             <td id="extra_litres"></td>
                                         </tr>
                                         <tr>

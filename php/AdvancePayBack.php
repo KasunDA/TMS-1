@@ -28,10 +28,13 @@ $name = $_GET['name'];
                         <div class="portlet-title">
                             <div class="caption font-red-sunglo">
                                 <i class="icon-settings font-red-sunglo"></i>
-                                <span class="caption-subject bold uppercase">Advance Payment</span>
+                                <span class="caption-subject bold uppercase"><?php $text = isset($_SESSION['disable_btn'])?'View':'Payback'; echo $text; ?> Advance Payment</span>
                             </div>
                         </div>
                         <div class="portlet-body form">
+                         <?php
+                                if(!isset($_SESSION['disable_btn']) )
+                                {?>
                             <form class="form-horizontal" role="form">
                                 <div class="form-body">
                                     <div class="row"> 
@@ -160,6 +163,7 @@ $name = $_GET['name'];
                                 </div>
                                 
                             </form>
+                            <?php }//END OF IF?> 
                         </div>
                         <!-- Form ends -->
                         <hr>

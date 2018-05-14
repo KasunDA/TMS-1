@@ -29,10 +29,13 @@ include 'nav.php';
                         <div class="portlet-title">
                             <div class="caption font-red-sunglo">
                                 <i class="icon-settings font-red-sunglo"></i>
-                                <span class="caption-subject bold uppercase"> Add New Container Type</span>
+                                <span class="caption-subject bold uppercase"><?php $text = isset($_SESSION['disable_btn'])?'View':'Add New'; echo $text; ?>  Container Type</span>
                             </div>
                         </div>
                         <div class="portlet-body form">
+                            <?php
+                                if(!isset($_SESSION['disable_btn']) )
+                                {?>
                             <form class="form-horizontal" role="form" method="post">
                                 <div class="form-body">
                                     <div class="row"> 
@@ -64,6 +67,7 @@ include 'nav.php';
                                 </div>
                                 
                             </form>
+                            <?php }//END OF IF?> 
                         </div>
                         <!-- Form ends -->
                         <hr>
@@ -132,17 +136,23 @@ include 'footer.php';
                     $.each(data,function(index,value){
 
                         $('tbody').append('<tr index="'+i+'" class="odd gradeX">'+
-
-                                '<td>'+ 
-                                    '<ul class="addremove">'+
-                                        '<li> <button class="btn btn-xs green update_btn" id="'+value['container_id']+'" type="button">  '+
-                                        '<i class="fa fa-plus-square"></i>'+
-                                        '</button> </li>'+
-                                        '<li>  <button class="btn btn-xs red delete_btn" id="'+value['container_id']+'" type="button">  '+
-                                        '<i class="fa fa-minus-square"></i>'+
-                                        '</button> </li>'+
-                                    '</ul>'+
-                                '</td>'+                       
+                                <?php
+                                if(!isset($_SESSION['disable_btn']) )
+                                {?>
+                                    '<td>'+ 
+                                        '<ul class="addremove">'+
+                                            '<li> <button class="btn btn-xs green update_btn" id="'+value['container_id']+'" type="button">  '+
+                                            '<i class="fa fa-plus-square"></i>'+
+                                            '</button> </li>'+
+                                            '<li>  <button class="btn btn-xs red delete_btn" id="'+value['container_id']+'" type="button">  '+
+                                            '<i class="fa fa-minus-square"></i>'+
+                                            '</button> </li>'+
+                                        '</ul>'+
+                                    '</td>'+    
+                                <?php }//END OF If
+                                else{?>
+                                    '<td></td>'+
+                                <?php }//END OF ELSE ?>                    
 
                                 '<td>'+n+'</td>'+
                                 '<td>'+value['type']+'</td>'+

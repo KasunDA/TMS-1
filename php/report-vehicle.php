@@ -182,6 +182,9 @@ date_default_timezone_set("Asia/Karachi");
                 </div>
                 <!-- END BORDERED TABLE PORTLET-->
             </div>
+            <?php
+            if(!isset($_SESSION['disable_btn']) )
+            {?>
             <div class="col-md-6" id="voucher_div" style="display: none;">
                 <div class="portlet light bordered">
                     <div class="portlet-title">
@@ -273,6 +276,7 @@ date_default_timezone_set("Asia/Karachi");
                     
                 </div> 
             </div>
+            <?php }//END OF IF?>
         </div>
     <!-- END CONTENT BODY -->
         </div>

@@ -32,10 +32,13 @@ date_default_timezone_set("Asia/Karachi");
                         <div class="portlet-title">
                             <div class="caption font-red-sunglo">
                                 <i class="icon-settings font-red-sunglo"></i>
-                                <span class="caption-subject bold uppercase"> Update Container Movement</span>
+                                <span class="caption-subject bold uppercase"> <?php $text = isset($_SESSION['disable_btn'])?'View':'Update'; echo $text; ?> Container Movement</span>
                             </div>
                         </div>
                         <div class="portlet-body form">
+                          <?php
+                                if(!isset($_SESSION['disable_btn']) )
+                                {?>
                             <form class="form-horizontal <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'add_entry_form' ?>" role="form" method="post">
                                 <div class="form-body">
                                    
@@ -152,10 +155,10 @@ date_default_timezone_set("Asia/Karachi");
                                         </div>
                                         <div class="row"> 
                                               <div class="form-group">
-                                                    <label class="col-md-2 control-label">From Yard:</label>
+                                                    <label class="col-md-2 control-label">From Destination:</label>
                                                     <div class="col-md-3">
                                                         <select class="form-control" id="from_yard_id" name="from_yard_id" required tabindex="7" >
-                                                            <option value="">Select Yard</option>
+                                                            <option value="">Select Destination</option>
                                                             <?php 
 
                                                           $q = mysqli_query($mycon,'SELECT yard_id,short_form from yard where status=1 ORDER BY yard_id DESC');
@@ -174,10 +177,10 @@ date_default_timezone_set("Asia/Karachi");
                                           </div>
                                           <div class="row"> 
                                                 <div class="form-group">
-                                                      <label class="col-md-2 control-label">To Yard:</label>
+                                                      <label class="col-md-2 control-label">To Destination:</label>
                                                       <div class="col-md-3">
                                                           <select class="form-control" id="to_yard_id" name="to_yard_id" required tabindex="8"  >
-                                                              <option value="">Select Yard</option>
+                                                              <option value="">Select Destination</option>
                                                                 <?php 
 
                                                           $q = mysqli_query($mycon,'SELECT yard_id,short_form from yard where status=1 ORDER BY yard_id DESC');
@@ -315,6 +318,7 @@ date_default_timezone_set("Asia/Karachi");
                                 </div>
                                 
                             </form>
+                            <?php }//END OF IF?> 
 
                         </div>
                         <!-- Form ends -->
@@ -483,6 +487,9 @@ include 'footer.php';
 
                     $('tbody').append('<tr index="'+i+'" class="odd gradeX">'+
 
+                          <?php
+                                if(!isset($_SESSION['disable_btn']) )
+                                {?>
                             '<td>'+ 
                                 '<ul class="addremove">'+
                                     '<li> <button class="btn btn-xs green update_btn" id="'+value['cm_id']+'" type="button">  '+
@@ -492,7 +499,11 @@ include 'footer.php';
                                     '<i class="fa fa-minus-square"></i>'+
                                     '</button> </li>'+
                                 '</ul>'+
-                            '</td>'+                       
+                            '</td>'+        
+                            <?php }//END OF If
+                                else{?>
+                                    '<td></td>'+
+                                <?php }//END OF ELSE ?>               
 
                             '<td style="color:#000;">'+n+'</td>'+
                             '<td>'+value['cm_id']+'</td>'+

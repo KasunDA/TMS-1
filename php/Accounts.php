@@ -22,10 +22,13 @@ date_default_timezone_set("Asia/Karachi");
                         <div class="portlet-title">
                             <div class="caption font-red-sunglo">
                                 <i class="icon-settings font-red-sunglo"></i>
-                                <span class="caption-subject bold uppercase">Accounts</span>
+                                <span class="caption-subject bold uppercase"><?php $text = isset($_SESSION['disable_btn'])?'View':'Add New'; echo $text; ?> Account Transactions</span>
                             </div>
                         </div>
                         <div class="portlet-body form">
+                          <?php
+                                if(!isset($_SESSION['disable_btn']) )
+                                {?>
                             <form class="form-horizontal" role="form" method="post">
                                 <div class="form-body">
                                     <div class="row">
@@ -121,6 +124,7 @@ date_default_timezone_set("Asia/Karachi");
                                     </div>
                                 </div>
                             </form>
+                            <?php }//END OF IF?>
                         </div>
                         <!-- Form ends -->
                         <!-- end table -->

@@ -29,10 +29,14 @@ include 'nav.php';
                         <div class="portlet-title">
                             <div class="caption font-red-sunglo">
                                 <i class="icon-settings font-red-sunglo"></i>
-                                <span class="caption-subject bold uppercase">Add Company</span>
+                                <span class="caption-subject bold uppercase"><?php $text = isset($_SESSION['disable_btn'])?'View':'Add New'; echo $text; ?> Company</span>
                             </div>
                         </div>
                         <div class="portlet-body form">
+                        
+                        <?php
+                                if(!isset($_SESSION['disable_btn']) )
+                                {?>
                             <form class="form-horizontal" role="form" method="post">
                                 <div class="form-body">
                                     <div class="row"> 
@@ -65,6 +69,7 @@ include 'nav.php';
                                 </div>
                                 
                             </form>
+                            <?php }//END OF IF?>
                         </div>
                         <!-- Form ends -->
                         <hr>
@@ -134,37 +139,30 @@ include 'footer.php';
                     
                     $.each(data,function(index,value){
 
-                        if( value['name'] == 'Advance' ||  value['name'] == 'Bike Expenses' || value['name'] == 'Driver Salary' || value['name'] == 'lunch' )
-                        {
 
-                            $('tbody').append('<tr index="'+i+'" class="odd gradeX">'+
-
+                        $('tbody').append('<tr index="'+i+'" class="odd gradeX">'+
+                            <?php
+                                if(!isset($_SESSION['disable_btn']) )
+                                {?>
+                                '<td>'+ 
+                                    '<ul class="addremove">'+
+                                        '<li> <button class="btn btn-xs green update_btn" id="'+value['cmp_id']+'" type="button">  '+
+                                        '<i class="fa fa-plus-square"></i>'+
+                                        '</button> </li>'+
+                                        '<li>  <button class="btn btn-xs red delete_btn" id="'+value['cmp_id']+'" type="button">  '+
+                                        '<i class="fa fa-minus-square"></i>'+
+                                        '</button> </li>'+
+                                    '</ul>'+
+                                '</td>'+              
+                                <?php }//END OF If
+                                else{?>
                                     '<td></td>'+
-                                    '<td>'+n+'</td>'+
-                                    '<td>'+value['name']+'</td>'+
+                                <?php }//END OF ELSE ?>            
 
-                                    '</tr>');
-                        }
-                        else
-                        {
-                            $('tbody').append('<tr index="'+i+'" class="odd gradeX">'+
+                                '<td>'+n+'</td>'+
+                                '<td>'+value['name']+'</td>'+
 
-                                    '<td>'+ 
-                                        '<ul class="addremove">'+
-                                            '<li> <button class="btn btn-xs green update_btn" id="'+value['cmp_id']+'" type="button">  '+
-                                            '<i class="fa fa-plus-square"></i>'+
-                                            '</button> </li>'+
-                                            '<li>  <button class="btn btn-xs red delete_btn" id="'+value['cmp_id']+'" type="button">  '+
-                                            '<i class="fa fa-minus-square"></i>'+
-                                            '</button> </li>'+
-                                        '</ul>'+
-                                    '</td>'+                       
-
-                                    '<td>'+n+'</td>'+
-                                    '<td>'+value['name']+'</td>'+
-
-                                    '</tr>');
-                        }
+                                '</tr>');
 
                         n++; i++;
                     })

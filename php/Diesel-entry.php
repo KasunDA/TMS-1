@@ -21,10 +21,13 @@ date_default_timezone_set("Asia/Karachi");
                         <div class="portlet-title">
                             <div class="caption font-red-sunglo">
                                 <i class="icon-settings font-red-sunglo"></i>
-                                <span class="caption-subject bold uppercase">Diesel Entry</span>
+                                <span class="caption-subject bold uppercase"><?php $text = isset($_SESSION['disable_btn'])?'View':'Add New'; echo $text; ?> Diesel Entry</span>
                             </div>
                         </div>
                         <div class="portlet-body form">
+                            <?php
+                                if(!isset($_SESSION['disable_btn']) )
+                                {?>
                             <form class="form-horizontal" role="form" method="post">
                                 <div class="form-body">
                                     <div class="row">
@@ -46,7 +49,7 @@ date_default_timezone_set("Asia/Karachi");
                                               <input type="text" class="form-control form-control-inline input-medium date-picker"  size="16" id="datee" name="datee" value="<?php echo date('m/d/Y'); ?>"  required tabindex="1">
                                             </div>
                                             
-                                            <label class="col-md-2 control-label">vehicle#:</label>
+                                            <label class="col-md-2 control-label">vehicle #:</label>
                                             <div class="col-md-3">
                                                 <select class="form-control" id="vehicle_id" name="vehicle_id" required tabindex="2">
                                                     <option value="">Select Vehicle</option>
@@ -62,10 +65,10 @@ date_default_timezone_set("Asia/Karachi");
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-md-2 control-label">From:</label>
+                                            <label class="col-md-2 control-label">From Destination:</label>
                                             <div class="col-md-3">
                                                 <select class="form-control" id="from_yard_id" name="from_yard_id" required tabindex="3" style="width: 100%;">
-                                                    <option value="">Select Yard</option>
+                                                    <option value="">Select Destination</option>
                                                     <?php
 
                                                     $q = mysqli_query($mycon,'SELECT yard_id,short_form FROM yard WHERE status=1 ORDER BY yard_id DESC ');
@@ -80,10 +83,10 @@ date_default_timezone_set("Asia/Karachi");
                                                 </select>
                                             </div>
                                     
-                                            <label class="col-md-2 control-label">To:</label>
+                                            <label class="col-md-2 control-label">To Destination:</label>
                                             <div class="col-md-3">
                                                 <select class="" id="to_yard_id" name="to_yard_id" required tabindex="4" style="width: 100%;">
-                                                    <option value="" >Select Yard</option>
+                                                    <option value="" >Select Destination</option>
                                                     <?php
 
                                                     $q = mysqli_query($mycon,'SELECT yard_id,short_form FROM yard WHERE status=1 ORDER BY yard_id DESC ');
@@ -99,22 +102,22 @@ date_default_timezone_set("Asia/Karachi");
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-md-2 control-label">1 Litre Rate:</label>
+                                            <label class="col-md-2 control-label">1 Liter Rate:</label>
                                             <div class="col-md-3">
                                                <input type="number" step="0.01" min="0.0" id="litre_rate" name="litre_rate" required tabindex="5" class="form-control" placeholder="100">
                                             </div>
-                                            <label class="col-md-2 control-label"> Litres:</label>
+                                            <label class="col-md-2 control-label"> Liters:</label>
                                             <div class="col-md-3">
                                                <input type="number" readonly id="litres" value="0" name="litres" required tabindex="-1" class="form-control">
                                             </div>
                                             
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-md-2 control-label">Extra Litres:</label>
+                                            <label class="col-md-2 control-label">Extra Liters:</label>
                                             <div class="col-md-3">
                                                <input type="number" class="form-control" min="0" value="0" id="extra_litres" name="extra_litres" required tabindex="6" placeholder="7">
                                             </div>
-                                            <label class="col-md-2 control-label">Total Price #:</label>
+                                            <label class="col-md-2 control-label">Total Price:</label>
                                             <div class="col-md-3">
                                                <input type="number" step="0.01"  readonly id="total" name="total" class="form-control" placeholder="total" disabled>
                                             </div>
@@ -139,6 +142,7 @@ date_default_timezone_set("Asia/Karachi");
                                     </div>
                                 </div>
                             </form>
+                            <?php }//END OF IF?> 
                         </div>
                         <!-- Form ends -->
                         <!-- end table -->
@@ -169,9 +173,9 @@ date_default_timezone_set("Asia/Karachi");
                                          <th> Vehicle # </th>
                                          <th> From </th>
                                          <th> To </th>
-                                         <th> 1 Litre Rate </th>
-                                         <th> Litres </th>  
-                                         <th> Extra Litres </th>   
+                                         <th> 1 Liter Rate </th>
+                                         <th> Liters </th>  
+                                         <th> Extra Liters </th>   
                                          <th> Total Price </th>   
                                          <th> Description </th>   
                                      </tr>
@@ -194,19 +198,19 @@ date_default_timezone_set("Asia/Karachi");
                                     <thead>
                                         <tr class="uppercase">
                                             <td> # </td>
-                                            <td> One litre Price</td>
+                                            <td> One liter Price</td>
                                             <td id="llitre_rate">  </td>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr class="uppercase">
                                             <td> 1 </td>
-                                            <td> Total litres </td>
+                                            <td> Total liters </td>
                                             <td id="total_litres">  </td>
                                         </tr>
                                         <tr class="uppercase">
                                             <td> 2 </td>
-                                            <td> Total Extra litres </td>
+                                            <td> Total Extra liters </td>
                                             <td id="total_extra_litres">  </td>
                                         </tr>
                                         <tr>
@@ -331,7 +335,9 @@ include 'footer.php';
                     $.each(data,function(index,value){
 
                         $('#mytable tbody').append('<tr index="'+i+'" class="odd gradeX">'+
-
+                             <?php
+                                if(!isset($_SESSION['disable_btn']) )
+                                {?>
                                 '<td>'+ 
                                     '<ul class="addremove">'+
                                         '<li> <button class="btn btn-xs green update_btn" id="'+value['de_id']+'" type="button">  '+
@@ -341,7 +347,11 @@ include 'footer.php';
                                         '<i class="fa fa-minus-square"></i>'+
                                         '</button> </li>'+
                                     '</ul>'+
-                                '</td>'+                       
+                                '</td>'+          
+                                <?php }//END OF If
+                                else{?>
+                                    '<td></td>'+
+                                <?php }//END OF ELSE ?>             
 
                                 '<td>'+n+'</td>'+
                                 '<td>'+value['datee']+'</td>'+

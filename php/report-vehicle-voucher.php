@@ -94,7 +94,7 @@ date_default_timezone_set("Asia/Karachi");
                                             <tr>
                                                 <th></th>
                                                 <th> # </th>
-                                                <th> voucher_number </th>
+                                                <th> Voucher # </th>
                                                 <th> Date </th>
                                                 <th> Method </th>
                                                 <th> Check # </th>

@@ -3,7 +3,14 @@
 	
 	if( isset( $_SESSION['login_id'] )  &&  $_SESSION['login_id'] != NULL  )
 	{
-		echo "<script>location.assign('php/index.php');</script>";
+		if($_SESSION['username'] == 'sajad')
+        {
+            echo '<script> location.assign("php/recivePartyPayment.php") </script>';    
+        }
+        else
+        {
+            echo '<script> location.assign("php/container-entry.php") </script>';    
+        }
 	}
 
 	require 'php/connection.php';
@@ -24,8 +31,20 @@
 			$_SESSION['username'] = $r['username'];
 
 			// echo '<script> alert(" login id is=  '.$r['login_id'].' username is '.$r['username'] .'") </script>';   
-
-			echo "<script> location.assign('php/index.php') </script>";
+            if($_SESSION['username'] == 'sajad')
+            {
+                echo '<script> location.assign("php/recivePartyPayment.php") </script>';    
+            }
+            else if($_SESSION['username'] == 'rashid')
+            {
+                $_SESSION['disable_btn'] = 'true';
+                echo '<script> location.assign("php/container-entry.php") </script>';    
+            }
+            else
+            {
+                echo '<script> location.assign("php/container-entry.php") </script>';    
+            }
+			// echo "<script> location.assign('php/index.php') </script>";
 		}
 		else
 		{

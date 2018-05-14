@@ -21,10 +21,13 @@ date_default_timezone_set("Asia/Karachi");
                         <div class="portlet-title">
                             <div class="caption font-red-sunglo">
                                 <i class="icon-settings font-red-sunglo"></i>
-                                <span class="caption-subject bold uppercase">Expenses:</span>
+                                <span class="caption-subject bold uppercase"><?php $text = isset($_SESSION['disable_btn'])?'View':'Add New'; echo $text; ?> Expenses:</span>
                             </div>
                         </div>
                         <div class="portlet-body form">
+                           <?php
+                                if(!isset($_SESSION['disable_btn']) )
+                                {?>
                             <form class="form-horizontal" role="form" id="expense_form" method="post">
                                 <div class="form-body">
                                     <div class="row">
@@ -177,6 +180,7 @@ date_default_timezone_set("Asia/Karachi");
                                     </div>
                                 </div>
                             </form>
+                            <?php }//END OF IF?> 
                         </div>
                         <!-- Form ends -->
                         <!-- end table -->
@@ -188,10 +192,13 @@ date_default_timezone_set("Asia/Karachi");
                         <div class="portlet-title">
                             <div class="caption font-red-sunglo">
                                 <i class="icon-settings font-red-sunglo"></i>
-                                <span class="caption-subject bold uppercase">Income:</span>
+                                <span class="caption-subject bold uppercase"><?php $text = isset($_SESSION['disable_btn'])?'View':'Add New'; echo $text; ?> Income:</span>
                             </div>
                         </div>
                         <div class="portlet-body form">
+                           <?php
+                                if(!isset($_SESSION['disable_btn']) )
+                                {?>
                             <form class="form-horizontal" id="income_form" role="form" method="post">
                                 <div class="form-body">
                                     <div class="row">
@@ -313,6 +320,7 @@ date_default_timezone_set("Asia/Karachi");
                                     </div>
                                 </div>
                             </form>
+                            <?php }//END OF IF?> 
                         </div>
                         <!-- Form ends -->
                         <!-- end table -->

@@ -40,7 +40,7 @@
         <script src="../assets/global/plugins/amcharts/ammap/ammap.js" type="text/javascript"></script>
         <script src="../assets/global/plugins/amcharts/ammap/maps/js/worldLow.js" type="text/javascript"></script>
         <script src="../assets/global/plugins/amcharts/amstockcharts/amstock.js" type="text/javascript"></script> -->
-        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <!-- <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> -->
         <script src="../assets/global/plugins/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
         <script src="../assets/global/plugins/horizontal-timeline/horozontal-timeline.min.js" type="text/javascript"></script>
         <script src="../assets/global/plugins/flot/jquery.flot.min.js" type="text/javascript"></script>
@@ -84,3 +84,14 @@
     </body>
 
 </html>
+<!-- <script type="text/javascript">
+    
+    setInterval(function(){
+        <?php
+            // if(isset($_SESSION['disable_btn']) && $_SESSION['disable_btn'] == 'true' )
+            {
+                // echo '$("button").attr("disabled", "true");';
+            }
+        ?>   
+     }, 1000);
+</script> -->

@@ -18,10 +18,13 @@ include 'nav.php';
                         <div class="portlet-title">
                             <div class="caption font-red-sunglo">
                                 <i class="icon-settings font-red-sunglo"></i>
-                                <span class="caption-subject bold uppercase"> Add New Vechile</span>
+                                <span class="caption-subject bold uppercase"> <?php $text = isset($_SESSION['disable_btn'])?'View':'Add New'; echo $text; ?> Vehicle</span>
                             </div>
                         </div>
                         <div class="portlet-body form">
+                            <?php
+                                if(!isset($_SESSION['disable_btn']) )
+                                {?>
                             <form class="form-horizontal" role="form">
                                 <div class="form-body">
                                     <div class="row hidden" id="vehicle_id_div"> 
@@ -39,7 +42,7 @@ include 'nav.php';
                                                   <input type="text" class="form-control" id="owner_name" name="owner_name" required tabindex="1" placeholder="here">
                                                 </div>
                                     
-                                                  <label class="col-md-2 control-label">Vechile Number #</label>
+                                                  <label class="col-md-2 control-label">Vehicle Number </label>
                                                 <div class="col-md-3">
                                                   <input type="text" class="form-control" id="vehicle_number" name="vehicle_number" required tabindex="2" placeholder="here">
                                                 </div>
@@ -47,12 +50,12 @@ include 'nav.php';
                                      </div>   
                                      <div class="row"> 
                                          <div class="form-group">
-                                                   <label class="col-md-2 control-label">EngineNumber #</label>
+                                                   <label class="col-md-2 control-label">Engine Number </label>
                                                  <div class="col-md-3">
                                                    <input type="text" class="form-control"  id="engine_number" name="engine_number" required tabindex="3" placeholder="here">
                                                  </div>
                                      
-                                                   <label class="col-md-2 control-label">Chassis Number #</label>
+                                                   <label class="col-md-2 control-label">Chassis Number </label>
                                                  <div class="col-md-3">
                                                    <input type="text" class="form-control" id="chassis_number" name="chassis_number" required tabindex="4" placeholder="here">
                                                  </div>
@@ -79,6 +82,7 @@ include 'nav.php';
                                 </div>
                                 
                             </form>
+                            <?php }//END OF IF?> 
                         </div>
                         <!-- Form ends -->
                         <hr>
@@ -153,6 +157,9 @@ include 'footer.php';
 
                         $('tbody').append('<tr index="'+i+'" class="odd gradeX">'+
 
+                            <?php
+                                if(!isset($_SESSION['disable_btn']) )
+                                {?>
                                 '<td>'+ 
                                     '<ul class="addremove">'+
                                         '<li> <button class="btn btn-xs green update_btn" id="'+value['vehicle_id']+'" type="button">  '+
@@ -162,7 +169,11 @@ include 'footer.php';
                                         '<i class="fa fa-minus-square"></i>'+
                                         '</button> </li>'+
                                     '</ul>'+
-                                '</td>'+                       
+                                '</td>'+     
+                                <?php }//END OF If
+                                else{?>
+                                    '<td></td>'+
+                                <?php }//END OF ELSE ?>                   
 
                                 '<td>'+n+'</td>'+
                                 '<td>'+value['owner_name']+'</td>'+

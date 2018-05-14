@@ -29,66 +29,70 @@ include 'nav.php';
                         <div class="portlet-title">
                             <div class="caption font-red-sunglo">
                                 <i class="icon-settings font-red-sunglo"></i>
-                                <span class="caption-subject bold uppercase"> Add New Chart Of Account</span>
+                                <span class="caption-subject bold uppercase"><?php $text = isset($_SESSION['disable_btn'])?'View':'Add New'; echo $text; ?> Chart Of Account</span>
                             </div>
                         </div>
                         <div class="portlet-body form">
-                            <form class="form-horizontal" role="form"  method="post">
-                                <div class="form-body">
-                                    <div class="row hidden" id="coa_id_div"> 
-                                        <div class="form-group">
-                                            <label class="col-md-2 control-label">ID:</label>
-                                            <div class="col-md-3">
-                                              <input type="number" name="coa_id" id="coa_id" readonly class="form-control">
+                            <?php
+                                if(!isset($_SESSION['disable_btn']) )
+                                {?>
+                                    <form class="form-horizontal" role="form"  method="post">
+                                        <div class="form-body">
+                                            <div class="row hidden" id="coa_id_div"> 
+                                                <div class="form-group">
+                                                    <label class="col-md-2 control-label">ID:</label>
+                                                    <div class="col-md-3">
+                                                      <input type="number" name="coa_id" id="coa_id" readonly class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row"> 
+                                                <div class="form-group">
+
+                                                        <label class="col-md-2 control-label">Short Form:</label>
+                                                        <div class="col-md-3">
+                                                          <input type="text" name="short_form" id="short_form" tabindex="1" class="form-control" placeholder="here" required>
+                                                        </div>
+
+                                                        <label class="col-md-2 control-label">Full Form:</label>
+                                                        <div class="col-md-3">
+                                                          <input type="text" name="full_form" id="full_form" tabindex="2" class="form-control" placeholder="here" required>
+                                                        </div>
+                                                 </div>  
+                                             </div>   
+                                             <div class="row"> 
+                                                 <div class="form-group">
+                                                           <label class="col-md-2 control-label">Contact Number:</label>
+                                                         <div class="col-md-3">
+                                                           <input type="text" name="contact" id="contact" maxlength="11" tabindex="3" class="form-control" pattern="[\d]{11}" placeholder="03XXXXXXXXX" required>
+                                                         </div>
+
+                                                         <label class="col-md-2 control-label">Address</label>
+                                                        <div class="col-md-3">
+                                                          <textarea class="form-control" name="address" tabindex="4" id="address" placeholder="here" required></textarea>
+                                                        </div>
+                                             
+                                                           <!-- <label class="col-md-2 control-label">City</label>
+                                                         <div class="col-md-3">
+                                                           <input type="text" class="form-control" placeholder="here">
+                                                         </div> -->
+                                                  </div>  
+                                              </div>
+
+
+                                                
+                                             
+                                            <div class="form-actions ">
+                                                <button type="submit" class="btn blue" id="btn_submit" tabindex="5">Submit</button> 
+                                                <button type="reset" class="btn default" id="btn_reset" tabindex="6">Cancel</button>
+
+                                                <button type="submit" class="btn blue hidden" id="update_form_btn" tabindex="5">Update</button> 
+                                                <button type="button" class="btn default hidden"  id="add_new" tabindex="6">Add New</button>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row"> 
-                                        <div class="form-group">
-
-                                                <label class="col-md-2 control-label">Short Form:</label>
-                                                <div class="col-md-3">
-                                                  <input type="text" name="short_form" id="short_form" tabindex="1" class="form-control" placeholder="here" required>
-                                                </div>
-
-                                                <label class="col-md-2 control-label">Full Form:</label>
-                                                <div class="col-md-3">
-                                                  <input type="text" name="full_form" id="full_form" tabindex="2" class="form-control" placeholder="here" required>
-                                                </div>
-                                         </div>  
-                                     </div>   
-                                     <div class="row"> 
-                                         <div class="form-group">
-                                                   <label class="col-md-2 control-label">Contact Number:</label>
-                                                 <div class="col-md-3">
-                                                   <input type="text" name="contact" id="contact" maxlength="11" tabindex="3" class="form-control" pattern="[\d]{11}" placeholder="03XXXXXXXXX" required>
-                                                 </div>
-
-                                                 <label class="col-md-2 control-label">Address</label>
-                                                <div class="col-md-3">
-                                                  <textarea class="form-control" name="address" tabindex="4" id="address" placeholder="here" required></textarea>
-                                                </div>
-                                     
-                                                   <!-- <label class="col-md-2 control-label">City</label>
-                                                 <div class="col-md-3">
-                                                   <input type="text" class="form-control" placeholder="here">
-                                                 </div> -->
-                                          </div>  
-                                      </div>
-
-
-                                        
-                                     
-                                    <div class="form-actions ">
-                                        <button type="submit" class="btn blue" id="btn_submit" tabindex="5">Submit</button> 
-                                        <button type="reset" class="btn default" id="btn_reset" tabindex="6">Cancel</button>
-
-                                        <button type="submit" class="btn blue hidden" id="update_form_btn" tabindex="5">Update</button> 
-                                        <button type="button" class="btn default hidden"  id="add_new" tabindex="6">Add New</button>
-                                    </div>
-                                </div>
-                                
-                            </form>
+                                    
+                                    </form>
+                                <?php }//END OF IF?> 
                         </div>
                         <!-- Form ends -->
                         <hr>
@@ -162,6 +166,10 @@ include 'footer.php';
 
                         $('tbody').append('<tr index="'+i+'" class="odd gradeX">'+
 
+                            <?php
+                                if(!isset($_SESSION['disable_btn']) )
+                                {?>
+
                                 '<td>'+ 
                                     '<ul class="addremove">'+
                                         '<li> <button class="btn btn-xs green update_btn" id="'+value['coa_id']+'" type="button">  '+
@@ -171,7 +179,11 @@ include 'footer.php';
                                         '<i class="fa fa-minus-square"></i>'+
                                         '</button> </li>'+
                                     '</ul>'+
-                                '</td>'+                       
+                                '</td>'+    
+                                <?php }//END OF If
+                                else{?>
+                                    '<td></td>'+
+                                <?php }//END OF ELSE ?>                   
 
                                 '<td>'+n+'</td>'+
                                 '<td>'+value['short_form']+'</td>'+

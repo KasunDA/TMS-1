@@ -3,8 +3,17 @@
 session_start();
 if(!isset($_SESSION['login_id']) && !isset($_SESSION['username']) )
 {
-    echo '<script> location.assign("../index.php") </script>';    
+    echo '<script> location.assign("../index.php") </script>';      
 } 
+// echo '<script>alert("'.basename($_SERVER['PHP_SELF']).'")</script>';
+
+if ( $_SESSION['username'] == 'sajad' )
+{
+    if( basename($_SERVER['PHP_SELF']) != 'recivePartyPayment.php' && basename($_SERVER['PHP_SELF']) != 'report-vehicle.php' && basename($_SERVER['PHP_SELF']) != 'report-vehicle-voucher.php' && basename($_SERVER['PHP_SELF']) != 'recivePartyPaymentSingle.php'  )
+    {
+        echo '<script> location.assign("recivePartyPayment.php") </script>';     
+    }
+}
 ?>
 <!DOCTYPE html>
 <!-- 
@@ -77,7 +86,8 @@ Like: www.facebook.com/logicsaint
             cursor: text;
         }
     </style>
+
     </head>
     <!-- END HEAD -->
 
-    <body class="page-container-bg-solid page-header-fixed page-sidebar-closed-hide-logo page-md">
+    <body class="page-container-bg-solid page-header-fixed page-sidebar-closed-hide-logo page-md page-sidebar-closed">

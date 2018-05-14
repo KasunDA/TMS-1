@@ -120,7 +120,7 @@ date_default_timezone_set("Asia/Karachi");
                                         <tr class="uppercase">
                                             <td> # </td>
                                             <td> Bank Name </td>
-                                            <td> Prevoius Balance </td>
+                                            <td> Previous Balance </td>
                                             <td> Total Debit</td>
                                             <td> Total Credit</td>
                                             <td> Balance </td>

@@ -92,7 +92,9 @@ $cm_id = $_GET['cm_id'];
                                 <thead>
                                     <tr class="uppercase">
                                         <th> # </th>
-                                        <th> Name </th>
+                                        <!-- <th> Name </th> -->
+                                        <th> Container Type </th>
+                                        <th> Container # </th>
                                         <th> Vehicle # </th>
                                         <th> CONT. Size </th>
                                         <th> Index No. </th>
@@ -117,7 +119,11 @@ $cm_id = $_GET['cm_id'];
                 </div>
             </div>
         </div>
+        
         <div class="row"  >  
+            <?php
+            if(!isset($_SESSION['disable_btn']) )
+            {?>
             <div class="col-md-6 col-md-push-6" id="party_received_div"> <!--   style="display: none;" -->
                 <div class="portlet light bordered">
                     <div class="portlet-title">
@@ -209,6 +215,7 @@ $cm_id = $_GET['cm_id'];
                     
                 </div> 
             </div>
+            <?php }//END OF IF?> 
 
             <div class="col-md-12" id="voucher_div">
                 <!-- BEGIN BORDERED TABLE PORTLET-->
@@ -237,6 +244,8 @@ $cm_id = $_GET['cm_id'];
                 <!-- END BORDERED TABLE PORTLET-->
             </div>
         </div>
+        
+
 
     <!-- END CONTENT BODY -->
         </div>
@@ -448,7 +457,9 @@ include 'footer.php';
                     $('#entry_table tbody').append('<tr class="odd gradeX">'+
 
                             '<td>'+n+'</td>'+
-                            '<td>'+value['driver_name']+'</td>'+
+                            // '<td>'+value['driver_name']+'</td>'+
+                            '<td>'+value['container_type']+'</td>'+
+                            '<td>'+value['container_number']+'</td>'+
                             '<td id="'+value['vehicle_id']+'">'+value['vehicle_number']+'</td>'+
                             '<td>'+value['container_size']+'</td>'+
                             '<td>'+value['index_number']+'</td>'+
