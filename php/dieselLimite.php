@@ -149,7 +149,8 @@ include 'footer.php';
 
         //Select2 from _yard
         $('#from_yard,#to_yard').select2({
-            width: 'resolve'
+            width: 'resolve',
+            theme: "classic"
         });
 
         $('.select2-selection').addClass('select');

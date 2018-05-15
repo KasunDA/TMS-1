@@ -533,10 +533,38 @@ include 'footer.php';
 
     getId();
 
+    function toYardIdSelect()
+      {
+        $('#to_yard_id').select2({
+            width: 'resolve',
+            theme: "classic"
+          });
+      }
+      
+      $('#from_yard_id').on('change',function(){
+
+        $('#to_yard_id').find('option').each(function(){
+            $(this).removeAttr('disabled');
+        });
+        toYardIdSelect();
+
+        var option = $('#to_yard_id').find("option[value='" + $(this).val() + "']");
+
+        if (option.length) 
+        {
+          option.attr('disabled',true);
+          toYardIdSelect();
+        }
+        
+
+      });
+
     //Select2
    $('#from_yard_id,#to_yard_id,#coa_id,#consignee_id,#movement,#empty_terminal_id,#container_size,#container_id,#line_id,#vehicle_id,#owner_name').select2({
-      width: 'resolve'
+      width: 'resolve',
+      theme: "classic"
    });
+   $('.select2-selection').addClass('select');
 
     function myDataTable()
     {

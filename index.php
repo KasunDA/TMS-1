@@ -3,7 +3,7 @@
 	
 	if( isset( $_SESSION['login_id'] )  &&  $_SESSION['login_id'] != NULL  )
 	{
-		if($_SESSION['username'] == 'sajad')
+		if($_SESSION['role'] == 'reporting')
         {
             echo '<script> location.assign("php/recivePartyPayment.php") </script>';    
         }
@@ -22,20 +22,22 @@
 		$username = mysqli_real_escape_string($mycon, $_POST['username'] );
 		$pass = mysqli_real_escape_string($mycon, $_POST['pass'] );
 
-		$q = mysqli_query($mycon,"SELECT * from login where username='$username' and pass=MD5('$pass') ");
+		$q = mysqli_query($mycon,"SELECT * from login where username='$username' and pass=MD5('$pass') and status=1 ");
 
 		if($r = mysqli_fetch_array($q) )
 		{
 			
         	$_SESSION["login_id"] = $r["login_id"];
-			$_SESSION['username'] = $r['username'];
+			$_SESSION['name'] = $r['name'];
+            $_SESSION['username'] = $r['username'];
+            $_SESSION['role']     = $r['role'];
 
 			// echo '<script> alert(" login id is=  '.$r['login_id'].' username is '.$r['username'] .'") </script>';   
-            if($_SESSION['username'] == 'sajad')
+            if($_SESSION['role'] == 'reporting')
             {
                 echo '<script> location.assign("php/recivePartyPayment.php") </script>';    
             }
-            else if($_SESSION['username'] == 'rashid')
+            else if($_SESSION['role'] == 'only view')
             {
                 $_SESSION['disable_btn'] = 'true';
                 echo '<script> location.assign("php/container-entry.php") </script>';    

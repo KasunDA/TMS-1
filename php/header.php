@@ -7,7 +7,7 @@ if(!isset($_SESSION['login_id']) && !isset($_SESSION['username']) )
 } 
 // echo '<script>alert("'.basename($_SERVER['PHP_SELF']).'")</script>';
 
-if ( $_SESSION['username'] == 'sajad' )
+if ( $_SESSION['role'] == 'reporting' )
 {
     if( basename($_SERVER['PHP_SELF']) != 'recivePartyPayment.php' && basename($_SERVER['PHP_SELF']) != 'report-vehicle.php' && basename($_SERVER['PHP_SELF']) != 'report-vehicle-voucher.php' && basename($_SERVER['PHP_SELF']) != 'recivePartyPaymentSingle.php'  )
     {
@@ -78,12 +78,12 @@ Like: www.facebook.com/logicsaint
             /*color: #fff;*/
         }
 
-        .select
-        {
+        .select {
             background-color: white;
-            border: 1px solid #aaa;
-            border-radius: 4px;
+            border: 1px solid #cacaca;
+            border-radius: 1px;
             cursor: text;
+            /*padding-top: 3px;*/
         }
     </style>
 

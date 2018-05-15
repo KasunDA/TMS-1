@@ -215,8 +215,10 @@ include 'footer.php';
 
     //Select2
    $('#coa_id').select2({
-      width: 'resolve'
+      width: 'resolve',
+      theme: "classic"
    });
+   $('.select2-selection').addClass('select');
 
     function myDataTable()
     {

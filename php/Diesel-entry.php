@@ -281,8 +281,10 @@ include 'footer.php';
 
         //Select2 from _yard
         $('#vehicle_id,#from_yard_id,#to_yard_id').select2({
-            width: 'resolve'
+            width: 'resolve',
+            theme: "classic"
         });
+        $('.select2-selection').addClass('select');
 
         // Reset Button Code
         $('#btn_reset').click(function(e){

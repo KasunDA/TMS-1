@@ -181,8 +181,10 @@ include 'footer.php';
 
     //Select2
    $('#vehicle_id').select2({
-      width: 'resolve'
+      width: 'resolve',
+      theme: "classic"
    });
+   $('.select2-selection').addClass('select');
 
     function myDataTable()
     {

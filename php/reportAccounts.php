@@ -238,8 +238,10 @@ include 'footer.php';
 
     //Select2
    $('#bank_id').select2({
-      width: 'resolve'
+      width: 'resolve',
+      theme: "classic"
    });
+   $('.select2-selection').addClass('select');
 
     function myDataTable()
     {

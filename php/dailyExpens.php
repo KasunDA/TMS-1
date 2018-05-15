@@ -653,8 +653,10 @@ include 'footer.php';
 
     //Select2
    $('#dd_id,#idd_id,#bank_id,#ibank_id,#vehicle_id,#name,#bike_id,#cmp_id').select2({
-      width: 'resolve'
+      width: 'resolve',
+      theme: "classic"
    });
+   $('.select2-selection').addClass('select');
 
    $('input[name="method"],input[name="imethod"]').change(function(){
 

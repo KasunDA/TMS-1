@@ -25,7 +25,7 @@
                     <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
                     <li class="dropdown dropdown-user dropdown-dark">
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                            <span class="username username-hide-on-mobile" style="text-transform: capitalize;"> <?php echo $_SESSION['username']; ?></span>
+                            <span class="username username-hide-on-mobile" style="text-transform: capitalize;"> <?php echo $_SESSION['name']; ?></span>
                             <!-- DOC: Do not remove below empty space(&nbsp;) as its purposely used -->
                             <img alt="" class="img-circle" src="../assets/layouts/layout4/img/avatar.png" /> </a>
                         <ul class="dropdown-menu dropdown-menu-default">
@@ -100,7 +100,7 @@
                 <?php
                     // session_start();
 
-                    if($_SESSION['username'] == 'sajad')
+                    if($_SESSION['role'] == 'reporting')
                     {?>
                         <li class="nav-item  ">
                             <a href="javascript:;" class="nav-link nav-toggle">
@@ -303,6 +303,14 @@
                                     </a>
                                 </li>
                             </ul>
+                        </li>
+
+                        <li class="nav-item  ">
+                            <a href="user.php" class="nav-link">
+                                <i class="fa fa-users"></i>
+                                <span class="title">Users</span>
+                                <span class="arrow"></span>
+                            </a>
                         </li>
                     <?php } // END OF ELSE?>   
             </ul>

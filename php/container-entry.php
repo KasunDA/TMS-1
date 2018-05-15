@@ -63,7 +63,7 @@ date_default_timezone_set("Asia/Karachi");
                                                 <div  >
                                                   <label class="col-md-2 control-label">Transaction ID:</label>
                                                   <div class="col-md-3">
-                                                    <input type="text" class="form-control" id="ce_id" name="ce_id" required readonly >
+                                                    <input type="text" class="form-control" id="ce_id" tabindex="-1" name="ce_id" required readonly >
                                                   </div>
                                                 </div>
                                     
@@ -110,7 +110,7 @@ date_default_timezone_set("Asia/Karachi");
                                                     </select>
                                                 </div>
                                                 <div class="col-md-5">
-                                                  <input type="text" class="form-control" placeholder="Full Form" id="coa_id_full_form" readonly>
+                                                  <input type="text" class="form-control" placeholder="Full Form" id="coa_id_full_form" tabindex="-1" readonly>
                                                 </div>
                                             </div> 
                                       </div>
@@ -131,7 +131,7 @@ date_default_timezone_set("Asia/Karachi");
                                                     </select>
                                                 </div>
                                                 <div class="col-md-5">
-                                                  <input type="text" class="form-control" placeholder="Full Form" id="consignee_id_full_form" readonly>
+                                                  <input type="text" class="form-control" placeholder="Full Form" id="consignee_id_full_form" tabindex="-1" readonly>
                                                 </div>
                                             </div> 
                                       </div>
@@ -165,7 +165,7 @@ date_default_timezone_set("Asia/Karachi");
                                                       </select>
                                                   </div>
                                                   <div class="col-md-5">
-                                                    <input type="text" class="form-control" placeholder="Full Form" id="empty_terminal_id_full_form" readonly>
+                                                    <input type="text" class="form-control" placeholder="Full Form" id="empty_terminal_id_full_form" tabindex="-1" readonly>
                                                   </div>
                                               </div> 
                                         </div>
@@ -187,7 +187,7 @@ date_default_timezone_set("Asia/Karachi");
                                                         </select>
                                                     </div>
                                                     <div class="col-md-5">
-                                                      <input type="text" class="form-control" placeholder="Full Form" id="from_yard_id_full_form" readonly>
+                                                      <input type="text" class="form-control" placeholder="Full Form" id="from_yard_id_full_form" tabindex="-1" readonly>
                                                     </div>
                                                 </div> 
                                           </div>
@@ -209,7 +209,7 @@ date_default_timezone_set("Asia/Karachi");
                                                           </select>
                                                       </div>
                                                       <div class="col-md-5">
-                                                        <input type="text" class="form-control" placeholder="Full Form" id="to_yard_id_full_form" readonly>
+                                                        <input type="text" class="form-control" placeholder="Full Form" id="to_yard_id_full_form" tabindex="-1" readonly>
                                                       </div>
                                                   </div> 
                                             </div>
@@ -217,12 +217,12 @@ date_default_timezone_set("Asia/Karachi");
                                                 <div class="form-group">
                                                           <label class="col-md-2 control-label">B/L OR CRO No:</label>
                                                         <div class="col-md-3">
-                                                          <input type="text" class="form-control" placeholder="E-1035" id="bl_cro_number" name="bl_cro_number" required tabindex="9" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) { echo 'value="'.$_SESSION['bl_cro_number'].'" readonly';}?> >
+                                                          <input type="text" class="form-control" placeholder="0898664" id="bl_cro_number" name="bl_cro_number" required tabindex="9" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) { echo 'value="'.$_SESSION['bl_cro_number'].'" readonly';}?> >
                                                         </div>
                                             
                                                           <label class="col-md-1 control-label">Job No:</label>
                                                         <div class="col-md-4">
-                                                          <input type="text" class="form-control" placeholder="E-1035" id="job_number" name="job_number" required tabindex="10" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) { echo 'value="'.$_SESSION['job_number'].'" readonly';}?>>
+                                                          <input type="text" class="form-control" placeholder="123456" id="job_number" name="job_number" required tabindex="10" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) { echo 'value="'.$_SESSION['job_number'].'" readonly';}?>>
                                                         </div>
                                                  </div>  
                                              </div>
@@ -231,13 +231,13 @@ date_default_timezone_set("Asia/Karachi");
                                                  <div class="form-group">
                                                     <label class="col-md-2 control-label">Container No:</label>
                                                     <div class="col-md-3">
-                                                      <input type="text" class="form-control" placeholder="E-1035" id="container_number" name="container_number" required tabindex="11">
+                                                      <input type="text" class="form-control" placeholder="APZU4846408" id="container_number" name="container_number" required tabindex="11">
                                                     </div>
 
                                                            
                                                          <div class="col-md-2 small-lab">
                                                           <label class=" control-label">Index No</label>
-                                                           <input type="text" class="form-control" placeholder="E-1035" id="index_number" name="index_number" required tabindex="12" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) { echo 'value="'.$_SESSION['index_number'].'" readonly';}?>>
+                                                           <input type="text" class="form-control" placeholder="123456" id="index_number" name="index_number" required tabindex="12" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) { echo 'value="'.$_SESSION['index_number'].'" readonly';}?>>
                                                          </div>
                                                     
                                                       <div class="col-md-3 small-lab2">
@@ -268,7 +268,7 @@ date_default_timezone_set("Asia/Karachi");
                                                               </select>
                                                           </div>
                                                           <div class="col-md-5">
-                                                            <input type="text" class="form-control" placeholder="Owner Name" id="vehicle_id_full_form" readonly>
+                                                            <input type="text" class="form-control" placeholder="Owner Name" id="vehicle_id_full_form" tabindex="-1" readonly>
                                                           </div>
                                                       </div> 
                                                 </div>
@@ -304,7 +304,7 @@ date_default_timezone_set("Asia/Karachi");
                                                               </div>
                                                               <label class="col-md-1 control-label">Balance:</label>
                                                               <div class="col-md-2">
-                                                                <input type="number" class="form-control" placeholder="Balance" id="balance" name="balance" readonly tabindex="20">
+                                                                <input type="number" class="form-control" placeholder="Balance" id="balance" name="balance" tabindex="-1" readonly tabindex="20">
                                                               </div>
                                                              
                                                           </div> 
@@ -368,7 +368,7 @@ date_default_timezone_set("Asia/Karachi");
                                                                 </select>
                                                             </div>
                                                             <div class="col-md-5">
-                                                              <input type="text" class="form-control" placeholder="Full Form" id="line_id_full_form" readonly>
+                                                              <input type="text" class="form-control" placeholder="Full Form" id="line_id_full_form" tabindex="-1" readonly>
                                                             </div>
                                                         </div> 
                                                   </div>
@@ -413,6 +413,7 @@ date_default_timezone_set("Asia/Karachi");
                                                               </div> 
                                                         </div>                                     
                                     <div class="form-actions ">
+                                      <div class="col-md-2 col-md-offset-2" style=" padding-left:  0px;">
                                         <button type="submit" class="btn blue" id="btn_submit" tabindex="28">Submit (F2)</button> 
                                         <!-- <button type="reset" class="btn default" id="btn_reset" tabindex="29">Cancel</button> -->
 
@@ -423,7 +424,7 @@ date_default_timezone_set("Asia/Karachi");
                                         {
                                           echo '<a href="ajax/container_movement/destroy_cmid.php" class="btn default"  id="add_new_movement" tabindex="30">Add New Movement</a>';
                                         } ?>
-
+                                      </div>
                                     </div>
                                 </div>
                                 
@@ -513,7 +514,31 @@ include 'footer.php';
        }
       }
 
+      function toYardIdSelect()
+      {
+        $('#to_yard_id').select2({
+            width: 'resolve',
+            theme: "classic"
+          });
+      }
       
+      $('#from_yard_id').on('change',function(){
+
+        $('#to_yard_id').find('option').each(function(){
+            $(this).removeAttr('disabled');
+        });
+        toYardIdSelect();
+
+        var option = $('#to_yard_id').find("option[value='" + $(this).val() + "']");
+
+        if (option.length) 
+        {
+          option.attr('disabled',true);
+          toYardIdSelect();
+        }
+        
+
+      });
 
       $('#advance,#rent,#lolo_charges,#weight_charges').on('keyup change',function(){
           var a = $('#rent').val()/1 + $('#lolo_charges').val()/1,
@@ -524,8 +549,10 @@ include 'footer.php';
 
         //Select2
       $('#agent_id,#coa_id,#consignee_id,#empty_terminal_id,#movement,#vehicle_id,#container_id,#line_id,#color,#container_size,#from_yard_id,#to_yard_id').select2({
-            width: 'resolve'
+            width: 'resolve',
+            theme: "classic"
           });
+      $('.select2-selection').addClass('select');
 
       function getId()
       {

@@ -94,7 +94,7 @@ date_default_timezone_set("Asia/Karachi");
                                                     </select>
                                                 </div>
                                                 <div class="col-md-5">
-                                                  <input type="text" class="form-control" placeholder="Full Form" id="coa_id_full_form" readonly>
+                                                  <input type="text" class="form-control" placeholder="Full Form" id="coa_id_full_form" tabindex="-1" readonly>
                                                 </div>
                                             </div> 
                                       </div>
@@ -115,7 +115,7 @@ date_default_timezone_set("Asia/Karachi");
                                                     </select>
                                                 </div>
                                                 <div class="col-md-5">
-                                                  <input type="text" class="form-control" placeholder="Full Form" id="consignee_id_full_form" readonly>
+                                                  <input type="text" class="form-control" placeholder="Full Form" id="consignee_id_full_form" tabindex="-1" readonly>
                                                 </div>
                                             </div> 
                                       </div>
@@ -149,7 +149,7 @@ date_default_timezone_set("Asia/Karachi");
                                                       </select>
                                                   </div>
                                                   <div class="col-md-5">
-                                                    <input type="text" class="form-control" placeholder="Full Form" id="empty_terminal_id_full_form" readonly>
+                                                    <input type="text" class="form-control" placeholder="Full Form" id="empty_terminal_id_full_form" tabindex="-1" readonly>
                                                   </div>
                                               </div> 
                                         </div>
@@ -171,7 +171,7 @@ date_default_timezone_set("Asia/Karachi");
                                                         </select>
                                                     </div>
                                                     <div class="col-md-5">
-                                                      <input type="text" class="form-control" placeholder="Full Form" id="from_yard_id_full_form" readonly>
+                                                      <input type="text" class="form-control" placeholder="Full Form" id="from_yard_id_full_form" tabindex="-1" readonly>
                                                     </div>
                                                 </div> 
                                           </div>
@@ -193,7 +193,7 @@ date_default_timezone_set("Asia/Karachi");
                                                           </select>
                                                       </div>
                                                       <div class="col-md-5">
-                                                        <input type="text" class="form-control" placeholder="Full Form" id="to_yard_id_full_form" readonly>
+                                                        <input type="text" class="form-control" placeholder="Full Form" id="to_yard_id_full_form" tabindex="-1" readonly>
                                                       </div>
                                                   </div> 
                                             </div>
@@ -241,7 +241,7 @@ date_default_timezone_set("Asia/Karachi");
                                                                 </select>
                                                             </div>
                                                             <div class="col-md-5">
-                                                              <input type="text" class="form-control" placeholder="Full Form" id="line_id_full_form" readonly>
+                                                              <input type="text" class="form-control" placeholder="Full Form" id="line_id_full_form" tabindex="-1" readonly>
                                                             </div>
                                                         </div> 
                                                   </div>
@@ -250,12 +250,12 @@ date_default_timezone_set("Asia/Karachi");
                                                 <div class="form-group">
                                                           <label class="col-md-2 control-label">B/L OR CRO No:</label>
                                                         <div class="col-md-3">
-                                                          <input type="text" class="form-control" placeholder="E-1035" id="bl_cro_number" name="bl_cro_number" required tabindex="13">
+                                                          <input type="text" class="form-control" placeholder="0898664" id="bl_cro_number" name="bl_cro_number" required tabindex="13">
                                                         </div>
                                             
                                                           <label class="col-md-1 control-label">Job No:</label>
                                                         <div class="col-md-4">
-                                                          <input type="text" class="form-control" placeholder="E-1035" id="job_number" name="job_number" required tabindex="14">
+                                                          <input type="text" class="form-control" placeholder="123456" id="job_number" name="job_number" required tabindex="14">
                                                         </div>
                                                  </div>  
                                             </div>
@@ -265,7 +265,7 @@ date_default_timezone_set("Asia/Karachi");
                                                           
                                                          <label class="col-md-1 control-label">Index No</label> 
                                                          <div class="col-md-2"> 
-                                                           <input type="text" class="form-control" placeholder="E-1035" id="index_number" name="index_number" required tabindex="15">
+                                                           <input type="text" class="form-control" placeholder="123456" id="index_number" name="index_number" required tabindex="15">
                                                          </div>
              
                                                           <label class="col-md-1 control-label">Rent:</label>
@@ -400,11 +400,38 @@ include 'footer.php';
           $('#balance').val($('#advance').val()-$('#rent').val());
         });
 
+      function toYardIdSelect()
+      {
+        $('#to_yard_id').select2({
+            width: 'resolve',
+            theme: "classic"
+          });
+      }
+      
+      $('#from_yard_id').on('change',function(){
+
+        $('#to_yard_id').find('option').each(function(){
+            $(this).removeAttr('disabled');
+        });
+        toYardIdSelect();
+
+        var option = $('#to_yard_id').find("option[value='" + $(this).val() + "']");
+
+        if (option.length) 
+        {
+          option.attr('disabled',true);
+          toYardIdSelect();
+        }
+        
+
+      });
 
       
       $('#agent_id,#coa_id,#consignee_id,#empty_terminal_id,#movement,#vehicle_id,#line_id,#container_size,#from_yard_id,#to_yard_id,#container_id').select2({
-            width: 'resolve'
+            width: 'resolve',
+            theme: "classic"
           });  
+      $('.select2-selection').addClass('select');
       
 
       function load_full_form(v,param)

@@ -49,7 +49,7 @@ date_default_timezone_set("Asia/Karachi");
                                                 <input class="form-control form-control-inline input-medium date-picker" size="16" type="date-picker"  placeholder="Today Date" id="datee" name="datee" value="<?php echo date('m/d/Y'); ?>"  required tabindex="1" />
                                             </div>
                                             <label class="col-md-2 control-label">Bank:</label>
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <select class="form-control" id="bank_id" name="bank_id" required tabindex="2">
                                                     <option value="">Select Bank</option>
                                                     <?php 
@@ -301,8 +301,10 @@ include 'footer.php';
 
         //Select2
        $('#bank_id').select2({
-          width: 'resolve'
+          width: 'resolve',
+          theme: "classic"
        });
+       $('.select2-selection').addClass('select');
 
        $('input[name="method"]').change(function(){
 
