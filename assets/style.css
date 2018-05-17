@@ -90,3 +90,16 @@ div.progress-bar > span {
 #skills-pgr div.progress{
     height: 1.5em  !important;
 }
+.select2-container--classic .select2-selection--single {
+    background-color: #f7f7f7;
+    border: 1px solid #dcdcdc !important;
+    border-radius: 0px !important;
+    background: #fff !important;
+}
+.select2-container--classic .select2-selection--single .select2-selection__arrow {
+    border-left: 1px solid #d4d4d4 !important;
+    background: #fff !important;
+}
+.select2-container--classic .select2-selection--single:focus {
+    border: 1px solid #5897fb !important;
+}
