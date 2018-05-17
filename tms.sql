@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 15, 2018 at 06:32 PM
+-- Generation Time: May 17, 2018 at 10:11 AM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 7.0.13
 
@@ -202,7 +202,7 @@ INSERT INTO `container` (`container_id`, `type`, `status`) VALUES
 
 CREATE TABLE `container_entry` (
   `ce_id` int(11) NOT NULL,
-  `container_number` int(11) NOT NULL,
+  `container_number` varchar(30) NOT NULL,
   `vehicle_id` int(11) NOT NULL,
   `advance` int(11) NOT NULL,
   `balance` int(11) NOT NULL,
@@ -212,6 +212,15 @@ CREATE TABLE `container_entry` (
   `cm_id` int(11) NOT NULL,
   `status` tinyint(4) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `container_entry`
+--
+
+INSERT INTO `container_entry` (`ce_id`, `container_number`, `vehicle_id`, `advance`, `balance`, `color`, `mr_charges`, `remarks`, `cm_id`, `status`) VALUES
+(1, 'APZU123456', 3, 500, 500, 'white', 0, '', 1, 1),
+(2, 'APZU369852', 2, 500, 500, 'white', 0, '', 1, 1),
+(3, 'APZU135454', 1, 500, 500, 'white', 0, '', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -233,9 +242,9 @@ CREATE TABLE `container_movement` (
   `party_charges` int(11) NOT NULL,
   `lot_of` int(11) NOT NULL,
   `line_id` int(11) NOT NULL,
-  `bl_cro_number` varchar(16) NOT NULL,
-  `job_number` varchar(16) NOT NULL,
-  `index_number` varchar(15) NOT NULL,
+  `bl_cro_number` varchar(30) NOT NULL,
+  `job_number` varchar(30) NOT NULL,
+  `index_number` varchar(30) NOT NULL,
   `rent` int(11) NOT NULL,
   `container_id` int(11) NOT NULL,
   `lolo_charges` int(11) NOT NULL,
@@ -243,6 +252,13 @@ CREATE TABLE `container_movement` (
   `paid_status` tinyint(4) NOT NULL DEFAULT '0',
   `status` tinyint(4) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `container_movement`
+--
+
+INSERT INTO `container_movement` (`cm_id`, `datee`, `agent_id`, `coa_id`, `consignee_id`, `movement`, `empty_terminal_id`, `from_yard_id`, `to_yard_id`, `container_size`, `party_charges`, `lot_of`, `line_id`, `bl_cro_number`, `job_number`, `index_number`, `rent`, `container_id`, `lolo_charges`, `weight_charges`, `paid_status`, `status`) VALUES
+(1, '2018-05-17', 2, 1, 1, 'import', 5, 5, 4, 20, 25000, 3, 1, '123465', '1321655', '6516', 600, 3, 600, 200, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -788,12 +804,12 @@ ALTER TABLE `container`
 -- AUTO_INCREMENT for table `container_entry`
 --
 ALTER TABLE `container_entry`
-  MODIFY `ce_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ce_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `container_movement`
 --
 ALTER TABLE `container_movement`
-  MODIFY `cm_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `cm_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `daily_description`
 --
