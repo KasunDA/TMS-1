@@ -241,21 +241,21 @@ date_default_timezone_set("Asia/Karachi");
                                     <th> # </th>
                                     <th> Status </th>
                                     <th> Date </th>
-                                    <th> Agent Name </th>
+                                    <th> Agent </th>
                                     <th> Chart of Account </th>
                                     <th> Consignee </th>
                                     <th> Movement </th>
-                                    <th> Empty Terminal </th>
+                                    <th> Empty  </th>
                                     <th> From  </th>
                                     <th> To </th>
                                     <th> Size </th>
                                     <th> Lot Of </th>
                                     <th> Line </th>
-                                    <th> BL_CRO_Number </th>
+                                    <th> B/L OR CRO NO. </th>
                                     <th> Job # </th>
                                     <th> Index # </th>
                                     <th> Rent </th>
-                                    <th> Container Type </th>
+                                    <th> Type </th>
                                     <th> Lolo Charges </th>
                                     <th> Weight Charges </th>
                                     <th> Party Charges </th>
