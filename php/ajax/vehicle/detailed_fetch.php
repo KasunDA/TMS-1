@@ -6,10 +6,27 @@
 	$sql='';
 	$from_datee =  date('Y-m-d', strtotime($_GET['from_datee'])) ; //date('Y-m-d', strtotime(
 	$to_datee = date('Y-m-d', strtotime($_GET['to_datee']));
-	$movement = $_GET['movement'];
-	$container_size = $_GET['container_size'];
 
-	$sql = "SELECT a.*, b.*,c.owner_name,c.driver_name,c.vehicle_number FROM container_entry a , container_movement b , vehicle c  WHERE a.status=1 and b.status=1 and a.cm_id = b.cm_id and a.vehicle_id=c.vehicle_id and b.datee BETWEEN '$from_datee' AND '$to_datee' and b.movement='$movement' and b.container_size=$container_size";
+
+	$sql = "SELECT a.*, b.*,c.owner_name,c.driver_name,c.vehicle_number FROM container_entry a , container_movement b , vehicle c  WHERE a.status=1 and b.status=1 and a.cm_id = b.cm_id and a.vehicle_id=c.vehicle_id and b.datee BETWEEN '$from_datee' AND '$to_datee' ";
+
+	
+	if( isset($_GET['movement']) && $_GET['movement'] != NULL )
+	{
+		$movement = $_GET['movement'];
+
+		$sql .= " and b.movement='$movement' ";       
+
+	}
+
+	if( isset($_GET['container_size']) && $_GET['container_size'] != NULL )
+	{
+		$container_size = $_GET['container_size'];
+
+		$sql .= " and b.container_size=$container_size ";       
+
+	}
+
 
 	if( isset($_GET['from_yard_id']) && $_GET['from_yard_id'] != NULL )
 	{
@@ -18,7 +35,7 @@
 		$sql .= " and b.from_yard_id=$from_yard_id ";       
 
 	}
-	
+
 
 	if( isset($_GET['to_yard_id']) && $_GET['to_yard_id'] != NULL )
 	{

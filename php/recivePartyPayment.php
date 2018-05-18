@@ -47,7 +47,7 @@ date_default_timezone_set("Asia/Karachi");
                                             <label class="col-md-2 control-label">From Destination:</label>
                                             <div class="col-md-3">
                                                 <select class="form-control" id="from_yard_id" name="from_yard_id" tabindex="3" >
-                                                    <option value="">Select Destination</option>
+                                                    <option value="">All</option>
                                                     <?php 
 
                                                   $q = mysqli_query($mycon,'SELECT yard_id,short_form from yard where status=1 ORDER BY yard_id DESC');
@@ -63,7 +63,7 @@ date_default_timezone_set("Asia/Karachi");
                                             <label class="col-md-2 control-label">To Destination:</label>
                                             <div class="col-md-3">
                                               <select class="form-control" id="to_yard_id" name="to_yard_id" tabindex="4"  >
-                                                  <option value="">Select Destination</option>
+                                                  <option value="">All</option>
                                                     <?php 
 
                                               $q = mysqli_query($mycon,'SELECT yard_id,short_form from yard where status=1 ORDER BY yard_id DESC');
@@ -84,7 +84,7 @@ date_default_timezone_set("Asia/Karachi");
                                         <label class="col-md-2 control-label">On Account Of:</label>
                                         <div class="col-md-3">
                                             <select class="form-control" id="coa_id" name="coa_id"  tabindex="5" >
-                                                <option value="">Select Account</option>
+                                                <option value="">All</option>
                                                 <?php 
 
                                                   $q = mysqli_query($mycon,'SELECT coa_id,short_form from chart_of_account where status=1 ORDER BY coa_id DESC');
@@ -99,7 +99,7 @@ date_default_timezone_set("Asia/Karachi");
                                         <label class="col-md-2 control-label">Consignee:</label>
                                         <div class="col-md-3">
                                             <select class="form-control" id="consignee_id" name="consignee_id"  tabindex="6">
-                                                <option value="">Select Consignee</option>
+                                                <option value="">All</option>
                                                 <?php 
 
                                                   $q = mysqli_query($mycon,'SELECT consignee_id,short_form from consignee where status=1 ORDER BY consignee_id DESC');
@@ -118,6 +118,7 @@ date_default_timezone_set("Asia/Karachi");
                                         <label class="col-md-2 control-label"> Movement:</label>
                                         <div class="col-md-3">
                                             <select class="form-control" id="movement" name="movement" tabindex="7" >
+                                                <option value="">All</option>
                                                 <option value="empty">Empty</option>
                                                 <option value="import">Import</option>
                                                 <option value="export">Export</option> 
@@ -127,7 +128,7 @@ date_default_timezone_set("Asia/Karachi");
                                         <label class="col-md-2 control-label"> Empty Terminal:</label>
                                           <div class="col-md-3">
                                               <select class="form-control" id="empty_terminal_id" name="empty_terminal_id" tabindex="8" >
-                                                  <option value="">Select Terminal</option>
+                                                  <option value="">All</option>
                                                   <?php 
 
                                                   $q = mysqli_query($mycon,'SELECT yard_id,short_form from yard where status=1 ORDER BY yard_id DESC');
@@ -153,7 +154,7 @@ date_default_timezone_set("Asia/Karachi");
                                         <label class="col-md-2 control-label">Shipping Line:</label>
                                         <div class="col-md-3">
                                             <select class="form-control" id="line_id" name="line_id"  tabindex="15" >
-                                                <option value="">Select Shipping Line</option>
+                                                <option value="">All</option>
                                                     <?php 
 
                                                     $q = mysqli_query($mycon,'SELECT line_id,short_form from line where status=1 ORDER BY line_id ');
@@ -175,6 +176,7 @@ date_default_timezone_set("Asia/Karachi");
                                         <label class="col-md-2 control-label">Container Size:</label>
                                         <div class="col-md-3">
                                             <select class="form-control" id="container_size" name="container_size" tabindex="11">
+                                              <option value="">All</option>
                                               <option value="20">20</option>
                                               <option value="40">40</option>
                                               <option value="45">45</option>
@@ -184,7 +186,7 @@ date_default_timezone_set("Asia/Karachi");
                                         <label class="col-md-2 control-label">Container Type:</label>
                                         <div class="col-md-3">
                                             <select class="form-control" id="container_id" name="container_id" tabindex="12" >
-                                              <option value="">Select Container Type</option>
+                                              <option value="">All</option>
                                               <?php 
 
                                                  $q = mysqli_query($mycon,'SELECT container_id,type from container where status=1 ORDER BY container_id DESC');
@@ -461,7 +463,6 @@ include 'footer.php';
             error:function(){ alert("Failed Fetch Ajax Call.") }
         });
     }
-
     
     //Add & Update expense 
     $('form').submit(function(e){
@@ -482,6 +483,7 @@ include 'footer.php';
 
 
         loadData(from_datee,to_datee,from_yard_id,to_yard_id,coa_id,consignee_id,movement,empty_terminal_id,bl_cro_number,container_size,container_id,line_id);
+
 
     });
 

@@ -48,7 +48,7 @@ date_default_timezone_set("Asia/Karachi");
                                             <label class="col-md-2 control-label">From Destination:</label>
                                             <div class="col-md-3">
                                                 <select class="form-control" id="from_yard_id" name="from_yard_id" tabindex="3" >
-                                                    <option value="">Select Destination</option>
+                                                    <option value="">All</option>
                                                     <?php 
 
                                                   $q = mysqli_query($mycon,'SELECT yard_id,short_form from yard where status=1 ORDER BY yard_id DESC');
@@ -64,7 +64,7 @@ date_default_timezone_set("Asia/Karachi");
                                             <label class="col-md-2 control-label">To Destination:</label>
                                             <div class="col-md-3">
                                               <select class="form-control" id="to_yard_id" name="to_yard_id" tabindex="4"  >
-                                                  <option value="">Select Destination</option>
+                                                  <option value="">All</option>
                                                     <?php 
 
                                               $q = mysqli_query($mycon,'SELECT yard_id,short_form from yard where status=1 ORDER BY yard_id DESC');
@@ -85,7 +85,7 @@ date_default_timezone_set("Asia/Karachi");
                                         <label class="col-md-2 control-label">On Account Of:</label>
                                         <div class="col-md-3">
                                             <select class="form-control" id="coa_id" name="coa_id"  tabindex="5" >
-                                                <option value="">Select Account</option>
+                                                <option value="">All</option>
                                                 <?php 
 
                                                   $q = mysqli_query($mycon,'SELECT coa_id,short_form from chart_of_account where status=1 ORDER BY coa_id DESC');
@@ -100,7 +100,7 @@ date_default_timezone_set("Asia/Karachi");
                                         <label class="col-md-2 control-label">Consignee:</label>
                                         <div class="col-md-3">
                                             <select class="form-control" id="consignee_id" name="consignee_id"  tabindex="6">
-                                                <option value="">Select Consignee</option>
+                                                <option value="">All</option>
                                                 <?php 
 
                                                   $q = mysqli_query($mycon,'SELECT consignee_id,short_form from consignee where status=1 ORDER BY consignee_id DESC');
@@ -119,6 +119,7 @@ date_default_timezone_set("Asia/Karachi");
                                         <label class="col-md-2 control-label"> Movement:</label>
                                         <div class="col-md-3">
                                             <select class="form-control" id="movement" name="movement" tabindex="7" >
+                                                <option value="">All</option>
                                                 <option value="empty">Empty</option>
                                                 <option value="import">Import</option>
                                                 <option value="export">Export</option> 
@@ -128,7 +129,7 @@ date_default_timezone_set("Asia/Karachi");
                                         <label class="col-md-2 control-label"> Empty Terminal:</label>
                                           <div class="col-md-3">
                                               <select class="form-control" id="empty_terminal_id" name="empty_terminal_id" tabindex="8" >
-                                                  <option value="">Select Terminal</option>
+                                                  <option value="">All</option>
                                                   <?php 
 
                                                   $q = mysqli_query($mycon,'SELECT yard_id,short_form from yard where status=1 ORDER BY yard_id DESC');
@@ -164,6 +165,7 @@ date_default_timezone_set("Asia/Karachi");
                                         <label class="col-md-2 control-label">Container Size:</label>
                                         <div class="col-md-3">
                                             <select class="form-control" id="container_size" name="container_size" tabindex="11">
+                                              <option value="">All</option>
                                               <option value="20">20</option>
                                               <option value="40">40</option>
                                               <option value="45">45</option>
@@ -173,7 +175,7 @@ date_default_timezone_set("Asia/Karachi");
                                         <label class="col-md-2 control-label">Container Type:</label>
                                         <div class="col-md-3">
                                             <select class="form-control" id="container_id" name="container_id" tabindex="12" >
-                                              <option value="">Select Container Type</option>
+                                              <option value="">All</option>
                                               <?php 
 
                                                  $q = mysqli_query($mycon,'SELECT container_id,type from container where status=1 ORDER BY container_id DESC');
@@ -228,7 +230,7 @@ date_default_timezone_set("Asia/Karachi");
                                         <label class="col-md-2 control-label">Shipping Line:</label>
                                             <div class="col-md-3">
                                                 <select class="form-control" id="line_id" name="line_id"  tabindex="15" >
-                                                    <option value="">Select Shipping Line</option>
+                                                    <option value="">All</option>
                                                         <?php 
 
                                                         $q = mysqli_query($mycon,'SELECT line_id,short_form from line where status=1 ORDER BY line_id ');
@@ -279,7 +281,7 @@ date_default_timezone_set("Asia/Karachi");
                         <table class="table table-striped table-bordered table-hover table-checkable order-column" id="mytable">
                                         <thead>
                                             <tr>
-                                                <th> Index # </th>
+                                                <th> Index </th>
                                                 <th> ID </th>
                                                 <th> Date </th>
                                                 <th> Chart Of Account  </th>
@@ -466,6 +468,28 @@ date_default_timezone_set("Asia/Karachi");
             </div>
             <?php }//END OF IF?>
         </div>
+        <div class="row hidden">
+          <table class="table table-striped table-bordered table-hover table-checkable order-column"  id="mytable1" >
+
+            <thead>
+                <tr>
+                    <th> Index </th>
+                    <th> Chart Of Account  </th>
+                    <th> From  </th>
+                    <th> To </th>
+                    <th> Movement </th>
+                    <th> 20 </th>
+                    <th> 40 </th>
+                    <th> 45 </th>
+                    <th> Total </th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+
+        
+          </table>
+        </div>
     <!-- END CONTENT BODY -->
         </div>
 <!-- END CONTENT -->
@@ -477,6 +501,8 @@ include 'footer.php';
  ?>
 
 <script src="../assets/global/scripts/select2.full.min.js"></script>
+<script src="../assets/global/scripts/jspdf.debug.js"></script>
+<script src="../assets/global/scripts/jspdf.plugin.autotable.js"></script>
 <script type="text/javascript">
  
  $(document).ready(function(){
@@ -532,31 +558,31 @@ include 'footer.php';
 
     getId();
 
-    function toYardIdSelect()
-      {
-        $('#to_yard_id').select2({
-            width: 'resolve',
-            theme: "classic"
-          });
-      }
+    // function toYardIdSelect()
+    //   {
+    //     $('#to_yard_id').select2({
+    //         width: 'resolve',
+    //         theme: "classic"
+    //       });
+    //   }
       
-      $('#from_yard_id').on('change',function(){
+    // $('#from_yard_id').on('change',function(){
 
-        $('#to_yard_id').find('option').each(function(){
-            $(this).removeAttr('disabled');
-        });
-        toYardIdSelect();
+    //   $('#to_yard_id').find('option').each(function(){
+    //       $(this).removeAttr('disabled');
+    //   });
+    //   toYardIdSelect();
 
-        var option = $('#to_yard_id').find("option[value='" + $(this).val() + "']");
+    //   var option = $('#to_yard_id').find("option[value='" + $(this).val() + "']");
 
-        if (option.length) 
-        {
-          option.attr('disabled',true);
-          toYardIdSelect();
-        }
-        
+    //   if (option.length) 
+    //   {
+    //     option.attr('disabled',true);
+    //     toYardIdSelect();
+    //   }
+      
 
-      });
+    // });
 
     //Select2
    $('#from_yard_id,#to_yard_id,#coa_id,#consignee_id,#movement,#empty_terminal_id,#container_size,#container_id,#line_id,#vehicle_id,#owner_name').select2({
@@ -567,11 +593,11 @@ include 'footer.php';
 
     function myDataTable()
     {
-        // var e=$("#mytable");
-        // e.dataTable({language:{aria:{sortAscending:": activate to sort column ascending",sortDescending:": activate to sort column descending"},emptyTable:"No data available in table",info:"Showing _START_ to _END_ of _TOTAL_ records",infoEmpty:"No records found",infoFiltered:"(filtered1 from _MAX_ total records)",lengthMenu:"Show _MENU_",search:"Search:",zeroRecords:"No matching records found",paginate:{previous:"Prev",next:"Next",last:"Last",first:"First"}},bStateSave:!0,columnDefs:[{targets:0,orderable:!1,searchable:!1}],lengthMenu:[[5,15,20,-1],[5,15,20,"All"]],pageLength:5,pagingType:"bootstrap_full_number",columnDefs:[{orderable:!1,targets:[0]},{searchable:!1,targets:[0]}],order:[[1,"asc"]]});
-    
+      // var e=$("#mytable");
+      //   e.dataTable({language:{aria:{sortAscending:": activate to sort column ascending",sortDescending:": activate to sort column descending"},emptyTable:"No data available in table",info:"Showing _START_ to _END_ of _TOTAL_ records",infoEmpty:"No records found",infoFiltered:"(filtered1 from _MAX_ total records)",lengthMenu:"Show _MENU_",search:"Search:",zeroRecords:"No matching records found",paginate:{previous:"Prev",next:"Next",last:"Last",first:"First"}},bStateSave:!0,columnDefs:[{targets:0,orderable:!1,searchable:!1}],lengthMenu:[[5,15,20,-1],[5,15,20,"All"]],pageLength:5,pagingType:"bootstrap_full_number",columnDefs:[{orderable:!1,targets:[0]},{searchable:!1,targets:[0]}],order:[[1,"asc"]]});
+
         var TableDatatablesButtons=function(){var e=function(){var e=$("#mytable");
-        e.dataTable({language:{aria:{sortAscending:": activate to sort column ascending",sortDescending:": activate to sort column descending"},emptyTable:"No data available in table",info:"Showing _START_ to _END_ of _TOTAL_ entries",infoEmpty:"No entries found",infoFiltered:"(filtered1 from _MAX_ total entries)",lengthMenu:"_MENU_ entries",search:"Search:",zeroRecords:"No matching records found"},buttons:[{extend:"print",orientation: 'landscape',pageSize: 'LEGAL',exportOptions:{columns: ':visible'},className:"btn dark btn-outline"},{extend:"copy",className:"btn red btn-outline",exportOptions:{columns: ':visible'}},{extend: 'pdfHtml5',orientation: 'landscape',pageSize: 'LEGAL',exportOptions:{columns: ':visible'},className:"btn green btn-outline"},{extend:"excelHtml5",className:"btn yellow btn-outline ",exportOptions:{columns: ':visible'}},{extend:"csv",className:"btn purple btn-outline ",exportOptions:{columns: ':visible'}},{extend:"colvis",className:"btn dark btn-outline",text:"Columns"}],responsive:!0,order:[[0,"asc"]],lengthMenu:[[5,10,15,20,-1],[5,10,15,20,"All"]],pageLength:10,dom:"<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>"})},t=function(){var e=$("#sample_2");e.dataTable({language:{aria:{sortAscending:": activate to sort column ascending",sortDescending:": activate to sort column descending"},emptyTable:"No data available in table",info:"Showing _START_ to _END_ of _TOTAL_ entries",infoEmpty:"No entries found",infoFiltered:"(filtered1 from _MAX_ total entries)",lengthMenu:"_MENU_ entries",search:"Search:",zeroRecords:"No matching records found"},buttons:[{extend:"print",className:"btn default"},{extend:"copy",className:"btn default"},{extend:"pdf",className:"btn default"},{extend:"excel",className:"btn default"},{extend:"csv",className:"btn default"},{text:"Reload",className:"btn default",action:function(e,t,a,n){alert("Custom Button")}}],order:[[0,"asc"]],lengthMenu:[[5,10,15,20,-1],[5,10,15,20,"All"]],pageLength:10,dom:"<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>"})},a=function(){var e=$("#sample_3"),t=e.dataTable({language:{aria:{sortAscending:": activate to sort column ascending",sortDescending:": activate to sort column descending"},emptyTable:"No data available in table",info:"Showing _START_ to _END_ of _TOTAL_ entries",infoEmpty:"No entries found",infoFiltered:"(filtered1 from _MAX_ total entries)",lengthMenu:"_MENU_ entries",search:"Search:",zeroRecords:"No matching records found"},buttons:[{extend:"print",className:"btn dark btn-outline"},{extend:"copy",className:"btn red btn-outline"},{extend:"pdf",className:"btn green btn-outline"},{extend:"excel",className:"btn yellow btn-outline "},{extend:"csv",className:"btn purple btn-outline "},{extend:"colvis",className:"btn dark btn-outline",text:"Columns"}],responsive:!0,order:[[0,"asc"]],lengthMenu:[[5,10,15,20,-1],[5,10,15,20,"All"]],pageLength:10});$("#sample_3_tools > li > a.tool-action").on("click",function(){var e=$(this).attr("data-action");t.DataTable().button(e).trigger()})},n=function(){$(".date-picker").datepicker({rtl:App.isRTL(),autoclose:!0});var e=new Datatable;e.init({src:$("#datatable_ajax"),onSuccess:function(e,t){},onError:function(e){},onDataLoad:function(e){},loadingMessage:"Loading...",dataTable:{bStateSave:!0,lengthMenu:[[10,20,50,100,150,-1],[10,20,50,100,150,"All"]],pageLength:10,ajax:{url:"../demo/table_ajax.php"},order:[[1,"asc"]],buttons:[{extend:"print",className:"btn default"},{extend:"copy",className:"btn default"},{extend:"pdf",className:"btn default"},{extend:"excel",className:"btn default"},{extend:"csv",className:"btn default"},{text:"Reload",className:"btn default",action:function(e,t,a,n){t.ajax.reload(),alert("Datatable reloaded!")}}]}}),e.getTableWrapper().on("click",".table-group-action-submit",function(t){t.preventDefault();var a=$(".table-group-action-input",e.getTableWrapper());""!=a.val()&&e.getSelectedRowsCount()>0?(e.setAjaxParam("customActionType","group_action"),e.setAjaxParam("customActionName",a.val()),e.setAjaxParam("id",e.getSelectedRows()),e.getDataTable().ajax.reload(),e.clearAjaxParams()):""==a.val()?App.alert({type:"danger",icon:"warning",message:"Please select an action",container:e.getTableWrapper(),place:"prepend"}):0===e.getSelectedRowsCount()&&App.alert({type:"danger",icon:"warning",message:"No record selected",container:e.getTableWrapper(),place:"prepend"})}),$("#datatable_ajax_tools > li > a.tool-action").on("click",function(){var t=$(this).attr("data-action");e.getDataTable().button(t).trigger()})};return{init:function(){jQuery().dataTable&&(e(),t(),a(),n())}}}();jQuery(document).ready(function(){TableDatatablesButtons.init()});
+        e.dataTable({language:{aria:{sortAscending:": activate to sort column ascending",sortDescending:": activate to sort column descending"},emptyTable:"No data available in table",info:"Showing _START_ to _END_ of _TOTAL_ entries",infoEmpty:"No entries found",infoFiltered:"(filtered1 from _MAX_ total entries)",lengthMenu:"_MENU_ entries",search:"Search:",zeroRecords:"No matching records found"},buttons:[{extend:"print",title: 'Vehicle Report',orientation: 'landscape',pageSize: 'LEGAL',exportOptions:{columns: ':visible'},className:"btn dark btn-outline"},{extend:"",text :"Summary",className:"btn blue btn-outline summary_btn"},{extend:"excelHtml5",title: 'Vehicle Report',className:"btn yellow btn-outline ",exportOptions:{columns: ':visible'}},{extend:"colvis",title: 'Vehicle Report',className:"btn green btn-outline",text:"Columns"}],responsive:!0,order:[[0,"asc"]],lengthMenu:[[5,10,15,20,-1],[5,10,15,20,"All"]],pageLength:10,dom:"<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>"})},t=function(){var e=$("#sample_2");e.dataTable({language:{aria:{sortAscending:": activate to sort column ascending",sortDescending:": activate to sort column descending"},emptyTable:"No data available in table",info:"Showing _START_ to _END_ of _TOTAL_ entries",infoEmpty:"No entries found",infoFiltered:"(filtered1 from _MAX_ total entries)",lengthMenu:"_MENU_ entries",search:"Search:",zeroRecords:"No matching records found"},buttons:[{extend:"print",className:"btn default"},{extend:"copy",className:"btn default"},{extend:"pdf",className:"btn default"},{extend:"excel",className:"btn default"},{extend:"csv",className:"btn default"},{text:"Reload",className:"btn default",action:function(e,t,a,n){alert("Custom Button")}}],order:[[0,"asc"]],lengthMenu:[[5,10,15,20,-1],[5,10,15,20,"All"]],pageLength:10,dom:"<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>"})},a=function(){var e=$("#sample_3"),t=e.dataTable({language:{aria:{sortAscending:": activate to sort column ascending",sortDescending:": activate to sort column descending"},emptyTable:"No data available in table",info:"Showing _START_ to _END_ of _TOTAL_ entries",infoEmpty:"No entries found",infoFiltered:"(filtered1 from _MAX_ total entries)",lengthMenu:"_MENU_ entries",search:"Search:",zeroRecords:"No matching records found"},buttons:[{extend:"print",className:"btn dark btn-outline"},{extend:"copy",className:"btn red btn-outline"},{extend:"pdf",className:"btn green btn-outline"},{extend:"excel",className:"btn yellow btn-outline "},{extend:"csv",className:"btn purple btn-outline "},{extend:"colvis",className:"btn dark btn-outline",text:"Columns"}],responsive:!0,order:[[0,"asc"]],lengthMenu:[[5,10,15,20,-1],[5,10,15,20,"All"]],pageLength:10});$("#sample_3_tools > li > a.tool-action").on("click",function(){var e=$(this).attr("data-action");t.DataTable().button(e).trigger()})},n=function(){$(".date-picker").datepicker({rtl:App.isRTL(),autoclose:!0});var e=new Datatable;e.init({src:$("#datatable_ajax"),onSuccess:function(e,t){},onError:function(e){},onDataLoad:function(e){},loadingMessage:"Loading...",dataTable:{bStateSave:!0,lengthMenu:[[10,20,50,100,150,-1],[10,20,50,100,150,"All"]],pageLength:10,ajax:{url:"../demo/table_ajax.php"},order:[[1,"asc"]],buttons:[{extend:"print",className:"btn default"},{extend:"copy",className:"btn default"},{extend:"pdf",className:"btn default"},{extend:"excel",className:"btn default"},{extend:"csv",className:"btn default"},{text:"Reload",className:"btn default",action:function(e,t,a,n){t.ajax.reload(),alert("Datatable reloaded!")}}]}}),e.getTableWrapper().on("click",".table-group-action-submit",function(t){t.preventDefault();var a=$(".table-group-action-input",e.getTableWrapper());""!=a.val()&&e.getSelectedRowsCount()>0?(e.setAjaxParam("customActionType","group_action"),e.setAjaxParam("customActionName",a.val()),e.setAjaxParam("id",e.getSelectedRows()),e.getDataTable().ajax.reload(),e.clearAjaxParams()):""==a.val()?App.alert({type:"danger",icon:"warning",message:"Please select an action",container:e.getTableWrapper(),place:"prepend"}):0===e.getSelectedRowsCount()&&App.alert({type:"danger",icon:"warning",message:"No record selected",container:e.getTableWrapper(),place:"prepend"})}),$("#datatable_ajax_tools > li > a.tool-action").on("click",function(){var t=$(this).attr("data-action");e.getDataTable().button(t).trigger()})};return{init:function(){jQuery().dataTable&&(e(),t(),a(),n())}}}();jQuery(document).ready(function(){TableDatatablesButtons.init()});
     }
 
     myDataTable();
@@ -652,6 +678,70 @@ include 'footer.php';
         });
     }
 
+ 
+    function loadSummary(from_datee,to_datee,from_yard_id,to_yard_id,coa_id,movement)
+    {
+        $.ajax({
+            url:'ajax/container_movement/summary.php?from_datee='+from_datee+'&to_datee='+to_datee+'&from_yard_id='+from_yard_id+'&to_yard_id='+to_yard_id+'&coa_id='+coa_id+'&movement='+movement,
+            dataType:"JSON",
+            success:function(data){
+                var n = 1,
+                    m20_total = 0,
+                    m40_total = 0,
+                    m45_total = 0,
+                    vr_total = 0;
+
+    
+                $('#mytable1 tbody').html("");
+                
+                var t = $.each(data,function(index,value){
+
+                    m20_total += value['20'];
+                    m40_total += value['40'];
+                    m45_total += value['45'];
+                    vr_total  += value['hr_total']; 
+
+                    $('#mytable1 tbody').append('<tr class="odd gradeX">'+                      
+
+                            '<td style="color:#000;">'+n+'</td>'+
+                            '<td id="'+value['coa_id']+'">'+value['coa']+'</td>'+
+                            '<td id="'+value['from_yard_id']+'">'+value['from_yard']+'</td>'+
+                            '<td id="'+value['to_yard_id']+'">'+value['to_yard']+'</td>'+
+                            '<td>'+value['movement']+'</td>'+
+                            '<td>'+value['20']+'</td>'+
+                            '<td>'+value['40']+'</td>'+
+                            '<td>'+value['45']+'</td>'+
+                            '<td>'+value['hr_total']+'</td>'+
+                            
+                            '</tr>');
+
+                    n++; 
+                }); //END OF EACH
+
+
+                $.when(t).done(function(){
+
+                    $('#mytable1 tbody').append('<tr class="odd gradeX">'+                      
+
+                            '<td></td>'+
+                            '<td></td>'+
+                            '<td></td>'+
+                            '<td></td>'+
+                            '<td>Total</td>'+
+                            '<td>'+m20_total+'</td>'+
+                            '<td>'+m40_total+'</td>'+
+                            '<td>'+m45_total+'</td>'+
+                            '<td>'+vr_total+'</td>'+
+                            
+                            '</tr>');
+                });
+
+                
+            },
+            error:function(){ alert("Failed Fetch Summary Ajax Call.") }
+        });
+    }
+
     function getTotal(name)
     {
         var sum = 0,
@@ -705,6 +795,9 @@ include 'footer.php';
             error:function(){ alert("Error in Add Ajax Call.") }
         });
     }
+
+    var from_date = null,
+        to_date   = null;
     
     //Add & Update expense 
     $('#form').submit(function(e){
@@ -729,6 +822,10 @@ include 'footer.php';
 
         loadData(from_datee,to_datee,from_yard_id,to_yard_id,coa_id,consignee_id,movement,empty_terminal_id,container_number,bl_cro_number,container_size,container_id,vehicle_id,owner_name,line_id);
 
+        from_date = from_datee;
+        to_date   = to_datee;
+        loadSummary(from_datee,to_datee,from_yard_id,to_yard_id,coa_id,movement);
+
     });
 
     //Add & Update expense 
@@ -744,6 +841,25 @@ include 'footer.php';
 
         add(vehicle_id,datee,method,check_number,bank_id,amount);   
 
+    });
+
+    function printPDF() {
+      var doc = new jsPDF('p', 'pt');
+      doc.setFontSize(12);
+      doc.setFontStyle('bold');
+      var elem = document.getElementById("mytable1");
+      var res = doc.autoTableHtmlToJson(elem);
+
+      var text = 'From Date '+from_date+' To Date '+to_date,
+      xOffset = (doc.internal.pageSize.width / 2) - (doc.getStringUnitWidth(text) * doc.internal.getFontSize() / 2); 
+      doc.text(text, xOffset, 20); 
+      
+      doc.autoTable(res.columns, res.data,{startY: 50 , theme: 'grid'});
+      doc.save("Vehicle Summary.pdf");
+    }
+
+    $(document).on('click','.summary_btn',function() {
+      printPDF();
     });
 
  });
