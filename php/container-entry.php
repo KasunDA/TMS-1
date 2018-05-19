@@ -776,7 +776,7 @@ include 'footer.php';
                   }
                   getId();
               },
-              error:function(){ alert("Error in Add Ajax Call.") }
+              error:function(){ alert("Error in Add Container Entry Ajax Call.") }
           });
       }
 
