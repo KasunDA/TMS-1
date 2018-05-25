@@ -127,6 +127,7 @@ date_default_timezone_set("Asia/Karachi");
                                                         <option value="empty">Empty</option>
                                                         <option value="import">Import</option>
                                                         <option value="export">Export</option> 
+                                                        <option value="open_cargo">Open Cargo</option> 
                                                     </select>
                                                 </div>
                                                 
@@ -408,23 +409,23 @@ include 'footer.php';
           });
       }
       
-      $('#from_yard_id').on('change',function(){
+      // $('#from_yard_id').on('change',function(){
 
-        $('#to_yard_id').find('option').each(function(){
-            $(this).removeAttr('disabled');
-        });
-        toYardIdSelect();
+      //   $('#to_yard_id').find('option').each(function(){
+      //       $(this).removeAttr('disabled');
+      //   });
+      //   toYardIdSelect();
 
-        var option = $('#to_yard_id').find("option[value='" + $(this).val() + "']");
+      //   var option = $('#to_yard_id').find("option[value='" + $(this).val() + "']");
 
-        if (option.length) 
-        {
-          option.attr('disabled',true);
-          toYardIdSelect();
-        }
+      //   if (option.length) 
+      //   {
+      //     option.attr('disabled',true);
+      //     toYardIdSelect();
+      //   }
         
 
-      });
+      // });
 
       
       $('#agent_id,#coa_id,#consignee_id,#empty_terminal_id,#movement,#vehicle_id,#line_id,#container_size,#from_yard_id,#to_yard_id,#container_id').select2({

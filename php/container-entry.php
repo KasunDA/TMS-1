@@ -143,6 +143,7 @@ date_default_timezone_set("Asia/Karachi");
                                                         <option value="empty">Empty</option>
                                                         <option value="import">Import</option>
                                                         <option value="export">Export</option> 
+                                                        <option value="open_cargo">Open Cargo</option> 
                                                     </select>
                                                 </div>
                                                 
@@ -514,31 +515,31 @@ include 'footer.php';
        }
       }
 
-      function toYardIdSelect()
-      {
-        $('#to_yard_id').select2({
-            width: 'resolve',
-            theme: "classic"
-          });
-      }
+      // function toYardIdSelect()
+      // {
+      //   $('#to_yard_id').select2({
+      //       width: 'resolve',
+      //       theme: "classic"
+      //     });
+      // }
       
-      $('#from_yard_id').on('change',function(){
+      // $('#from_yard_id').on('change',function(){
 
-        $('#to_yard_id').find('option').each(function(){
-            $(this).removeAttr('disabled');
-        });
-        toYardIdSelect();
+      //   $('#to_yard_id').find('option').each(function(){
+      //       $(this).removeAttr('disabled');
+      //   });
+      //   toYardIdSelect();
 
-        var option = $('#to_yard_id').find("option[value='" + $(this).val() + "']");
+      //   var option = $('#to_yard_id').find("option[value='" + $(this).val() + "']");
 
-        if (option.length) 
-        {
-          option.attr('disabled',true);
-          toYardIdSelect();
-        }
+      //   if (option.length) 
+      //   {
+      //     option.attr('disabled',true);
+      //     toYardIdSelect();
+      //   }
         
 
-      });
+      // });
 
       $('#advance,#rent,#lolo_charges,#weight_charges').on('keyup change',function(){
           var a = $('#rent').val()/1 + $('#lolo_charges').val()/1,
