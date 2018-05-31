@@ -477,24 +477,30 @@ include 'footer.php';
             });
         }
 
-        function update()
+        function update(name,cnic,father_name,dob,email,contact,address,designation)
         {
-        	var fdata = $('#myform').serialize();
+        	var fdata = new FormData( $('#myform')[0] ); 
 
             $.ajax({
                 url:'ajax/employee/update.php',
                 type:"POST",
-                data:{fdata},
+                data:fdata,
+                contentType: false,
+                processData: false,
                 success:function(data){
                     if(data)
                     {
                         var i = $('.selectedd').attr('index');
                         var temp = $('#mytable').DataTable().row(i).data();
                         
-                        // temp[3] = name;
-                        // temp[4] = cnic;
-                        // temp[5] = ;
-                        // temp[5] = ;
+                        temp[3]  = name;
+                        temp[4]  = cnic;
+                        temp[5]  = father_name;
+                        temp[6]  = dob;
+                        temp[7]  = email;
+                        temp[8]  = contact;
+                        temp[9]  = address;
+                        temp[10] = designation;
 
                         $('#mytable').DataTable().row(i).data(temp).draw();
                      
@@ -531,6 +537,9 @@ include 'footer.php';
             $('#btn_submit').addClass('hidden');
             $('#btn_reset').addClass('hidden');
 
+            $('#signature').removeAttr('required');
+            $('#picture').removeAttr('required');
+
         }
 
         function addNewClick()
@@ -547,14 +556,11 @@ include 'footer.php';
             $('#btn_submit').removeClass('hidden');
             $('#btn_reset').removeClass('hidden');
 
+            $('#signature').attr('required','required');
+            $('#picture').attr('required','required');
+
         }
 
-        // //DETAILS 
-        // $(document).on('click','.detail_btn',function(){
-
-        //     var employee_id = $(this).attr('id');
-
-        // });
 
         //DELETE 
         $(document).on('click','.delete_btn',function(){
@@ -569,6 +575,47 @@ include 'footer.php';
         $(document).on('click','#add_new',function(){
             addNewClick();
         });
+
+        function loadDetails(employee_id)
+        {
+            $.ajax({
+                url:'ajax/employee/fetch_details.php?employee_id='+employee_id,
+                dataType:"JSON",
+                success:function(data){
+
+                        $('#employee_id').val(data['employee_id']);
+                        $('#name').val(data['name']);
+                        $('#cnic').val(data['cnic']);
+                        $('#cnic_valid').val(data['cnic_valid']);
+                        $('#father_name').val(data['father_name']);
+                        $('#dob').val(data['dob']);
+                        $('#email').val(data['email']);
+                        $('#address').val(data['address']);
+
+                        $('#e_contact_name1').val(data['e_contact_name1']);
+                        $('#relation1').val(data['relation1']);
+                        $('#e_contact1').val(data['e_contact1']);
+
+                        $('#e_contact_name2').val(data['e_contact_name2']);
+                        $('#relation2').val(data['relation2']);
+                        $('#e_contact2').val(data['e_contact2']);
+
+                        $('#qualification').val(data['qualification']);
+                        $('#institute_name').val(data['institute_name']);
+                        $('#subject').val(data['subject']);
+
+                        $('#contact').val(data['contact']);
+                        $('#joining_date').val(data['joining_date']);
+                        $('#dg_id').val(data['dg_id']).trigger('change');
+
+                        $('#ereferences').val(data['ereferences']);
+                        $('#img_signature').attr('src',data['img_signature']);
+                        $('#img_picture').attr('src',data['img_picture']);
+
+                },
+                error:function(){ alert("Failed Fetch Details Ajax Call.") }
+            });
+        }
 
         //UPDATE 
         $(document).on('click','.update_btn',function(){
@@ -587,10 +634,8 @@ include 'footer.php';
 
             trr.addClass('selectedd');   
 
-            $('#employee_id').val( employee_id );
-            $('#name').val( trr.find('td').eq(2).text() );
-            $('#').val( trr.find('td').eq().text() );
-            //continue
+            loadDetails(employee_id);
+            
         });
 
         //Add & Update
@@ -598,18 +643,22 @@ include 'footer.php';
            e.preventDefault();
            
            var name = $('#name').val()
-               // username = $('#username').val() ,
-               // role = $('#role').val(),
-               // pass = $('#pass').val(),
+               cnic = $('#cnic').val() ,
+               father_name = $('#father_name').val(),
+               dob = $('#dob').val(),
+               email = $('#email').val(),
+               contact = $('#contact').val(),
+               address = $('#address').val(),
+               designation = $('#dg_id option:selected').text(),
                employee_id =  $('#employee_id').val();
 
            if( $(this).hasClass('update_form') ) 
            {
-                // update(employee_id,name,username,role,pass);
+                update(name,cnic,father_name,dob,email,contact,address,designation);
            }
            else
            {
-                add()
+                add();
            }
         });
 

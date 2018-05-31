@@ -36,9 +36,9 @@
 	$e_contact1      = $_POST['e_contact1'];
 	
 
-	$e_contact_name2 = ($_POST['e_contact_name2']!=NULL?$_POST['e_contact_name2']:'NULL');
-	$relation2       = ($_POST['relation2']!=NULL?$_POST['relation2']:'NULL');
-	$e_contact2      = ($_POST['e_contact2']!=NULL?$_POST['e_contact2']:'NULL');
+	$e_contact_name2 = ($_POST['e_contact_name2']!=NULL?$_POST['e_contact_name2']:'');
+	$relation2       = ($_POST['relation2']!=NULL?$_POST['relation2']:'');
+	$e_contact2      = ($_POST['e_contact2']!=NULL?$_POST['e_contact2']:'');
 	
 	$qualification   = $_POST['qualification'];
 	$institute_name  = $_POST['institute_name'];
@@ -46,7 +46,7 @@
 	$contact         = $_POST['contact'];
 	$joining_date    = $_POST['joining_date'];
 	$dg_id           = $_POST['dg_id'];
-	$ereferences     = ($_POST['ereferences']!=NULL?$_POST['ereferences']:'NULL');
+	$ereferences     = ($_POST['ereferences']!=NULL?$_POST['ereferences']:'NILL');
 	$img_signature   = saveImage('signature');
 	$img_picture     = saveImage('picture');
 

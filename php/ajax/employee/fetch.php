@@ -14,6 +14,7 @@
 		$json[$n]['father_name'] = $r['father_name'];
 		$json[$n]['dob'] = $r['dob'];
 		$json[$n]['email'] = $r['email'];
+		$json[$n]['contact'] = $r['contact'];
 		$json[$n]['address'] = $r['address'];
 
 		$q1 = mysqli_query($mycon,'SELECT * FROM designation WHERE dg_id='.$r['dg_id']);
