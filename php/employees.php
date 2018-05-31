@@ -302,6 +302,7 @@ require 'connection.php';
     <!-- END CONTENT -->
 </div>
 <!-- END bike -->
+
 <?php 
 include 'footer.php';
  ?>
@@ -419,9 +420,9 @@ include 'footer.php';
                                     '<i class="fa fa-plus-square"></i>'+
                                     '</button> </li>'+
                                     
-                                    '<li>  <button class="btn btn-xs blue detail_btn" id="'+value['employee_id']+'" type="button">  '+
+                                    '<li> <a class="btn btn-xs blue detail_btn"  href="employee_details.php?employee_id='+value['employee_id']+'" target="_blank" >  '+
                                     '<i class="fa fa-info"></i>'+
-                                    '</button> </li>'+
+                                    '</a> </li>'+
                                     
                                     '<li>  <button class="btn btn-xs red delete_btn" id="'+value['employee_id']+'" type="button">  '+
                                     '<i class="fa fa-minus-square"></i>'+
@@ -457,7 +458,7 @@ include 'footer.php';
         {
         	// var fdata = $('#myform').serialize(); FormData
         	var fdata = new FormData( $('#myform')[0] ); 
-        	alert(fdata[0]);
+
             $.ajax({
                 url:'ajax/employee/add.php',
                 type:"POST",
@@ -467,7 +468,7 @@ include 'footer.php';
                 success:function(data){
                     if(data)
                     {
-                        // $('#btn_reset').trigger('click');
+                        $('#btn_reset').trigger('click');
                         
                         loadData();
                     }
@@ -547,6 +548,13 @@ include 'footer.php';
             $('#btn_reset').removeClass('hidden');
 
         }
+
+        // //DETAILS 
+        // $(document).on('click','.detail_btn',function(){
+
+        //     var employee_id = $(this).attr('id');
+
+        // });
 
         //DELETE 
         $(document).on('click','.delete_btn',function(){

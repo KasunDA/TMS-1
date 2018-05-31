@@ -1,4 +1,26 @@
 <?php 
+	
+	function saveImage($fileToUpload)
+	{
+		$target_dir = "../../uploads/";
+		$filename = basename($_FILES[ $fileToUpload ]["name"]);
+		$target_file = $target_dir . $filename;
+		$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+		
+		$temp = explode(".", $filename);
+		$newfilename = substr(md5(uniqid(rand(), true)), 0, 8) . ".$imageFileType";
+		// $newfilename = round(microtime(true)) . '.' . end($temp);
+		$target_file = $target_dir . $newfilename;
+
+		if (move_uploaded_file($_FILES[ $fileToUpload ]["tmp_name"], $target_file)) 
+		{
+	        return "uploads/".$newfilename;
+	    } 
+	    else 
+	    {
+	        return 'NULL';
+	    }
+	}
 
 	require '../../connection.php';
 
@@ -25,10 +47,11 @@
 	$joining_date    = $_POST['joining_date'];
 	$dg_id           = $_POST['dg_id'];
 	$ereferences     = ($_POST['ereferences']!=NULL?$_POST['ereferences']:'NULL');
-	$img_signature   = $_POST['signature'];
-	$img_picture     = $_POST['picture'];
+	$img_signature   = saveImage('signature');
+	$img_picture     = saveImage('picture');
 
 
+	
 	
 	$q = mysqli_query($mycon,"INSERT INTO employee( name, cnic, cnic_valid, father_name, dob, email, address, e_contact_name1, relation1, e_contact1, e_contact_name2, relation2, e_contact2, qualification, institute_name, subject, contact, joining_date, dg_id, ereferences , img_signature , img_picture ) VALUES ( '$name', '$cnic', '$cnic_valid', '$father_name', '$dob', '$email', '$address', '$e_contact_name1', '$relation1', '$e_contact1', '$e_contact_name2', '$relation2', '$e_contact2', '$qualification', '$institute_name', '$subject', '$contact', '$joining_date', $dg_id, '$ereferences' , '$img_signature' , '$img_picture' ) ");
 
