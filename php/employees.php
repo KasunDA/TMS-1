@@ -329,6 +329,7 @@ include 'footer.php';
      	$('#btn_reset').click(function(){
      		$('#img_picture,#img_signature').removeAttr('src');
      		$('#dg_id').val('').trigger('change');
+            $('#filehelp_picture,#filehelp_signature').html('');
      		getId();
      	});
 
@@ -344,20 +345,38 @@ include 'footer.php';
                 fileInput.value = '';
                 return false;
             }
-
             else
             {
-                if (input.files && input.files[0]) {
-                    var reader = new FileReader();
+                if (window.File && window.FileReader && window.FileList && window.Blob)
+                {
+                    //get the file size and file type from file input field
+                    var fsize = $('#'+name)[0].files[0].size;
+                    
+                    if(fsize>2048576) //do something if file size more than 2 mb (2048576)
+                    {
+                        $('#filehelp_'+name).html('Maximum 2mb file is allowed.');   
+                    }
+                    else
+                    {
+                        if (input.files && input.files[0]) 
+                        {
+                            var reader = new FileReader();
 
-                    reader.onload = function (e) {
-                        $('#img_'+name)
-                            .attr('src', e.target.result);
+                            reader.onload = function (e) {
+                                $('#img_'+name)
+                                    .attr('src', e.target.result);
 
-                        $('#filehelp_'+name).html('');    
-                    };
+                                $('#filehelp_'+name).html('');    
+                            };
 
-                    reader.readAsDataURL(input.files[0]);
+                            reader.readAsDataURL(input.files[0]);
+                        }
+                    }
+                }
+                
+                else
+                {
+                    $('#filehelp_'+name).html("Please upgrade your browser, because your current browser lacks some new features we need!");   
                 }
             }    
         }
