@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 17, 2018 at 10:11 AM
+-- Generation Time: May 31, 2018 at 11:15 PM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 7.0.13
 
@@ -126,7 +126,8 @@ CREATE TABLE `chart_of_account` (
 --
 
 INSERT INTO `chart_of_account` (`coa_id`, `short_form`, `full_form`, `address`, `contact`, `status`) VALUES
-(1, 'AST', 'Agha Steel.', 'address', '03030303030', 1);
+(1, 'AST', 'Agha Steel.', 'address', '03030303030', 1),
+(2, 'STM', 'Pak Steel Mill', 'address', '03216516161', 1);
 
 -- --------------------------------------------------------
 
@@ -205,6 +206,7 @@ CREATE TABLE `container_entry` (
   `container_number` varchar(30) NOT NULL,
   `vehicle_id` int(11) NOT NULL,
   `advance` int(11) NOT NULL,
+  `diesel` int(11) NOT NULL,
   `balance` int(11) NOT NULL,
   `color` varchar(7) NOT NULL,
   `mr_charges` int(11) NOT NULL,
@@ -217,10 +219,27 @@ CREATE TABLE `container_entry` (
 -- Dumping data for table `container_entry`
 --
 
-INSERT INTO `container_entry` (`ce_id`, `container_number`, `vehicle_id`, `advance`, `balance`, `color`, `mr_charges`, `remarks`, `cm_id`, `status`) VALUES
-(1, 'APZU123456', 3, 500, 500, 'white', 0, '', 1, 1),
-(2, 'APZU369852', 2, 500, 500, 'white', 0, '', 1, 1),
-(3, 'APZU135454', 1, 500, 500, 'white', 0, '', 1, 1);
+INSERT INTO `container_entry` (`ce_id`, `container_number`, `vehicle_id`, `advance`, `diesel`, `balance`, `color`, `mr_charges`, `remarks`, `cm_id`, `status`) VALUES
+(1, 'APZU123456', 3, 500, 0, 500, 'white', 0, '', 1, 1),
+(2, 'APZU369852', 2, 500, 0, 500, 'white', 0, '', 1, 1),
+(3, 'APZU135454', 1, 500, 0, 500, 'white', 0, '', 1, 1),
+(4, 'APZU123456', 3, 500, 0, 500, 'white', 0, '', 2, 1),
+(5, 'APZU369852', 2, 500, 0, 500, 'white', 0, '', 2, 1),
+(6, 'APZU135454', 1, 500, 0, 500, 'white', 0, '', 2, 1),
+(7, 'APZU123456', 3, 500, 0, 500, 'white', 0, '', 3, 1),
+(8, 'APZU369852', 2, 500, 0, 500, 'white', 0, '', 3, 1),
+(9, 'APZU135454', 1, 500, 0, 500, 'white', 0, '', 3, 1),
+(10, 'APZU123456', 3, 500, 0, 500, 'white', 0, '', 4, 1),
+(11, 'APZU369852', 2, 500, 0, 500, 'white', 0, '', 4, 1),
+(12, 'APZU135454', 1, 500, 0, 500, 'white', 0, '', 4, 1),
+(13, '231561', 2, 500, 0, 500, 'white', 0, '', 5, 1),
+(14, '321654', 2, 200, 0, 800, 'white', 0, '', 5, 1),
+(15, '1616156', 1, 200, 0, 1466, 'white', 0, '', 6, 1),
+(16, '165161651', 1, 500, 0, 1166, 'white', 0, '', 6, 1),
+(17, 'Apzu11331', 3, 200, 0, 700, 'white', 0, '', 7, 1),
+(18, '1234564', 3, 500, 0, 500, 'white', 500, '', 8, 1),
+(19, '2313', 2, 300, 3300, 322, 'white', 0, '', 9, 1),
+(20, '321564', 1, 321, 600, 301, 'white', 0, '', 9, 1);
 
 -- --------------------------------------------------------
 
@@ -234,7 +253,7 @@ CREATE TABLE `container_movement` (
   `agent_id` int(11) NOT NULL,
   `coa_id` int(11) NOT NULL,
   `consignee_id` int(11) NOT NULL,
-  `movement` varchar(7) NOT NULL,
+  `movement` varchar(17) NOT NULL,
   `empty_terminal_id` int(11) NOT NULL,
   `from_yard_id` int(11) NOT NULL,
   `to_yard_id` int(11) NOT NULL,
@@ -258,7 +277,15 @@ CREATE TABLE `container_movement` (
 --
 
 INSERT INTO `container_movement` (`cm_id`, `datee`, `agent_id`, `coa_id`, `consignee_id`, `movement`, `empty_terminal_id`, `from_yard_id`, `to_yard_id`, `container_size`, `party_charges`, `lot_of`, `line_id`, `bl_cro_number`, `job_number`, `index_number`, `rent`, `container_id`, `lolo_charges`, `weight_charges`, `paid_status`, `status`) VALUES
-(1, '2018-05-17', 2, 1, 1, 'import', 5, 5, 4, 20, 25000, 3, 1, '123465', '1321655', '6516', 600, 3, 600, 200, 0, 1);
+(1, '2018-05-17', 2, 1, 1, 'import', 5, 5, 4, 20, 25000, 3, 1, '123465', '1321655', '6516', 600, 3, 600, 200, 0, 1),
+(2, '2018-05-17', 2, 2, 1, 'import', 5, 5, 4, 40, 25000, 3, 1, '123465', '1321655', '6516', 600, 3, 600, 200, 0, 1),
+(3, '2018-05-17', 2, 1, 1, 'import', 5, 5, 4, 45, 25000, 3, 1, '123465', '1321655', '6516', 600, 3, 600, 200, 0, 1),
+(4, '2018-05-17', 2, 2, 1, 'export', 5, 5, 4, 20, 25000, 3, 1, '123465', '1321655', '6516', 600, 3, 600, 200, 0, 1),
+(5, '2018-05-19', 1, 2, 2, 'import', 1, 1, 3, 20, 81000, 2, 2, 'APZ123545', '13464', '1651615', 200, 4, 900, 100, 0, 1),
+(6, '2018-05-19', 2, 1, 3, 'export', 5, 1, 2, 20, 50000, 2, 2, 'APUZ64516561', '661516', '1313', 155, 3, 2111, 600, 0, 1),
+(7, '2018-05-19', 1, 1, 3, 'import', 3, 3, 2, 20, 50000, 3, 2, '11111', '156161', '1616', 500, 3, 600, 200, 0, 1),
+(8, '2018-05-29', 2, 2, 4, 'import', 5, 5, 4, 20, 50000, 2, 1, '123456', '123564', '13', 600, 4, 600, 200, 0, 1),
+(9, '2018-05-30', 2, 2, 4, 'open_cargo', 3, 4, 3, 20, 20000, 2, 1, '213456', '123546', '12312', 522, 5, 300, 200, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -284,6 +311,27 @@ INSERT INTO `daily_description` (`dd_id`, `name`, `status`) VALUES
 (5, 'breakfast', 1),
 (6, 'Party Payment', 1),
 (7, 'Vehicle Monthly Payment', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `designation`
+--
+
+CREATE TABLE `designation` (
+  `dg_id` int(11) NOT NULL,
+  `designation` varchar(50) NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `designation`
+--
+
+INSERT INTO `designation` (`dg_id`, `designation`, `status`) VALUES
+(1, 'driver', 1),
+(2, 'd2', 0),
+(3, 'officer', 1);
 
 -- --------------------------------------------------------
 
@@ -344,6 +392,47 @@ INSERT INTO `diesel_limit` (`dl_id`, `from_yard`, `to_yard`, `limit_litre`, `sta
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `employee`
+--
+
+CREATE TABLE `employee` (
+  `employee_id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `cnic` varchar(20) NOT NULL,
+  `cnic_valid` varchar(15) NOT NULL,
+  `father_name` varchar(50) NOT NULL,
+  `dob` varchar(20) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `address` text NOT NULL,
+  `e_contact_name1` varchar(30) NOT NULL,
+  `relation1` varchar(20) NOT NULL,
+  `e_contact1` varchar(20) NOT NULL,
+  `e_contact_name2` varchar(30) DEFAULT NULL,
+  `relation2` varchar(20) DEFAULT NULL,
+  `e_contact2` varchar(20) DEFAULT NULL,
+  `qualification` varchar(30) NOT NULL,
+  `institute_name` varchar(30) NOT NULL,
+  `subject` varchar(16) NOT NULL,
+  `contact` varchar(16) NOT NULL,
+  `joining_date` varchar(20) NOT NULL,
+  `dg_id` int(11) NOT NULL,
+  `ereferences` text,
+  `img_signature` text NOT NULL,
+  `img_picture` text NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `employee`
+--
+
+INSERT INTO `employee` (`employee_id`, `name`, `cnic`, `cnic_valid`, `father_name`, `dob`, `email`, `address`, `e_contact_name1`, `relation1`, `e_contact1`, `e_contact_name2`, `relation2`, `e_contact2`, `qualification`, `institute_name`, `subject`, `contact`, `joining_date`, `dg_id`, `ereferences`, `img_signature`, `img_picture`, `status`) VALUES
+(1, 'Ahmed khan', '42501-5646845-7', '11/21/2025', 'Nazim khan', '05/06/1983', 'ahmed_khan@yahoo.com', 'new address', 'Nazim khan', 'Father', '03106666666', '', '', '', 'b.com', 'indus', 'subject', '03377777777', '07/01/2018', 1, 'NILL', 'uploads/caced7f7.jpg', 'uploads/f4927eb8.jpg', 1),
+(11, 'asdasd', '42201-1565848-5', '06/05/2018', 'asdasd', '05/28/2018', 'adad@gmail.com', 'asdads', 'asdasd', 'asdad', '03000000000', '', '', '', 'asdad', 'asdads', 'asdasd', '03055555555', '06/13/2018', 3, 'NILL', 'uploads/7352d714.png', 'uploads/72709113.png', 0);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `exin`
 --
 
@@ -390,7 +479,9 @@ INSERT INTO `exin` (`exin_id`, `expense_id`, `income_id`, `datee`, `previous_bal
 (27, NULL, 14, '2018-05-13', 502700, 503000),
 (28, NULL, 15, '2018-05-13', 503000, 503500),
 (29, NULL, 16, '2018-05-13', 503500, 504500),
-(30, 13, NULL, '2018-05-13', 504500, 503500);
+(30, 13, NULL, '2018-05-13', 504500, 503500),
+(31, 14, NULL, '2018-05-29', 503500, 424800),
+(32, 15, NULL, '2018-05-29', 424800, 346100);
 
 -- --------------------------------------------------------
 
@@ -432,7 +523,9 @@ INSERT INTO `expenses` (`expense_id`, `datee`, `dd_id`, `method`, `check_number`
 (10, '2018-05-13', 2, 'cash', 'null', NULL, '2000.00', 1, 'Jamal (Driver) ', NULL, 0, NULL, '', 1),
 (11, '2018-05-13', 2, 'cash', 'null', NULL, '400.00', 1, 'Jamal (Driver) ', NULL, 0, NULL, '', 1),
 (12, '2018-05-13', 2, 'cash', 'null', NULL, '100.00', 1, 'Jamal (Driver) ', NULL, 0, NULL, '', 1),
-(13, '2018-05-13', 2, 'cash', '', NULL, '1000.00', NULL, NULL, NULL, 0, 1, '', 1);
+(13, '2018-05-13', 2, 'cash', '', NULL, '1000.00', NULL, NULL, NULL, 0, 1, '', 1),
+(14, '2018-05-29', 7, 'cash', NULL, NULL, '78700.00', NULL, NULL, NULL, 0, NULL, 'Vehicle Owner Payment.', 1),
+(15, '2018-05-29', 7, 'cash', NULL, NULL, '78700.00', NULL, NULL, NULL, 0, NULL, 'Vehicle Owner Payment.', 1);
 
 -- --------------------------------------------------------
 
@@ -459,7 +552,8 @@ INSERT INTO `garage_entry` (`ge_id`, `datee`, `vehicle_id`, `amount`, `descripti
 (3, '05/07/2018', 1, '2000.00', '', 1),
 (4, '05/13/2018', 1, '2000.00', '', 1),
 (5, '05/13/2018', 1, '5000.00', '', 1),
-(6, '05/13/2018', 1, '5000.00', '', 1);
+(6, '05/13/2018', 1, '5000.00', '', 1),
+(7, '05/29/2018', 3, '500.00', 'NILL', 1);
 
 -- --------------------------------------------------------
 
@@ -691,6 +785,12 @@ ALTER TABLE `daily_description`
   ADD PRIMARY KEY (`dd_id`);
 
 --
+-- Indexes for table `designation`
+--
+ALTER TABLE `designation`
+  ADD PRIMARY KEY (`dg_id`);
+
+--
 -- Indexes for table `diesel_entry`
 --
 ALTER TABLE `diesel_entry`
@@ -701,6 +801,12 @@ ALTER TABLE `diesel_entry`
 --
 ALTER TABLE `diesel_limit`
   ADD PRIMARY KEY (`dl_id`);
+
+--
+-- Indexes for table `employee`
+--
+ALTER TABLE `employee`
+  ADD PRIMARY KEY (`employee_id`);
 
 --
 -- Indexes for table `exin`
@@ -784,7 +890,7 @@ ALTER TABLE `bike`
 -- AUTO_INCREMENT for table `chart_of_account`
 --
 ALTER TABLE `chart_of_account`
-  MODIFY `coa_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `coa_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `company`
 --
@@ -804,17 +910,22 @@ ALTER TABLE `container`
 -- AUTO_INCREMENT for table `container_entry`
 --
 ALTER TABLE `container_entry`
-  MODIFY `ce_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ce_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT for table `container_movement`
 --
 ALTER TABLE `container_movement`
-  MODIFY `cm_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `cm_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `daily_description`
 --
 ALTER TABLE `daily_description`
   MODIFY `dd_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+--
+-- AUTO_INCREMENT for table `designation`
+--
+ALTER TABLE `designation`
+  MODIFY `dg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `diesel_entry`
 --
@@ -826,20 +937,25 @@ ALTER TABLE `diesel_entry`
 ALTER TABLE `diesel_limit`
   MODIFY `dl_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
+-- AUTO_INCREMENT for table `employee`
+--
+ALTER TABLE `employee`
+  MODIFY `employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+--
 -- AUTO_INCREMENT for table `exin`
 --
 ALTER TABLE `exin`
-  MODIFY `exin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `exin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 --
 -- AUTO_INCREMENT for table `expenses`
 --
 ALTER TABLE `expenses`
-  MODIFY `expense_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `expense_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `garage_entry`
 --
 ALTER TABLE `garage_entry`
-  MODIFY `ge_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `ge_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `income`
 --
@@ -854,7 +970,7 @@ ALTER TABLE `line`
 -- AUTO_INCREMENT for table `login`
 --
 ALTER TABLE `login`
-  MODIFY `login_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `login_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `vehicle`
 --
