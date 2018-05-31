@@ -14,6 +14,14 @@ if ( $_SESSION['role'] == 'reporting' )
         echo '<script> location.assign("recivePartyPayment.php") </script>';     
     }
 }
+
+if ( $_SESSION['role'] != 'admin' )
+{
+    if( basename($_SERVER['PHP_SELF']) == 'user.php' || basename($_SERVER['PHP_SELF']) == 'employees.php' )
+    {
+        echo '<script> location.assign("container-entry.php") </script>';     
+    }
+}
 ?>
 <!DOCTYPE html>
 <!-- 

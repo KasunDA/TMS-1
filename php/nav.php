@@ -200,6 +200,11 @@
                                        <span class="title">Diesel Limit</span>
                                    </a>
                                </li>
+                               <li class="nav-item  ">
+                                   <a href="designation.php" class="nav-link ">
+                                       <span class="title">Designation</span>
+                                   </a>
+                               </li>
                             </ul>
                         </li>
                         <li class="nav-item  ">
@@ -304,15 +309,41 @@
                                 </li>
                             </ul>
                         </li>
+                        
+                        <?php 
+                            if($_SESSION['role'] == 'admin')
+                            {   
 
-                        <li class="nav-item  ">
-                            <a href="user.php" class="nav-link">
-                                <i class="fa fa-users"></i>
-                                <span class="title">Users</span>
-                                <span class="arrow"></span>
-                            </a>
-                        </li>
-                    <?php } // END OF ELSE?>   
+                                echo '
+
+                                    <li class="nav-item  ">
+                                        <a href="javascript:;" class="nav-link nav-toggle">
+                                            <i class="fa fa-users"></i>
+                                            <span class="title">Data</span>
+                                            <span class="arrow"></span>
+                                        </a>
+                                        <ul class="sub-menu">
+                                            <li class="nav-item  ">
+                                                <a href="user.php" class="nav-link ">
+                                                    <span class="title">Users</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item  ">
+                                                <a href="employees.php" class="nav-link ">
+                                                    <span class="title">Employees</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item  ">
+                                                <a href="#" class="nav-link ">
+                                                    <span class="title">Truck Drivers</span>
+                                                </a>
+                                            </li>
+                                            
+                                        </ul>
+                                    </li>
+                                ';
+                            }
+                    }// END OF ELSE?>   
             </ul>
             <!-- END SIDEBAR MENU -->
         </div>

@@ -72,6 +72,7 @@
 		$json[$n]['advance'] = $r['advance'];
 		$json[$n]['rent'] = $r['rent'];
 		$json[$n]['balance'] = $r['balance'];
+		$json[$n]['diesel'] = $r['diesel'];
 		$json[$n]['party_charges'] = $r['party_charges'];
 	
 		$q1 = mysqli_query($mycon,"SELECT type from container where container_id=".$r['container_id']);

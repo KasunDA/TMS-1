@@ -851,7 +851,7 @@ include 'footer.php';
       var elem = document.getElementById("mytable1");
       var res = doc.autoTableHtmlToJson(elem);
 
-      var text = 'From Date '+from_date+' To Date '+to_date,
+      var text = 'Transaction Container Movement From Date '+from_date+' To Date '+to_date,
       xOffset = (doc.internal.pageSize.width / 2) - (doc.getStringUnitWidth(text) * doc.internal.getFontSize() / 2); 
       doc.text(text, xOffset, 20); 
       

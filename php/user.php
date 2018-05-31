@@ -1,4 +1,12 @@
 <?php 
+
+session_start();
+
+if($_SESSION['role'] != 'admin')
+{
+    echo '<script> location.assign("../index.php"); </script>';
+}
+
 include 'header.php';
 include 'nav.php';
  ?>
@@ -29,13 +37,10 @@ include 'nav.php';
                         <div class="portlet-title">
                             <div class="caption font-red-sunglo">
                                 <i class="icon-settings font-red-sunglo"></i>
-                                <span class="caption-subject bold uppercase"> <?php $text = isset($_SESSION['disable_btn'])?'View':'Add New'; echo $text; ?> User</span>
+                                <span class="caption-subject bold uppercase"> Add User</span>
                             </div>
                         </div>
                         <div class="portlet-body form">
-                            <?php
-                                if(!isset($_SESSION['disable_btn']) )
-                                {?>
                             <form class="form-horizontal" role="form" method="post">
                                 <div class="form-body">
                                     <div class="row"> 
@@ -112,7 +117,6 @@ include 'nav.php';
                                 </div>
                                 
                             </form>
-                             <?php }//END OF IF?> 
                         </div>
                         <!-- Form ends -->
                         <hr>

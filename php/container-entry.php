@@ -232,7 +232,7 @@ date_default_timezone_set("Asia/Karachi");
                                                  <div class="form-group">
                                                     <label class="col-md-2 control-label">Container No:</label>
                                                     <div class="col-md-3">
-                                                      <input type="text" class="form-control" placeholder="APZU4846408" id="container_number" name="container_number" required tabindex="11">
+                                                      <input type="text" class="form-control" placeholder="APZU4846408" id="container_number" name="container_number" required tabindex="11"  <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) { echo 'autofocus=""';}?> >
                                                     </div>
 
                                                            
@@ -299,13 +299,18 @@ date_default_timezone_set("Asia/Karachi");
                                                         <div class="form-group">
                                                               
                                                               <label class="col-md-2 control-label">Party Rent:</label>
-                                                               
-                                                              <div class="col-md-3">
+                                                              <div class="col-md-2">
                                                                 <input type="number" min="0" class="form-control" placeholder="Party Charges" id="party_charges" name="party_charges" required tabindex="19"  <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'readonly' ?> />
                                                               </div>
+
                                                               <label class="col-md-1 control-label">Balance:</label>
                                                               <div class="col-md-2">
-                                                                <input type="number" class="form-control" placeholder="Balance" id="balance" name="balance" tabindex="-1" readonly tabindex="20">
+                                                                <input type="number" class="form-control" placeholder="Balance" id="balance" name="balance" tabindex="-1" readonly >
+                                                              </div>
+
+                                                              <label class="col-md-1 control-label">Diesel:</label>
+                                                              <div class="col-md-2">
+                                                                <input type="number" class="form-control" placeholder="Diesel" id="diesel" name="diesel" tabindex="20" min="0" required>
                                                               </div>
                                                              
                                                           </div> 
@@ -467,6 +472,7 @@ date_default_timezone_set("Asia/Karachi");
                                                 <th> Advance </th>
                                                 <th> Rent </th>
                                                 <th> Balance </th>
+                                                <th> Diesel </th>
                                                 <th> Party Charges </th>
                                                 <th> Container Type </th>
                                                 <th> Lot Of </th>
@@ -706,6 +712,7 @@ include 'footer.php';
                             '<td>'+value['advance']+'</td>'+
                             '<td>'+value['rent']+'</td>'+
                             '<td>'+value['balance']+'</td>'+
+                            '<td>'+value['diesel']+'</td>'+
                             '<td>'+value['party_charges']+'</td>'+
                             '<td id="'+value['container_id']+'">'+value['container_type']+'</td>'+
                             '<td>'+value['lot_of']+'</td>'+
@@ -749,16 +756,16 @@ include 'footer.php';
 
         <?php }// END oF IF ?>
 
-      function add_entry(cm_id,container_number,vehicle_id,advance,balance,color,mr_charges,remarks)
+      function add_entry(cm_id,container_number,vehicle_id,advance,diesel,balance,color,mr_charges,remarks)
       {
           $.ajax({
-              url:'ajax/container_entry/add.php?cm_id='+cm_id+'&container_number='+container_number+'&vehicle_id='+vehicle_id+'&advance='+advance+'&balance='+balance+'&color='+color+'&mr_charges='+mr_charges+'&remarks='+encodeURIComponent(remarks),
+              url:'ajax/container_entry/add.php?cm_id='+cm_id+'&container_number='+container_number+'&vehicle_id='+vehicle_id+'&advance='+advance+'&diesel='+diesel+'&balance='+balance+'&color='+color+'&mr_charges='+mr_charges+'&remarks='+encodeURIComponent(remarks),
               type:"POST",
               dataType:'JSON',
               success:function(data){
                   if(data['inserted'] == 'true')
                   {
-                      $('#container_number,#advance,#balance,#remarks').val("");
+                      $('#container_number,#advance,#balance,#remarks,#diesel').val("");
                       $('#mr_charges').val("0");
                       $('#color').val('white').trigger('change');
                       $('#vehicle_id').val("").trigger('change');
@@ -777,11 +784,11 @@ include 'footer.php';
                   }
                   getId();
               },
-              error:function(){ alert("Error in Add Container Entry Ajax Call.") }
+              error:function(){ /*alert("Error in Add Container Entry Ajax Call.")*/ }
           });
       }
 
-      function add(datee,agent_id,coa_id,consignee_id,movement,empty_terminal_id,from_yard_id,to_yard_id,bl_cro_number,job_number,container_number,index_number,container_size,vehicle_id,advance,rent,balance,party_charges,container_id,lot_of,line_id,lolo_charges,weight_charges,color,mr_charges,remarks)
+      function add(datee,agent_id,coa_id,consignee_id,movement,empty_terminal_id,from_yard_id,to_yard_id,bl_cro_number,job_number,container_number,index_number,container_size,vehicle_id,advance,rent,balance,diesel,party_charges,container_id,lot_of,line_id,lolo_charges,weight_charges,color,mr_charges,remarks)
       {
           $.ajax({
               url:'ajax/container_movement/add.php?datee='+encodeURIComponent(datee)+'&agent_id='+agent_id+'&coa_id='+coa_id+'&consignee_id='+consignee_id+'&movement='+encodeURIComponent(movement)+'&empty_terminal_id='+empty_terminal_id+'&from_yard_id='+from_yard_id+'&to_yard_id='+to_yard_id+'&container_size='+container_size+'&party_charges='+party_charges+'&lot_of='+lot_of+'&line_id='+line_id+'&bl_cro_number='+bl_cro_number+'&job_number='+job_number+'&index_number='+index_number+'&rent='+rent+'&container_id='+container_id+'&lolo_charges='+lolo_charges+'&weight_charges='+weight_charges,
@@ -792,19 +799,19 @@ include 'footer.php';
                   {
                       // $('#datee,#agent_id,#coa_id,#consignee_id,#movement,#empty_terminal_id,#from_yard_id,#to_yard_id,#container_size,#party_charges,#lot_of,#line_id').attr('readonly', 'readonly');
                       
-                      add_entry(data['cm_id'],container_number,vehicle_id,advance,balance,color,mr_charges,remarks);
+                      add_entry(data['cm_id'],container_number,vehicle_id,advance,diesel,balance,color,mr_charges,remarks);
 
                       location.assign('container-entry.php');
                   }
               },
-              error:function(){ alert("Error in Add Ajax Call.") }
+              error:function(){ /*alert("Error in Add Ajax Call.")*/ }
           });
       }
 
-      function update(ce_id,container_number,vehicle_id,vehicle_number,advance,balance,color,mr_charges,remarks)
+      function update(ce_id,container_number,vehicle_id,vehicle_number,advance,diesel,balance,color,mr_charges,remarks)
       {
           $.ajax({
-              url:'ajax/container_entry/update.php?ce_id='+ce_id+'&container_number='+container_number+'&vehicle_id='+vehicle_id+'&advance='+advance+'&balance='+balance+'&color='+color+'&mr_charges='+mr_charges+'&remarks='+encodeURIComponent(remarks),
+              url:'ajax/container_entry/update.php?ce_id='+ce_id+'&container_number='+container_number+'&vehicle_id='+vehicle_id+'&advance='+advance+'&diesel='+diesel+'&balance='+balance+'&color='+color+'&mr_charges='+mr_charges+'&remarks='+encodeURIComponent(remarks),
               type:"POST",
               success:function(data){
                   if(data)
@@ -818,9 +825,10 @@ include 'footer.php';
                       temp[15] = vehicle_number;
                       temp[16] = advance;
                       temp[18] = balance;
-                      temp[25] = color;
-                      temp[26] = mr_charges;
-                      temp[27] = remarks;
+                      temp[19] = diesel;
+                      temp[26] = color;
+                      temp[27] = mr_charges;
+                      temp[28] = remarks;
 
                       $('#mytable').DataTable().row(i).data(temp).draw();
 
@@ -952,15 +960,16 @@ include 'footer.php';
           $('#advance').val( trr.find('td').eq(16).text() );
           // $('#rent').val( trr.find('td').eq(17).text() );
           $('#balance').val( trr.find('td').eq(18).text() );
+          $('#diesel').val( trr.find('td').eq(19).text() );
           // $('#party_charges').val( trr.find('td').eq(19).text() );
           // $('#container_id').val( trr.find('td').eq(20).attr('id') ).trigger('change');
           // $('#lot_of').val( trr.find('td').eq(21).text() );
           // $('#line_id').val( trr.find('td').eq(22).attr('id') ).trigger('change');
           // $('#lolo_charges').val( trr.find('td').eq(23).text() );
           // $('#weight_charges').val( trr.find('td').eq(24).text() );
-          $('#color').val( trr.find('td').eq(25).text() ).trigger('change');
-          $('#mr_charges').val( trr.find('td').eq(26).text() );
-          $('#remarks').val( trr.find('td').eq(27).text() );
+          $('#color').val( trr.find('td').eq(26).text() ).trigger('change');
+          $('#mr_charges').val( trr.find('td').eq(27).text() );
+          $('#remarks').val( trr.find('td').eq(28).text() );
       });
 
       //Add & Update
@@ -985,6 +994,7 @@ include 'footer.php';
              advance = $('#advance').val(),
              rent = $('#rent').val(),
              balance = $('#balance').val(),
+             diesel = $('#diesel').val(),
              party_charges = $('#party_charges').val(),
              container_id = $('#container_id').val(),
              container_type = $('#container_id option:selected').text(),
@@ -999,20 +1009,20 @@ include 'footer.php';
 
          if( $(this).hasClass('update_form') ) 
          {
-            update(ce_id,container_number,vehicle_id,vehicle_number,advance,balance,color,mr_charges,remarks);
+            update(ce_id,container_number,vehicle_id,vehicle_number,advance,diesel,balance,color,mr_charges,remarks);
          }
          else if( $(this).hasClass('add_entry_form') )
          {  
             <?php 
               if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL )
               {
-                echo 'add_entry('.$_SESSION['cm_id'].',container_number,vehicle_id,advance,balance,color,mr_charges,remarks)';  
+                echo 'add_entry('.$_SESSION['cm_id'].',container_number,vehicle_id,advance,diesel,balance,color,mr_charges,remarks)';  
               }
             ?>
          }
          else
          {
-              add(datee,agent_id,coa_id,consignee_id,movement,empty_terminal_id,from_yard_id,to_yard_id,bl_cro_number,job_number,container_number,index_number,container_size,vehicle_id,advance,rent,balance,party_charges,container_id,lot_of,line_id,lolo_charges,weight_charges,color,mr_charges,remarks);
+              add(datee,agent_id,coa_id,consignee_id,movement,empty_terminal_id,from_yard_id,to_yard_id,bl_cro_number,job_number,container_number,index_number,container_size,vehicle_id,advance,rent,balance,diesel,party_charges,container_id,lot_of,line_id,lolo_charges,weight_charges,color,mr_charges,remarks);
          }
       });
 

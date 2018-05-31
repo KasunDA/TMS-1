@@ -61,7 +61,6 @@ $cm_id = $_GET['cm_id'];
                                     <th> BL_CRO_Number </th>
                                     <th> Job # </th>
                                     <th> Index # </th>
-                                    <th> Rent </th>
                                     <th> Container Type </th>
                                     <th> Lolo Charges </th>
                                     <th> Weight Charges </th>
@@ -421,7 +420,6 @@ include 'footer.php';
                             '<td>'+value['bl_cro_number']+'</td>'+
                             '<td>'+value['job_number']+'</td>'+
                             '<td>'+value['index_number']+'</td>'+
-                            '<td>'+value['rent']+'</td>'+
                             '<td id="'+value['container_id']+'">'+value['container_type']+'</td>'+
                             '<td>'+value['lolo_charges']+'</td>'+
                             '<td>'+value['weight_charges']+'</td>'+
