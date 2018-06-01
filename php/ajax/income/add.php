@@ -47,10 +47,62 @@
 
 		$q1 = mysqli_query($mycon,"INSERT INTO exin (income_id, datee, previous_balance, current_balance) VALUES ($income_id,'$datee',$previous_balance,$current_balance) ");
 		
-		if(mysqli_affected_rows($mycon))
+		if( $check_number != NULL )
 		{
-			echo "true";
+			$esql = "INSERT INTO expenses(datee, dd_id, method, check_number, bank_id, amount , description) VALUES ( '$datee' , $dd_id, '$method', '".$check_number."' , ".$bank_id.", $amount ,'$description' ) ";
+
+			$eq = mysqli_query($mycon,$esql);
+
+			if($eq)
+			{
+				$expense_id_q = mysqli_query($mycon,'SELECT expense_id from expenses ORDER BY expense_id DESC limit 1');
+				$r_expense_id = mysqli_fetch_array($expense_id_q);
+
+				$previous_balance_q = mysqli_query($mycon,'SELECT current_balance from exin ORDER BY exin_id DESC limit 1');
+				$r_previous_balance = mysqli_fetch_array($previous_balance_q);
+
+				$expense_id = $r_expense_id['expense_id'];
+				$previous_balance = $r_previous_balance['current_balance'];
+				$current_balance = $previous_balance - $amount;
+
+				$eq1 = mysqli_query($mycon,"INSERT INTO exin (expense_id, datee, previous_balance, current_balance) VALUES ($expense_id,'$datee',$previous_balance,$current_balance) ");	
+			}
+
+			//Accounts Entry
+
+			$datee 			  =	date('m/d/Y', strtotime( $datee ));
+			$action 		  = 'credit';
+			$method 		  = 'check';
+			$current_balance  = 0;
+			$previous_balance = 0;
+
+			$aq = mysqli_query($mycon,'SELECT current_balance from accounts_entry where bank_id='.$bank_id.' ORDER BY ae_id DESC limit 1');
+
+			if ( $raq = mysqli_fetch_array($aq) )
+			{
+				$previous_balance = $raq['current_balance'];
+			}
+			else
+			{
+				$bq = mysqli_query($mycon,'SELECT balance from bank where bank_id='.$bank_id);
+				$rbq = mysqli_fetch_array($bq);
+
+				$previous_balance = $rbq['balance'];	
+			}
+
+	     	$current_balance = $previous_balance + $amount;   
+			
+			$bq = mysqli_query($mycon,"INSERT INTO accounts_entry(datee,bank_id,action,method,amount,check_number,previous_balance,current_balance,description ) VALUES('$datee',$bank_id,'$action','$method',$amount,'$check_number',$previous_balance,$current_balance, '$description') ");
+
+			if($bq)
+			{
+				if(mysqli_affected_rows($mycon))
+				{
+					echo "true";
+				}
+			}
 		}
+
 	}
 
 ?>

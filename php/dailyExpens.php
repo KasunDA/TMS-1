@@ -808,6 +808,7 @@ include 'footer.php';
                     bikehide();
                     
                     loadData();
+                    iloadData();
                 }
             },
             error:function(){ alert("Error in Add Ajax Call.") }
@@ -830,6 +831,7 @@ include 'footer.php';
                     cmphide();  
                     
                     iloadData();
+                    loadData();
                 }
             },
             error:function(){ alert("Error in iAdd Ajax Call.") }
