@@ -24,14 +24,17 @@
 
 	require '../../connection.php';
 	
-	$driver_id     	 = $_POST['driver_id'];
-	$name            = $_POST['name'];
-	$cnic            = $_POST['cnic'];
-	$father_name     = $_POST['father_name'];
-	$address         = $_POST['address'];
-	$contact         = $_POST['contact'];
-	$ereferences     = ($_POST['ereferences']!=NULL?$_POST['ereferences']:'NILL');
-	$truck_number    = $_POST['truck_number'];
+	$json['updated'] 	 = 'false';
+	$json['img_license'] = NULL;
+	$json['img_license'] = NULL;
+	$driver_id     	 	 = $_POST['driver_id'];
+	$name            	 = $_POST['name'];
+	$cnic            	 = $_POST['cnic'];
+	$father_name     	 = $_POST['father_name'];
+	$address         	 = $_POST['address'];
+	$contact          	 = $_POST['contact'];
+	$ereferences     	 = ($_POST['ereferences']!=NULL?$_POST['ereferences']:'NILL');
+	$truck_number    	 = $_POST['truck_number'];
 	
 	$sql = "UPDATE driver SET name='$name', cnic='$cnic' , father_name='$father_name' , address='$address', contact='$contact' , ereferences='$ereferences' , truck_number='$truck_number' ";
 	
@@ -39,12 +42,14 @@
 	{
 		$img_cnic = saveImage('cnic_pic');
 		$sql.= " , img_cnic= '$img_cnic' ";
+		$json['img_cnic'] = $img_cnic;
 	}
 
 	if( $_FILES['license']['size'] != 0 )
 	{
 		$img_license = saveImage('license');
 		$sql.= " , img_license='$img_license' ";
+		$json['img_license'] = $img_license;
 	}
 
 	
@@ -55,7 +60,8 @@
 
 	if(mysqli_affected_rows($mycon))
 	{
-		echo "true";
+		$json['updated'] = "true";
 	}
 
+	echo json_encode($json);
 ?>

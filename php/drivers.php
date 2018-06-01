@@ -177,6 +177,8 @@ require 'connection.php';
                                                     <th> Address </th>
                                                     <th> Reference </th>
                                                     <th> Truck # </th>
+                                                    <th> CNIC </th>
+                                                    <th> License </th>
 
                                                 </tr>
                                             </thead>
@@ -335,6 +337,8 @@ include 'footer.php';
                             '<td>'+value['address']+'</td>'+
                             '<td>'+value['ereferences']+'</td>'+
                             '<td>'+value['truck_number']+'</td>'+
+                            '<td> <img src="'+value['img_cnic']+'" height="100" width="100" /></td>'+
+                            '<td> <img src="'+value['img_license']+'" height="100" width="100" /></td>'+
                             '</tr>');
 
                         n++; i++;
@@ -379,11 +383,12 @@ include 'footer.php';
             $.ajax({
                 url:'ajax/driver/update.php',
                 type:"POST",
+                dataType:'JSON',
                 data:fdata,
                 contentType: false,
                 processData: false,
                 success:function(data){
-                    if(data)
+                    if(data['updated'])
                     {
                         var i = $('.selectedd').attr('index');
                         var temp = $('#mytable').DataTable().row(i).data();
@@ -396,8 +401,19 @@ include 'footer.php';
                         temp[8]  = ereferences;
                         temp[9]  = truck_number;
 
+                        
+                        if(data['img_cnic'])
+                        {
+                            temp[10]  = ' <img src="'+data['img_cnic']+'" height="100" width="100" /> ';
+                        }
+                        
+                        if(data['img_license'])
+                        {
+                            temp[11]  = ' <img src="'+data['img_license']+'" height="100" width="100" /> ';
+                        }
+
                         $('#mytable').DataTable().row(i).data(temp).draw();
-                     
+
                         addNewClick();
                     }
                 },

@@ -16,6 +16,8 @@
 		$json[$n]['contact'] = $r['contact'];
 		$json[$n]['address'] = $r['address'];
 		$json[$n]['truck_number'] = $r['truck_number'];
+		$json[$n]['img_cnic'] = $r['img_cnic'];
+		$json[$n]['img_license'] = $r['img_license'];
 
 		$n++;
 	}
