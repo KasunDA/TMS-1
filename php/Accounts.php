@@ -97,7 +97,7 @@ date_default_timezone_set("Asia/Karachi");
                                         </div>
                                         <div class="form-group">
                                             
-                                            <label class="col-md-2 control-label">Amount #</label>
+                                            <label class="col-md-2 control-label">Amount: </label>
                                              <div class="col-md-3">
                                                <input type="number" step="0.01" min="0" class="form-control" id="amount" name="amount" required tabindex="7" placeholder="58680">
                                              </div>
@@ -109,15 +109,24 @@ date_default_timezone_set("Asia/Karachi");
                                                  </div>
                                              </div>
                                         </div>
+
+                                        <div class="form-group">
+                                            
+                                            <label class="col-md-2  control-label">Description: </label>
+                                             <div class="col-md-8">
+                                               <textarea class="form-control" style="resize: none;" rows="4" id="description" name="description" tabindex="9" ></textarea>
+                                             </div>
+                                            
+                                        </div>
                                         
                                         <div class="form-group">
                                             <div class="col-md-5 col-md-push-2">
                                                 <div class="">
-                                                    <button type="submit" class="btn blue" id="btn_submit" tabindex="9">Submit</button> 
-                                                    <button type="reset" class="btn default" id="btn_reset" tabindex="10">Cancel</button>
+                                                    <button type="submit" class="btn blue" id="btn_submit" tabindex="10">Submit</button> 
+                                                    <button type="reset" class="btn default" id="btn_reset" tabindex="11">Cancel</button>
 
-                                                    <button type="submit" class="btn blue hidden" id="update_form_btn" tabindex="9">Update</button> 
-                                                    <button type="button" class="btn default hidden"  id="add_new" tabindex="10">Add New</button>
+                                                    <button type="submit" class="btn blue hidden" id="update_form_btn" tabindex="10">Update</button> 
+                                                    <button type="button" class="btn default hidden"  id="add_new" tabindex="11">Add New</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -157,7 +166,8 @@ date_default_timezone_set("Asia/Karachi");
                                          <th> Credit </th>
                                          <th> Check # </th>
                                          <th> Previous Balance </th>
-                                         <th> Current Balance </th>   
+                                         <th> Current Balance </th> 
+                                         <th> Description </th>   
                                      </tr>
                                  </thead>
                                  <tbody>
@@ -331,8 +341,6 @@ include 'footer.php';
                     var n = 1,
                         old_bank_id = [],
                         nameAttr = '';
-
-
                     
                     $('#mytable').DataTable().destroy();
                     $('#mytable tbody').html("");
@@ -370,6 +378,7 @@ include 'footer.php';
                                 '<td>'+value['check_number']+'</td>'+
                                 '<td '+nameAttr+'>'+value['previous_balance']+'</td>'+
                                 '<td>'+value['current_balance']+'</td>'+
+                                '<td>'+value['description']+'</td>'+
                                 '</tr>');
 
                         n++;
@@ -395,10 +404,10 @@ include 'footer.php';
 
         loadData(); 
 
-        function add(datee,bank_id,action,method,amount,check_number)
+        function add(datee,bank_id,action,method,amount,check_number,description)
         {
             $.ajax({
-                url:'ajax/accounts_entry/add.php?datee='+datee+'&bank_id='+bank_id+'&action='+action+'&method='+method+'&amount='+amount+'&check_number='+check_number,
+                url:'ajax/accounts_entry/add.php?datee='+datee+'&bank_id='+bank_id+'&action='+action+'&method='+method+'&amount='+amount+'&check_number='+check_number+'&description='+description,
                 type:"POST",
                 success:function(data){
                     if(data)
@@ -414,10 +423,10 @@ include 'footer.php';
             });
         }
 
-        function update(ae_id,datee,bank_id,action,method,amount,check_number)
+        function update(ae_id,datee,bank_id,action,method,amount,check_number,description)
         {
             $.ajax({
-                url:'ajax/accounts_entry/update.php?ae_id='+ae_id+'&datee='+datee+'&bank_id='+bank_id+'&action='+action+'&method='+method+'&amount='+amount+'&check_number='+check_number,
+                url:'ajax/accounts_entry/update.php?ae_id='+ae_id+'&datee='+datee+'&bank_id='+bank_id+'&action='+action+'&method='+method+'&amount='+amount+'&check_number='+check_number+'&description='+description,
                 type:"POST",
                 success:function(data){
                     if(data)
@@ -534,6 +543,7 @@ include 'footer.php';
                method= $('input[name="method"]:checked').val() ,
                amount = $('#amount').val() ,
                check_number = $('#check_number').val() ,
+               description = $('#description').val() ,
                ae_id =  $('#ae_id').val();
 
            if( $(this).hasClass('update_form') ) 
@@ -542,7 +552,7 @@ include 'footer.php';
            }
            else
            {
-                add(datee,bank_id,action,method,amount,check_number);
+                add(datee,bank_id,action,method,amount,check_number,description);
            }
         });
 

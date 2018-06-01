@@ -32,6 +32,7 @@
 		$json[$n]['check_number'] = $r['check_number'];
 		$json[$n]['previous_balance'] = $r['previous_balance'];
 		$json[$n]['current_balance'] = $r['current_balance'];
+		$json[$n]['description'] = $r['description'];
 
 		$n++;
 	}

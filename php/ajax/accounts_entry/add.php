@@ -10,6 +10,7 @@
 	$check_number = $_GET['check_number'];
 	$current_balance=0;
 	$previous_balance=0;
+	$description = ($_GET['description']!=NULL?$_GET['description']:'NILL');
 
 
 	$aq = mysqli_query($mycon,'SELECT current_balance from accounts_entry where bank_id='.$bank_id.' ORDER BY ae_id DESC limit 1');
@@ -36,7 +37,7 @@
      	$current_balance = $previous_balance + $amount;   
     }
 	
-	$q = mysqli_query($mycon,"INSERT INTO accounts_entry(datee,bank_id,action,method,amount,check_number,previous_balance,current_balance) VALUES('$datee',$bank_id,'$action','$method',$amount,'$check_number',$previous_balance,$current_balance) ");
+	$q = mysqli_query($mycon,"INSERT INTO accounts_entry(datee,bank_id,action,method,amount,check_number,previous_balance,current_balance,description ) VALUES('$datee',$bank_id,'$action','$method',$amount,'$check_number',$previous_balance,$current_balance, '$description') ");
 
 	if(mysqli_affected_rows($mycon))
 	{
