@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 31, 2018 at 11:15 PM
+-- Generation Time: Jun 01, 2018 at 08:48 AM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 7.0.13
 
@@ -388,6 +388,34 @@ INSERT INTO `diesel_limit` (`dl_id`, `from_yard`, `to_yard`, `limit_litre`, `sta
 (2, 2, 3, 202, 1),
 (3, 4, 5, 300, 1),
 (4, 3, 4, 600, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `driver`
+--
+
+CREATE TABLE `driver` (
+  `driver_id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `cnic` varchar(20) NOT NULL,
+  `father_name` varchar(50) NOT NULL,
+  `address` text NOT NULL,
+  `contact` varchar(16) NOT NULL,
+  `ereferences` text,
+  `truck_number` varchar(30) NOT NULL,
+  `img_cnic` text NOT NULL,
+  `img_license` text NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `driver`
+--
+
+INSERT INTO `driver` (`driver_id`, `name`, `cnic`, `father_name`, `address`, `contact`, `ereferences`, `truck_number`, `img_cnic`, `img_license`, `status`) VALUES
+(1, 'Ahmed khan', '42501-5646845-7', 'Nazim khan', 'new address', '03377777777', 'NILL', '', 'uploads/caced7f7.jpg', 'uploads/f4927eb8.jpg', 1),
+(2, 'asdasd', '42201-1565848-5', 'asdasd', 'asdads', '03055555555', 'NILL', '', 'uploads/7352d714.png', 'uploads/72709113.png', 1);
 
 -- --------------------------------------------------------
 
@@ -803,6 +831,12 @@ ALTER TABLE `diesel_limit`
   ADD PRIMARY KEY (`dl_id`);
 
 --
+-- Indexes for table `driver`
+--
+ALTER TABLE `driver`
+  ADD PRIMARY KEY (`driver_id`);
+
+--
 -- Indexes for table `employee`
 --
 ALTER TABLE `employee`
@@ -936,6 +970,11 @@ ALTER TABLE `diesel_entry`
 --
 ALTER TABLE `diesel_limit`
   MODIFY `dl_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `driver`
+--
+ALTER TABLE `driver`
+  MODIFY `driver_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `employee`
 --

@@ -17,7 +17,9 @@ if ( $_SESSION['role'] == 'reporting' )
 
 if ( $_SESSION['role'] != 'admin' )
 {
-    if( basename($_SERVER['PHP_SELF']) == 'user.php' || basename($_SERVER['PHP_SELF']) == 'employees.php' )
+    // || basename($_SERVER['PHP_SELF']) == 'employees.php'
+    
+    if( basename($_SERVER['PHP_SELF']) == 'user.php'  )
     {
         echo '<script> location.assign("container-entry.php") </script>';     
     }

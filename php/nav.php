@@ -310,6 +310,26 @@
                             </ul>
                         </li>
                         
+                        <li class="nav-item  ">
+                        <a href="javascript:;" class="nav-link nav-toggle">
+                            <i class="fa fa-users"></i>
+                            <span class="title">Data</span>
+                            <span class="arrow"></span>
+                        </a>
+                            
+                        <ul class="sub-menu">
+
+                        <li class="nav-item  ">
+                            <a href="employees.php" class="nav-link ">
+                                <span class="title">Employees</span>
+                            </a>
+                        </li>
+                        <li class="nav-item  ">
+                            <a href="drivers.php" class="nav-link ">
+                                <span class="title">Drivers</span>
+                            </a>
+                        </li>
+
                         <?php 
                             if($_SESSION['role'] == 'admin')
                             {   
@@ -317,33 +337,17 @@
                                 echo '
 
                                     <li class="nav-item  ">
-                                        <a href="javascript:;" class="nav-link nav-toggle">
-                                            <i class="fa fa-users"></i>
-                                            <span class="title">Data</span>
-                                            <span class="arrow"></span>
+                                        <a href="user.php" class="nav-link ">
+                                            <span class="title">Users</span>
                                         </a>
-                                        <ul class="sub-menu">
-                                            <li class="nav-item  ">
-                                                <a href="user.php" class="nav-link ">
-                                                    <span class="title">Users</span>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item  ">
-                                                <a href="employees.php" class="nav-link ">
-                                                    <span class="title">Employees</span>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item  ">
-                                                <a href="#" class="nav-link ">
-                                                    <span class="title">Truck Drivers</span>
-                                                </a>
-                                            </li>
-                                            
-                                        </ul>
                                     </li>
+                                            
                                 ';
-                            }
-                    }// END OF ELSE?>   
+                            }?>
+                       
+                            </ul>
+                        </li>
+                    <?php }// END OF ELSE?>
             </ul>
             <!-- END SIDEBAR MENU -->
         </div>

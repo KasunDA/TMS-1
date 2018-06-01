@@ -85,7 +85,7 @@ include 'nav.php';
                                                    
                                                     <th> Action </th> 
                                                     <th> # </th>
-                                                   <th> Description Name </th>
+                                                    <th> Description Name </th>
                                                    
                                                 </tr>
                                             </thead>

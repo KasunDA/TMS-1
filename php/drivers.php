@@ -31,10 +31,11 @@ require 'connection.php';
                         <div class="portlet-title">
                             <div class="caption font-red-sunglo">
                                 <i class="icon-settings font-red-sunglo"></i>
-                                <span class="caption-subject bold uppercase"> <?php $text = isset($_SESSION['disable_btn'])?'View':'Add New'; echo $text; ?> Employee</span>
+                                <span class="caption-subject bold uppercase"> <?php $text = isset($_SESSION['disable_btn'])?'View':'Add New'; echo $text; ?> Driver</span>
                             </div>
                         </div>
                         <div class="portlet-body form">
+
                             <?php
                                 if(!isset($_SESSION['disable_btn']) )
                                 {?>
@@ -42,9 +43,9 @@ require 'connection.php';
                                 <div class="form-body">
                                     <div class="row"> 
                                         <div class="form-group">
-                                            <label class="col-md-2 control-label">Employee ID:</label>
+                                            <label class="col-md-2 control-label">Driver ID:</label>
                                             <div class="col-md-3">
-                                              <input type="number" readonly class="form-control" id="employee_id" tabindex="-1" name="employee_id">
+                                              <input type="number" readonly class="form-control" id="driver_id" tabindex="-1" name="driver_id">
                                             </div>
 
                                             <label class="col-md-2 control-label">Name:</label>
@@ -59,114 +60,17 @@ require 'connection.php';
                                     <div class="row">
                                         <div class="form-group">
                                             
-                                            <label class="col-md-2 control-label">CNIC:</label>
-                                            <div class="col-md-3">
-                                              <input type="text" class="form-control" id="cnic" name="cnic" tabindex="2" pattern="[\d*]{5}-[\d*]{7}-[\d*]{1}" placeholder="XXXXX-XXXXXXX-X" required maxlength="15">
-                                            </div>
-
-											<label class="col-md-2 control-label">CNIC Valid:</label>
-                                            <div class="col-md-3">
-                                              <input type="text" class="form-control date-picker" id="cnic_valid" name="cnic_valid" tabindex="3" placeholder="mm/dd/yyyy" required >
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-
-                                    <div class="row">
-                                        <div class="form-group">
-
                                         	<label class="col-md-2 control-label">Father Name:</label>
                                             <div class="col-md-3">
-                                              <input type="text" class="form-control" id="father_name" name="father_name" tabindex="4" placeholder="" required maxlength="50">
+                                              <input type="text" class="form-control" id="father_name" name="father_name" tabindex="2" placeholder="" required maxlength="50">
                                             </div>
 
-                                            <label class="col-md-2 control-label">Date Of Birth:</label>
+                                            <label class="col-md-2 control-label">CNIC:</label>
                                             <div class="col-md-3">
-                                              <input type="text" class="form-control date-picker" id="dob" name="dob" tabindex="5" placeholder="mm/dd/yyyy" required >
+                                              <input type="text" class="form-control" id="cnic" name="cnic" tabindex="3" pattern="[\d*]{5}-[\d*]{7}-[\d*]{1}" placeholder="XXXXX-XXXXXXX-X" required maxlength="15">
                                             </div>
 
-                                        </div>
-                                    </div>
-
-
-                                    <div class="row">
-                                        <div class="form-group">
                                             
-                                            <label class="col-md-2 control-label">Email:</label>
-                                            <div class="col-md-3">
-                                              <input type="email" class="form-control" id="email" name="email" tabindex="6" placeholder="" required maxlength="50">
-                                            </div>
-
-                                            <label class="col-md-2 control-label">Address:</label>
-                                            <div class="col-md-3">
-                                              <textarea class="form-control" id="address" rows="3" style="resize: none;" name="address" tabindex="7" required></textarea>
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-
-                                    <div class="row">
-                                        <div class="form-group">
-                                            
-                                            <label class="col-md-2 control-label">Emergency Contact Name :</label>
-                                            <div class="col-md-2">
-                                              <input type="text" class="form-control" id="e_contact_name1" name="e_contact_name1" tabindex="8" placeholder="" required maxlength="30">
-                                            </div>
-
-                                            <label class="col-md-1 control-label">Relation:</label>
-                                            <div class="col-md-2">
-                                              <input type="text" class="form-control" id="relation1" name="relation1" tabindex="9" placeholder="Father" required maxlength="20">
-                                            </div>
-
-                                            <label class="col-md-1 control-label">Contact:</label>
-                                            <div class="col-md-2">
-                                              <input type="text" class="form-control" id="e_contact1" name="e_contact1" tabindex="10" placeholder="03XXXXXXXXX" required maxlength="11" pattern="\d*">
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="form-group">
-                                            
-                                            <label class="col-md-2 control-label">Emergency Contact Name :</label>
-                                            <div class="col-md-2">
-                                              <input type="text" class="form-control" id="e_contact_name2" name="e_contact_name2" tabindex="11" placeholder=""  maxlength="30">
-                                            </div>
-
-                                            <label class="col-md-1 control-label">Relation:</label>
-                                            <div class="col-md-2">
-                                              <input type="text" class="form-control" id="relation2" name="relation2" tabindex="12" placeholder="Brother"  maxlength="20">
-                                            </div>
-
-                                            <label class="col-md-1 control-label">Contact:</label>
-                                            <div class="col-md-2">
-                                              <input type="text" class="form-control" id="e_contact2" name="e_contact2" tabindex="13" placeholder="03XXXXXXXXX"  maxlength="11" pattern="\d*">
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-									<div class="row">
-                                        <div class="form-group">
-                                            
-                                            <label class="col-md-2 control-label">Qualification:</label>
-                                            <div class="col-md-2">
-                                              <input type="text" class="form-control" id="qualification" name="qualification" tabindex="14" placeholder=""  maxlength="30">
-                                            </div>
-
-                                            <label class="col-md-1 control-label">Institute:</label>
-                                            <div class="col-md-2">
-                                              <input type="text" class="form-control" id="institute_name" name="institute_name" tabindex="15" placeholder=""  maxlength="30">
-                                            </div>
-
-                                            <label class="col-md-1 control-label">Subject:</label>
-                                            <div class="col-md-2">
-                                              <input type="text" class="form-control" id="subject" name="subject" tabindex="16" placeholder=""  maxlength="16" >
-                                            </div>
-
                                         </div>
                                     </div>
 
@@ -174,28 +78,13 @@ require 'connection.php';
                                         <div class="form-group">
                                             
                                             <label class="col-md-2 control-label">Contact:</label>
-                                            <div class="col-md-2">
-                                            	<input type="text" class="form-control" id="contact" name="contact" tabindex="17" placeholder="03XXXXXXXXX" required maxlength="11" pattern="\d*">
+                                            <div class="col-md-3">
+                                                <input type="text" class="form-control" id="contact" name="contact" tabindex="4" placeholder="03XXXXXXXXX" required maxlength="11" pattern="\d*">
                                             </div>
 
-                                            <label class="col-md-1 control-label">Joining:</label>
-                                            <div class="col-md-2">
-                                            	<input type="text" class="form-control date-picker" id="joining_date" name="joining_date" tabindex="18" placeholder="mm/dd/yyyy" required >
-                                            </div>
-
-                                            <label class="col-md-1 control-label">Designation:</label>
-                                            <div class="col-md-2">
-                                              <select class="form-control" id="dg_id" name="dg_id" tabindex="19" required>
-                                              		<option value="">Select Designation</option>
-                                              		<?php
-                                              			$q = mysqli_query($mycon,"SELECT * FROM designation WHERE status=1");
-                                              			while( $r = mysqli_fetch_array($q) )
-                                              			{
-                                              				echo '<option  value="'.$r['dg_id'].'">'.$r['designation'].'</option>';
-                                              			}
-                                              		?>
-
-                                              </select>
+                                            <label class="col-md-2 control-label">Address:</label>
+                                            <div class="col-md-3">
+                                              <textarea class="form-control" id="address" rows="3" style="resize: none;" name="address" tabindex="5" required></textarea>
                                             </div>
 
                                         </div>
@@ -204,9 +93,14 @@ require 'connection.php';
                                     <div class="row">
                                         <div class="form-group">
                                             
-                                            <label class="col-md-3 control-label">References:</label>
-                                            <div class="col-md-6">
-                                              <textarea class="form-control" id="ereferences" rows="3" style="resize: none;" name="ereferences" tabindex="19" ></textarea>
+                                            <label class="col-md-2 control-label">Truck #:</label>
+                                            <div class="col-md-3">
+                                            	<input type="text" class="form-control" id="truck_number" name="truck_number" tabindex="6" placeholder="" required >
+                                            </div>
+
+                                            <label class="col-md-2 control-label">References:</label>
+                                            <div class="col-md-3">
+                                              <textarea class="form-control" id="ereferences" rows="3" style="resize: none;" name="ereferences" tabindex="7" ></textarea>
                                             </div>
 
                                         </div>
@@ -217,17 +111,17 @@ require 'connection.php';
                                     <div class="row">
                                         <div class="form-group">
                                             
-                                            <label class="col-md-1	 control-label">Signature:</label>
+                                            <label class="col-md-1	 control-label">CNIC Copy:</label>
                                             <div class="col-md-2">
-                                              <input type="file" class="form-control-file" id="signature" name="signature" tabindex="20" required aria-describedby="filehelp_signature" accept=".jpg, .png, .jpeg" />
-    											<small id="filehelp_signature" class="form-text text-muted text-danger"></small>
+                                              <input type="file" class="form-control-file" id="cnic_pic" name="cnic_pic" tabindex="8" required aria-describedby="filehelp_cnic_pic" accept=".jpg, .png, .jpeg" />
+    											<small id="filehelp_cnic_pic" class="form-text text-muted text-danger"></small>
   
                                             </div>
 
-		                                    <label class="col-md-1 control-label col-md-push-5 ">Picture:</label>
+		                                    <label class="col-md-1 control-label col-md-push-5 ">License:</label>
                                             <div class="col-md-2 col-md-push-5">
-                                              <input type="file" class="form-control-file" id="picture" name="picture" tabindex="21" required aria-describedby="filehelp_picture" accept=".jpg, .png, .jpeg" />
-    											<small id="filehelp_picture" class="form-text text-muted text-danger"></small>
+                                              <input type="file" class="form-control-file" id="license" name="license" tabindex="9" required aria-describedby="filehelp_license" accept=".jpg, .png, .jpeg" />
+    											<small id="filehelp_license" class="form-text text-muted text-danger"></small>
   
                                             </div>
 
@@ -239,28 +133,27 @@ require 'connection.php';
                                             
                                             <label class="col-md-1 control-label">Preview:</label>
                                             <div class="col-md-2">
-                                              <img height="150" width="200" id="img_signature">
+                                              <img height="150" width="200" id="img_cnic_pic">
                                             </div>
 
 		                                    <label class="col-md-1 control-label col-md-push-5 ">Preview:</label>
                                             <div class="col-md-2 col-md-push-5">
-                                             <img height="150" width="200" id="img_picture">
+                                             <img height="150" width="200" id="img_license">
                                             </div>
 
                                         </div>
                                     </div>                                        
                                      
                                     <div class="form-actions ">
-                                        <button type="submit" class="btn blue" id="btn_submit" tabindex="22">Submit</button> 
-                                        <button type="reset" class="btn default" id="btn_reset" tabindex="23">Cancel</button>
+                                        <button type="submit" class="btn blue" id="btn_submit" tabindex="10">Submit</button> 
+                                        <button type="reset" class="btn default" id="btn_reset" tabindex="11">Cancel</button>
 
-                                        <button type="submit" class="btn blue hidden" id="update_form_btn" tabindex="22">Update</button> 
-                                        <button type="button" class="btn default hidden"  id="add_new" tabindex="23">Add New</button>
+                                        <button type="submit" class="btn blue hidden" id="update_form_btn" tabindex="10">Update</button> 
+                                        <button type="button" class="btn default hidden"  id="add_new" tabindex="11">Add New</button>
                                     </div>
                                 </div>
                                 
                             </form>
-
                             <?php }//END OF IF?>
                         </div>
                         <!-- Form ends -->
@@ -280,11 +173,10 @@ require 'connection.php';
                                                     <th> Name     </th>
                                                     <th> CNIC </th>
                                                     <th> Father Name </th>
-                                                    <th> DOB </th>
-                                                    <th> Email </th>
                                                     <th> Contact </th>
                                                     <th> Address </th>
-                                                    <th> Designation </th>
+                                                    <th> Reference </th>
+                                                    <th> Truck # </th>
 
                                                 </tr>
                                             </thead>
@@ -311,7 +203,7 @@ require 'connection.php';
 <?php 
 include 'footer.php';
  ?>
-<script src="../assets/global/scripts/select2.full.min.js"></script>
+
 <script type="text/javascript">
      
     $(document).ready(function(){
@@ -319,11 +211,11 @@ include 'footer.php';
      	function getId()
 	    {
 	        $.ajax({
-	          url :'ajax/employee/fetchid_employee.php',
+	          url :'ajax/driver/fetchid_driver.php',
 	          dataType:'JSON',
 	          success: function(data)
 	          {
-	              $('#employee_id').val(data['employee_id']);
+	              $('#driver_id').val(data['driver_id']);
 	          }
 	          // error: function(){ alert('Error in get id Ajax.') }
 
@@ -333,9 +225,8 @@ include 'footer.php';
 	    getId();
 
      	$('#btn_reset').click(function(){
-     		$('#img_picture,#img_signature').removeAttr('src');
-     		$('#dg_id').val('').trigger('change');
-            $('#filehelp_picture,#filehelp_signature').html('');
+     		$('#img_cnic_pic,#img_license').removeAttr('src');
+            $('#filehelp_cnic_pic,#filehelp_license').html('');
      		getId();
      	});
 
@@ -387,15 +278,10 @@ include 'footer.php';
             }    
         }
 
-		$("#signature,#picture").change(function () {
+		$("#cnic_pic,#license").change(function () {
 			setImage( this,$(this).attr('id') );
 	    });
 
-		//Select2
-	    $('#dg_id').select2({
-	    	width: 'resolve',
-	    	theme: "classic"
-	   	});
 
         function myDataTable()
         {
@@ -406,7 +292,7 @@ include 'footer.php';
         function loadData()
         {
             $.ajax({
-                url:'ajax/employee/fetch.php',
+                url:'ajax/driver/fetch.php',
                 dataType:"JSON",
                 success:function(data){
                     var n = 1,
@@ -425,15 +311,11 @@ include 'footer.php';
 
                         	'<td>'+ 
                                 '<ul class="addremove">'+
-                                    '<li> <button class="btn btn-xs green update_btn" id="'+value['employee_id']+'" type="button">  '+
+                                    '<li> <button class="btn btn-xs green update_btn" id="'+value['driver_id']+'" type="button">  '+
                                     '<i class="fa fa-plus-square"></i>'+
                                     '</button> </li>'+
                                     
-                                    '<li> <a class="btn btn-xs blue detail_btn"  href="employee_details.php?employee_id='+value['employee_id']+'" target="_blank" >  '+
-                                    '<i class="fa fa-info"></i>'+
-                                    '</a> </li>'+
-                                    
-                                    '<li>  <button class="btn btn-xs red delete_btn" id="'+value['employee_id']+'" type="button">  '+
+                                    '<li>  <button class="btn btn-xs red delete_btn" id="'+value['driver_id']+'" type="button">  '+
                                     '<i class="fa fa-minus-square"></i>'+
                                     '</button> </li>'+
                                 '</ul>'+
@@ -441,25 +323,18 @@ include 'footer.php';
 
                             <?php }//END OF If
                             else{?>
-                                '<td>'+ 
-                                '<ul class="addremove">'+
-                                    '<li> <a class="btn btn-xs blue detail_btn"  href="employee_details.php?employee_id='+value['employee_id']+'" target="_blank" >  '+
-                                    '<i class="fa fa-info"></i>'+
-                                    '</a> </li>'+                                    
-                                '</ul>'+
-                            '</td>'+
+                                '<td></td>'+
                             <?php }//END OF ELSE ?>
 
                             '<td>'+n+'</td>'+
-                            '<td>'+value['employee_id']+'</td>'+
+                            '<td>'+value['driver_id']+'</td>'+
                             '<td>'+value['name']+'</td>'+
                             '<td>'+value['cnic']+'</td>'+
                             '<td>'+value['father_name']+'</td>'+
-                            '<td>'+value['dob']+'</td>'+
-                            '<td>'+value['email']+'</td>'+
                             '<td>'+value['contact']+'</td>'+
                             '<td>'+value['address']+'</td>'+
-                            '<td id="'+value['dg_id']+'">'+value['designation']+'</td>'+
+                            '<td>'+value['ereferences']+'</td>'+
+                            '<td>'+value['truck_number']+'</td>'+
                             '</tr>');
 
                         n++; i++;
@@ -480,7 +355,7 @@ include 'footer.php';
         	var fdata = new FormData( $('#myform')[0] ); 
 
             $.ajax({
-                url:'ajax/employee/add.php',
+                url:'ajax/driver/add.php',
                 type:"POST",
                 data:fdata,
                 contentType: false,
@@ -497,12 +372,12 @@ include 'footer.php';
             });
         }
 
-        function update(name,cnic,father_name,dob,email,contact,address,designation)
+        function update(name,cnic,father_name,contact,address,ereferences,truck_number)
         {
         	var fdata = new FormData( $('#myform')[0] ); 
 
             $.ajax({
-                url:'ajax/employee/update.php',
+                url:'ajax/driver/update.php',
                 type:"POST",
                 data:fdata,
                 contentType: false,
@@ -516,11 +391,10 @@ include 'footer.php';
                         temp[3]  = name;
                         temp[4]  = cnic;
                         temp[5]  = father_name;
-                        temp[6]  = dob;
-                        temp[7]  = email;
-                        temp[8]  = contact;
-                        temp[9]  = address;
-                        temp[10] = designation;
+                        temp[6]  = contact;
+                        temp[7]  = address;
+                        temp[8]  = ereferences;
+                        temp[9]  = truck_number;
 
                         $('#mytable').DataTable().row(i).data(temp).draw();
                      
@@ -531,10 +405,10 @@ include 'footer.php';
             });
         }
 
-        function deletetr(trr,employee_id)
+        function deletetr(trr,driver_id)
         {
             $.ajax({
-                url:'ajax/employee/delete.php?employee_id='+employee_id,
+                url:'ajax/driver/delete.php?driver_id='+driver_id,
                 type:"POST",
                 success:function(data){
                     trr.fadeOut(100,function(){
@@ -550,15 +424,15 @@ include 'footer.php';
 
             $('form').addClass('update_form');
 
-            // $('#employee_id_div').removeClass('hidden');
+            // $('#driver_id_div').removeClass('hidden');
             $('#update_form_btn').removeClass('hidden');
             $('#add_new').removeClass('hidden');
 
             $('#btn_submit').addClass('hidden');
             $('#btn_reset').addClass('hidden');
 
-            $('#signature').removeAttr('required');
-            $('#picture').removeAttr('required');
+            $('#cnic_pic').removeAttr('required');
+            $('#license').removeAttr('required');
 
         }
 
@@ -569,26 +443,25 @@ include 'footer.php';
 
             $('#btn_reset').trigger('click');
 
-            // $('#employee_id_div').addClass('hidden');
+            // $('#driver_id_div').addClass('hidden');
             $('#update_form_btn').addClass('hidden');
             $('#add_new').addClass('hidden');
 
             $('#btn_submit').removeClass('hidden');
             $('#btn_reset').removeClass('hidden');
 
-            $('#signature').attr('required','required');
-            $('#picture').attr('required','required');
+            $('#cnic_pic').attr('required','required');
+            $('#license').attr('required','required');
 
         }
-
 
         //DELETE 
         $(document).on('click','.delete_btn',function(){
 
-            var employee_id = $(this).attr('id'),
+            var driver_id = $(this).attr('id'),
                 trr = $(this).closest('tr');
 
-            deletetr(trr,employee_id);
+            deletetr(trr,driver_id);
         });
 
         //ADD NEW 
@@ -596,41 +469,23 @@ include 'footer.php';
             addNewClick();
         });
 
-        function loadDetails(employee_id)
+        function loadDetails(driver_id)
         {
             $.ajax({
-                url:'ajax/employee/fetch_details.php?employee_id='+employee_id,
+                url:'ajax/driver/fetch_details.php?driver_id='+driver_id,
                 dataType:"JSON",
                 success:function(data){
 
-                        $('#employee_id').val(data['employee_id']);
+                        $('#driver_id').val(data['driver_id']);
                         $('#name').val(data['name']);
                         $('#cnic').val(data['cnic']);
-                        $('#cnic_valid').val(data['cnic_valid']);
                         $('#father_name').val(data['father_name']);
-                        $('#dob').val(data['dob']);
-                        $('#email').val(data['email']);
-                        $('#address').val(data['address']);
-
-                        $('#e_contact_name1').val(data['e_contact_name1']);
-                        $('#relation1').val(data['relation1']);
-                        $('#e_contact1').val(data['e_contact1']);
-
-                        $('#e_contact_name2').val(data['e_contact_name2']);
-                        $('#relation2').val(data['relation2']);
-                        $('#e_contact2').val(data['e_contact2']);
-
-                        $('#qualification').val(data['qualification']);
-                        $('#institute_name').val(data['institute_name']);
-                        $('#subject').val(data['subject']);
-
                         $('#contact').val(data['contact']);
-                        $('#joining_date').val(data['joining_date']);
-                        $('#dg_id').val(data['dg_id']).trigger('change');
-
+                        $('#address').val(data['address']);
                         $('#ereferences').val(data['ereferences']);
-                        $('#img_signature').attr('src',data['img_signature']);
-                        $('#img_picture').attr('src',data['img_picture']);
+                        $('#truck_number').val(data['truck_number']);
+                        $('#img_cnic_pic').attr('src',data['img_cnic']);
+                        $('#img_license').attr('src',data['img_license']);
 
                 },
                 error:function(){ alert("Failed Fetch Details Ajax Call.") }
@@ -642,7 +497,7 @@ include 'footer.php';
 
             updateClick();
 
-            var employee_id = $(this).attr('id'),
+            var driver_id = $(this).attr('id'),
                 trr = $(this).closest('tr');
 
             $('tr').each(function(){
@@ -654,7 +509,7 @@ include 'footer.php';
 
             trr.addClass('selectedd');   
 
-            loadDetails(employee_id);
+            loadDetails(driver_id);
             
         });
 
@@ -665,16 +520,15 @@ include 'footer.php';
            var name = $('#name').val()
                cnic = $('#cnic').val() ,
                father_name = $('#father_name').val(),
-               dob = $('#dob').val(),
-               email = $('#email').val(),
                contact = $('#contact').val(),
                address = $('#address').val(),
-               designation = $('#dg_id option:selected').text(),
-               employee_id =  $('#employee_id').val();
+               ereferences = $('#ereferences').val(),
+               truck_number = $('#truck_number').val(),
+               driver_id =  $('#driver_id').val();
 
            if( $(this).hasClass('update_form') ) 
            {
-                update(name,cnic,father_name,dob,email,contact,address,designation);
+                update(name,cnic,father_name,contact,address,ereferences,truck_number);
            }
            else
            {
