@@ -248,28 +248,18 @@ include 'footer.php';
             {
                 if (window.File && window.FileReader && window.FileList && window.Blob)
                 {
-                    //get the file size and file type from file input field
-                    var fsize = $('#'+name)[0].files[0].size;
-                    
-                    if(fsize>2048576) //do something if file size more than 2 mb (2048576)
+                    if (input.files && input.files[0]) 
                     {
-                        $('#filehelp_'+name).html('Maximum 2mb file is allowed.');   
-                    }
-                    else
-                    {
-                        if (input.files && input.files[0]) 
-                        {
-                            var reader = new FileReader();
+                        var reader = new FileReader();
 
-                            reader.onload = function (e) {
-                                $('#img_'+name)
-                                    .attr('src', e.target.result);
+                        reader.onload = function (e) {
+                            $('#img_'+name)
+                                .attr('src', e.target.result);
 
-                                $('#filehelp_'+name).html('');    
-                            };
+                            $('#filehelp_'+name).html('');    
+                        };
 
-                            reader.readAsDataURL(input.files[0]);
-                        }
+                        reader.readAsDataURL(input.files[0]);
                     }
                 }
                 
