@@ -45,7 +45,7 @@
 
 	$lot_of_limit = $_SESSION['lot_of'];
 
-	$count = mysqli_query($mycon,' SELECT COUNT(ce_id) as lot_of from container_entry where cm_id='.$_SESSION['cm_id']);
+	$count = mysqli_query($mycon,' SELECT COUNT(ce_id) as lot_of from container_entry where cm_id='.$_SESSION['cm_id'].' and status=1 ');
 
 	$rc = mysqli_fetch_array($count);
 
