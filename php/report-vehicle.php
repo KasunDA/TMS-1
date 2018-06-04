@@ -608,7 +608,8 @@ include 'footer.php';
         $.ajax({
             url:'ajax/vehicle/detailed_fetch.php?from_datee='+from_datee+'&to_datee='+to_datee+'&from_yard_id='+from_yard_id+'&to_yard_id='+to_yard_id+'&coa_id='+coa_id+'&consignee_id='+consignee_id+'&movement='+movement+'&empty_terminal_id='+empty_terminal_id+'&container_number='+container_number+'&bl_cro_number='+bl_cro_number+'&container_size='+container_size+'&container_id='+container_id+'&vehicle_id='+vehicle_id+'&owner_name='+owner_name+'&line_id='+line_id,
             dataType:"JSON",
-            success:function(data){
+            success:function(data)
+            {
                 var n = 1,
                     total_trips = 0,
                     balance_trips = 0;
@@ -644,8 +645,8 @@ include 'footer.php';
                             '</tr>');
 
                     n++; total_trips++;
-                })
-
+                });
+	
                 myDataTable();
                 // $('#total_amount').html(getTotal('total_amount'));
 
@@ -657,7 +658,6 @@ include 'footer.php';
                 //Voucher Form
                 if( data !=null && vehicle_id!=0 )
                 {
-
                     if( $('#owner_name').html() == 'butt brothers' )
                     {
                         $('#voucher_div').hide();
@@ -670,10 +670,7 @@ include 'footer.php';
                 else
                 {
                     $('#voucher_div').hide();
-                }
-
-                $('#total_balance').html( $('#advance_taken_owner').html()/1 + $('#advance_taken').html()/1 + $('#total_diesel').html()/1 + $('#total_rm').html()/1 - $('#balance_trips').html()/1  );
-
+                } 
             },
             error:function(){ alert("Failed Fetch Ajax Call.") }
         });
@@ -774,6 +771,10 @@ include 'footer.php';
                     $('#total_rm').html(value['total_rm_amount']);
                     $('#driver_salary').html(value['total_driver_salary']);
                     $('#paid_salary').html(value['total_paid_salary']);
+
+            		// alert( "advance taken owner="+$('#advance_taken_owner').html()+ " advance taken"+ $('#advance_taken').html() + " total diesel = " + $('#total_diesel').html() + " total repair maintenance =  " + $('#total_rm').html() );
+
+                	$('#total_balance').html( ( $('#advance_taken_owner').html()/1 + $('#advance_taken').html()/1 + $('#total_diesel').html()/1 + $('#total_rm').html()/1 ) - $('#balance_trips').html()/1  );
                 });
             },
             error: function(){ alert("Failed Fetch Records.") }, 

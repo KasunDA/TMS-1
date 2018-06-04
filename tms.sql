@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 01, 2018 at 08:48 AM
+-- Generation Time: Jun 02, 2018 at 10:32 PM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 7.0.13
 
@@ -36,8 +36,18 @@ CREATE TABLE `accounts_entry` (
   `check_number` varchar(30) DEFAULT NULL,
   `previous_balance` decimal(13,2) NOT NULL,
   `current_balance` decimal(13,2) NOT NULL,
+  `description` text,
   `status` tinyint(4) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `accounts_entry`
+--
+
+INSERT INTO `accounts_entry` (`ae_id`, `datee`, `bank_id`, `action`, `method`, `amount`, `check_number`, `previous_balance`, `current_balance`, `description`, `status`) VALUES
+(1, '06/02/2018', 2, 'credit', 'check', '10000.00', '132456', '50000.00', '60000.00', 'loan liya.', 1),
+(2, '06/02/2018', 2, 'credit', 'check', '5000.00', '321654', '60000.00', '65000.00', 'aik or loan liya', 1),
+(5, '06/02/2018', 2, 'debit', 'check', '15000.00', '565161', '65000.00', '50000.00', 'nashta kharcha hogya', 1);
 
 -- --------------------------------------------------------
 
@@ -414,8 +424,8 @@ CREATE TABLE `driver` (
 --
 
 INSERT INTO `driver` (`driver_id`, `name`, `cnic`, `father_name`, `address`, `contact`, `ereferences`, `truck_number`, `img_cnic`, `img_license`, `status`) VALUES
-(1, 'Ahmed khan', '42501-5646845-7', 'Nazim khan', 'new address', '03377777777', 'NILL', '', 'uploads/caced7f7.jpg', 'uploads/f4927eb8.jpg', 1),
-(2, 'asdasd', '42201-1565848-5', 'asdasd', 'asdads', '03055555555', 'NILL', '', 'uploads/7352d714.png', 'uploads/72709113.png', 1);
+(1, 'Ahmed khan', '42501-5646845-7', 'Nazim khan', 'new address', '03377777777', 'NILL', 'KH1561', 'uploads/c05f6382.jpg', 'uploads/f4927eb8.jpg', 1),
+(2, 'kg', '42201-1565848-7', 'rathor', 'address', '03444444444', 'NILL', 'KG3215', 'uploads/d3ed4fb1.png', 'uploads/e6d7ad7c.jpg', 1);
 
 -- --------------------------------------------------------
 
@@ -455,7 +465,7 @@ CREATE TABLE `employee` (
 --
 
 INSERT INTO `employee` (`employee_id`, `name`, `cnic`, `cnic_valid`, `father_name`, `dob`, `email`, `address`, `e_contact_name1`, `relation1`, `e_contact1`, `e_contact_name2`, `relation2`, `e_contact2`, `qualification`, `institute_name`, `subject`, `contact`, `joining_date`, `dg_id`, `ereferences`, `img_signature`, `img_picture`, `status`) VALUES
-(1, 'Ahmed khan', '42501-5646845-7', '11/21/2025', 'Nazim khan', '05/06/1983', 'ahmed_khan@yahoo.com', 'new address', 'Nazim khan', 'Father', '03106666666', '', '', '', 'b.com', 'indus', 'subject', '03377777777', '07/01/2018', 1, 'NILL', 'uploads/caced7f7.jpg', 'uploads/f4927eb8.jpg', 1),
+(1, 'Ahmed khan', '42501-5646845-7', '11/21/2025', 'Nazim khan', '05/06/1983', 'ahmed_khan@yahoo.com', 'new address', 'Nazim khan', 'Father', '03106666666', '', '', '', 'b.com', 'indus', 'subject', '03377777777', '07/01/2018', 1, 'NILL', 'uploads/006c00fe.png', 'uploads/f4927eb8.jpg', 1),
 (11, 'asdasd', '42201-1565848-5', '06/05/2018', 'asdasd', '05/28/2018', 'adad@gmail.com', 'asdads', 'asdasd', 'asdad', '03000000000', '', '', '', 'asdad', 'asdads', 'asdasd', '03055555555', '06/13/2018', 3, 'NILL', 'uploads/7352d714.png', 'uploads/72709113.png', 0);
 
 -- --------------------------------------------------------
@@ -509,7 +519,15 @@ INSERT INTO `exin` (`exin_id`, `expense_id`, `income_id`, `datee`, `previous_bal
 (29, NULL, 16, '2018-05-13', 503500, 504500),
 (30, 13, NULL, '2018-05-13', 504500, 503500),
 (31, 14, NULL, '2018-05-29', 503500, 424800),
-(32, 15, NULL, '2018-05-29', 424800, 346100);
+(32, 15, NULL, '2018-05-29', 424800, 346100),
+(33, NULL, 17, '2018-06-01', 346100, 346200),
+(34, NULL, 18, '2018-06-01', 346200, 348200),
+(35, NULL, 19, '2018-06-02', 348200, 358200),
+(36, 16, NULL, '2018-06-02', 358200, 348200),
+(37, NULL, 20, '2018-06-02', 348200, 353200),
+(38, 17, NULL, '2018-06-02', 353200, 348200),
+(41, NULL, 21, '2018-06-02', 348200, 363200),
+(42, 20, NULL, '2018-06-02', 363200, 348200);
 
 -- --------------------------------------------------------
 
@@ -553,7 +571,10 @@ INSERT INTO `expenses` (`expense_id`, `datee`, `dd_id`, `method`, `check_number`
 (12, '2018-05-13', 2, 'cash', 'null', NULL, '100.00', 1, 'Jamal (Driver) ', NULL, 0, NULL, '', 1),
 (13, '2018-05-13', 2, 'cash', '', NULL, '1000.00', NULL, NULL, NULL, 0, 1, '', 1),
 (14, '2018-05-29', 7, 'cash', NULL, NULL, '78700.00', NULL, NULL, NULL, 0, NULL, 'Vehicle Owner Payment.', 1),
-(15, '2018-05-29', 7, 'cash', NULL, NULL, '78700.00', NULL, NULL, NULL, 0, NULL, 'Vehicle Owner Payment.', 1);
+(15, '2018-05-29', 7, 'cash', NULL, NULL, '78700.00', NULL, NULL, NULL, 0, NULL, 'Vehicle Owner Payment.', 1),
+(16, '2018-06-02', 2, 'check', '132456', 2, '10000.00', NULL, NULL, NULL, 0, NULL, 'loan liya.', 1),
+(17, '2018-06-02', 2, 'check', '321654', 2, '5000.00', NULL, NULL, NULL, 0, NULL, 'aik or loan liya', 1),
+(20, '2018-06-02', 5, 'check', '565161', 2, '15000.00', NULL, 'null', NULL, 0, NULL, 'nashta kharcha hogya', 1);
 
 -- --------------------------------------------------------
 
@@ -624,7 +645,12 @@ INSERT INTO `income` (`income_id`, `datee`, `dd_id`, `method`, `check_number`, `
 (13, '2018-05-13', 2, 'cash', '', NULL, '200.00', NULL, 1, 'Jamal (Driver) ', '', 1),
 (14, '2018-05-13', 2, 'cash', '', NULL, '300.00', NULL, 1, 'Jamal (Driver) ', '', 1),
 (15, '2018-05-13', 2, 'cash', '', NULL, '500.00', NULL, 1, 'Jamal (Driver) ', '', 1),
-(16, '2018-05-13', 2, 'cash', '', NULL, '1000.00', NULL, 1, 'Jamal (Driver) ', '', 1);
+(16, '2018-05-13', 2, 'cash', '', NULL, '1000.00', NULL, 1, 'Jamal (Driver) ', '', 1),
+(17, '2018-06-01', 2, 'cash', '', NULL, '100.00', 2, NULL, NULL, '', 1),
+(18, '2018-06-01', 2, 'check', '2000', 2, '2000.00', 2, NULL, NULL, '', 1),
+(19, '2018-06-02', 2, 'check', '132456', 2, '10000.00', 2, NULL, NULL, 'loan liya.', 1),
+(20, '2018-06-02', 2, 'check', '321654', 2, '5000.00', 2, NULL, NULL, 'aik or loan liya', 1),
+(21, '2018-06-02', 5, 'check', '565161', 2, '15000.00', NULL, NULL, NULL, 'nashta kharcha hogya', 1);
 
 -- --------------------------------------------------------
 
@@ -904,7 +930,7 @@ ALTER TABLE `yard`
 -- AUTO_INCREMENT for table `accounts_entry`
 --
 ALTER TABLE `accounts_entry`
-  MODIFY `ae_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ae_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `agent`
 --
@@ -974,7 +1000,7 @@ ALTER TABLE `diesel_limit`
 -- AUTO_INCREMENT for table `driver`
 --
 ALTER TABLE `driver`
-  MODIFY `driver_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `driver_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `employee`
 --
@@ -984,12 +1010,12 @@ ALTER TABLE `employee`
 -- AUTO_INCREMENT for table `exin`
 --
 ALTER TABLE `exin`
-  MODIFY `exin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `exin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 --
 -- AUTO_INCREMENT for table `expenses`
 --
 ALTER TABLE `expenses`
-  MODIFY `expense_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `expense_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT for table `garage_entry`
 --
@@ -999,7 +1025,7 @@ ALTER TABLE `garage_entry`
 -- AUTO_INCREMENT for table `income`
 --
 ALTER TABLE `income`
-  MODIFY `income_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `income_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 --
 -- AUTO_INCREMENT for table `line`
 --
