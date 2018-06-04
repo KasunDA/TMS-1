@@ -299,6 +299,7 @@ date_default_timezone_set("Asia/Karachi");
                                                 <th> Driver </th>
                                                 <th> Owner </th>
                                                 <th> Advance </th>
+                                                <th> Diesel </th>
                                                 <th> Balance </th>
                                                 <th> Remarks </th>
                                             </tr>
@@ -612,7 +613,8 @@ include 'footer.php';
             {
                 var n = 1,
                     total_trips = 0,
-                    balance_trips = 0;
+                    balance_trips = 0,
+                    total_diesel = 0;
 
                 $('#mytable').DataTable().destroy();
                 $('#mytable tbody').html("");
@@ -620,6 +622,7 @@ include 'footer.php';
                 $.each(data,function(index,value){
 
                     balance_trips +=  value['balance']/1;
+                    total_diesel  +=  value['diesel']/1;
 
                     $('#mytable tbody').append('<tr class="odd gradeX">'+
                
@@ -640,6 +643,7 @@ include 'footer.php';
                             '<td>'+value['driver_name']+'</td>'+
                             '<td id="owner_name">'+value['owner_name']+'</td>'+
                             '<td>'+value['advance']+'</td>'+
+                            '<td>'+value['diesel']+'</td>'+
                             '<td name="balance_trips">'+value['balance']+'</td>'+
                             '<td>'+value['remarks']+'</td>'+
                             '</tr>');
@@ -652,6 +656,7 @@ include 'footer.php';
 
                 $('#total_trips').html(total_trips);
                 $('#balance_trips').html(balance_trips);
+                $('#total_diesel').html(total_diesel);
 
                 getRecords(from_datee,to_datee,vehicle_id);
 
@@ -767,7 +772,7 @@ include 'footer.php';
                 $.each(data,function(index,value){
                     $('#advance_taken').html(value['total_remaining_advance']);
                     $('#advance_taken_owner').html(value['total_remaining_advance_owner']);
-                    $('#total_diesel').html(value['total_de_amount']);
+                    // $('#total_diesel').html(value['total_de_amount']);
                     $('#total_rm').html(value['total_rm_amount']);
                     $('#driver_salary').html(value['total_driver_salary']);
                     $('#paid_salary').html(value['total_paid_salary']);
