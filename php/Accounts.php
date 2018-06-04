@@ -151,7 +151,9 @@ date_default_timezone_set("Asia/Karachi");
                                  <span class="caption-subject bold uppercase">Detailed Report</span>
                              </div>
                              <div class="tools">
+                                 <button class="btn green" id="update_records_btn">Update Records</button>
                                  <a href="" class="collapse "> </a>
+
                              </div>
                          </div>
                          <div class="portlet-body table-both-scroll">
@@ -257,6 +259,9 @@ include 'footer.php';
      
      $(document).ready(function(){
 
+        $('#update_records_btn').click(function(event) {
+          loadData();
+        });
 
         function loadPreviousBalance()
         {
