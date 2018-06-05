@@ -190,6 +190,7 @@
 				$json[$n]['container_number'] = $r['container_number'];
 				$json[$n]['advance'] = $r['advance'];
 				$json[$n]['diesel'] = $r['diesel'];
+				$json[$n]['mr_charges'] = $r['mr_charges'];
 				$json[$n]['balance'] = $r['balance'];
 				$json[$n]['remarks'] = $r['remarks'];
 			}
@@ -259,6 +260,7 @@
 			$json[$n]['container_number'] = $r['container_number'];
 			$json[$n]['advance'] = $r['advance'];
 			$json[$n]['diesel'] = $r['diesel'];
+			$json[$n]['mr_charges'] = $r['mr_charges'];
 			$json[$n]['balance'] = $r['balance'];
 			$json[$n]['remarks'] = $r['remarks'];
 		}

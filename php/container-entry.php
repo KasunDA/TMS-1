@@ -42,8 +42,8 @@ date_default_timezone_set("Asia/Karachi");
             <!-- END PAGE BREADCRUMB -->
             <!-- BEGIN PAGE BASE CONTENT -->
             <div class="row">
-                <div class="col-md-12">
-                    <div class="portlet light bordered">
+                <div class="col-md-12 no-pad">
+                    <div class="portlet light bordered no-tb-style-cnt">
                         <div class="portlet-title">
                             <div class="caption font-red-sunglo">
                                 <i class="icon-settings font-red-sunglo"></i>
@@ -54,7 +54,7 @@ date_default_timezone_set("Asia/Karachi");
                           <?php
                                 if(!isset($_SESSION['disable_btn']) )
                                 {?>
-                            <form class="form-horizontal <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'add_entry_form' ?>" role="form" method="post">
+                            <form class="form-horizontal <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'add_entry_form' ?>" role="form" method="post" autocomplete="off">
                                 <div class="form-body">
                                    
                                     <div class="row"> 
@@ -69,7 +69,7 @@ date_default_timezone_set("Asia/Karachi");
                                     
                                                 <label class="col-md-2 control-label">Transaction Date:</label>
                                                 <div class="col-md-3">
-                                                  <input type="date" class="form-control" id="datee" name="datee" required tabindex="1" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) { echo 'value="'.$_SESSION['datee'].'" readonly';} else{ echo 'value="'.date('Y-m-d').'"'; } ?>  />
+                                                  <input type="date" class="form-control" id="datee" name="datee" required tabindex="1" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) { echo 'value="'.$_SESSION['datee'].'" readonly disabled';} else{ echo 'value="'.date('Y-m-d').'"'; } ?>  />
                                                 </div>
                                          </div>  
                                      </div>
@@ -218,12 +218,12 @@ date_default_timezone_set("Asia/Karachi");
                                                 <div class="form-group">
                                                           <label class="col-md-2 control-label">B/L OR CRO No:</label>
                                                         <div class="col-md-3">
-                                                          <input type="text" class="form-control" placeholder="0898664" id="bl_cro_number" name="bl_cro_number" required tabindex="9" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) { echo 'value="'.$_SESSION['bl_cro_number'].'" readonly';}?> >
+                                                          <input type="text" class="form-control" placeholder="0898664" id="bl_cro_number" name="bl_cro_number" required  <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) { echo 'value="'.$_SESSION['bl_cro_number'].'" readonly tabindex="-1" ';}?>  tabindex="9">
                                                         </div>
                                             
                                                           <label class="col-md-1 control-label">Job No:</label>
                                                         <div class="col-md-4">
-                                                          <input type="text" class="form-control" placeholder="123456" id="job_number" name="job_number" required tabindex="10" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) { echo 'value="'.$_SESSION['job_number'].'" readonly';}?>>
+                                                          <input type="text" class="form-control" placeholder="123456" id="job_number" name="job_number" required <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) { echo 'value="'.$_SESSION['job_number'].'" readonly tabindex="-1" ';}?> tabindex="10">
                                                         </div>
                                                  </div>  
                                              </div>
@@ -238,7 +238,7 @@ date_default_timezone_set("Asia/Karachi");
                                                            
                                                          <div class="col-md-2 small-lab">
                                                           <label class=" control-label">Index No</label>
-                                                           <input type="text" class="form-control" placeholder="123456" id="index_number" name="index_number" required tabindex="12" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) { echo 'value="'.$_SESSION['index_number'].'" readonly';}?>>
+                                                           <input type="text" class="form-control" placeholder="123456" id="index_number" name="index_number" required  <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) { echo 'value="'.$_SESSION['index_number'].'" readonly tabindex="-1" ';}?> tabindex="12">
                                                          </div>
                                                     
                                                       <div class="col-md-3 small-lab2">
@@ -283,12 +283,12 @@ date_default_timezone_set("Asia/Karachi");
 
                                                             <label class="col-md-1 control-label">Rent:</label>
                                                             <div class="col-md-2">
-                                                              <input type="number" min="0" class="form-control" placeholder="Rent" id="rent" name="rent"  tabindex="17" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) { echo 'value="'.$_SESSION['rent'].'" readonly';}?>>
+                                                              <input type="number" min="0" class="form-control" placeholder="Rent" id="rent" name="rent"   <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) { echo 'value="'.$_SESSION['rent'].'" readonly tabindex="-1" ';}?> tabindex="17">
                                                             </div>
 
                                                             <label class="col-md-1 control-label">Lolo Charges:</label>
                                                             <div class="col-md-2">
-                                                              <input type="number" min="0" step="0.01" class="form-control" placeholder="lolo Charges" id="lolo_charges" name="lolo_charges" required tabindex="18" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) { echo 'value="'.$_SESSION['lolo_charges'].'" readonly';}?>>
+                                                              <input type="number" min="0" step="0.01" class="form-control" placeholder="lolo Charges" id="lolo_charges" name="lolo_charges" required  <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) { echo 'value="'.$_SESSION['lolo_charges'].'" readonly tabindex="-1" ';}?> tabindex="18">
                                                             </div>
                                                               
                                                               
@@ -300,7 +300,7 @@ date_default_timezone_set("Asia/Karachi");
                                                               
                                                               <label class="col-md-2 control-label">Party Rent:</label>
                                                               <div class="col-md-2">
-                                                                <input type="number" min="0" class="form-control" placeholder="Party Charges" id="party_charges" name="party_charges" required tabindex="19"  <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'readonly' ?> />
+                                                                <input type="number" min="0" class="form-control" placeholder="Party Charges" id="party_charges" name="party_charges" required   <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo ' readonly tabindex="-1" ' ?> tabindex="19" />
                                                               </div>
 
                                                               <label class="col-md-1 control-label">Balance:</label>
@@ -352,7 +352,7 @@ date_default_timezone_set("Asia/Karachi");
                                                           <label class="col-md-1 control-label">Lot Of :</label>
                                                            
                                                           <div class="col-md-4">
-                                                            <input type="number" min="0"  class="form-control" placeholder="Lot Of" id="lot_of" name="lot_of" required tabindex="22" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'readonly' ?> />
+                                                            <input type="number" min="0"  class="form-control" placeholder="Lot Of" id="lot_of" name="lot_of" required  <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo ' readonly tabindex="-1"' ?> tabindex="22" />
                                                           </div>
                                                            
                                                       </div> 
@@ -386,7 +386,7 @@ date_default_timezone_set("Asia/Karachi");
                                                                   <label class="col-md-2 control-label">Weight Charges</label>
                                                                    
                                                                   <div class="col-md-3">
-                                                                    <input type="number" min="0" step="0.01" class="form-control" placeholder="Weight Charges" id="weight_charges" name="weight_charges" required tabindex="24" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) { echo 'value="'.$_SESSION['weight_charges'].'" readonly';}?>>
+                                                                    <input type="number" min="0" step="0.01" class="form-control" placeholder="Weight Charges" id="weight_charges" name="weight_charges" required  <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) { echo 'value="'.$_SESSION['weight_charges'].'" readonly tabindex="-1" ';}?> tabindex="24">
                                                                   </div>
                                                       
                                                                    
@@ -444,8 +444,20 @@ date_default_timezone_set("Asia/Karachi");
                          <div class="row">
                      <div class="col-md-12">
                             <!-- BEGIN EXAMPLE TABLE PORTLET-->
-                            <div class="portlet light bordered">
+                            <div class="portlet light bordered no-defualt-set-cnt">
                                 
+                                <div class="portlet-title">
+		                             <div class="caption font-green">
+		                                 <i class="icon-settings font-green"></i>
+		                                 <span class="caption-subject bold uppercase">Container Entries</span>
+		                             </div>
+		                             <div class="tools">
+		                                 <button class="btn green" id="update_records_btn">Update Records</button>
+		                                 <a href="" class="collapse "> </a>
+
+		                             </div>
+                         		</div>
+
                                 <div class="portlet-body">
                   
                                     <table class="table table-striped table-bordered table-hover table-checkable order-column" id="mytable">
@@ -509,6 +521,10 @@ include 'footer.php';
  <script src="../assets/global/scripts/select2.full.min.js"></script>
  <script type="text/javascript">
    $(document).ready(function(){
+
+   		$('#update_records_btn').click(function(event) {
+          <?php echo 'loadData("'.$_SESSION['cm_id'].'")'; ?>
+        });
 
       document.onkeyup = KeyCheck;
 
@@ -636,7 +652,7 @@ include 'footer.php';
       function myDataTable()
         {
             var e=$("#mytable");
-            e.dataTable({language:{aria:{sortAscending:": activate to sort column ascending",sortDescending:": activate to sort column descending"},emptyTable:"No data available in table",info:"Showing _START_ to _END_ of _TOTAL_ records",infoEmpty:"No records found",infoFiltered:"(filtered1 from _MAX_ total records)",lengthMenu:"Show _MENU_",search:"Search:",zeroRecords:"No matching records found",paginate:{previous:"Prev",next:"Next",last:"Last",first:"First"}},bStateSave:!0,columnDefs:[{targets:0,orderable:!1,searchable:!1}],lengthMenu:[[5,15,20,-1],[5,15,20,"All"]],pageLength:5,pagingType:"bootstrap_full_number",columnDefs:[{orderable:!1,targets:[0]},{searchable:!1,targets:[0]}],order:[[1,"asc"]]});
+            e.dataTable({language:{aria:{sortAscending:": activate to sort column ascending",sortDescending:": activate to sort column descending"},emptyTable:"No data available in table",info:"Showing _START_ to _END_ of _TOTAL_ records",infoEmpty:"No records found",infoFiltered:"(filtered1 from _MAX_ total records)",lengthMenu:"Show _MENU_",search:"Search:",zeroRecords:"No matching records found",paginate:{previous:"Prev",next:"Next",last:"Last",first:"First"}},bStateSave:!0,columnDefs:[{targets:0,orderable:!1,searchable:!1}],lengthMenu:[[5,15,20,-1],[5,15,20,"All"]],pageLength:-1,pagingType:"bootstrap_full_number",columnDefs:[{orderable:!1,targets:[0]},{searchable:!1,targets:[0]}],order:[[1,"asc"]]});
         }
 
       myDataTable();
@@ -887,6 +903,8 @@ include 'footer.php';
           $('#btn_submit').addClass('hidden');
           $('#btn_reset').addClass('hidden');
 
+          $('#container_number').focus();
+
       }
 
       function addNewClick()
@@ -1024,6 +1042,8 @@ include 'footer.php';
          {
               add(datee,agent_id,coa_id,consignee_id,movement,empty_terminal_id,from_yard_id,to_yard_id,bl_cro_number,job_number,container_number,index_number,container_size,vehicle_id,advance,rent,balance,diesel,party_charges,container_id,lot_of,line_id,lolo_charges,weight_charges,color,mr_charges,remarks);
          }
+
+         $('#container_number').focus();
       });
 
     });

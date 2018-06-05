@@ -280,33 +280,40 @@ date_default_timezone_set("Asia/Karachi");
                     </div>
                     <div class="portlet-body table-both-scroll" >  <!-- style="display: none;" -->
                         <table class="table table-striped table-bordered table-hover table-checkable order-column" id="mytable">
-                                        <thead>
-                                            <tr>
-                                                <th> Index </th>
-                                                <th> ID </th>
-                                                <th> Date </th>
-                                                <th> Chart Of Account  </th>
-                                                <th> Empty </th>
-                                                <th> From  </th>
-                                                <th> To </th>
-                                                <th> Movement </th>
-                                                <th> Container # </th>
-                                                <th> Size </th>
-                                                <th> Type </th>
-                                                <th> Line </th>
-                                                <th> B/L OR CRO NO. </th>
-                                                <th> Vehicle # </th>
-                                                <th> Driver </th>
-                                                <th> Owner </th>
-                                                <th> Advance </th>
-                                                <th> Diesel </th>
-                                                <th> Balance </th>
-                                                <th> Remarks </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
+                          <thead>
+                              <tr>
+                                  <th>
+                                    <!-- <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                        <input type="checkbox" class="group-checkable" data-set="#mytable .checkboxes" />
+                                        <span></span>
+                                    </label> -->
+                                  </th>
+                                  <th> Index </th>
+                                  <th> ID </th>
+                                  <th> Date </th>
+                                  <th> Chart Of Account  </th>
+                                  <th> Empty </th>
+                                  <th> From  </th>
+                                  <th> To </th>
+                                  <th> Movement </th>
+                                  <th> Container # </th>
+                                  <th> Size </th>
+                                  <th> Type </th>
+                                  <th> Line </th>
+                                  <th> B/L OR CRO NO. </th>
+                                  <th> Vehicle # </th>
+                                  <th> Driver </th>
+                                  <th> Owner </th>
+                                  <th> Advance </th>
+                                  <th> Diesel </th>
+                                  <th> Repair Charges </th>
+                                  <th> Balance </th>
+                                  <th> Remarks </th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                          </tbody>
+                      </table>
                     </div>
                 </div>
             </div>
@@ -509,6 +516,36 @@ include 'footer.php';
  
  $(document).ready(function(){
 
+    //checkboxes code
+    $(document).on('change','tbody tr .checkboxes',function(){
+      $(this).parents("tr").toggleClass("active");
+      $(this).parents("tr").toggleClass("selectedd");
+
+      var i         = $(this).parents('tr').attr('index'),
+      tableData     = $('#mytable').DataTable().row(i).data(),
+      total_diesel  = tableData[18],
+      total_rm      = tableData[19], 
+      balance_trips = tableData[20];
+
+      if( !$(this).parents('tr').hasClass('selectedd') )
+      {                  
+        $('#total_trips').html( $('#total_trips').html()/1 -1 );
+        $('#total_diesel').html( $('#total_diesel').html()/1 - total_diesel);
+        $('#total_rm').html( $('#total_rm').html()/1 - total_rm);
+        $('#balance_trips').html( $('#balance_trips').html()/1 - balance_trips);
+      }
+      else
+      {
+        $('#total_trips').html( $('#total_trips').html()/1 + 1 );
+        $('#total_diesel').html( parseFloat($('#total_diesel').html()) + parseFloat(total_diesel) ) ;
+        $('#total_rm').html( parseFloat( $('#total_rm').html() ) + parseFloat(total_rm) );
+        $('#balance_trips').html( parseFloat( $('#balance_trips').html() ) + parseFloat(balance_trips) ); 
+      }
+
+      calculations();
+
+    });
+
       //RESET BUTTON CODE
     $(document).on('click','#btn_reset',function(){
         bchide();
@@ -599,7 +636,7 @@ include 'footer.php';
       //   e.dataTable({language:{aria:{sortAscending:": activate to sort column ascending",sortDescending:": activate to sort column descending"},emptyTable:"No data available in table",info:"Showing _START_ to _END_ of _TOTAL_ records",infoEmpty:"No records found",infoFiltered:"(filtered1 from _MAX_ total records)",lengthMenu:"Show _MENU_",search:"Search:",zeroRecords:"No matching records found",paginate:{previous:"Prev",next:"Next",last:"Last",first:"First"}},bStateSave:!0,columnDefs:[{targets:0,orderable:!1,searchable:!1}],lengthMenu:[[5,15,20,-1],[5,15,20,"All"]],pageLength:5,pagingType:"bootstrap_full_number",columnDefs:[{orderable:!1,targets:[0]},{searchable:!1,targets:[0]}],order:[[1,"asc"]]});
 
         var TableDatatablesButtons=function(){var e=function(){var e=$("#mytable");
-        e.dataTable({language:{aria:{sortAscending:": activate to sort column ascending",sortDescending:": activate to sort column descending"},emptyTable:"No data available in table",info:"Showing _START_ to _END_ of _TOTAL_ entries",infoEmpty:"No entries found",infoFiltered:"(filtered1 from _MAX_ total entries)",lengthMenu:"_MENU_ entries",search:"Search:",zeroRecords:"No matching records found"},buttons:[{extend:"print",title: 'Vehicle Report',orientation: 'landscape',pageSize: 'LEGAL',exportOptions:{columns: ':visible'},className:"btn dark btn-outline"},{extend:"",text :"Summary",className:"btn blue btn-outline summary_btn"},{extend:"excelHtml5",title: 'Vehicle Report',className:"btn yellow btn-outline ",exportOptions:{columns: ':visible'}},{extend:"colvis",title: 'Vehicle Report',className:"btn green btn-outline",text:"Columns"}],responsive:!0,order:[[0,"asc"]],lengthMenu:[[5,10,15,20,-1],[5,10,15,20,"All"]],pageLength:10,dom:"<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>"})},t=function(){var e=$("#sample_2");e.dataTable({language:{aria:{sortAscending:": activate to sort column ascending",sortDescending:": activate to sort column descending"},emptyTable:"No data available in table",info:"Showing _START_ to _END_ of _TOTAL_ entries",infoEmpty:"No entries found",infoFiltered:"(filtered1 from _MAX_ total entries)",lengthMenu:"_MENU_ entries",search:"Search:",zeroRecords:"No matching records found"},buttons:[{extend:"print",className:"btn default"},{extend:"copy",className:"btn default"},{extend:"pdf",className:"btn default"},{extend:"excel",className:"btn default"},{extend:"csv",className:"btn default"},{text:"Reload",className:"btn default",action:function(e,t,a,n){alert("Custom Button")}}],order:[[0,"asc"]],lengthMenu:[[5,10,15,20,-1],[5,10,15,20,"All"]],pageLength:10,dom:"<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>"})},a=function(){var e=$("#sample_3"),t=e.dataTable({language:{aria:{sortAscending:": activate to sort column ascending",sortDescending:": activate to sort column descending"},emptyTable:"No data available in table",info:"Showing _START_ to _END_ of _TOTAL_ entries",infoEmpty:"No entries found",infoFiltered:"(filtered1 from _MAX_ total entries)",lengthMenu:"_MENU_ entries",search:"Search:",zeroRecords:"No matching records found"},buttons:[{extend:"print",className:"btn dark btn-outline"},{extend:"copy",className:"btn red btn-outline"},{extend:"pdf",className:"btn green btn-outline"},{extend:"excel",className:"btn yellow btn-outline "},{extend:"csv",className:"btn purple btn-outline "},{extend:"colvis",className:"btn dark btn-outline",text:"Columns"}],responsive:!0,order:[[0,"asc"]],lengthMenu:[[5,10,15,20,-1],[5,10,15,20,"All"]],pageLength:10});$("#sample_3_tools > li > a.tool-action").on("click",function(){var e=$(this).attr("data-action");t.DataTable().button(e).trigger()})},n=function(){$(".date-picker").datepicker({rtl:App.isRTL(),autoclose:!0});var e=new Datatable;e.init({src:$("#datatable_ajax"),onSuccess:function(e,t){},onError:function(e){},onDataLoad:function(e){},loadingMessage:"Loading...",dataTable:{bStateSave:!0,lengthMenu:[[10,20,50,100,150,-1],[10,20,50,100,150,"All"]],pageLength:10,ajax:{url:"../demo/table_ajax.php"},order:[[1,"asc"]],buttons:[{extend:"print",className:"btn default"},{extend:"copy",className:"btn default"},{extend:"pdf",className:"btn default"},{extend:"excel",className:"btn default"},{extend:"csv",className:"btn default"},{text:"Reload",className:"btn default",action:function(e,t,a,n){t.ajax.reload(),alert("Datatable reloaded!")}}]}}),e.getTableWrapper().on("click",".table-group-action-submit",function(t){t.preventDefault();var a=$(".table-group-action-input",e.getTableWrapper());""!=a.val()&&e.getSelectedRowsCount()>0?(e.setAjaxParam("customActionType","group_action"),e.setAjaxParam("customActionName",a.val()),e.setAjaxParam("id",e.getSelectedRows()),e.getDataTable().ajax.reload(),e.clearAjaxParams()):""==a.val()?App.alert({type:"danger",icon:"warning",message:"Please select an action",container:e.getTableWrapper(),place:"prepend"}):0===e.getSelectedRowsCount()&&App.alert({type:"danger",icon:"warning",message:"No record selected",container:e.getTableWrapper(),place:"prepend"})}),$("#datatable_ajax_tools > li > a.tool-action").on("click",function(){var t=$(this).attr("data-action");e.getDataTable().button(t).trigger()})};return{init:function(){jQuery().dataTable&&(e(),t(),a(),n())}}}();jQuery(document).ready(function(){TableDatatablesButtons.init()});
+        e.dataTable({language:{aria:{sortAscending:": activate to sort column ascending",sortDescending:": activate to sort column descending"},emptyTable:"No data available in table",info:"Showing _START_ to _END_ of _TOTAL_ entries",infoEmpty:"No entries found",infoFiltered:"(filtered1 from _MAX_ total entries)",lengthMenu:"_MENU_ entries",search:"Search:",zeroRecords:"No matching records found"},buttons:[{extend:"print",title: 'Vehicle Report',orientation: 'landscape',pageSize: 'LEGAL',exportOptions:{columns: ':visible' , rows: '.selectedd'},className:"btn dark btn-outline"},{extend:"",text :"Summary",className:"btn blue btn-outline summary_btn"},{extend:"excelHtml5",title: 'Vehicle Report',className:"btn yellow btn-outline ",exportOptions:{columns: ':visible' ,  rows: '.selectedd' }},{extend:"colvis",title: 'Vehicle Report',className:"btn green btn-outline",text:"Columns"}],responsive:!0,order:[[0,"asc"]],lengthMenu:[[5,10,15,20,-1],[5,10,15,20,"All"]],pageLength:10,dom:"<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>"})},t=function(){var e=$("#sample_2");e.dataTable({language:{aria:{sortAscending:": activate to sort column ascending",sortDescending:": activate to sort column descending"},emptyTable:"No data available in table",info:"Showing _START_ to _END_ of _TOTAL_ entries",infoEmpty:"No entries found",infoFiltered:"(filtered1 from _MAX_ total entries)",lengthMenu:"_MENU_ entries",search:"Search:",zeroRecords:"No matching records found"},buttons:[{extend:"print",className:"btn default"},{extend:"copy",className:"btn default"},{extend:"pdf",className:"btn default"},{extend:"excel",className:"btn default"},{extend:"csv",className:"btn default"},{text:"Reload",className:"btn default",action:function(e,t,a,n){alert("Custom Button")}}],order:[[0,"asc"]],lengthMenu:[[5,10,15,20,-1],[5,10,15,20,"All"]],pageLength:10,dom:"<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>"})},a=function(){var e=$("#sample_3"),t=e.dataTable({language:{aria:{sortAscending:": activate to sort column ascending",sortDescending:": activate to sort column descending"},emptyTable:"No data available in table",info:"Showing _START_ to _END_ of _TOTAL_ entries",infoEmpty:"No entries found",infoFiltered:"(filtered1 from _MAX_ total entries)",lengthMenu:"_MENU_ entries",search:"Search:",zeroRecords:"No matching records found"},buttons:[{extend:"print",className:"btn dark btn-outline"},{extend:"copy",className:"btn red btn-outline"},{extend:"pdf",className:"btn green btn-outline"},{extend:"excel",className:"btn yellow btn-outline "},{extend:"csv",className:"btn purple btn-outline "},{extend:"colvis",className:"btn dark btn-outline",text:"Columns"}],responsive:!0,order:[[0,"asc"]],lengthMenu:[[5,10,15,20,-1],[5,10,15,20,"All"]],pageLength:10});$("#sample_3_tools > li > a.tool-action").on("click",function(){var e=$(this).attr("data-action");t.DataTable().button(e).trigger()})},n=function(){$(".date-picker").datepicker({rtl:App.isRTL(),autoclose:!0});var e=new Datatable;e.init({src:$("#datatable_ajax"),onSuccess:function(e,t){},onError:function(e){},onDataLoad:function(e){},loadingMessage:"Loading...",dataTable:{bStateSave:!0,lengthMenu:[[10,20,50,100,150,-1],[10,20,50,100,150,"All"]],pageLength:10,ajax:{url:"../demo/table_ajax.php"},order:[[1,"asc"]],buttons:[{extend:"print",className:"btn default"},{extend:"copy",className:"btn default"},{extend:"pdf",className:"btn default"},{extend:"excel",className:"btn default"},{extend:"csv",className:"btn default"},{text:"Reload",className:"btn default",action:function(e,t,a,n){t.ajax.reload(),alert("Datatable reloaded!")}}]}}),e.getTableWrapper().on("click",".table-group-action-submit",function(t){t.preventDefault();var a=$(".table-group-action-input",e.getTableWrapper());""!=a.val()&&e.getSelectedRowsCount()>0?(e.setAjaxParam("customActionType","group_action"),e.setAjaxParam("customActionName",a.val()),e.setAjaxParam("id",e.getSelectedRows()),e.getDataTable().ajax.reload(),e.clearAjaxParams()):""==a.val()?App.alert({type:"danger",icon:"warning",message:"Please select an action",container:e.getTableWrapper(),place:"prepend"}):0===e.getSelectedRowsCount()&&App.alert({type:"danger",icon:"warning",message:"No record selected",container:e.getTableWrapper(),place:"prepend"})}),$("#datatable_ajax_tools > li > a.tool-action").on("click",function(){var t=$(this).attr("data-action");e.getDataTable().button(t).trigger()})};return{init:function(){jQuery().dataTable&&(e(),t(),a(),n())}}}();jQuery(document).ready(function(){TableDatatablesButtons.init()});
     }
 
     myDataTable();
@@ -612,6 +649,7 @@ include 'footer.php';
             success:function(data)
             {
                 var n = 1,
+                    i = 0,
                     total_trips = 0,
                     balance_trips = 0,
                     total_diesel = 0;
@@ -624,8 +662,15 @@ include 'footer.php';
                     balance_trips +=  value['balance']/1;
                     total_diesel  +=  value['diesel']/1;
 
-                    $('#mytable tbody').append('<tr class="odd gradeX">'+
-               
+                    $('#mytable tbody').append('<tr class="odd gradeX selectedd" index="'+i+'">'+
+                            
+                            '<td>'+
+                              '<label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">'+
+                                  '<input type="checkbox" class="checkboxes" value="1" />'+
+                                  '<span></span>'+
+                              '</label>'+
+                            '</td>'+
+
                             '<td>'+n+'</td>'+
                             '<td>'+value['transaction_id']+'</td>'+
                             '<td>'+value['datee']+'</td>'+
@@ -644,11 +689,12 @@ include 'footer.php';
                             '<td id="owner_name">'+value['owner_name']+'</td>'+
                             '<td>'+value['advance']+'</td>'+
                             '<td>'+value['diesel']+'</td>'+
+                            '<td>'+value['mr_charges']+'</td>'+
                             '<td name="balance_trips">'+value['balance']+'</td>'+
                             '<td>'+value['remarks']+'</td>'+
                             '</tr>');
 
-                    n++; total_trips++;
+                    n++; total_trips++; i++;
                 });
 	
                 myDataTable();
@@ -681,6 +727,35 @@ include 'footer.php';
         });
     }
 
+    function getSelectedRecords()
+    {
+      var tableData     = $('#mytable').Datatable().rows().data(),
+          total_trips   = 0,
+          balance_trips = 0,
+          total_diesel  = 0,
+          total_rm      = 0,
+          index         = 0; 
+                
+      for(index ; index <= tableData.length ; index++ )
+      {
+          // total_trips   += tableData[17];
+          total_diesel  += tableData[18];
+          balance_trips += tableData[19]; //continue
+      }
+
+      $('#total_trips').html(tableData.length);
+      $('#balance_trips').html(balance_trips);
+      $('#total_diesel').html(total_diesel);
+      $('#total_rm').html(total_rm);
+
+      calculations();        
+    }
+
+    function calculations(){
+      // alert( "advance taken owner="+$('#advance_taken_owner').html()+ " advance taken"+ $('#advance_taken').html() + " total diesel = " + $('#total_diesel').html() + " total repair maintenance =  " + $('#total_rm').html() );
+
+      $('#total_balance').html( ( $('#advance_taken_owner').html()/1 + $('#advance_taken').html()/1 + $('#total_diesel').html()/1 + $('#total_rm').html()/1 ) - $('#balance_trips').html()/1  );
+    }
  
     function loadSummary(from_datee,to_datee,from_yard_id,to_yard_id,coa_id,movement)
     {
