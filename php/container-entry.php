@@ -90,6 +90,16 @@ date_default_timezone_set("Asia/Karachi");
                                                           
                                                      </select>
                                                  </div>
+
+                                                 <div class="col-md-1">
+
+                                                            <button class="btn btn-xs green agent_id" para="agent_id"  type="button">
+                                                            
+                                                              <i class="fa fa-refresh"></i>
+                                                            
+                                                            </button>
+
+                                                </div>
                                                  
                                              </div> 
                                        </div>
@@ -109,7 +119,18 @@ date_default_timezone_set("Asia/Karachi");
                                                           <?php } //END OF WHILE ?>
                                                     </select>
                                                 </div>
-                                                <div class="col-md-5">
+
+                                                <div class="col-md-1">
+
+                                                            <button class="btn btn-xs green coa_id" para="coa_id"  type="button">
+                                                            
+                                                              <i class="fa fa-refresh"></i>
+                                                            
+                                                            </button>
+
+                                                </div>
+
+                                                <div class="col-md-4">
                                                   <input type="text" class="form-control" placeholder="Full Form" id="coa_id_full_form" tabindex="-1" readonly>
                                                 </div>
                                             </div> 
@@ -130,7 +151,18 @@ date_default_timezone_set("Asia/Karachi");
                                                           <?php } //END OF WHILE ?>
                                                     </select>
                                                 </div>
-                                                <div class="col-md-5">
+
+                                                <div class="col-md-1">
+
+                                                            <button class="btn btn-xs green consignee_id" para="consignee_id"  type="button">
+                                                            
+                                                              <i class="fa fa-refresh"></i>
+                                                            
+                                                            </button>
+
+                                                      </div>
+
+                                                <div class="col-md-4">
                                                   <input type="text" class="form-control" placeholder="Full Form" id="consignee_id_full_form" tabindex="-1" readonly>
                                                 </div>
                                             </div> 
@@ -165,7 +197,18 @@ date_default_timezone_set("Asia/Karachi");
                                                           <?php } //END OF WHILE ?>
                                                       </select>
                                                   </div>
-                                                  <div class="col-md-5">
+
+                                                  <div class="col-md-1">
+
+                                                            <button class="btn btn-xs green empty_terminal_id" para="empty_terminal_id"  type="button">
+                                                            
+                                                              <i class="fa fa-refresh"></i>
+                                                            
+                                                            </button>
+
+                                                      </div>
+
+                                                  <div class="col-md-4">
                                                     <input type="text" class="form-control" placeholder="Full Form" id="empty_terminal_id_full_form" tabindex="-1" readonly>
                                                   </div>
                                               </div> 
@@ -187,7 +230,19 @@ date_default_timezone_set("Asia/Karachi");
                                                             
                                                         </select>
                                                     </div>
-                                                    <div class="col-md-5">
+
+
+                                                    <div class="col-md-1">
+
+                                                            <button class="btn btn-xs green from_yard_id" para="from_yard_id"  type="button">
+                                                            
+                                                              <i class="fa fa-refresh"></i>
+                                                            
+                                                            </button>
+
+                                                      </div>
+
+                                                    <div class="col-md-4">
                                                       <input type="text" class="form-control" placeholder="Full Form" id="from_yard_id_full_form" tabindex="-1" readonly>
                                                     </div>
                                                 </div> 
@@ -209,7 +264,18 @@ date_default_timezone_set("Asia/Karachi");
                                                               
                                                           </select>
                                                       </div>
-                                                      <div class="col-md-5">
+
+                                                      <div class="col-md-1">
+
+                                                            <button class="btn btn-xs green to_yard_id" para="to_yard_id"  type="button">
+                                                            
+                                                              <i class="fa fa-refresh"></i>
+                                                            
+                                                            </button>
+
+                                                      </div>
+
+                                                      <div class="col-md-4">
                                                         <input type="text" class="form-control" placeholder="Full Form" id="to_yard_id_full_form" tabindex="-1" readonly>
                                                       </div>
                                                   </div> 
@@ -268,7 +334,19 @@ date_default_timezone_set("Asia/Karachi");
                                                           <?php } //END OF WHILE ?>
                                                               </select>
                                                           </div>
-                                                          <div class="col-md-5">
+
+                                                          <div class="col-md-1">
+
+                                                            <button class="btn btn-xs green vehicle_id" para="vehicle_id"  type="button">
+                                                            
+                                                              <i class="fa fa-refresh"></i>
+                                                            
+                                                            </button>
+
+                                                          </div>
+
+
+                                                          <div class="col-md-4">
                                                             <input type="text" class="form-control" placeholder="Owner Name" id="vehicle_id_full_form" tabindex="-1" readonly>
                                                           </div>
                                                       </div> 
@@ -333,25 +411,24 @@ date_default_timezone_set("Asia/Karachi");
                                                             {?>
                                                               <option value="<?php echo $r['container_id']; ?>"><?php echo $r['type']; ?></option>
                                                           <?php } //END OF WHILE ?>
-
-                                                                  <!-- <option>40</option>
-                                                                  <option>45</option>
-                                                                  <option>Tanki</option> 
-                                                                  <option>Dry Containers</option> 
-                                                                  <option>Open Top Containers</option> 
-                                                                  <option>Tunnel Container</option> 
-                                                                  <option>Side Open Storage Container</option> 
-                                                                  <option>Insulated or Thermal Containers</option> 
-                                                                  <option>Tanks </option> 
-                                                                  <option>Cargo Storage Roll Containers</option> 
-                                                                  <option>Half Height Containers</option> 
-                                                                  <option>Car Carriers</option>  -->
                                                                
                                                               </select>
                                                           </div>
+
+                                                          <div class="col-md-1">
+
+                                                            <button class="btn btn-xs green container_id" para="container_id"  type="button">
+                                                            
+                                                              <i class="fa fa-refresh"></i>
+                                                            
+                                                            </button>
+
+                                                          </div>
+  
+
                                                           <label class="col-md-1 control-label">Lot Of :</label>
                                                            
-                                                          <div class="col-md-4">
+                                                          <div class="col-md-3">
                                                             <input type="number" min="0"  class="form-control" placeholder="Lot Of" id="lot_of" name="lot_of" required  <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo ' readonly tabindex="-1"' ?> tabindex="22" />
                                                           </div>
                                                            
@@ -373,7 +450,19 @@ date_default_timezone_set("Asia/Karachi");
                                                           <?php } //END OF WHILE ?>
                                                                 </select>
                                                             </div>
-                                                            <div class="col-md-5">
+
+                                                            <div class="col-md-1">
+
+                                                            <button class="btn btn-xs green line_id" para="line_id"  type="button">
+                                                            
+                                                              <i class="fa fa-refresh"></i>
+                                                            
+                                                            </button>
+
+                                                          </div>
+  
+
+                                                            <div class="col-md-4">
                                                               <input type="text" class="form-control" placeholder="Full Form" id="line_id_full_form" tabindex="-1" readonly>
                                                             </div>
                                                         </div> 
@@ -515,6 +604,16 @@ date_default_timezone_set("Asia/Karachi");
     <!-- END CONTENT -->
 </div>
 <!-- END CONTAINER -->
+
+<div id="message" style="display: none;">
+    <div style="padding: 5px;">
+        <div id="inner-message" class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <span></span>
+        </div>
+    </div>
+</div>
+
 <?php 
 include 'footer.php';
  ?>
@@ -525,6 +624,25 @@ include 'footer.php';
    		$('#update_records_btn').click(function(event) {
           <?php echo 'loadData("'.$_SESSION['cm_id'].'")'; ?>
         });
+
+        function alertMessage(msg,behave)
+        {
+        	$('#message').hide();
+        	
+        	if(behave == 'success')
+        	{
+        		$('#inner-message').removeClass('alert-danger');
+        		$('#inner-message').addClass('alert-success');
+        	}
+        	else
+        	{
+        		$('#inner-message').removeClass('alert-success');
+        		$('#inner-message').addClass('alert-danger');
+        	}
+    		
+    		$('#inner-message').find('span').html(msg);
+        	$('#message').show().delay(6000).fadeOut();
+        }
 
       document.onkeyup = KeyCheck;
 
@@ -537,31 +655,6 @@ include 'footer.php';
        }
       }
 
-      // function toYardIdSelect()
-      // {
-      //   $('#to_yard_id').select2({
-      //       width: 'resolve',
-      //       theme: "classic"
-      //     });
-      // }
-      
-      // $('#from_yard_id').on('change',function(){
-
-      //   $('#to_yard_id').find('option').each(function(){
-      //       $(this).removeAttr('disabled');
-      //   });
-      //   toYardIdSelect();
-
-      //   var option = $('#to_yard_id').find("option[value='" + $(this).val() + "']");
-
-      //   if (option.length) 
-      //   {
-      //     option.attr('disabled',true);
-      //     toYardIdSelect();
-      //   }
-        
-
-      // });
 
       $('#advance,#rent,#lolo_charges,#weight_charges').on('keyup change',function(){
           var a = $('#rent').val()/1 + $('#lolo_charges').val()/1,
@@ -576,6 +669,111 @@ include 'footer.php';
             theme: "classic"
           });
       $('.select2-selection').addClass('select');
+
+
+      function updateField(param)
+      {
+        $.ajax({
+          url:'ajax/container_movement/update_field.php?id='+param,
+          dataType:'JSON',
+          success:function(data){
+
+
+              if( param =='agent_id' )
+              {
+                $('#'+param).html('<option value="">Select Agent</option>');
+                
+                $.each(data,function(index,value){
+                  $('#'+param).append('<option value="'+value['agent_id']+'">'+value['name']+'</option> ');
+                });
+              }
+              else if( param =='coa_id' )
+              {
+                $('#'+param+'_full_form').val('');
+                $('#'+param).html('<option value="">Select Account</option>');
+                
+                $.each(data,function(index,value){
+                  $('#'+param).append('<option value="'+value['coa_id']+'">'+value['short_form']+'</option> ');
+                });
+              }
+              else if( param =='consignee_id' )
+              {
+                $('#'+param+'_full_form').val('');
+                $('#'+param).html('<option value="">Select Consignee</option>');
+                
+                $.each(data,function(index,value){
+                  $('#'+param).append('<option value="'+value['consignee_id']+'">'+value['short_form']+'</option> ');
+                });
+              }
+              else if( param =='empty_terminal_id' )
+              {
+                $('#'+param+'_full_form').val('');
+                $('#'+param).html('<option value="">Select Terminal</option>');
+                
+                $.each(data,function(index,value){
+                  $('#'+param).append('<option value="'+value['yard_id']+'">'+value['short_form']+'</option> ');
+                });
+              }
+              else if( param =='from_yard_id' )
+              {
+                $('#'+param+'_full_form').val('');
+                $('#'+param).html('<option value="">Select Destination</option>');
+                
+                $.each(data,function(index,value){
+                  $('#'+param).append('<option value="'+value['yard_id']+'">'+value['short_form']+'</option> ');
+                });
+              }
+              else if( param =='to_yard_id' )
+              {
+                $('#'+param+'_full_form').val('');
+                $('#'+param).html('<option value="">Select Destination</option>');
+                
+                $.each(data,function(index,value){
+                  $('#'+param).append('<option value="'+value['yard_id']+'">'+value['short_form']+'</option> ');
+                });
+              }
+              else if( param =='line_id' )
+              {
+                $('#'+param+'_full_form').val('');
+                $('#'+param).html('<option value="">Select Shipping Line</option>');
+                
+                $.each(data,function(index,value){
+                  $('#'+param).append('<option value="'+value['line_id']+'">'+value['short_form']+'</option> ');
+                });
+              }
+              else if( param =='vehicle_id' )
+              {
+                $('#'+param+'_full_form').val('');
+                $('#'+param).html('<option value="">Select Vehicle</option>');
+                
+                $.each(data,function(index,value){
+                  $('#'+param).append('<option value="'+value['vehicle_id']+'">'+value['vehicle_number']+'</option> ');
+                });
+              }
+              else
+              {
+                $('#'+param).html('<option value="">Select Container Type</option>');
+                
+                $.each(data,function(index,value){
+                  $('#'+param).append('<option value="'+value['container_id']+'">'+value['type']+'</option> ');
+                });
+              }
+
+              $('#'+param).select2({
+                width: 'resolve',
+                theme: "classic"
+              });
+
+            // $('#'+v+'_full_form').val(data['val']);
+          },
+          error:function(){  alert('Error in Updating Field Ajax Call.') }
+        });
+      }
+
+      $(document).on('click','.agent_id,.coa_id,.consignee_id,.line_id,.empty_terminal_id,.from_yard_id,.to_yard_id,.vehicle_id,.container_id', function()
+      {
+        updateField(''+$(this).attr('para')+'');
+      });
 
       function getId()
       {
@@ -652,7 +850,7 @@ include 'footer.php';
       function myDataTable()
         {
             var e=$("#mytable");
-            e.dataTable({language:{aria:{sortAscending:": activate to sort column ascending",sortDescending:": activate to sort column descending"},emptyTable:"No data available in table",info:"Showing _START_ to _END_ of _TOTAL_ records",infoEmpty:"No records found",infoFiltered:"(filtered1 from _MAX_ total records)",lengthMenu:"Show _MENU_",search:"Search:",zeroRecords:"No matching records found",paginate:{previous:"Prev",next:"Next",last:"Last",first:"First"}},bStateSave:!0,columnDefs:[{targets:0,orderable:!1,searchable:!1}],lengthMenu:[[5,15,20,-1],[5,15,20,"All"]],pageLength:-1,pagingType:"bootstrap_full_number",columnDefs:[{orderable:!1,targets:[0]},{searchable:!1,targets:[0]}],order:[[1,"asc"]]});
+            e.dataTable({language:{aria:{sortAscending:": activate to sort column ascending",sortDescending:": activate to sort column descending"},emptyTable:"No data available in table",info:"Showing _START_ to _END_ of _TOTAL_ records",infoEmpty:"No records found",infoFiltered:"(filtered1 from _MAX_ total records)",lengthMenu:"Show _MENU_",search:"Search:",zeroRecords:"No matching records found",paginate:{previous:"Prev",next:"Next",last:"Last",first:"First"}},bStateSave:!0,columnDefs:[{targets:0,orderable:!1,searchable:!1}],lengthMenu:[[-1,5,15,20],["All",5,15,20]],pageLength:20,pagingType:"bootstrap_full_number",columnDefs:[{orderable:!1,targets:[0]},{searchable:!1,targets:[0]}],order:[[1,"asc"]]});
         }
 
       myDataTable();
@@ -793,10 +991,14 @@ include 'footer.php';
                           echo 'loadData("'.$_SESSION['cm_id'].'")';  
                         }
                       ?>
+
+                      alertMessage('Entry Added Successfully.','success');
+
                   }
                   else
                   {
-                    alert(data['lot_of_limit']);
+                    // alert(data['lot_of_limit']);
+                    alertMessage("'"+data['lot_of_limit']+"'",'success');
                   }
                   getId();
               },
@@ -871,9 +1073,11 @@ include 'footer.php';
                     }
 
                     getId();
+
+                    alertMessage('Entry Updated Successfully.','success');
                   }
               },
-              error:function(){ alert("Error in Update Ajax Call.") }
+              error:function(){ /*alert("Error in Update Ajax Call.") */  alertMessage('Entry Not Updated.','error'); }
           });
       }
 
@@ -912,7 +1116,7 @@ include 'footer.php';
 
           $('form').removeClass('update_form');
 
-          $('#container_number,#advance,#remarks').val("");
+          $('#container_number,#advance,#remarks,#diesel').val("");
           $('#mr_charges').val("0"); 
           $('#color').val('white').trigger('change');
           $('#vehicle_id').val('').trigger('change');

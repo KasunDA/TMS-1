@@ -433,8 +433,8 @@ include 'footer.php';
             theme: "classic"
           });  
       $('.select2-selection').addClass('select');
-      
 
+      
       function load_full_form(v,param)
       {
         $.ajax({
@@ -523,6 +523,11 @@ include 'footer.php';
                                     '<li> <button class="btn btn-xs green update_btn" id="'+value['cm_id']+'" type="button">  '+
                                     '<i class="fa fa-plus-square"></i>'+
                                     '</button> </li>'+
+
+                                    '<li>  <button class="btn btn-xs blue cupdate_btn" id="'+value['cm_id']+'" type="button">  '+
+                                    '<i class="fa fa-info"></i>'+
+                                    '</button> </li>'+
+
                                     '<li>  <button class="btn btn-xs red delete_btn" id="'+value['cm_id']+'" type="button">  '+
                                     '<i class="fa fa-minus-square"></i>'+
                                     '</button> </li>'+
@@ -582,13 +587,13 @@ include 'footer.php';
                       
                       addNewClick();
 
-                      temp[3] = datee;
-                      temp[4] = agent_name;
-                      temp[5] = coa;
-                      temp[6] = consignee;
-                      temp[7] = movement;
-                      temp[8] = empty_terminal;
-                      temp[9] = from_yard;
+                      temp[3]  = datee;
+                      temp[4]  = agent_name;
+                      temp[5]  = coa;
+                      temp[6]  = consignee;
+                      temp[7]  = movement;
+                      temp[8]  = empty_terminal;
+                      temp[9]  = from_yard;
                       temp[10] = to_yard;
                       temp[11] = container_size;
                       temp[12] = party_charges;
@@ -636,6 +641,7 @@ include 'footer.php';
           $('#cm_id_div').removeClass('hidden');
           $('#update_form_btn').removeAttr('disabled');
 
+          $('#datee').focus();
       }
 
       function addNewClick()
@@ -659,6 +665,18 @@ include 'footer.php';
               trr = $(this).closest('tr');
 
           deletetr(trr,cm_id);
+      });
+
+      //C Update 
+      $(document).on('click','.cupdate_btn',function(){
+
+          var cm_id = $(this).attr('id');
+
+          $.ajax({
+            url:'ajax/container_movement/cupdate.php?cm_id='+cm_id,
+            success:function(data){ location.assign("container-entry.php"); },
+            error:function(){ alert("Can't edit Entries right now.") },
+          })
       });
 
       //ADD NEW 
@@ -745,10 +763,10 @@ include 'footer.php';
          {
             update(cm_id,datee,agent_id,agent_name,coa_id,coa,consignee_id,consignee,movement,empty_terminal_id,empty_terminal,from_yard_id,from_yard,to_yard_id,to_yard,container_size,party_charges,lot_of,line_id,line,bl_cro_number,job_number,index_number,rent,container_id,container_type,lolo_charges,weight_charges);
          }
-         else
-         {
+         // else
+         // {
 
-         }
+         // }
       });
 
     });

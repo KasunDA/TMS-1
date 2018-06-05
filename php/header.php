@@ -49,7 +49,7 @@ Like: www.facebook.com/logicsaint
         <meta content="" name="description" />
         <meta content="" name="author" />
         <!-- BEGIN GLOBAL MANDATORY STYLES -->
-        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
         <link href="../assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
         <link href="../assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
         <link href="../assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -94,6 +94,17 @@ Like: www.facebook.com/logicsaint
             border-radius: 1px;
             cursor: text;
             /*padding-top: 3px;*/
+        }
+
+        #message {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            margin-top: 55px;
+        }
+        #inner-message {
+            margin: 0 auto;
         }
     </style>
 
