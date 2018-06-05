@@ -163,7 +163,7 @@ date_default_timezone_set("Asia/Karachi");
                                  <a href="" class="expand"> </a>
                              </div>
                          </div>
-                         <div class="portlet-body table-both-scroll" style="display: none;">
+                         <div class="portlet-body table-both-scroll" >
                              <table class="table table-striped table-bordered table-hover table-checkable order-column" id="mytable">
                                  <thead>
                                      <tr>

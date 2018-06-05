@@ -97,6 +97,16 @@ $name = $_GET['name'];
                                             
                                                 </select>
                                             </div>
+
+                                            <div class="col-md-1">
+
+                                                <button class="btn btn-xs green bank_id" para="bank_id"  type="button">
+                                                
+                                                  <i class="fa fa-refresh"></i>
+                                                
+                                                </button>
+
+                                            </div>
                                         </div>
                                     </div>    
                                      <div class="row">
@@ -257,6 +267,36 @@ include 'footer.php';
        
        $('#vehicle_id').val(<?php echo $vehicle_id; ?>).trigger('change');
        //$('#vehicle_id').attr('disabled');
+
+       function updateField(param)
+      {
+        $.ajax({
+          url:'ajax/container_movement/update_field.php?id='+param,
+          dataType:'JSON',
+          success:function(data){
+
+                $('#'+param+'_full_form').val('');
+                $('#'+param).html('<option value="">Select Bank</option>');
+                
+                $.each(data,function(index,value){
+                  $('#'+param).append('<option value="'+value['bank_id']+'">'+value['short_form']+'</option> ');
+                });
+
+
+                  $('#'+param).select2({
+                    width: 'resolve',
+                    theme: "classic"
+                  });
+
+          },
+          error:function(){  alert('Error in Updating Field Ajax Call.') }
+        });
+      }
+
+      $(document).on('click','.bank_id', function()
+      {
+        updateField(''+$(this).attr('para')+'');
+      });
 
        function bcshow()
         {

@@ -58,9 +58,20 @@ date_default_timezone_set("Asia/Karachi");
                                                   <?php } //END OF WHILE ?>
                                                     
                                                 </select>
+
                                             </div>
+
+                                            <div class="col-md-1">
+
+                                              <button class="btn btn-xs green from_yard_id" para="from_yard_id"  type="button">
+                                              
+                                                <i class="fa fa-refresh"></i>
+                                              
+                                              </button>
+
+                                             </div>
                                             
-                                            <label class="col-md-2 control-label">To Destination:</label>
+                                            <label class="col-md-1 control-label">To Destination:</label>
                                             <div class="col-md-3">
                                               <select class="form-control" id="to_yard_id" name="to_yard_id" tabindex="4"  >
                                                   <option value="">All</option>
@@ -75,6 +86,16 @@ date_default_timezone_set("Asia/Karachi");
                                                   
                                               </select>
                                             </div>
+
+                                            <div class="col-md-1">
+
+                                              <button class="btn btn-xs green to_yard_id" para="to_yard_id"  type="button">
+                                              
+                                                <i class="fa fa-refresh"></i>
+                                              
+                                              </button>
+
+                                             </div>
 
                                         </div> 
                                 </div>
@@ -95,8 +116,18 @@ date_default_timezone_set("Asia/Karachi");
                                                   <?php } //END OF WHILE ?>
                                             </select>
                                         </div>
+
+                                        <div class="col-md-1">
+
+                                            <button class="btn btn-xs green coa_id" para="coa_id"  type="button">
+                                          
+                                                <i class="fa fa-refresh"></i>
+                                          
+                                            </button>
+
+                                        </div>
                                         
-                                        <label class="col-md-2 control-label">Consignee:</label>
+                                        <label class="col-md-1 control-label">Consignee:</label>
                                         <div class="col-md-3">
                                             <select class="form-control" id="consignee_id" name="consignee_id"  tabindex="6">
                                                 <option value="">All</option>
@@ -110,6 +141,16 @@ date_default_timezone_set("Asia/Karachi");
                                                   <?php } //END OF WHILE ?>
                                             </select>
                                         </div>
+
+                                        <div class="col-md-1">
+
+                                              <button class="btn btn-xs green consignee_id" para="consignee_id"  type="button">
+                                              
+                                                <i class="fa fa-refresh"></i>
+                                              
+                                              </button>
+
+                                             </div>
                                     </div> 
                                 </div>
                                 
@@ -140,6 +181,16 @@ date_default_timezone_set("Asia/Karachi");
                                                   <?php } //END OF WHILE ?>
                                               </select>
                                           </div>
+
+                                          <div class="col-md-1">
+
+                                              <button class="btn btn-xs green empty_terminal_id" para="empty_terminal_id"  type="button">
+                                              
+                                                <i class="fa fa-refresh"></i>
+                                              
+                                              </button>
+
+                                             </div>
                                     </div> 
                                 </div>
                                 
@@ -166,6 +217,16 @@ date_default_timezone_set("Asia/Karachi");
                                                       <?php } //END OF WHILE ?>
                                             </select>
                                         </div>  
+
+                                        <div class="col-md-1">
+
+                                              <button class="btn btn-xs green line_id" para="line_id"  type="button">
+                                              
+                                                <i class="fa fa-refresh"></i>
+                                              
+                                              </button>
+
+                                             </div>
 
                                     
                                     </div>  
@@ -198,6 +259,16 @@ date_default_timezone_set("Asia/Karachi");
                                                 <?php } //END OF WHILE ?>
                                             </select>
                                         </div>
+
+                                        <div class="col-md-1">
+
+                                              <button class="btn btn-xs green container_id" para="container_id"  type="button">
+                                              
+                                                <i class="fa fa-refresh"></i>
+                                              
+                                              </button>
+
+                                             </div>
                                     </div>  
                                 </div>
 
@@ -369,6 +440,87 @@ include 'footer.php';
       theme: "classic"
    });
    $('.select2-selection').addClass('select');
+
+    function updateField(param)
+      {
+        $.ajax({
+          url:'ajax/container_movement/update_field.php?id='+param,
+          dataType:'JSON',
+          success:function(data){
+
+
+              if( param =='coa_id' )
+              {
+                $('#'+param).html('<option value="">All</option>');
+                
+                $.each(data,function(index,value){
+                  $('#'+param).append('<option value="'+value['coa_id']+'">'+value['short_form']+'</option> ');
+                });
+              }
+              else if( param =='consignee_id' )
+              {
+                $('#'+param).html('<option value="">All</option>');
+                
+                $.each(data,function(index,value){
+                  $('#'+param).append('<option value="'+value['consignee_id']+'">'+value['short_form']+'</option> ');
+                });
+              }
+              else if( param =='empty_terminal_id' )
+              {
+                $('#'+param).html('<option value="">All</option>');
+                
+                $.each(data,function(index,value){
+                  $('#'+param).append('<option value="'+value['yard_id']+'">'+value['short_form']+'</option> ');
+                });
+              }
+              else if( param =='from_yard_id' )
+              {
+                $('#'+param).html('<option value="">All</option>');
+                
+                $.each(data,function(index,value){
+                  $('#'+param).append('<option value="'+value['yard_id']+'">'+value['short_form']+'</option> ');
+                });
+              }
+              else if( param =='to_yard_id' )
+              {
+                $('#'+param).html('<option value="">All</option>');
+                
+                $.each(data,function(index,value){
+                  $('#'+param).append('<option value="'+value['yard_id']+'">'+value['short_form']+'</option> ');
+                });
+              }
+              else if( param =='line_id' )
+              {
+                $('#'+param).html('<option value="">All</option>');
+                
+                $.each(data,function(index,value){
+                  $('#'+param).append('<option value="'+value['line_id']+'">'+value['short_form']+'</option> ');
+                });
+              }
+              else
+              {
+                $('#'+param).html('<option value="">All</option>');
+                
+                $.each(data,function(index,value){
+                  $('#'+param).append('<option value="'+value['container_id']+'">'+value['type']+'</option> ');
+                });
+              }
+
+              $('#'+param).select2({
+                width: 'resolve',
+                theme: "classic"
+              });
+
+            // $('#'+v+'_full_form').val(data['val']);
+          },
+          error:function(){  alert('Error in Updating Field Ajax Call.') }
+        });
+      }
+
+      $(document).on('click','.coa_id,.consignee_id,.line_id,.empty_terminal_id,.from_yard_id,.to_yard_id,.container_id', function()
+      {
+        updateField(''+$(this).attr('para')+'');
+      });
 
     function myDataTable()
     {

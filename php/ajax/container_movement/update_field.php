@@ -39,6 +39,32 @@ else if ( $termid=='vehicle_id' )
 	$term = 'vehicle_number';
 	$sql = " SELECT vehicle_id,vehicle_number from vehicle where status=1 ORDER BY vehicle_id DESC ";
 }
+else if ( $termid=='owner_name' ) 
+{
+	$term = 'owner_name';
+	$sql = " SELECT owner_name from vehicle where status=1 GROUP BY owner_name ";
+}
+else if ( $termid=='dd_id' || $termid=='idd_id' ) 
+{
+	$stermid = 'dd_id';
+	$term = 'name';
+	$sql = " SELECT dd_id,name from daily_description where status=1 and dd_id!=6 and dd_id!=7 ORDER BY dd_id DESC ";
+}
+else if ( $termid=='bank_id' || $termid=='ibank_id') 
+{
+	$stermid = 'bank_id';
+	$sql = " SELECT bank_id,short_form from bank where status=1 ORDER BY bank_id DESC ";
+}
+else if ( $termid=='bike_id' ) 
+{
+	$term = 'bike_number';
+	$sql = " SELECT bike_id,bike_number from bike where status=1 ORDER BY bike_id DESC ";
+}
+else if ( $termid=='cmp_id' ) 
+{
+	$term = 'name';
+	$sql = " SELECT * from company where status=1 ORDER BY cmp_id DESC ";
+}
 else
 {
 	$term = 'type';

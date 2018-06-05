@@ -63,12 +63,17 @@ date_default_timezone_set("Asia/Karachi");
                                                           
                                                      </select>
                                                     
-                                                    <!-- <option>Lunch</option>
-                                                    <option>Advance</option>
-                                                    <option>Diesel</option>
-                                                    <option>Bike Expenses</option>
-                                                    <option>Driver Salary</option> -->
                                                 
+                                            </div>
+
+                                            <div class="col-md-1">
+
+                                              <button class="btn btn-xs green dd_id" para="dd_id"  type="button">
+                                              
+                                                <i class="fa fa-refresh"></i>
+                                              
+                                              </button>
+
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -109,6 +114,17 @@ date_default_timezone_set("Asia/Karachi");
                                                     
                                                 </select>
                                             </div>
+
+                                            <div class="col-md-1">
+
+                                              <button class="btn btn-xs green bank_id" para="bank_id"  type="button">
+                                              
+                                                <i class="fa fa-refresh"></i>
+                                              
+                                              </button>
+
+                                            </div>
+
                                         </div>
                                         </div>
                                         <div class="form-group">
@@ -132,6 +148,16 @@ date_default_timezone_set("Asia/Karachi");
                                               <?php } //END OF WHILE ?>
                                                   </select>
                                             </div>
+
+                                            <div class="col-md-1">
+
+                                              <button class="btn btn-xs green bike_id" para="bike_id"  type="button">
+                                              
+                                                <i class="fa fa-refresh"></i>
+                                              
+                                              </button>
+
+                                            </div>
                                         </div>
                                     
                                         <div class="form-group hidden" id="vn_div">
@@ -148,6 +174,16 @@ date_default_timezone_set("Asia/Karachi");
                                                   <option value="<?php echo $r['vehicle_id']; ?>"><?php echo $r['vehicle_number']; ?></option>
                                               <?php } //END OF WHILE ?>
                                                   </select>
+                                            </div>
+
+                                            <div class="col-md-1">
+
+                                              <button class="btn btn-xs green vehicle_id" para="vehicle_id"  type="button">
+                                              
+                                                <i class="fa fa-refresh"></i>
+                                              
+                                              </button>
+
                                             </div>
                                         </div>
                                     
@@ -234,6 +270,17 @@ date_default_timezone_set("Asia/Karachi");
                                                           <?php } //END OF WHILE ?>
                                                           
                                                      </select>
+
+                                            </div>
+
+                                            <div class="col-md-1">
+
+                                              <button class="btn btn-xs green idd_id" para="idd_id"  type="button">
+                                              
+                                                <i class="fa fa-refresh"></i>
+                                              
+                                              </button>
+
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -274,6 +321,16 @@ date_default_timezone_set("Asia/Karachi");
                                                     
                                                 </select>
                                             </div>
+
+                                            <div class="col-md-1">
+
+                                              <button class="btn btn-xs green ibank_id" para="ibank_id"  type="button">
+                                              
+                                                <i class="fa fa-refresh"></i>
+                                              
+                                              </button>
+
+                                            </div>
                                         </div>
                                         </div>
                                         <div class="form-group">
@@ -297,6 +354,16 @@ date_default_timezone_set("Asia/Karachi");
                                                   <?php } //END OF WHILE ?>
                                                     
                                                 </select>
+                                            </div>
+
+                                            <div class="col-md-1">
+
+                                              <button class="btn btn-xs green cmp_id" para="cmp_id"  type="button">
+                                              
+                                                <i class="fa fa-refresh"></i>
+                                              
+                                              </button>
+
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -657,6 +724,88 @@ include 'footer.php';
       theme: "classic"
    });
    $('.select2-selection').addClass('select');
+
+      function updateField(param)
+      {
+        $.ajax({
+          url:'ajax/container_movement/update_field.php?id='+param,
+          dataType:'JSON',
+          success:function(data){
+
+
+              if( param =='dd_id' )
+              {
+                $('#'+param).html('<option value="">Select Description</option>');
+                
+                $.each(data,function(index,value){
+                  $('#'+param).append('<option value="'+value['dd_id']+'">'+value['name']+'</option> ');
+                });
+              }
+              else if( param =='idd_id' )
+              {
+                $('#'+param).html('<option value="">Select Description</option>');
+                
+                $.each(data,function(index,value){
+                  $('#'+param).append('<option value="'+value['dd_id']+'">'+value['name']+'</option> ');
+                });
+              }
+              else if( param =='bank_id' )
+              {
+                $('#'+param).html('<option value="">Select Bank</option>');
+                
+                $.each(data,function(index,value){
+                  $('#'+param).append('<option value="'+value['bank_id']+'">'+value['short_form']+'</option> ');
+                });
+              }
+              else if( param =='ibank_id' )
+              {
+                $('#'+param).html('<option value="">Select Bank</option>');
+                
+                $.each(data,function(index,value){
+                  $('#'+param).append('<option value="'+value['bank_id']+'">'+value['short_form']+'</option> ');
+                });
+              }
+              else if( param =='bike_id' )
+              {
+                $('#'+param).html('<option value="">Select Bike</option>');
+                
+                $.each(data,function(index,value){
+                  $('#'+param).append('<option value="'+value['bike_id']+'">'+value['bike_number']+'</option> ');
+                });
+              }
+              else if( param =='vehicle_id' )
+              {
+                $('#name').val('').trigger('change');
+                $('#'+param).html('<option value="">Select Vehicle</option>');
+                
+                $.each(data,function(index,value){
+                  $('#'+param).append('<option value="'+value['vehicle_id']+'">'+value['vehicle_number']+'</option> ');
+                });
+              }
+              else
+              {
+                $('#'+param).html('<option value="">Select Company</option>');
+                
+                $.each(data,function(index,value){
+                  $('#'+param).append('<option value="'+value['cmp_id']+'">'+value['name']+'</option> ');
+                });
+              }
+
+              $('#'+param).select2({
+                width: 'resolve',
+                theme: "classic"
+              });
+
+            // $('#'+v+'_full_form').val(data['val']);
+          },
+          error:function(){  alert('Error in Updating Field Ajax Call.') }
+        });
+      }
+
+      $(document).on('click','.dd_id,.idd_id,.bank_id,.ibank_id,.vehicle_id,.bike_id,.cmp_id', function()
+      {
+        updateField(''+$(this).attr('para')+'');
+      });
 
    $('input[name="method"],input[name="imethod"]').change(function(){
 

@@ -71,7 +71,19 @@ date_default_timezone_set("Asia/Karachi");
                                                   <?php } //END OF WHILE ?>
                                                 </select>
                                             </div>
-                                            <label class="col-md-2 control-label">Amount</label>
+
+                                            <div class="col-md-1">
+
+                                                <button class="btn btn-xs green vehicle_id" para="vehicle_id"  type="button">
+                                                
+                                                  <i class="fa fa-refresh"></i>
+                                                
+                                                </button>
+
+                                            </div>
+
+
+                                            <label class="col-md-1 control-label">Amount</label>
                                              <div class="col-md-3">
                                                <input type="number" step="0.01" min="0" class="form-control" id="amount" name="amount" required tabindex="4" placeholder="58680">
                                              </div>
@@ -145,6 +157,36 @@ include 'footer.php';
           theme: "classic"
        });
        $('.select2-selection').addClass('select');
+
+      function updateField(param)
+      {
+        $.ajax({
+          url:'ajax/container_movement/update_field.php?id='+param,
+          dataType:'JSON',
+          success:function(data){
+
+                $('#'+param+'_full_form').val('');
+                $('#'+param).html('<option value="">Select Vehicle</option>');
+                
+                $.each(data,function(index,value){
+                  $('#'+param).append('<option value="'+value['vehicle_id']+'">'+value['vehicle_number']+'</option> ');
+                });
+
+
+                  $('#'+param).select2({
+                    width: 'resolve',
+                    theme: "classic"
+                  });
+
+          },
+          error:function(){  alert('Error in Updating Field Ajax Call.') }
+        });
+      }
+
+      $(document).on('click','.vehicle_id', function()
+      {
+        updateField(''+$(this).attr('para')+'');
+      });
 
        function myDataTable()
         {

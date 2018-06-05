@@ -60,8 +60,18 @@ date_default_timezone_set("Asia/Karachi");
                                                     
                                                 </select>
                                             </div>
+
+                                            <div class="col-md-1">
+
+                                              <button class="btn btn-xs green from_yard_id" para="from_yard_id"  type="button">
+                                              
+                                                <i class="fa fa-refresh"></i>
+                                              
+                                              </button>
+
+                                             </div>
                                             
-                                            <label class="col-md-2 control-label">To Destination:</label>
+                                            <label class="col-md-1 control-label">To Destination:</label>
                                             <div class="col-md-3">
                                               <select class="form-control" id="to_yard_id" name="to_yard_id" tabindex="4"  >
                                                   <option value="">All</option>
@@ -76,6 +86,16 @@ date_default_timezone_set("Asia/Karachi");
                                                   
                                               </select>
                                             </div>
+
+                                            <div class="col-md-1">
+
+                                              <button class="btn btn-xs green to_yard_id" para="to_yard_id"  type="button">
+                                              
+                                                <i class="fa fa-refresh"></i>
+                                              
+                                              </button>
+
+                                             </div>
 
                                         </div> 
                                 </div>
@@ -96,8 +116,18 @@ date_default_timezone_set("Asia/Karachi");
                                                   <?php } //END OF WHILE ?>
                                             </select>
                                         </div>
+
+                                        <div class="col-md-1">
+
+                                          <button class="btn btn-xs green coa_id" para="coa_id"  type="button">
+                                          
+                                            <i class="fa fa-refresh"></i>
+                                          
+                                          </button>
+
+                                        </div>
                                         
-                                        <label class="col-md-2 control-label">Consignee:</label>
+                                        <label class="col-md-1 control-label">Consignee:</label>
                                         <div class="col-md-3">
                                             <select class="form-control" id="consignee_id" name="consignee_id"  tabindex="6">
                                                 <option value="">All</option>
@@ -110,6 +140,16 @@ date_default_timezone_set("Asia/Karachi");
                                                       <option value="<?php echo $r['consignee_id']; ?>"><?php echo $r['short_form']; ?></option>
                                                   <?php } //END OF WHILE ?>
                                             </select>
+                                        </div>
+
+                                        <div class="col-md-1">
+
+                                          <button class="btn btn-xs green consignee_id" para="consignee_id"  type="button">
+                                          
+                                            <i class="fa fa-refresh"></i>
+                                          
+                                          </button>
+
                                         </div>
                                     </div> 
                                 </div>
@@ -141,6 +181,16 @@ date_default_timezone_set("Asia/Karachi");
                                                   <?php } //END OF WHILE ?>
                                               </select>
                                           </div>
+
+                                          <div class="col-md-1">
+
+                                          <button class="btn btn-xs green empty_terminal_id" para="empty_terminal_id"  type="button">
+                                          
+                                            <i class="fa fa-refresh"></i>
+                                          
+                                          </button>
+
+                                        </div>
                                     </div> 
                                 </div>
                                 
@@ -187,6 +237,16 @@ date_default_timezone_set("Asia/Karachi");
                                                 <?php } //END OF WHILE ?>
                                             </select>
                                         </div>
+
+                                        <div class="col-md-1">
+
+                                          <button class="btn btn-xs green container_id" para="container_id"  type="button">
+                                          
+                                            <i class="fa fa-refresh"></i>
+                                          
+                                          </button>
+
+                                        </div>
                                     </div>  
                                 </div>
 
@@ -207,7 +267,17 @@ date_default_timezone_set("Asia/Karachi");
                                             </select>
                                         </div>
 
-                                        <label class="col-md-2 control-label">Owner Name:</label>
+                                        <div class="col-md-1">
+
+                                          <button class="btn btn-xs green vehicle_id" para="vehicle_id"  type="button">
+                                          
+                                            <i class="fa fa-refresh"></i>
+                                          
+                                          </button>
+
+                                        </div>
+
+                                        <label class="col-md-1 control-label">Owner Name:</label>
                                         <div class="col-md-3">
                                             <select class="form-control" id="owner_name" name="owner_name" tabindex="14">
                                                 <option value="">All</option>
@@ -220,7 +290,17 @@ date_default_timezone_set("Asia/Karachi");
                                                         <option value="<?php echo $r['owner_name']; ?>"><?php echo $r['owner_name']; ?></option>
                                                     <?php } //END OF WHILE ?>         
                                             </select>
-                                        </div>                                        
+                                        </div>   
+
+                                        <div class="col-md-1">
+
+                                          <button class="btn btn-xs green owner_name" para="owner_name"  type="button">
+                                          
+                                            <i class="fa fa-refresh"></i>
+                                          
+                                          </button>
+
+                                        </div>                                     
                                     
                                     </div>  
                                 </div>
@@ -241,7 +321,17 @@ date_default_timezone_set("Asia/Karachi");
                                                               <option value="<?php echo $r['line_id']; ?>"><?php echo $r['short_form']; ?></option>
                                                           <?php } //END OF WHILE ?>
                                                 </select>
-                                            </div>                                     
+                                            </div>       
+
+                                            <div class="col-md-1">
+
+                                          <button class="btn btn-xs green line_id" para="line_id"  type="button">
+                                          
+                                            <i class="fa fa-refresh"></i>
+                                          
+                                          </button>
+
+                                        </div>                              
                                     </div>  
                                 </div>
                                 
@@ -449,6 +539,16 @@ date_default_timezone_set("Asia/Karachi");
                                                     
                                                 </select>
                                             </div>
+
+                                            <div class="col-md-1">
+
+                                                <button class="btn btn-xs green bank_id" para="bank_id"  type="button">
+                                                
+                                                  <i class="fa fa-refresh"></i>
+                                                
+                                                </button>
+
+                                            </div>
                                         </div>
                                         </div>
                                         <div class="form-group">
@@ -624,11 +724,116 @@ include 'footer.php';
     // });
 
     //Select2
-   $('#from_yard_id,#to_yard_id,#coa_id,#consignee_id,#movement,#empty_terminal_id,#container_size,#container_id,#line_id,#vehicle_id,#owner_name').select2({
+   $('#from_yard_id,#to_yard_id,#coa_id,#consignee_id,#movement,#empty_terminal_id,#container_size,#container_id,#line_id,#vehicle_id,#owner_name,#bank_id').select2({
       width: 'resolve',
       theme: "classic"
    });
    $('.select2-selection').addClass('select');
+
+   function updateField(param)
+      {
+        $.ajax({
+          url:'ajax/container_movement/update_field.php?id='+param,
+          dataType:'JSON',
+          success:function(data){
+
+
+              if( param =='coa_id' )
+              {
+                $('#'+param).html('<option value="">All</option>');
+                
+                $.each(data,function(index,value){
+                  $('#'+param).append('<option value="'+value['coa_id']+'">'+value['short_form']+'</option> ');
+                });
+              }
+              else if( param =='consignee_id' )
+              {
+                $('#'+param).html('<option value="">All</option>');
+                
+                $.each(data,function(index,value){
+                  $('#'+param).append('<option value="'+value['consignee_id']+'">'+value['short_form']+'</option> ');
+                });
+              }
+              else if( param =='empty_terminal_id' )
+              {
+                $('#'+param).html('<option value="">All</option>');
+                
+                $.each(data,function(index,value){
+                  $('#'+param).append('<option value="'+value['yard_id']+'">'+value['short_form']+'</option> ');
+                });
+              }
+              else if( param =='from_yard_id' )
+              {
+                $('#'+param).html('<option value="">All</option>');
+                
+                $.each(data,function(index,value){
+                  $('#'+param).append('<option value="'+value['yard_id']+'">'+value['short_form']+'</option> ');
+                });
+              }
+              else if( param =='to_yard_id' )
+              {
+                $('#'+param).html('<option value="">All</option>');
+                
+                $.each(data,function(index,value){
+                  $('#'+param).append('<option value="'+value['yard_id']+'">'+value['short_form']+'</option> ');
+                });
+              }
+              else if( param =='line_id' )
+              {
+                $('#'+param).html('<option value="">All</option>');
+                
+                $.each(data,function(index,value){
+                  $('#'+param).append('<option value="'+value['line_id']+'">'+value['short_form']+'</option> ');
+                });
+              }
+              else if( param =='vehicle_id' )
+              {
+                $('#'+param).html('<option value="">All</option>');
+                
+                $.each(data,function(index,value){
+                  $('#'+param).append('<option value="'+value['vehicle_id']+'">'+value['vehicle_number']+'</option> ');
+                });
+              }
+              else if( param =='owner_name' )
+              {
+                $('#'+param).html('<option value="">All</option>');
+                
+                $.each(data,function(index,value){
+                  $('#'+param).append('<option value="'+value['owner_name']+'">'+value['owner_name']+'</option> ');
+                });
+              }
+              else if ( param == 'bank_id' )
+              {
+                $('#'+param).html('<option value="">Select Bank</option>');
+                
+                $.each(data,function(index,value){
+                  $('#'+param).append('<option value="'+value['bank_id']+'">'+value['short_form']+'</option> ');
+                });
+              }
+              else
+              {
+                $('#'+param).html('<option value="">All</option>');
+                
+                $.each(data,function(index,value){
+                  $('#'+param).append('<option value="'+value['container_id']+'">'+value['type']+'</option> ');
+                });
+              }
+
+              $('#'+param).select2({
+                width: 'resolve',
+                theme: "classic"
+              });
+
+            // $('#'+v+'_full_form').val(data['val']);
+          },
+          error:function(){  alert('Error in Updating Field Ajax Call.') }
+        });
+      }
+
+      $(document).on('click','.coa_id,.consignee_id,.line_id,.empty_terminal_id,.from_yard_id,.to_yard_id,.vehicle_id,.container_id,.owner_name,.bank_id', function()
+      {
+        updateField(''+$(this).attr('para')+'');
+      });
 
     function myDataTable()
     {
