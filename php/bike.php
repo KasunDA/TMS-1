@@ -48,7 +48,7 @@ include 'nav.php';
                                                 </div>
                                                 <label class="col-md-2 control-label">bike #:</label>
                                                 <div class="col-md-3">
-                                                  <input type="text" class="form-control" id="bike_number" name="bike_number" tabindex="1" placeholder="bike Number" required>
+                                                  <input type="text" class="form-control" id="bike_number" name="bike_number" tabindex="1" placeholder="bike Number" required autofocus>
                                                 </div>
                                     
                                          </div>  
@@ -163,7 +163,7 @@ include 'footer.php';
 
                     myDataTable();
                 },
-                error:function(){ alert("Failed Fetch Ajax Call.") }
+                error:function(){ alertMessage("Failed Fetch Ajax Call.",'error') }
             });
         }
 
@@ -178,11 +178,11 @@ include 'footer.php';
                     if(data)
                     {
                         $('#bike_number').val("");
-                        
+                        alertMessage('Added Successfully.','success');
                         loadData();
                     }
                 },
-                error:function(){ alert("Error in Add Ajax Call.") }
+                error:function(){ alertMessage("Error in Add Ajax Call.",'error') }
             });
         }
 
@@ -202,9 +202,11 @@ include 'footer.php';
                         temp[2] = bike_number;
 
                         $('#mytable').DataTable().row(i).data(temp).draw();
+
+                        alertMessage('Updated Successfully.','success');
                     }
                 },
-                error:function(){ alert("Error in Update Ajax Call.") }
+                error:function(){ alertMessage("Error in Update Ajax Call.",'error') }
             });
         }
 
@@ -218,7 +220,7 @@ include 'footer.php';
                        trr.remove(); 
                     });
                 },
-                error:function(){ alert("Error in Delete ajax Call.") }
+                error:function(){ alertMessage("Error in Delete ajax Call.",'error') }
             });
         }
 
@@ -233,6 +235,8 @@ include 'footer.php';
 
             $('#btn_submit').addClass('hidden');
             $('#btn_reset').addClass('hidden');
+
+            $('#bike_number').focus();
 
         }
 
@@ -249,6 +253,8 @@ include 'footer.php';
 
             $('#btn_submit').removeClass('hidden');
             $('#btn_reset').removeClass('hidden');
+
+            $('#bike_number').focus();
 
         }
 
@@ -303,6 +309,8 @@ include 'footer.php';
            {
                 add(bike_number);
            }
+
+           $('#bike_number').focus();
         });
 
 

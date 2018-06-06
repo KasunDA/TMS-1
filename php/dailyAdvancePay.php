@@ -60,7 +60,7 @@ $name = $_GET['name'];
                                             <div class="col-md-2">
                                                 <div class="mt-radio-list">
                                                     <label class="mt-radio">
-                                                        <input type="radio" name="method" id="optionsRadios22" value="cash" checked tabindex="1"> Cash 
+                                                        <input type="radio" name="method" id="optionsRadios22" value="cash" checked tabindex="1" autofocus> Cash 
                                                         <span></span>
                                                     </label>
                                                     <label class="mt-radio">
@@ -289,7 +289,7 @@ include 'footer.php';
                   });
 
           },
-          error:function(){  alert('Error in Updating Field Ajax Call.') }
+          error:function(){  alertMessage('Error in Updating Field Ajax Call.','error') }
         });
       }
 
@@ -414,7 +414,7 @@ include 'footer.php';
 
                     myDataTable();
                 },
-                error:function(){ alert("Failed Fetch Ajax Call.") }
+                error:function(){ alertMessage("Failed Fetch Ajax Call.",'error') }
             });
         }
 
@@ -462,7 +462,7 @@ include 'footer.php';
                     });
 
                 },
-                error:function(){ alert("Failed iFetch Ajax Call.") }
+                error:function(){ alertMessage("Failed iFetch Ajax Call.",'error'); }
             });
         }
 
@@ -480,11 +480,12 @@ include 'footer.php';
                         $('#bank_id').val("").trigger('change');
                         $('#amount,#check_number,#description').val("");
                         
+                        alertMessage('Added Successfully.','success');
                         // loadData();
                         iloadData(<?php echo $vehicle_id.',"'.$name.'"';?>);
                     }
                 },
-                error:function(){ alert("Error in Add Ajax Call.") }
+                error:function(){ alertMessage("Error in Add Ajax Call.",'error') }
             });
         }
 

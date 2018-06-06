@@ -605,15 +605,6 @@ date_default_timezone_set("Asia/Karachi");
 </div>
 <!-- END CONTAINER -->
 
-<div id="message" style="display: none;">
-    <div style="padding: 5px;">
-        <div id="inner-message" class="alert alert-success">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <span></span>
-        </div>
-    </div>
-</div>
-
 <?php 
 include 'footer.php';
  ?>
@@ -622,27 +613,14 @@ include 'footer.php';
    $(document).ready(function(){
 
    		$('#update_records_btn').click(function(event) {
-          <?php echo 'loadData("'.$_SESSION['cm_id'].'")'; ?>
+          
+          <?php 
+            if(isset($_SESSION['']))
+            {
+              echo 'loadData("'.$_SESSION['cm_id'].'")'; 
+            }
+          ?>  
         });
-
-        function alertMessage(msg,behave)
-        {
-        	$('#message').hide();
-        	
-        	if(behave == 'success')
-        	{
-        		$('#inner-message').removeClass('alert-danger');
-        		$('#inner-message').addClass('alert-success');
-        	}
-        	else
-        	{
-        		$('#inner-message').removeClass('alert-success');
-        		$('#inner-message').addClass('alert-danger');
-        	}
-    		
-    		$('#inner-message').find('span').html(msg);
-        	$('#message').show().delay(6000).fadeOut();
-        }
 
       document.onkeyup = KeyCheck;
 
@@ -998,7 +976,7 @@ include 'footer.php';
                   else
                   {
                     // alert(data['lot_of_limit']);
-                    alertMessage("'"+data['lot_of_limit']+"'",'success');
+                    alertMessage("'"+data['lot_of_limit']+"'",'error');
                   }
                   getId();
               },
@@ -1120,7 +1098,7 @@ include 'footer.php';
           $('#mr_charges').val("0"); 
           $('#color').val('white').trigger('change');
           $('#vehicle_id').val('').trigger('change');
-//          $('#btn_reset').trigger('click');
+          //$('#btn_reset').trigger('click');
 
           $('#ce_id_div').addClass('hidden');
           $('#update_form_btn').addClass('hidden');

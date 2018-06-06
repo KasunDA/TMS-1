@@ -609,7 +609,7 @@ include 'footer.php';
 
             // $('#'+v+'_full_form').val(data['val']);
           },
-          error:function(){  alert('Error in Updating Field Ajax Call.') }
+          error:function(){  alertMessage('Error in Updating Field Ajax Call.','error') }
         });
       }
 
@@ -627,7 +627,7 @@ include 'footer.php';
           success:function(data){
             $('#'+v+'_full_form').val(data['val']);
           },
-          error:function(){  alert('Error Ajax Call.') }
+          error:function(){  alertMessage('Error Ajax Call.','error') }
         })
       }
 
@@ -752,7 +752,7 @@ include 'footer.php';
 
                 myDataTable();
             },
-            error:function(){ alert("Failed Fetch Ajax Call.") }
+            error:function(){ alertMessage("Failed Fetch Ajax Call.",'error') }
         });
       }
 
@@ -794,12 +794,14 @@ include 'footer.php';
 
                       $('#mytable').DataTable().row(i).data(temp).draw();
 
-                    $('.selectedd').css('');
+                      alertMessage('Updated Successfully.','success');
 
-                    location.assign('container-entry.php');
+                      $('.selectedd').css('');
+
+                      // location.assign('container-entry.php');
                   }
               },
-              error:function(){ alert("Error in Update Ajax Call.") }
+              error:function(){ alertMessage("Error in Update Ajax Call.",'error') }
           });
       }
 
@@ -813,7 +815,7 @@ include 'footer.php';
                      trr.remove(); 
                   });
               },
-              error:function(){ alert("Error in Delete ajax Call.") }
+              error:function(){ alertMessage("Error in Delete ajax Call.",'error') }
           });
       }
 
@@ -859,7 +861,7 @@ include 'footer.php';
           $.ajax({
             url:'ajax/container_movement/cupdate.php?cm_id='+cm_id,
             success:function(data){ location.assign("container-entry.php"); },
-            error:function(){ alert("Can't edit Entries right now.") },
+            error:function(){ alertMessage("Can't edit Entries right now.",'error') },
           })
       });
 

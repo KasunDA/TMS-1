@@ -195,7 +195,7 @@ include 'footer.php';
           });
 
           },
-          error:function(){  alert('Error in Updating Field Ajax Call.') }
+          error:function(){  alertMessage('Error in Updating Field Ajax Call.','error') }
         });
     }    
 
@@ -262,7 +262,7 @@ include 'footer.php';
                 $('#total_price').text(total_price);
 
             },
-            error:function(){ alert("Failed Fetch Ajax Call.") }
+            error:function(){ alertMessage("Failed Fetch Ajax Call.",'error') }
         });
     }
 

@@ -550,7 +550,7 @@ include 'footer.php';
 
                 })
             },
-            error:function(){ alert("Failed Get Previous Balance Fetch Ajax Call.") }
+            error:function(){ alertMessage("Failed Get Previous Balance Fetch Ajax Call.",'error') }
         });
     }
 
@@ -701,7 +701,7 @@ include 'footer.php';
                 }
                 
             },
-            error:function(){ alert(' Failed Ajax Call Get Names.'); },
+            error:function(){ alertMessage(' Failed Ajax Call Get Names.','error'); },
         })
          
     });
@@ -798,7 +798,7 @@ include 'footer.php';
 
             // $('#'+v+'_full_form').val(data['val']);
           },
-          error:function(){  alert('Error in Updating Field Ajax Call.') }
+          error:function(){  alertMessage('Error in Updating Field Ajax Call.','error') }
         });
       }
 
@@ -886,7 +886,7 @@ include 'footer.php';
                 myDataTable();
                 getPreviousBalance();
             },
-            error:function(){ alert("Failed Fetch Ajax Call.") }
+            error:function(){ alertMessage("Failed Fetch Ajax Call.",'error') }
         });
     }
 
@@ -936,7 +936,7 @@ include 'footer.php';
                 imyDataTable();
                 getPreviousBalance();
             },
-            error:function(){ alert("Failed iFetch Ajax Call.") }
+            error:function(){ alertMessage("Failed iFetch Ajax Call.",'error') }
         });
     }
 
@@ -956,11 +956,13 @@ include 'footer.php';
                     allhide();
                     bikehide();
                     
+                    alertMessage('Added Successfully.','success');
+
                     loadData();
                     iloadData();
                 }
             },
-            error:function(){ alert("Error in Add Ajax Call.") }
+            error:function(){ alertMessage("Error in Add Ajax Call.",'error') }
         });
     }
 
@@ -978,12 +980,14 @@ include 'footer.php';
                     $('#icheck_number_div').addClass('hidden'); 
 
                     cmphide();  
+
+                    alertMessage('Added Successfully.','success');
                     
                     iloadData();
                     loadData();
                 }
             },
-            error:function(){ alert("Error in iAdd Ajax Call.") }
+            error:function(){ alertMessage("Error in iAdd Ajax Call.",'error') }
         });
     }
 
@@ -1014,7 +1018,7 @@ include 'footer.php';
                     $('#mytable').DataTable().row(i).data(temp).draw();
                 }
             },
-            error:function(){ alert("Error in Update Ajax Call.") }
+            error:function(){ alertMessage("Error in Update Ajax Call.",'error') }
         });
     }
 
@@ -1043,7 +1047,7 @@ include 'footer.php';
                     $('#imytable').DataTable().row(i).data(temp).draw();
                 }
             },
-            error:function(){ alert("Error in iUpdate Ajax Call.") }
+            error:function(){ alertMessage("Error in iUpdate Ajax Call.",'error') }
         });
     }
 
@@ -1057,7 +1061,7 @@ include 'footer.php';
                    trr.remove(); 
                 });
             },
-            error:function(){ alert("Error in Delete ajax Call.") }
+            error:function(){ alertMessage("Error in Delete ajax Call.",'error') }
         });
     }
 
@@ -1071,7 +1075,7 @@ include 'footer.php';
                    trr.remove(); 
                 });
             },
-            error:function(){ alert("Error in iDelete ajax Call.") }
+            error:function(){ alertMessage("Error in iDelete ajax Call.",'error') }
         });
     }
 
@@ -1087,6 +1091,8 @@ include 'footer.php';
         $('#btn_submit').addClass('hidden');
         $('#btn_reset').addClass('hidden');
 
+        $('#datee').focus();
+
     }
 
     function iupdateClick()
@@ -1100,6 +1106,8 @@ include 'footer.php';
 
         $('#ibtn_submit').addClass('hidden');
         $('#ibtn_reset').addClass('hidden');
+
+        $('#idatee').focus();
 
     }
 
@@ -1285,6 +1293,8 @@ include 'footer.php';
        {
             add(datee,dd_id,method,check_number,bank_id,amount,vehicle_id,name,bike_id,description);
        }
+
+       $('#datee').focus();
     });
 
     //Add & Update income 
@@ -1318,6 +1328,8 @@ include 'footer.php';
        {
             iadd(idatee,idd_id,imethod,icheck_number,ibank_id,iamount,cmp_id,idescription);
        }
+
+       $('#idatee').focus();
     });
 
  });

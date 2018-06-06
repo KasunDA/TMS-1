@@ -41,7 +41,7 @@ require 'connection.php';
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">From Destination:</label>
                                             <div class="col-md-3">
-                                                <select class="form-control select" id="from_yard" name="from_yard" required tabindex="1" style="width: 100%;">
+                                                <select class="form-control select" id="from_yard" name="from_yard" required tabindex="1" style="width: 100%;" autofocus>
                                                     <option value="">Select Destination</option>
                                                     <?php
 
@@ -207,7 +207,7 @@ include 'footer.php';
                     })
                     myDataTable();
                 },
-                error:function(){ alert("Failed Fetch Ajax Call.") }
+                error:function(){ alertMessage("Failed Fetch Ajax Call.",'error') }
             });
         }
 
@@ -224,11 +224,11 @@ include 'footer.php';
                         $('#from_yard').val('').trigger('change');
                         $('#to_yard').val('').trigger('change');
                         $('#limit_litre').val("");
-                        
+                        alertMessage('Added Successfully.','success');
                         loadData();
                     }
                 },
-                error:function(){ alert("Error in Add Ajax Call.") }
+                error:function(){ alertMessage("Error in Add Ajax Call.",'error') }
             });
         }
 
@@ -250,10 +250,12 @@ include 'footer.php';
                         temp[4] = limit_litre;
 
                         $('#mytable').DataTable().row(i).data(temp).draw();
+
+                        alertMessage('Updated Successfully.','success');
                         
                     }
                 },
-                error:function(){ alert("Error in Update Ajax Call.") }
+                error:function(){ alertMessage("Error in Update Ajax Call.",'error') }
             });
         }
 
@@ -267,7 +269,7 @@ include 'footer.php';
                        trr.remove(); 
                     });
                 },
-                error:function(){ alert("Error in Delete ajax Call.") }
+                error:function(){ alertMessage("Error in Delete ajax Call.",'error') }
             });
         }
 
@@ -282,6 +284,8 @@ include 'footer.php';
 
             $('#btn_submit').addClass('hidden');
             $('#btn_reset').addClass('hidden');
+
+            $('#from_yard').focus();
 
         }
 
@@ -302,6 +306,8 @@ include 'footer.php';
 
             $('#btn_submit').removeClass('hidden');
             $('#btn_reset').removeClass('hidden');
+
+            $('#from_yard').focus();
 
         }
 
@@ -369,6 +375,8 @@ include 'footer.php';
            {
                 add(from_yard,to_yard,limit_litre);
            }
+
+           $('#from_yard').focus();
         });
 
 

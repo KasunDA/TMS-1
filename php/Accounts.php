@@ -300,7 +300,7 @@ include 'footer.php';
                         n++;
                     });
                 },
-                error:function(){ alert("Failed Previous Balance Fetch Ajax Call.") }
+                error:function(){ alertMessage("Failed Previous Balance Fetch Ajax Call.",'error') }
             });
         }
 
@@ -355,7 +355,7 @@ include 'footer.php';
                   });
 
           },
-          error:function(){  alert('Error in Updating Field Ajax Call.') }
+          error:function(){  alertMessage('Error in Updating Field Ajax Call.','error') }
         });
       }
 
@@ -445,7 +445,7 @@ include 'footer.php';
                     // $('#today_credit').html(today_credit);
                     // $('#today_balance').html(today_balance-today_debit);
                 },
-                error:function(){ alert("Failed Fetch Ajax Call.") }
+                error:function(){ alertMessage("Failed Fetch Ajax Call.",'error') }
             });
         }
 
@@ -462,12 +462,12 @@ include 'footer.php';
                     {
                         $('#bank_id').val("").trigger('change');
                         $('#btn_reset').trigger('click');
-                        
+                        alertMessage('Transaction Completed Successfully.','success');
                         loadData();
 
                     }
                 },
-                error:function(){ alert("Error in Add Ajax Call.") }
+                error:function(){ alertMessage("Error in Add Ajax Call.",'error') }
             });
         }
 
@@ -491,7 +491,7 @@ include 'footer.php';
                         dt();
                     }
                 },
-                error:function(){ alert("Error in Update Ajax Call.") }
+                error:function(){ alertMessage("Error in Update Ajax Call.",'error') }
             });
         }
 
@@ -506,7 +506,7 @@ include 'footer.php';
                     });
                     dt();
                 },
-                error:function(){ alert("Error in Delete ajax Call.") }
+                error:function(){ alertMessage("Error in Delete ajax Call.",'error') }
             });
         }
 
@@ -521,6 +521,8 @@ include 'footer.php';
 
             $('#btn_submit').addClass('hidden');
             $('#btn_reset').addClass('hidden');
+
+            $('#datee').focus();
 
         }
 
@@ -538,6 +540,8 @@ include 'footer.php';
 
             $('#btn_submit').removeClass('hidden');
             $('#btn_reset').removeClass('hidden');
+
+            $('#datee').focus();
 
         }
 
@@ -602,6 +606,8 @@ include 'footer.php';
            {
                 add(datee,bank_id,action,method,amount,check_number,description);
            }
+
+           $('#datee').focus();
         });
 
 

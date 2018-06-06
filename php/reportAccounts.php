@@ -224,7 +224,7 @@ include 'footer.php';
                     n++;
                 });
             },
-            error:function(){ alert("Failed Previous Balance Fetch Ajax Call.") }
+            error:function(){ alertMessage("Failed Previous Balance Fetch Ajax Call.",'error') }
         });
     }
 
@@ -274,7 +274,7 @@ include 'footer.php';
                   });
 
           },
-          error:function(){  alert('Error in Updating Field Ajax Call.') }
+          error:function(){  alertMessage('Error in Updating Field Ajax Call.','error') }
         });
       }
 
@@ -345,7 +345,7 @@ include 'footer.php';
                 //     $('#today_credit').html(today_credit);
                 //     $('#today_balance').html(today_balance-today_debit);
             },
-            error:function(){ alert("Failed Fetch Ajax Call.") }
+            error:function(){ alertMessage("Failed Fetch Ajax Call.",'error') }
         });
     }
 

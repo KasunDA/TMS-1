@@ -1,3 +1,13 @@
+        <!-- BEGIN MESSAGE -->
+        <div id="message" style="display: none;">
+            <div style="padding: 5px;">
+                <div id="inner-message" class="alert alert-success">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+
         <!-- BEGIN FOOTER -->
         <div class="page-footer">
             <div class="page-footer-inner"> 2018 &copy; Butt Brothers Transport co. Website Credit
@@ -99,3 +109,27 @@
         ?>   
      }, 1000);
 </script> -->
+
+<script type="text/javascript">
+    
+    //Alert Message FUNCTION
+    function alertMessage(msg,behave)
+        {
+            $('#message').hide();
+            
+            if(behave == 'success')
+            {
+                $('#inner-message').removeClass('alert-danger');
+                $('#inner-message').addClass('alert-success');
+            }
+            else
+            {
+                $('#inner-message').removeClass('alert-success');
+                $('#inner-message').addClass('alert-danger');
+            }
+            
+              $('#inner-message').find('span').html(msg);
+            $('#message').show().delay(6000).fadeOut();
+        }
+
+</script>

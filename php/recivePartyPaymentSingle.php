@@ -346,7 +346,7 @@ include 'footer.php';
                     n++;
                 });
             },
-            error:function(){ alert("Failed Previous Balance Fetch Ajax Call.") }
+            error:function(){ alertMessage("Failed Previous Balance Fetch Ajax Call.",'error') }
         });
     }
 
@@ -395,7 +395,7 @@ include 'footer.php';
                   });
 
           },
-          error:function(){  alert('Error in Updating Field Ajax Call.') }
+          error:function(){  alertMessage('Error in Updating Field Ajax Call.','error') }
         });
       }
 
@@ -474,7 +474,7 @@ include 'footer.php';
                 $('#amount').attr('max',$('#total_party_charges').html());
 
             },
-            error:function(){ alert("Failed Fetch Ajax Call.") }
+            error:function(){ alertMessage("Failed Fetch Ajax Call.",'error') }
         });
     }
 
@@ -511,7 +511,7 @@ include 'footer.php';
                 // myDataTable();
 
             },
-            error:function(){ alert("Failed Fetch Ajax Call.") }
+            error:function(){ alertMessage("Failed Fetch Ajax Call.",'error') }
         });
     }
 
@@ -527,11 +527,12 @@ include 'footer.php';
                 if(data)
                 {
                     $('#btn_reset').trigger('click');
-                    
+                    alertMessage('Added Successfully.','success');
+
                     iloadData(<?php echo $cm_id; ?>);
                 }
             },
-            error:function(){ alert("Error in Add Ajax Call.") }
+            error:function(){ alertMessage("Error in Add Voucher Ajax Call.",'error') }
         });
     }
 
@@ -561,7 +562,7 @@ include 'footer.php';
                 });
 
             },
-            error:function(){ alert("Failed Fetch Ajax Call.") }
+            error:function(){ alertMessage("Failed Fetch Ajax Call.",'error') }
         });
     }
 

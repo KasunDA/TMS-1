@@ -39,7 +39,7 @@ include 'nav.php';
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">Bank Short Form:</label>
                                             <div class="col-md-3">
-                                               <input type="text" class="form-control" id="short_form" name="short_form" required tabindex="1" placeholder="HBL">
+                                               <input type="text" class="form-control" id="short_form" name="short_form" required tabindex="1" placeholder="HBL" autofocus >
                                             </div>
                                             <label class="col-md-2 control-label">Bank Full Form:</label>
                                             <div class="col-md-4">
@@ -195,7 +195,7 @@ include 'footer.php';
                     })
                     myDataTable();
                 },
-                error:function(){ alert("Failed Fetch Ajax Call.") }
+                error:function(){ alertMessage("Failed Fetch Ajax Call.",'error') }
             });
         }
 
@@ -215,11 +215,11 @@ include 'footer.php';
                         $('#account_number').val("");
                         $('#balance').val("");
                         $('#address').val("");
-                        
+                        alertMessage('Added Successfully.','success');
                         loadData();
                     }
                 },
-                error:function(){ alert("Error in Add Ajax Call.") }
+                error:function(){ alertMessage("Error in Add Ajax Call.",'error') }
             });
         }
 
@@ -243,9 +243,11 @@ include 'footer.php';
                         temp[7] = address;
 
                         $('#mytable').DataTable().row(i).data(temp).draw();
+
+                        alertMessage('Updated Successfully.','success');
                     }
                 },
-                error:function(){ alert("Error in Update Ajax Call.") }
+                error:function(){ alertMessage("Error in Update Ajax Call.",'error') }
             });
         }
 
@@ -259,7 +261,7 @@ include 'footer.php';
                        trr.remove(); 
                     });
                 },
-                error:function(){ alert("Error in Delete ajax Call.") }
+                error:function(){ alertMessage("Error in Delete ajax Call.",'error') }
             });
         }
 
@@ -276,6 +278,8 @@ include 'footer.php';
             $('#balance_div').addClass('hidden');
             $('#btn_submit').addClass('hidden');
             $('#btn_reset').addClass('hidden');
+
+            $('#short_form').focus();
 
         }
 
@@ -300,6 +304,7 @@ include 'footer.php';
             $('#btn_submit').removeClass('hidden');
             $('#btn_reset').removeClass('hidden');
 
+            $('#short_form').focus();
         }
 
         //DELETE 
@@ -362,6 +367,8 @@ include 'footer.php';
            {
                 add(short_form,full_form,account_title,account_number,balance,address);
            }
+
+           $('#short_form').focus();
         });
 
 

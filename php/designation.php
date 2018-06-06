@@ -49,7 +49,7 @@ include 'nav.php';
 
                                                 <label class="col-md-2 control-label">Designation:</label>
                                                 <div class="col-md-3">
-                                                  <input type="text" class="form-control" id="designation" name="designation" required tabindex="1" placeholder="Designation">
+                                                  <input type="text" class="form-control" id="designation" name="designation" required tabindex="1" placeholder="Designation" autofocus >
                                                 </div>
                                     
                                          </div>  
@@ -164,7 +164,7 @@ include 'footer.php';
                     })
                     myDataTable();
                 },
-                error:function(){ alert("Failed Fetch Ajax Call.") }
+                error:function(){ alertMessage("Failed Fetch Ajax Call.",'error') }
             });
         }
 
@@ -179,11 +179,11 @@ include 'footer.php';
                     if(data)
                     {
                         $('#designation').val("");
-                        
+                        alertMessage('Added Successfully.','success');
                         loadData();
                     }
                 },
-                error:function(){ alert("Error in Add Ajax Call.") }
+                error:function(){ alertMessage("Error in Add Ajax Call.",'error') }
             });
         }
 
@@ -203,10 +203,12 @@ include 'footer.php';
                         temp[2] = designation;
 
                         $('#mytable').DataTable().row(i).data(temp).draw();
+
+                        alertMessage('Updated Successfully.','success');
                         
                     }
                 },
-                error:function(){ alert("Error in Update Ajax Call.") }
+                error:function(){ alertMessage("Error in Update Ajax Call.",'error') }
             });
         }
 
@@ -220,7 +222,7 @@ include 'footer.php';
                        trr.remove(); 
                     });
                 },
-                error:function(){ alert("Error in Delete ajax Call.") }
+                error:function(){ alertMessage("Error in Delete ajax Call.",'error') }
             });
         }
 
@@ -235,6 +237,8 @@ include 'footer.php';
 
             $('#btn_submit').addClass('hidden');
             $('#btn_reset').addClass('hidden');
+
+            $('#designation').focus();
 
         }
 
@@ -251,6 +255,8 @@ include 'footer.php';
 
             $('#btn_submit').removeClass('hidden');
             $('#btn_reset').removeClass('hidden');
+
+            $('#designation').focus();
 
         }
 
@@ -305,6 +311,8 @@ include 'footer.php';
            {
                 add(designation);
            }
+
+           $('#designation').focus();
         });
 
 

@@ -179,7 +179,7 @@ include 'footer.php';
                   });
 
           },
-          error:function(){  alert('Error in Updating Field Ajax Call.') }
+          error:function(){  alertMessage('Error in Updating Field Ajax Call.','error') }
         });
       }
 
@@ -239,7 +239,7 @@ include 'footer.php';
                     }) 
                     myDataTable();
                 },
-                error:function(){ alert("Failed Fetch Ajax Call.") }
+                error:function(){ alertMessage("Failed Fetch Ajax Call.",'error') }
             });
         }
 
@@ -255,11 +255,11 @@ include 'footer.php';
                     {
                         $('#vehicle_id').val("").trigger('change');
                         $('#btn_reset').trigger('click');
-                        
+                        alertMessage('Added Successfully.','success');
                         loadData();
                     }
                 },
-                error:function(){ alert("Error in Add Ajax Call.") }
+                error:function(){ alertMessage("Error in Add Ajax Call.",'error') }
             });
         }
 
@@ -283,9 +283,11 @@ include 'footer.php';
 
                         $('#mytable').DataTable().row(i).data(temp).draw();
 
+                        alertMessage('Updated Successfully.','success');
+
                     }
                 },
-                error:function(){ alert("Error in Update Ajax Call.") }
+                error:function(){ alertMessage("Error in Update Ajax Call.",'error') }
             });
         }
 
@@ -299,7 +301,7 @@ include 'footer.php';
                        trr.remove(); 
                     });
                 },
-                error:function(){ alert("Error in Delete ajax Call.") }
+                error:function(){ alertMessage("Error in Delete ajax Call.",'error') }
             });
         }
 
@@ -314,6 +316,8 @@ include 'footer.php';
 
             $('#btn_submit').addClass('hidden');
             $('#btn_reset').addClass('hidden');
+
+            $('#datee').focus();
 
         }
 
@@ -331,6 +335,8 @@ include 'footer.php';
 
             $('#btn_submit').removeClass('hidden');
             $('#btn_reset').removeClass('hidden');
+
+            $('#datee').focus();
 
         }
 
@@ -392,6 +398,8 @@ include 'footer.php';
            {
                 add(datee,description,vehicle_id,amount);
            }
+
+           $('#datee').focus();
         });
 
 

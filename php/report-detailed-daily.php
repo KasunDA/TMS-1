@@ -232,7 +232,7 @@ include 'footer.php';
 
                 })
             },
-            error:function(){ alert("Failed Get Previous Balance Fetch Ajax Call.") }
+            error:function(){ alertMessage("Failed Get Previous Balance Fetch Ajax Call.",'error') }
         });
     }
 
@@ -263,7 +263,7 @@ include 'footer.php';
           });
 
           },
-          error:function(){  alert('Error in Updating Field Ajax Call.') }
+          error:function(){  alertMessage('Error in Updating Field Ajax Call.','error') }
         });
     }    
 
@@ -323,7 +323,7 @@ include 'footer.php';
 
                 myDataTable();
             },
-            error:function(){ alert("Failed Fetch Ajax Call.") }
+            error:function(){ alertMessage("Failed Fetch Ajax Call.",'error') }
         });
     }
 
@@ -362,7 +362,7 @@ include 'footer.php';
 
                 imyDataTable();
             },
-            error:function(){ alert("Failed iFetch Ajax Call.") }
+            error:function(){ alertMessage("Failed iFetch Ajax Call.",'error') }
         });
     }
     

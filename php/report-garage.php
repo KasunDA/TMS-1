@@ -168,7 +168,7 @@ include 'footer.php';
           });
 
           },
-          error:function(){  alert('Error in Updating Field Ajax Call.') }
+          error:function(){  alertMessage('Error in Updating Field Ajax Call.','error') }
         });
     }    
 
@@ -220,7 +220,7 @@ include 'footer.php';
                 myDataTable();
                 $('#total_amount').html(total_amount); 
             },
-            error:function(){ alert("Failed Fetch Ajax Call.") }
+            error:function(){ alertMessage("Failed Fetch Ajax Call.",'error') }
         });
     }
 

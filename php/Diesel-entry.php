@@ -263,7 +263,7 @@ include 'footer.php';
                     $('#litres').val(data['limit_litre']);
                     ttotal();
                 },
-                error:function(){ alert("Failed litres Ajax Call.") }   
+                error:function(){ alertMessage("Failed litres Ajax Call.",'error') }   
             });
         }
 
@@ -309,7 +309,7 @@ include 'footer.php';
                         $('#total_price').html(value['total_price']);
                     });
                 },
-                error:function(){ alert("Failed Fetch Details Ajax Call.") }   
+                error:function(){ alertMessage("Failed Fetch Details Ajax Call.",'error') }   
             });    
         }
 
@@ -372,7 +372,7 @@ include 'footer.php';
                     })
                     myDataTable();
                 },
-                error:function(){ alert("Failed Fetch Ajax Call.") }
+                error:function(){ alertMessage("Failed Fetch Ajax Call.",'error') }
             });
         }
 
@@ -388,6 +388,7 @@ include 'footer.php';
                     {
                         $('#btn_reset').trigger('click');
                         
+                        alertMessage('Added Successfully.','success');
                         
                         loadData();
                         dt();
@@ -395,7 +396,7 @@ include 'footer.php';
                         $('#litre_rate').val(litre_rate);
                     }
                 },
-                error:function(){ alert("Error in Add Ajax Call.") }
+                error:function(){ alertMessage("Error in Add Ajax Call.",'error') }
             });
         }
 
@@ -424,12 +425,14 @@ include 'footer.php';
 
                         $('#mytable').DataTable().row(i).data(temp).draw();
 
+                        alertMessage('Updated Successfully.','success');
+                        
                         dt();
 
                         $('#litre_rate').val(litre_rate);
                     }
                 },
-                error:function(){ alert("Error in Update Ajax Call.") }
+                error:function(){ alertMessage("Error in Update Ajax Call.",'error') }
             });
         }
 
@@ -444,7 +447,7 @@ include 'footer.php';
                     });
                     dt();
                 },
-                error:function(){ alert("Error in Delete ajax Call.") }
+                error:function(){ alertMessage("Error in Delete ajax Call.",'error') }
             });
         }
 
@@ -459,6 +462,8 @@ include 'footer.php';
 
             $('#btn_submit').addClass('hidden');
             $('#btn_reset').addClass('hidden');
+
+            $('#datee').focus();
 
         }
 
@@ -475,6 +480,8 @@ include 'footer.php';
 
             $('#btn_submit').removeClass('hidden');
             $('#btn_reset').removeClass('hidden');
+
+            $('#datee').focus();
 
         }
 
@@ -548,6 +555,8 @@ include 'footer.php';
            {
                 add(datee,vehicle_id,from_yard_id,to_yard_id,litre_rate,litres,extra_litres,total,description);
            }
+
+           $('#datee').focus();
         });
 
 

@@ -216,7 +216,7 @@ include 'footer.php';
           });
 
           },
-          error:function(){  alert('Error in Updating Field Ajax Call.') }
+          error:function(){  alertMessage('Error in Updating Field Ajax Call.','error') }
         });
     }    
 
@@ -265,7 +265,7 @@ include 'footer.php';
                 myDataTable();
 
             },
-            error:function(){ alert("Failed Fetch Ajax Call.") }
+            error:function(){ alertMessage("Failed Fetch Ajax Call.",'error') }
         });
     }
 
@@ -302,7 +302,7 @@ include 'footer.php';
                     $('#paid_salary').html(value['total_paid_salary']);
                 });
             },
-            error: function(){ alert("Failed Fetch Records.") }, 
+            error: function(){ alertMessage("Failed Fetch Records.",'error') }, 
         });
     }
 
@@ -319,7 +319,7 @@ include 'footer.php';
                     $('#form').trigger('submit');
                 }
             },
-            error:function(){ alert("Error in Add Ajax Call.") }
+            error:function(){ alertMessage("Error in Add Ajax Call.",'error') }
         });
     }
     

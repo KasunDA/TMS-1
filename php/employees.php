@@ -49,7 +49,7 @@ require 'connection.php';
 
                                             <label class="col-md-2 control-label">Name:</label>
                                             <div class="col-md-3">
-                                              <input type="text" class="form-control" id="name" name="name" tabindex="1" placeholder="Full Name" required maxlength="60">
+                                              <input type="text" class="form-control" id="name" name="name" tabindex="1" placeholder="Full Name" required maxlength="60" autofocus>
                                             </div>
                                             
                                          </div>  
@@ -416,7 +416,7 @@ include 'footer.php';
                     });
 
                 },
-                error:function(){  alert('Error in Updating Field Ajax Call.') }
+                error:function(){  alertMessage('Error in Updating Field Ajax Call.','error') }
             });
         }
 
@@ -496,7 +496,7 @@ include 'footer.php';
                     myDataTable();
                     getId();
                 },
-                error:function(){ alert("Failed Fetch Ajax Call.") }
+                error:function(){ alertMessage("Failed Fetch Ajax Call.",'error') }
             });
         }
 
@@ -517,11 +517,12 @@ include 'footer.php';
                     if(data)
                     {
                         $('#btn_reset').trigger('click');
-                        
+                        alertMessage('Added Successfully.','success');
+
                         loadData();
                     }
                 },
-                error:function(){ alert("Error in Add Ajax Call.") }
+                error:function(){ alertMessage("Error in Add Ajax Call.",'error') }
             });
         }
 
@@ -551,11 +552,13 @@ include 'footer.php';
                         temp[10] = designation;
 
                         $('#mytable').DataTable().row(i).data(temp).draw();
-                     
+                        
+                        alertMessage('Updated Successfully.','success');
+
                         addNewClick();
                     }
                 },
-                error:function(){ alert("Error in Update Ajax Call.") }
+                error:function(){ alertMessage("Error in Update Ajax Call.",'error') }
             });
         }
 
@@ -569,7 +572,7 @@ include 'footer.php';
                        trr.remove(); 
                     });
                 },
-                error:function(){ alert("Error in Delete ajax Call.") }
+                error:function(){ alertMessage("Error in Delete ajax Call.",'error') }
             });
         }
 
@@ -587,6 +590,8 @@ include 'footer.php';
 
             $('#signature').removeAttr('required');
             $('#picture').removeAttr('required');
+
+            $('#name').focus();
 
         }
 
@@ -606,6 +611,8 @@ include 'footer.php';
 
             $('#signature').attr('required','required');
             $('#picture').attr('required','required');
+
+            $('#name').focus();
 
         }
 
@@ -661,7 +668,7 @@ include 'footer.php';
                         $('#img_picture').attr('src',data['img_picture']);
 
                 },
-                error:function(){ alert("Failed Fetch Details Ajax Call.") }
+                error:function(){ alertMessage("Failed Fetch Details Ajax Call.",'error') }
             });
         }
 
@@ -708,6 +715,8 @@ include 'footer.php';
            {
                 add();
            }
+
+           $('#name').focus();
         });
 
     });

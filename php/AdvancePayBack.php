@@ -291,7 +291,7 @@ include 'footer.php';
                   });
 
           },
-          error:function(){  alert('Error in Updating Field Ajax Call.') }
+          error:function(){  alertMessage('Error in Updating Field Ajax Call.','error') }
         });
       }
 
@@ -415,7 +415,7 @@ include 'footer.php';
 
                     myDataTable();
                 },
-                error:function(){ alert("Failed Fetch Ajax Call.") }
+                error:function(){ alertMessage("Failed Fetch Ajax Call.",'error') }
             });
         }
 
@@ -462,7 +462,7 @@ include 'footer.php';
                     });
 
                 },
-                error:function(){ alert("Failed iFetch Ajax Call.") }
+                error:function(){ alertMessage("Failed iFetch Ajax Call.",'error') }
             });
         }
 
@@ -480,11 +480,13 @@ include 'footer.php';
                         $('#bank_id').val("").trigger('change');
                         $('#amount,#check_number,#description').val("");
                         
+                        alertMessage('Added Successfully.','success');
+
                         // loadData();
                         iloadData(<?php echo $cmp_id; ?>);
                     }
                 },
-                error:function(){ alert("Error in Add Ajax Call.") }
+                error:function(){ alertMessage("Error in Add Ajax Call.",'error') }
             });
         }
 
