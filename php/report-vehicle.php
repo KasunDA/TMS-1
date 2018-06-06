@@ -618,6 +618,8 @@ include 'footer.php';
 
     //checkboxes code
     $(document).on('change','tbody tr .checkboxes',function(){
+      
+      $(this).toggleClass("faded");
       $(this).parents("tr").toggleClass("active");
       $(this).parents("tr").toggleClass("selectedd");
 
@@ -696,32 +698,6 @@ include 'footer.php';
     }
 
     getId();
-
-    // function toYardIdSelect()
-    //   {
-    //     $('#to_yard_id').select2({
-    //         width: 'resolve',
-    //         theme: "classic"
-    //       });
-    //   }
-      
-    // $('#from_yard_id').on('change',function(){
-
-    //   $('#to_yard_id').find('option').each(function(){
-    //       $(this).removeAttr('disabled');
-    //   });
-    //   toYardIdSelect();
-
-    //   var option = $('#to_yard_id').find("option[value='" + $(this).val() + "']");
-
-    //   if (option.length) 
-    //   {
-    //     option.attr('disabled',true);
-    //     toYardIdSelect();
-    //   }
-      
-
-    // });
 
     //Select2
    $('#from_yard_id,#to_yard_id,#coa_id,#consignee_id,#movement,#empty_terminal_id,#container_size,#container_id,#line_id,#vehicle_id,#owner_name,#bank_id').select2({
@@ -964,20 +940,55 @@ include 'footer.php';
  
     function loadSummary(from_datee,to_datee,from_yard_id,to_yard_id,coa_id,movement)
     {
+        
+        var ids = [],
+            tableData = $('#mytable').DataTable().rows().data();
+            
+        
+        for(var index = 0 ; index < tableData.length ; index++ )
+        {
+          var table     = $('#mytable').DataTable(),
+              row       = table.row(index),
+              rowData   = row.data(),  
+              $tr       = $(row.node()),
+              $checkbox = $tr.find('td:first-child input[type="checkbox"]');
+          
+          if($checkbox.is(':checked'))
+          {
+            // $checkbox.prop('checked', false);
+            ids.push( rowData[2] );
+          }
+
+          // if( cb.hasClass('faded') )
+          // {
+          //   ids.push( rowData[2] );
+          // }
+
+        }
+
+        // alert("ids are "+ids);
+
+
         $.ajax({
             url:'ajax/container_movement/summary.php?from_datee='+from_datee+'&to_datee='+to_datee+'&from_yard_id='+from_yard_id+'&to_yard_id='+to_yard_id+'&coa_id='+coa_id+'&movement='+movement,
             dataType:"JSON",
+            data:{ids:ids},
             success:function(data){
                 var n = 1,
                     m20_total = 0,
                     m40_total = 0,
                     m45_total = 0,
-                    vr_total = 0;
+                    vr_total  = 0;
 
     
                 $('#mytable1 tbody').html("");
                 
                 var t = $.each(data,function(index,value){
+
+                  if( value['20']==0 && value['40']==0 && value['45']==0)
+                  {
+                    return;
+                  }
 
                     m20_total += value['20'];
                     m40_total += value['40'];
@@ -1018,6 +1029,8 @@ include 'footer.php';
                             
                             '</tr>');
                 });
+
+                 printPDF();
 
                 
             },
@@ -1083,8 +1096,12 @@ include 'footer.php';
         });
     }
 
-    var from_date = null,
-        to_date   = null;
+    var from_date     = null,
+        to_date       = null,
+        from_yard_idd = null,
+        to_yard_idd   = null,
+        coa_idd       = null,
+        movementt     = null;
     
     //Add & Update expense 
     $('#form').submit(function(e){
@@ -1109,13 +1126,17 @@ include 'footer.php';
 
         loadData(from_datee,to_datee,from_yard_id,to_yard_id,coa_id,consignee_id,movement,empty_terminal_id,container_number,bl_cro_number,container_size,container_id,vehicle_id,owner_name,line_id);
 
-        from_date = from_datee;
-        to_date   = to_datee;
-        loadSummary(from_datee,to_datee,from_yard_id,to_yard_id,coa_id,movement);
+        from_date     = from_datee;
+        to_date       = to_datee;
+        from_yard_idd = from_yard_id;
+        to_yard_idd   = to_yard_id;
+        coa_idd       = coa_id;
+        movementt     = movement;
+        // loadSummary(from_datee,to_datee,from_yard_id,to_yard_id,coa_id,movement);
 
     });
 
-    //Add & Update expense 
+    //Add voucher
     $('#voucher_form').submit(function(e){
        e.preventDefault();
        
@@ -1146,7 +1167,9 @@ include 'footer.php';
     }
 
     $(document).on('click','.summary_btn',function() {
-      printPDF();
+
+      loadSummary(from_date,to_date,from_yard_idd,to_yard_idd,coa_idd,movementt);
+      // printPDF();
     });
 
  });

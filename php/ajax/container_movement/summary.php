@@ -40,9 +40,9 @@
 
 		$sql .= "and coa_id=$coa_id ";
 	}
-    
 
-	$sql .= "  GROUP BY coa_id,from_yard_id,to_yard_id,movement  ";
+    
+	$sql .= " GROUP BY coa_id,from_yard_id,to_yard_id,movement  ";
 
 	// echo '<script>alert("'.$sql.'")</script>';
 	
@@ -84,12 +84,20 @@
 		$json[$n]['40'] = 0;
 		$json[$n]['45'] = 0;
 
-		$q1 = mysqli_query($mycon,"SELECT * FROM container_movement where status=1 and coa_id=".$r['coa_id']." and movement='".$r['movement']."' and from_yard_id=".$r['from_yard_id']." and to_yard_id=".$r['to_yard_id']); 
+
+		$q1 = mysqli_query($mycon," SELECT * FROM container_movement where status=1 and coa_id=".$r['coa_id']." and movement='".$r['movement']."' and from_yard_id=".$r['from_yard_id']." and to_yard_id=".$r['to_yard_id']." and  datee BETWEEN '$from_datee' AND '$to_datee' "); 
 		
 		while( $r1 = mysqli_fetch_array($q1) )
 		{
-			
-			$q2 = mysqli_query($mycon,"SELECT COUNT(ce_id) as total_cs FROM container_entry where cm_id=".$r1['cm_id']); 
+			$sql1 = " SELECT COUNT(ce_id) as total_cs FROM container_entry where cm_id=".$r1['cm_id']." and status=1 ";
+
+			if( isset($_GET['ids']) && $_GET['ids'] != NULL )
+			{
+				$ids   = $_GET['ids'];
+				$sql1 .= "  and ce_id NOT IN ( '" . implode( "', '" , $ids ) . "' ) ";
+			}
+
+			$q2 = mysqli_query($mycon,$sql1); 
 			$r2 = mysqli_fetch_array($q2);
 
 			if( $r1['container_size'] == '20' )
@@ -109,12 +117,6 @@
 
 		$json[$n]['hr_total'] +=  $json[$n]['20']+$json[$n]['40']+$json[$n]['45'];
 
-
-
-		
-		// $json[$n]['weight_charges'] = $r['weight_charges'];
-		// $json[$n]['party_charges'] = $r['party_charges'];
-		// $json[$n]['total_party_charges'] = $r['party_charges']*$r['lot_of'];
 
 		$n++;
 	}
