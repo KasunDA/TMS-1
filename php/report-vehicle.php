@@ -394,6 +394,7 @@ date_default_timezone_set("Asia/Karachi");
                                   <th> Vehicle # </th>
                                   <th> Driver </th>
                                   <th> Owner </th>
+                                  <th> Rent </th>
                                   <th> Advance </th>
                                   <th> Diesel </th>
                                   <th> Repair Charges </th>
@@ -414,8 +415,8 @@ date_default_timezone_set("Asia/Karachi");
                 <div class="portlet light portlet-fit bordered ">
                     
                     <div class="portlet-body ">
-                        <div class="table-scrollable  table-scrollable-borderless">
-                            <table class="table table-hover table-light">
+                        <div class="table-scrollable  table-scrollable-borderless" id="mytable2_div">
+                            <table class="table table-hover table-light" id="mytable2">
                                 <thead>
                                     <tr class="uppercase">
                                         <td> # </td>
@@ -584,9 +585,12 @@ date_default_timezone_set("Asia/Karachi");
                 <tr>
                     <th> Index </th>
                     <th> Chart Of Account  </th>
+                    <th> Empty  </th>
                     <th> From  </th>
                     <th> To </th>
                     <th> Movement </th>
+                    <th> Line </th>
+                    <th> Lolo </th>
                     <th> 20 </th>
                     <th> 40 </th>
                     <th> 45 </th>
@@ -610,6 +614,7 @@ include 'footer.php';
  ?>
 
 <script src="../assets/global/scripts/select2.full.min.js"></script>
+<script src="../assets/global/scripts/buttons.html5.js"></script>
 <script src="../assets/global/scripts/jspdf.debug.js"></script>
 <script src="../assets/global/scripts/jspdf.plugin.autotable.js"></script>
 <script type="text/javascript">
@@ -625,9 +630,9 @@ include 'footer.php';
 
       var i         = $(this).parents('tr').attr('index'),
       tableData     = $('#mytable').DataTable().row(i).data(),
-      total_diesel  = tableData[18],
-      total_rm      = tableData[19], 
-      balance_trips = tableData[20];
+      total_diesel  = tableData[19],
+      total_rm      = tableData[20], 
+      balance_trips = tableData[21];
 
       if( !$(this).parents('tr').hasClass('selectedd') )
       {                  
@@ -811,13 +816,18 @@ include 'footer.php';
         updateField(''+$(this).attr('para')+'');
       });
 
+
+  function getWidthOfText(txt) {
+    return txt.length ;
+  }
+
     function myDataTable()
     {
-      // var e=$("#mytable");
-      //   e.dataTable({language:{aria:{sortAscending:": activate to sort column ascending",sortDescending:": activate to sort column descending"},emptyTable:"No data available in table",info:"Showing _START_ to _END_ of _TOTAL_ records",infoEmpty:"No records found",infoFiltered:"(filtered1 from _MAX_ total records)",lengthMenu:"Show _MENU_",search:"Search:",zeroRecords:"No matching records found",paginate:{previous:"Prev",next:"Next",last:"Last",first:"First"}},bStateSave:!0,columnDefs:[{targets:0,orderable:!1,searchable:!1}],lengthMenu:[[5,15,20,-1],[5,15,20,"All"]],pageLength:5,pagingType:"bootstrap_full_number",columnDefs:[{orderable:!1,targets:[0]},{searchable:!1,targets:[0]}],order:[[1,"asc"]]});
-
+    
         // var TableDatatablesButtons=function(){var e=function(){var e=$("#mytable");
         //   e.dataTable({language:{aria:{sortAscending:": activate to sort column ascending",sortDescending:": activate to sort column descending"},emptyTable:"No data available in table",info:"Showing _START_ to _END_ of _TOTAL_ entries",infoEmpty:"No entries found",infoFiltered:"(filtered1 from _MAX_ total entries)",lengthMenu:"_MENU_ entries",search:"Search:",zeroRecords:"No matching records found"},buttons:[{extend:"print",title: 'Vehicle Report',orientation: 'landscape',pageSize: 'LEGAL',exportOptions:{columns: ':visible' , rows: '.selectedd'},className:"btn dark btn-outline"},{extend:"",text :"Summary",className:"btn blue btn-outline summary_btn"},{extend:"excelHtml5",title: 'Vehicle Report',className:"btn yellow btn-outline ",exportOptions:{columns: ':visible' ,  rows: '.selectedd' }},{extend:"colvis",title: 'Vehicle Report',className:"btn green btn-outline",text:"Columns"}],responsive:!0,order:[[0,"asc"]],lengthMenu:[[5,10,15,20,-1],[5,10,15,20,"All"]],pageLength:10,dom:"<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>"})},t=function(){var e=$("#sample_2");e.dataTable({language:{aria:{sortAscending:": activate to sort column ascending",sortDescending:": activate to sort column descending"},emptyTable:"No data available in table",info:"Showing _START_ to _END_ of _TOTAL_ entries",infoEmpty:"No entries found",infoFiltered:"(filtered1 from _MAX_ total entries)",lengthMenu:"_MENU_ entries",search:"Search:",zeroRecords:"No matching records found"},buttons:[{extend:"print",className:"btn default"},{extend:"copy",className:"btn default"},{extend:"pdf",className:"btn default"},{extend:"excel",className:"btn default"},{extend:"csv",className:"btn default"},{text:"Reload",className:"btn default",action:function(e,t,a,n){alert("Custom Button")}}],order:[[0,"asc"]],lengthMenu:[[5,10,15,20,-1],[5,10,15,20,"All"]],pageLength:10,dom:"<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>"})},a=function(){var e=$("#sample_3"),t=e.dataTable({language:{aria:{sortAscending:": activate to sort column ascending",sortDescending:": activate to sort column descending"},emptyTable:"No data available in table",info:"Showing _START_ to _END_ of _TOTAL_ entries",infoEmpty:"No entries found",infoFiltered:"(filtered1 from _MAX_ total entries)",lengthMenu:"_MENU_ entries",search:"Search:",zeroRecords:"No matching records found"},buttons:[{extend:"print",className:"btn dark btn-outline"},{extend:"copy",className:"btn red btn-outline"},{extend:"pdf",className:"btn green btn-outline"},{extend:"excel",className:"btn yellow btn-outline "},{extend:"csv",className:"btn purple btn-outline "},{extend:"colvis",className:"btn dark btn-outline",text:"Columns"}],responsive:!0,order:[[0,"asc"]],lengthMenu:[[5,10,15,20,-1],[5,10,15,20,"All"]],pageLength:10});$("#sample_3_tools > li > a.tool-action").on("click",function(){var e=$(this).attr("data-action");t.DataTable().button(e).trigger()})},n=function(){$(".date-picker").datepicker({rtl:App.isRTL(),autoclose:!0});var e=new Datatable;e.init({src:$("#datatable_ajax"),onSuccess:function(e,t){},onError:function(e){},onDataLoad:function(e){},loadingMessage:"Loading...",dataTable:{bStateSave:!0,lengthMenu:[[10,20,50,100,150,-1],[10,20,50,100,150,"All"]],pageLength:10,ajax:{url:"../demo/table_ajax.php"},order:[[1,"asc"]],buttons:[{extend:"print",className:"btn default"},{extend:"copy",className:"btn default"},{extend:"pdf",className:"btn default"},{extend:"excel",className:"btn default"},{extend:"csv",className:"btn default"},{text:"Reload",className:"btn default",action:function(e,t,a,n){t.ajax.reload(),alert("Datatable reloaded!")}}]}}),e.getTableWrapper().on("click",".table-group-action-submit",function(t){t.preventDefault();var a=$(".table-group-action-input",e.getTableWrapper());""!=a.val()&&e.getSelectedRowsCount()>0?(e.setAjaxParam("customActionType","group_action"),e.setAjaxParam("customActionName",a.val()),e.setAjaxParam("id",e.getSelectedRows()),e.getDataTable().ajax.reload(),e.clearAjaxParams()):""==a.val()?App.alert({type:"danger",icon:"warning",message:"Please select an action",container:e.getTableWrapper(),place:"prepend"}):0===e.getSelectedRowsCount()&&App.alert({type:"danger",icon:"warning",message:"No record selected",container:e.getTableWrapper(),place:"prepend"})}),$("#datatable_ajax_tools > li > a.tool-action").on("click",function(){var t=$(this).attr("data-action");e.getDataTable().button(t).trigger()})};return{init:function(){jQuery().dataTable&&(e(),t(),a(),n())}}}();jQuery(document).ready(function(){TableDatatablesButtons.init()});
+
+
 
         var TableDatatablesButtons=function() 
         {
@@ -834,16 +844,75 @@ include 'footer.php';
                   , buttons:[ {
                       extend:"print", title: 'Vehicle Report', orientation: 'landscape', pageSize: 'LEGAL', exportOptions: {
                           columns: ':visible', rows: '.selectedd'
+                      },className:"btn dark btn-outline",
+                      customize: function ( win ) {
+
+                          $(win.document.body)
+                              .css( 'font-size', '10pt' )
+                              .prepend('')
+                              .prepend('')
+                              .prepend( $('#mytable2_div').html() )
+                              .prepend('');
                       }
-                      , className:"btn dark btn-outline"
-                  }
+                    }
                   , {
                       extend: "", text: "Summary", className: "btn blue btn-outline summary_btn"
                   }
                   , {
-                      extend:"excelHtml5", title: 'Vehicle Report', className:"btn yellow btn-outline ", exportOptions: {
+                      extend:"excelHtml5", title: 'Vehicle Report', className:"btn yellow btn-outline ", 
+
+                      customize: function (xlsx) {
+                        
+                        console.log(xlsx);
+                        var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                        var downrows = 2;
+                        var clRow = $('row', sheet);
+                        //update Row
+                        clRow.each(function () {
+                            var attr = $(this).attr('r');
+                            var ind = parseInt(attr);
+                            ind = ind + downrows;
+                            $(this).attr("r",ind);
+                        });
+                 
+                        // Update  row > c
+                        $('row c ', sheet).each(function () {
+                            var attr = $(this).attr('r');
+                            var pre = attr.substring(0, 1);
+                            var ind = parseInt(attr.substring(1, attr.length));
+                            ind = ind + downrows;
+                            $(this).attr("r", pre + ind);
+                        });
+                 
+                        function Addrow(index,data) {
+                            msg='<row r="'+index+'">'
+                            for(i=0;i<data.length;i++){
+                                var key=data[i].k;
+                                var value=data[i].v;
+                                msg += '<c t="inlineStr" r="' + key + index + '" s="42">';
+                                msg += '<is>';
+                                msg +=  '<t>'+value+'</t>';
+                                msg+=  '</is>';
+                                msg+='</c>';
+                            }
+                            msg += '</row>';
+                            return msg;
+                        }
+                 
+                        //insert
+                        var r1 = Addrow(1, [{ k: 'A', v: 'TOTAL TRIPS' }, { k: 'B', v: "Advance Taken Driver or All" }, { k: 'C', v: "Advance Taken Owner " }, { k: 'D', v: "Balance Total of all trips" } , { k: 'E', v: "Diesel" } , { k: 'F', v: "Repair and Maintenance" } , { k: 'G', v: "Driver Salary" } , { k: 'H', v: 'Paid' } , { k: 'I', v: "Total Balance" } ]);
+                        var r2 = Addrow(2, [{ k: 'A', v: $('#total_trips').html() }, { k: 'B', v: $('#advance_taken').html() }, { k: 'C', v: $('#advance_taken_owner').html() }, { k: 'D', v: $('#balance_trips').html() }, { k: 'E', v: $('#total_diesel').html() }, { k: 'F', v: $('#total_rm').html() }, { k: 'G', v: $('#driver_salary').html() }, { k: 'H', v: $('#paid_salary').html() }, { k: 'I', v: $('#total_balance').html() } ]);
+                        var r3 = Addrow(3, [{ k: 'A', v: '' }, { k: 'B', v: '' }, { k: 'C', v: '' },{ k: 'D', v: '' },{ k: 'E', v: '' },{ k: 'F', v: '' },{ k: 'G', v: '' },{ k: 'H', v: '' },{ k: 'I', v: '' }]);
+                        //var r4 = Addrow(4, [{ k: 'A', v: '' }, { k: 'B', v: '' }, { k: 'C', v: '' },{ k: 'D', v: '' },{ k: 'E', v: '' },{ k: 'F', v: '' },{ k: 'G', v: '' },{ k: 'H', v: '' },{ k: 'I', v: '' } ]);
+                        
+                        sheet.childNodes[0].childNodes[1].innerHTML = r1 + r2 + r3 + sheet.childNodes[0].childNodes[1].innerHTML;
+                      
+                      },
+
+                      exportOptions: {
                           columns: ':visible', rows: '.selectedd'
                       }
+
                   }
                   , {
                       extend: "colvis", title: 'Vehicle Report', className: "btn green btn-outline", text: "Columns"
@@ -905,6 +974,7 @@ include 'footer.php';
                             '<td id="'+value['vehicle_id']+'">'+value['vehicle_number']+'</td>'+
                             '<td>'+value['driver_name']+'</td>'+
                             '<td id="owner_name">'+value['owner_name']+'</td>'+
+                            '<td>'+value['rent']+'</td>'+
                             '<td>'+value['advance']+'</td>'+
                             '<td>'+value['diesel']+'</td>'+
                             '<td>'+value['mr_charges']+'</td>'+
@@ -975,7 +1045,7 @@ include 'footer.php';
       $('#total_balance').html( $('#balance_trips').html()/1 - ( $('#advance_taken_owner').html()/1 + $('#advance_taken').html()/1 + $('#total_diesel').html()/1 + $('#total_rm').html()/1 ) );
     }
  
-    function loadSummary(from_datee,to_datee,from_yard_id,to_yard_id,coa_id,movement)
+    function loadSummary(from_datee,to_datee,empty_terminal_id,from_yard_id,to_yard_id,coa_id,movement,line_id)
     {
         
         var ids = [],
@@ -1007,15 +1077,16 @@ include 'footer.php';
 
 
         $.ajax({
-            url:'ajax/container_movement/summary.php?from_datee='+from_datee+'&to_datee='+to_datee+'&from_yard_id='+from_yard_id+'&to_yard_id='+to_yard_id+'&coa_id='+coa_id+'&movement='+movement,
+            url:'ajax/container_movement/summary.php?from_datee='+from_datee+'&to_datee='+to_datee+'&empty_terminal_id='+empty_terminal_id+'&from_yard_id='+from_yard_id+'&to_yard_id='+to_yard_id+'&coa_id='+coa_id+'&movement='+movement+'&line_id='+line_id,
             dataType:"JSON",
             data:{ids:ids},
             success:function(data){
                 var n = 1,
-                    m20_total = 0,
-                    m40_total = 0,
-                    m45_total = 0,
-                    vr_total  = 0;
+                    lolo_total = 0,
+                    m20_total  = 0,
+                    m40_total  = 0,
+                    m45_total  = 0,
+                    vr_total   = 0;
 
     
                 $('#mytable1 tbody').html("");
@@ -1026,19 +1097,22 @@ include 'footer.php';
                   {
                     return;
                   }
-
-                    m20_total += value['20'];
-                    m40_total += value['40'];
-                    m45_total += value['45'];
-                    vr_total  += value['hr_total']; 
+                    lolo_total += value['lolo_charges']/1;
+                    m20_total  += value['20'];
+                    m40_total  += value['40'];
+                    m45_total  += value['45'];
+                    vr_total   += value['hr_total']; 
 
                     $('#mytable1 tbody').append('<tr class="odd gradeX">'+                      
 
                             '<td style="color:#000;">'+n+'</td>'+
                             '<td id="'+value['coa_id']+'">'+value['coa']+'</td>'+
+                            '<td id="'+value['empty_terminal_id']+'">'+value['empty_terminal']+'</td>'+
                             '<td id="'+value['from_yard_id']+'">'+value['from_yard']+'</td>'+
                             '<td id="'+value['to_yard_id']+'">'+value['to_yard']+'</td>'+
                             '<td>'+value['movement']+'</td>'+
+                            '<td id="'+value['line_id']+'">'+value['line']+'</td>'+
+                            '<td>'+value['lolo_charges']+'</td>'+
                             '<td>'+value['20']+'</td>'+
                             '<td>'+value['40']+'</td>'+
                             '<td>'+value['45']+'</td>'+
@@ -1058,7 +1132,10 @@ include 'footer.php';
                             '<td></td>'+
                             '<td></td>'+
                             '<td></td>'+
+                            '<td></td>'+
+                            '<td></td>'+
                             '<td>Total</td>'+
+                            '<td>'+lolo_total+'</td>'+
                             '<td>'+m20_total+'</td>'+
                             '<td>'+m40_total+'</td>'+
                             '<td>'+m45_total+'</td>'+
@@ -1131,12 +1208,14 @@ include 'footer.php';
         });
     }
 
-    var from_date     = null,
-        to_date       = null,
-        from_yard_idd = null,
-        to_yard_idd   = null,
-        coa_idd       = null,
-        movementt     = null;
+    var from_date          = null,
+        to_date            = null,
+        empty_terminal_idd = null,
+        from_yard_idd      = null,
+        to_yard_idd        = null,
+        coa_idd            = null,
+        movementt          = null,
+        line_idd           = null;
     
     //Add & Update expense 
     $('#form').submit(function(e){
@@ -1161,12 +1240,14 @@ include 'footer.php';
 
         loadData(from_datee,to_datee,from_yard_id,to_yard_id,coa_id,consignee_id,movement,empty_terminal_id,container_number,bl_cro_number,container_size,container_id,vehicle_id,owner_name,line_id);
 
-        from_date     = from_datee;
-        to_date       = to_datee;
-        from_yard_idd = from_yard_id;
-        to_yard_idd   = to_yard_id;
-        coa_idd       = coa_id;
-        movementt     = movement;
+        from_date          = from_datee;
+        to_date            = to_datee;
+        empty_terminal_idd = empty_terminal_id;
+        from_yard_idd      = from_yard_id;
+        to_yard_idd        = to_yard_id;
+        coa_idd            = coa_id;
+        movementt          = movement;
+        line_idd           = line_id;
         // loadSummary(from_datee,to_datee,from_yard_id,to_yard_id,coa_id,movement);
 
     });
@@ -1193,17 +1274,22 @@ include 'footer.php';
       var elem = document.getElementById("mytable1");
       var res = doc.autoTableHtmlToJson(elem);
 
+      var elem1 = document.getElementById("mytable2");
+      var res1 = doc.autoTableHtmlToJson(elem1);
+
       var text = 'Transaction Container Movement From Date '+from_date+' To Date '+to_date,
       xOffset = (doc.internal.pageSize.width / 2) - (doc.getStringUnitWidth(text) * doc.internal.getFontSize() / 2); 
       doc.text(text, xOffset, 20); 
       
       doc.autoTable(res.columns, res.data,{startY: 50 , theme: 'grid'});
+      doc.autoTable(res1.columns, res1.data,{startY: 50 , theme: 'grid' , startY: doc.autoTableEndPosY() + 50});
       doc.save("Vehicle Summary.pdf");
     }
 
     $(document).on('click','.summary_btn',function() {
 
-      loadSummary(from_date,to_date,from_yard_idd,to_yard_idd,coa_idd,movementt);
+      // loadSummary(from_date,to_date,from_yard_idd,to_yard_idd,coa_idd,movementt);
+      loadSummary(from_date,to_date,empty_terminal_idd,from_yard_idd,to_yard_idd,coa_idd,movementt,line_idd);
       // printPDF();
     });
 

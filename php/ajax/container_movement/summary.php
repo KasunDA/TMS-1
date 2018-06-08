@@ -16,6 +16,14 @@
 
 	}
 
+	if( isset($_GET['empty_terminal_id']) && $_GET['empty_terminal_id'] != NULL )
+	{
+		$empty_terminal_id = $_GET['empty_terminal_id'];
+
+		$sql .= " and empty_terminal_id=$empty_terminal_id ";       
+
+	}
+
 	if( isset($_GET['from_yard_id']) && $_GET['from_yard_id'] != NULL )
 	{
 		$from_yard_id = $_GET['from_yard_id'];
@@ -41,8 +49,15 @@
 		$sql .= "and coa_id=$coa_id ";
 	}
 
+	if( isset($_GET['line_id']) && $_GET['line_id'] != NULL )
+	{
+		$line_id = $_GET['line_id'];
+
+		$sql .= "and line_id=$line_id ";
+	}
+
     
-	$sql .= " GROUP BY coa_id,from_yard_id,to_yard_id,movement  ";
+	$sql .= " GROUP BY coa_id,empty_terminal_id,from_yard_id,to_yard_id,movement,line_id  ";
 
 	// echo '<script>alert("'.$sql.'")</script>';
 	
@@ -63,7 +78,14 @@
 		}
 
 		$json[$n]['movement'] = $r['movement'];
-		// $json[$n]['container_size'] = $r['container_size'];
+		$json[$n]['lolo_charges'] = $r['lolo_charges'];
+
+		$q1 = mysqli_query($mycon,"SELECT short_form from yard where yard_id=".$r['empty_terminal_id']);
+		if($r1 = mysqli_fetch_array($q1))
+		{ 
+			$json[$n]['empty_terminal_id'] = $r['empty_terminal_id'];
+			$json[$n]['empty_terminal'] = $r1['short_form'];
+		}
 
 		$q1 = mysqli_query($mycon,"SELECT short_form from yard where yard_id=".$r['from_yard_id']);
 		if($r1 = mysqli_fetch_array($q1))
@@ -79,13 +101,20 @@
 			$json[$n]['to_yard'] = $r1['short_form'];
 		}
 
+		$q1 = mysqli_query($mycon,"SELECT short_form from line where line_id=".$r['line_id']);
+		if($r1 = mysqli_fetch_array($q1))
+		{ 
+			$json[$n]['line_id'] = $r['line_id'];
+			$json[$n]['line'] = $r1['short_form'];
+		}
+
 
 		$json[$n]['20'] = 0;
 		$json[$n]['40'] = 0;
 		$json[$n]['45'] = 0;
 
 
-		$q1 = mysqli_query($mycon," SELECT * FROM container_movement where status=1 and coa_id=".$r['coa_id']." and movement='".$r['movement']."' and from_yard_id=".$r['from_yard_id']." and to_yard_id=".$r['to_yard_id']." and  datee BETWEEN '$from_datee' AND '$to_datee' "); 
+		$q1 = mysqli_query($mycon," SELECT * FROM container_movement where status=1 and coa_id=".$r['coa_id']." and movement='".$r['movement']."' and empty_terminal_id=".$r['empty_terminal_id']." and from_yard_id=".$r['from_yard_id']." and to_yard_id=".$r['to_yard_id']." and line_id=".$r['line_id']." and  datee BETWEEN '$from_datee' AND '$to_datee' "); 
 		
 		while( $r1 = mysqli_fetch_array($q1) )
 		{

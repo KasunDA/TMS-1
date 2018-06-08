@@ -188,6 +188,7 @@
 				}
 				$json[$n]['bl_cro_number'] = $r['bl_cro_number'];
 				$json[$n]['container_number'] = $r['container_number'];
+				$json[$n]['rent'] = $r['rent'];
 				$json[$n]['advance'] = $r['advance'];
 				$json[$n]['diesel'] = $r['diesel'];
 				$json[$n]['mr_charges'] = $r['mr_charges'];
@@ -258,6 +259,7 @@
 			}
 			$json[$n]['bl_cro_number'] = $r['bl_cro_number'];
 			$json[$n]['container_number'] = $r['container_number'];
+			$json[$n]['rent'] = $r['rent'];
 			$json[$n]['advance'] = $r['advance'];
 			$json[$n]['diesel'] = $r['diesel'];
 			$json[$n]['mr_charges'] = $r['mr_charges'];

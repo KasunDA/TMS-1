@@ -634,9 +634,9 @@ include 'footer.php';
       }
 
 
-      $('#advance,#rent,#lolo_charges,#weight_charges').on('keyup change',function(){
-          var a = $('#rent').val()/1 + $('#lolo_charges').val()/1,
-              b = $('#advance').val()/1 + $('#weight_charges').val()/1; 
+      $('#advance,#rent,#lolo_charges,#weight_charges,#diesel').on('keyup change',function(){
+          var a = $('#rent').val()/1 + $('#lolo_charges').val()/1 + $('#weight_charges').val()/1,
+              b = $('#advance').val()/1 + $('#diesel').val()/1 ; 
           $('#balance').val( a - b );
         });
 
