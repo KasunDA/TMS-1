@@ -621,6 +621,56 @@ include 'footer.php';
  
  $(document).ready(function(){
 
+    // $('#mytable').on( 'focusout', 'tbody td:not(:first-child)', function (e) {
+        
+    //     var i = $(this).closest('tr').attr('index');
+    //     var temp = $('#mytable').DataTable().row(i).data();
+        
+    //     // temp[2] = name;
+
+    //     $('#mytable').DataTable().row(i).data(temp).draw();
+
+    //     // editor.inline( this );
+    // } );
+
+
+    // Making TD editable exept td with action button
+    $('#mytable').on('dblclick', 'td:not(:has(button))', function(){
+      // The cell that has been clicked will be editable
+      $(this).attr('contenteditable', 'true');
+      var el = $(this);
+      // We put the cursor at the beginning 
+      var range = document.createRange();
+      var sel = window.getSelection();
+      if(el[0].childNodes.length > 0)
+      {
+        range.setStart(el[0].childNodes[0],0);
+        range.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(range);
+      }
+      // The cell have now the focus
+      el.focus();
+
+      $(this).blur(endEdition);
+    });
+
+    function endEdition()
+    {
+      var myTable = $('#mytable').DataTable(); 
+      // We get the cell 
+      var el = $(this);
+      
+      // We tell to datatable to refresh the cache with the DOM, like that the filter will find the new data added in the table.
+      // BUT IF WE EDIT A ROW ADDED DYNAMICALLY, THIS INSTRUCTION IS A PROBLEM
+      myTable.cell( el ).invalidate().draw(); 
+      
+      // When the user finished to edit a cell and click out of the cell, the cell can't be editable, unless the user double click on this cell another time
+      el.attr('contenteditable', 'false');
+
+      el.off('blur', endEdition); // To prevent another bind to this function
+    }
+
     //checkboxes code
     $(document).on('change','tbody tr .checkboxes',function(){
       
@@ -917,7 +967,7 @@ include 'footer.php';
                   , {
                       extend: "colvis", title: 'Vehicle Report', className: "btn green btn-outline", text: "Columns"
                   }
-                  ],  order:[[0, "asc"]], lengthMenu:[[5, 10, 15, 20, -1], [5, 10, 15, 20, "All"]], pageLength:10, dom:"<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>"
+                  ],order:[[0, "asc"]], lengthMenu:[[5, 10, 15, 20, -1], [5, 10, 15, 20, "All"]], pageLength:10, dom:"<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
               })
           }
           //responsive:!0,
@@ -979,7 +1029,7 @@ include 'footer.php';
                             '<td>'+value['diesel']+'</td>'+
                             '<td>'+value['mr_charges']+'</td>'+
                             '<td name="balance_trips">'+value['balance']+'</td>'+
-                            '<td>'+value['remarks']+'</td>'+
+                            '<td contenteditable="true">'+value['remarks']+'</td>'+
                             '</tr>');
 
                     n++; total_trips++; i++;
@@ -1268,7 +1318,9 @@ include 'footer.php';
     });
 
     function printPDF() {
-      var doc = new jsPDF('p', 'pt');
+      // var doc = new jsPDF('p', 'pt');
+      var doc = new jsPDF('l', 'mm', [297, 220]);
+      // var doc = new jsPDF('p', '');
       doc.setFontSize(12);
       doc.setFontStyle('bold');
       var elem = document.getElementById("mytable1");
@@ -1278,7 +1330,8 @@ include 'footer.php';
       var res1 = doc.autoTableHtmlToJson(elem1);
 
       var text = 'Transaction Container Movement From Date '+from_date+' To Date '+to_date,
-      xOffset = (doc.internal.pageSize.width / 2) - (doc.getStringUnitWidth(text) * doc.internal.getFontSize() / 2); 
+      // xOffset = (doc.internal.pageSize.width/2 ) - (doc.getStringUnitWidth(text) * doc.internal.getFontSize() / 2)
+      xOffset = (doc.internal.pageSize.width/2 ) - (doc.getStringUnitWidth(text) * 2.3); 
       doc.text(text, xOffset, 20); 
       
       doc.autoTable(res.columns, res.data,{startY: 50 , theme: 'grid'});
