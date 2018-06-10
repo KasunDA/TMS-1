@@ -7,12 +7,13 @@
 	$vehicle_id       = $_GET['vehicle_id'];
 	$advance          = $_GET['advance'];
 	$diesel 		  = $_GET['diesel'];
+	$rent 			  = $_GET['rent'];
 	$balance 		  = $_GET['balance'];
 	$color 			  = $_GET['color'];
 	$mr_charges 	  = $_GET['mr_charges'];
 	$remarks 		  = $_GET['remarks'];
 
-	$q = mysqli_query($mycon,"UPDATE container_entry SET container_number='$container_number' , vehicle_id=$vehicle_id , advance=$advance , diesel=$diesel ,  balance=$balance , color='$color' , mr_charges=$mr_charges , remarks='$remarks'  WHERE ce_id=$ce_id ");
+	$q = mysqli_query($mycon,"UPDATE container_entry SET container_number='$container_number' , vehicle_id=$vehicle_id , advance=$advance , diesel=$diesel , rent=$rent , balance=$balance , color='$color' , mr_charges=$mr_charges , remarks='$remarks'  WHERE ce_id=$ce_id ");
 
 	if(mysqli_affected_rows($mycon))
 	{

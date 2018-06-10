@@ -266,8 +266,9 @@ date_default_timezone_set("Asia/Karachi");
                                            
                                              <div class="row">        
                                               <div class="form-group">
-                                                <div class="col-md-3 small-lab2">
-                                                  <label class=" control-label">Container Size:</label>
+                                                
+                                                <label class="col-md-2 control-label">Container Size:</label>
+                                                <div class="col-md-2 ">
                                                   <select class="form-control" id="container_size" name="container_size" tabindex="9">
                                                       <option value="20">20</option>
                                                       <option value="40">40</option>
@@ -275,7 +276,7 @@ date_default_timezone_set("Asia/Karachi");
                                                   </select>
                                                 </div>
                 
-                                                <label class="col-md-2 control-label">Party Rent:</label>
+                                                <label class="col-md-1 control-label">Party Rent:</label>
                                                 <div class="col-md-2">
                                                   <input type="number" min="0" class="form-control" placeholder="Party Chagers" id="party_charges" name="party_charges" required tabindex="10"/>
                                                 </div>
@@ -340,17 +341,17 @@ date_default_timezone_set("Asia/Karachi");
                                              <div class="row"> 
                                                  <div class="form-group">
                                                           
-                                                         <label class="col-md-1 control-label">Index No</label> 
+                                                         <label class="col-md-2 control-label">Index No</label> 
                                                          <div class="col-md-2"> 
                                                            <input type="text" class="form-control" placeholder="123456" id="index_number" name="index_number" required tabindex="15">
                                                          </div>
              
-                                                          <label class="col-md-1 control-label">Rent:</label>
-                                                            <div class="col-md-2">
-                                                              <input type="number" min="0" class="form-control" placeholder="Rent" id="rent" name="rent"  tabindex="16">
-                                                            </div>
+                                                          <label class="col-md-1 control-label">Weight Charges</label>   
+                                                          <div class="col-md-2">
+                                                            <input type="number" min="0" step="0.01" class="form-control" placeholder="Weight Charges" id="weight_charges" name="weight_charges" required tabindex="16">
+                                                          </div>
 
-                                                            <label class="col-md-2 control-label">Lolo Charges:</label>
+                                                            <label class="col-md-1 control-label">Lolo Charges:</label>
                                                             <div class="col-md-2">
                                                               <input type="number" min="0" step="0.01" class="form-control" placeholder="lolo Charges" id="lolo_charges" name="lolo_charges" required tabindex="17">
                                                             </div>
@@ -385,11 +386,6 @@ date_default_timezone_set("Asia/Karachi");
 
                                                           </div>
   
-                                                          <label class="col-md-2 control-label">Weight Charges</label>
-                                                                   
-                                                          <div class="col-md-2">
-                                                            <input type="number" min="0" step="0.01" class="form-control" placeholder="Weight Charges" id="weight_charges" name="weight_charges" required tabindex="19">
-                                                          </div>
 
                                                       </div> 
                                                 </div> 
@@ -440,7 +436,6 @@ date_default_timezone_set("Asia/Karachi");
                                                 <th> BL_CRO_Number </th>
                                                 <th> Job # </th>
                                                 <th> Index # </th>
-                                                <th> Rent </th>
                                                 <th> Container Type </th>
                                                 <th> Lolo Charges </th>
                                                 <th> Weight Charges </th>
@@ -486,8 +481,8 @@ include 'footer.php';
        }
       }
 
-      $('#advance,#rent').on('keyup change',function(){
-          $('#balance').val($('#advance').val()-$('#rent').val());
+      $('#advance').on('keyup change',function(){
+          // $('#balance').val($('#advance').val()-$('#rent').val());
         });
 
       function toYardIdSelect()
@@ -740,7 +735,6 @@ include 'footer.php';
                             '<td>'+value['bl_cro_number']+'</td>'+
                             '<td>'+value['job_number']+'</td>'+
                             '<td>'+value['index_number']+'</td>'+
-                            '<td>'+value['rent']+'</td>'+
                             '<td id="'+value['container_id']+'">'+value['container_type']+'</td>'+
                             '<td>'+value['lolo_charges']+'</td>'+
                             '<td>'+value['weight_charges']+'</td>'+
@@ -758,10 +752,10 @@ include 'footer.php';
 
       loadData();
 
-      function update(cm_id,datee,agent_id,agent_name,coa_id,coa,consignee_id,consignee,movement,empty_terminal_id,empty_terminal,from_yard_id,from_yard,to_yard_id,to_yard,container_size,party_charges,lot_of,line_id,line,bl_cro_number,job_number,index_number,rent,container_id,container_type,lolo_charges,weight_charges)
+      function update(cm_id,datee,agent_id,agent_name,coa_id,coa,consignee_id,consignee,movement,empty_terminal_id,empty_terminal,from_yard_id,from_yard,to_yard_id,to_yard,container_size,party_charges,lot_of,line_id,line,bl_cro_number,job_number,index_number,container_id,container_type,lolo_charges,weight_charges)
       {
           $.ajax({
-              url:'ajax/container_movement/update.php?cm_id='+cm_id+'&datee='+encodeURIComponent(datee)+'&agent_id='+agent_id+'&coa_id='+coa_id+'&consignee_id='+consignee_id+'&movement='+movement+'&empty_terminal_id='+empty_terminal_id+'&from_yard_id='+from_yard_id+'&to_yard_id='+to_yard_id+'&container_size='+container_size+'&party_charges='+party_charges+'&lot_of='+lot_of+'&line_id='+line_id+'&bl_cro_number='+bl_cro_number+'&job_number='+job_number+'&index_number='+index_number+'&rent='+rent+'&container_id='+container_id+'&lolo_charges='+lolo_charges+'&weight_charges='+weight_charges,
+              url:'ajax/container_movement/update.php?cm_id='+cm_id+'&datee='+encodeURIComponent(datee)+'&agent_id='+agent_id+'&coa_id='+coa_id+'&consignee_id='+consignee_id+'&movement='+movement+'&empty_terminal_id='+empty_terminal_id+'&from_yard_id='+from_yard_id+'&to_yard_id='+to_yard_id+'&container_size='+container_size+'&party_charges='+party_charges+'&lot_of='+lot_of+'&line_id='+line_id+'&bl_cro_number='+bl_cro_number+'&job_number='+job_number+'&index_number='+index_number+'&container_id='+container_id+'&lolo_charges='+lolo_charges+'&weight_charges='+weight_charges,
               type:"POST",
               success:function(data){
                   if(data)
@@ -787,10 +781,10 @@ include 'footer.php';
                       temp[15] = bl_cro_number;
                       temp[16] = job_number
                       temp[17] = index_number
-                      temp[18] = rent
-                      temp[19] = container_type
-                      temp[20] = lolo_charges
-                      temp[21] = weight_charges
+
+                      temp[18] = container_type
+                      temp[19] = lolo_charges
+                      temp[20] = weight_charges
 
                       $('#mytable').DataTable().row(i).data(temp).draw();
 
@@ -838,7 +832,7 @@ include 'footer.php';
           $('form select').val("").trigger('change');
           $('#movement').val('empty').trigger('change');
           $('#container_size').val('20').trigger('change');
-          $('#party_charges,#lot_of,#bl_cro_number,#job_number,#index_number,#rent,#lolo_charges,#weight_charges').val('');
+          $('#party_charges,#lot_of,#bl_cro_number,#job_number,#index_number,#lolo_charges,#weight_charges').val('');
 
           $('#cm_id_div').addClass('hidden');
           $('#update_form_btn').attr('disabled','disabled');
@@ -904,10 +898,10 @@ include 'footer.php';
           $('#bl_cro_number').val( trr.find('td').eq(15).text() );
           $('#job_number').val( trr.find('td').eq(16).text() );
           $('#index_number').val( trr.find('td').eq(17).text() );
-          $('#rent').val( trr.find('td').eq(18).text() );
-          $('#container_id').val( trr.find('td').eq(19).attr('id') ).trigger('change');
-          $('#lolo_charges').val( trr.find('td').eq(20).text() );
-          $('#weight_charges').val( trr.find('td').eq(21).text() );
+          
+          $('#container_id').val( trr.find('td').eq(18).attr('id') ).trigger('change');
+          $('#lolo_charges').val( trr.find('td').eq(19).text() );
+          $('#weight_charges').val( trr.find('td').eq(20).text() );
       });
 
       //Update
@@ -937,7 +931,7 @@ include 'footer.php';
              bl_cro_number = $('#bl_cro_number').val(),
              job_number = $('#job_number').val(),
              index_number = $('#index_number').val(),
-             rent = $('#rent').val(),
+
              container_id = $('#container_id').val(),
              container_type = $('#container_id option:selected').text(),
              lolo_charges = $('#lolo_charges').val(),
@@ -947,7 +941,7 @@ include 'footer.php';
 
          if( $(this).hasClass('update_form') ) 
          {
-            update(cm_id,datee,agent_id,agent_name,coa_id,coa,consignee_id,consignee,movement,empty_terminal_id,empty_terminal,from_yard_id,from_yard,to_yard_id,to_yard,container_size,party_charges,lot_of,line_id,line,bl_cro_number,job_number,index_number,rent,container_id,container_type,lolo_charges,weight_charges);
+            update(cm_id,datee,agent_id,agent_name,coa_id,coa,consignee_id,consignee,movement,empty_terminal_id,empty_terminal,from_yard_id,from_yard,to_yard_id,to_yard,container_size,party_charges,lot_of,line_id,line,bl_cro_number,job_number,index_number,container_id,container_type,lolo_charges,weight_charges);
          }
          // else
          // {

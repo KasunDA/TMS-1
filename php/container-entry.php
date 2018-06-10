@@ -361,7 +361,7 @@ date_default_timezone_set("Asia/Karachi");
 
                                                             <label class="col-md-1 control-label">Rent:</label>
                                                             <div class="col-md-2">
-                                                              <input type="number" min="0" class="form-control" placeholder="Rent" id="rent" name="rent"   <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) { echo 'value="'.$_SESSION['rent'].'" readonly tabindex="-1" ';}?> tabindex="17">
+                                                              <input type="number" min="0" class="form-control" placeholder="Rent" id="rent" name="rent" tabindex="17">
                                                             </div>
 
                                                             <label class="col-md-1 control-label">Lolo Charges:</label>
@@ -948,16 +948,16 @@ include 'footer.php';
 
         <?php }// END oF IF ?>
 
-      function add_entry(cm_id,container_number,vehicle_id,advance,diesel,balance,color,mr_charges,remarks)
+      function add_entry(cm_id,container_number,vehicle_id,advance,diesel,rent,balance,color,mr_charges,remarks)
       {
           $.ajax({
-              url:'ajax/container_entry/add.php?cm_id='+cm_id+'&container_number='+container_number+'&vehicle_id='+vehicle_id+'&advance='+advance+'&diesel='+diesel+'&balance='+balance+'&color='+color+'&mr_charges='+mr_charges+'&remarks='+encodeURIComponent(remarks),
+              url:'ajax/container_entry/add.php?cm_id='+cm_id+'&container_number='+container_number+'&vehicle_id='+vehicle_id+'&advance='+advance+'&diesel='+diesel+'&rent='+rent+'&balance='+balance+'&color='+color+'&mr_charges='+mr_charges+'&remarks='+encodeURIComponent(remarks),
               type:"POST",
               dataType:'JSON',
               success:function(data){
                   if(data['inserted'] == 'true')
                   {
-                      $('#container_number,#advance,#balance,#remarks,#diesel').val("");
+                      $('#container_number,#advance,#balance,#remarks,#rent,#diesel').val("");
                       $('#mr_charges').val("0");
                       $('#color').val('white').trigger('change');
                       $('#vehicle_id').val("").trigger('change');
@@ -987,7 +987,7 @@ include 'footer.php';
       function add(datee,agent_id,coa_id,consignee_id,movement,empty_terminal_id,from_yard_id,to_yard_id,bl_cro_number,job_number,container_number,index_number,container_size,vehicle_id,advance,rent,balance,diesel,party_charges,container_id,lot_of,line_id,lolo_charges,weight_charges,color,mr_charges,remarks)
       {
           $.ajax({
-              url:'ajax/container_movement/add.php?datee='+encodeURIComponent(datee)+'&agent_id='+agent_id+'&coa_id='+coa_id+'&consignee_id='+consignee_id+'&movement='+encodeURIComponent(movement)+'&empty_terminal_id='+empty_terminal_id+'&from_yard_id='+from_yard_id+'&to_yard_id='+to_yard_id+'&container_size='+container_size+'&party_charges='+party_charges+'&lot_of='+lot_of+'&line_id='+line_id+'&bl_cro_number='+bl_cro_number+'&job_number='+job_number+'&index_number='+index_number+'&rent='+rent+'&container_id='+container_id+'&lolo_charges='+lolo_charges+'&weight_charges='+weight_charges,
+              url:'ajax/container_movement/add.php?datee='+encodeURIComponent(datee)+'&agent_id='+agent_id+'&coa_id='+coa_id+'&consignee_id='+consignee_id+'&movement='+encodeURIComponent(movement)+'&empty_terminal_id='+empty_terminal_id+'&from_yard_id='+from_yard_id+'&to_yard_id='+to_yard_id+'&container_size='+container_size+'&party_charges='+party_charges+'&lot_of='+lot_of+'&line_id='+line_id+'&bl_cro_number='+bl_cro_number+'&job_number='+job_number+'&index_number='+index_number+'&container_id='+container_id+'&lolo_charges='+lolo_charges+'&weight_charges='+weight_charges,
               type:"POST",
               dataType:'JSON',
               success:function(data){
@@ -995,7 +995,7 @@ include 'footer.php';
                   {
                       // $('#datee,#agent_id,#coa_id,#consignee_id,#movement,#empty_terminal_id,#from_yard_id,#to_yard_id,#container_size,#party_charges,#lot_of,#line_id').attr('readonly', 'readonly');
                       
-                      add_entry(data['cm_id'],container_number,vehicle_id,advance,diesel,balance,color,mr_charges,remarks);
+                      add_entry(data['cm_id'],container_number,vehicle_id,advance,diesel,rent,balance,color,mr_charges,remarks);
 
                       location.assign('container-entry.php');
                   }
@@ -1004,10 +1004,10 @@ include 'footer.php';
           });
       }
 
-      function update(ce_id,container_number,vehicle_id,vehicle_number,advance,diesel,balance,color,mr_charges,remarks)
+      function update(ce_id,container_number,vehicle_id,vehicle_number,advance,diesel,rent,balance,color,mr_charges,remarks)
       {
           $.ajax({
-              url:'ajax/container_entry/update.php?ce_id='+ce_id+'&container_number='+container_number+'&vehicle_id='+vehicle_id+'&advance='+advance+'&diesel='+diesel+'&balance='+balance+'&color='+color+'&mr_charges='+mr_charges+'&remarks='+encodeURIComponent(remarks),
+              url:'ajax/container_entry/update.php?ce_id='+ce_id+'&container_number='+container_number+'&vehicle_id='+vehicle_id+'&advance='+advance+'&diesel='+diesel+'&rent='+rent+'&balance='+balance+'&color='+color+'&mr_charges='+mr_charges+'&remarks='+encodeURIComponent(remarks),
               type:"POST",
               success:function(data){
                   if(data)
@@ -1020,6 +1020,7 @@ include 'footer.php';
                       temp[12] = container_number;
                       temp[15] = vehicle_number;
                       temp[16] = advance;
+                      temp[17] = rent;
                       temp[18] = balance;
                       temp[19] = diesel;
                       temp[26] = color;
@@ -1094,7 +1095,7 @@ include 'footer.php';
 
           $('form').removeClass('update_form');
 
-          $('#container_number,#advance,#remarks,#diesel').val("");
+          $('#container_number,#advance,#remarks,#diesel,#rent').val("");
           $('#mr_charges').val("0"); 
           $('#color').val('white').trigger('change');
           $('#vehicle_id').val('').trigger('change');
@@ -1158,7 +1159,7 @@ include 'footer.php';
           // $('#container_size').val( trr.find('td').eq(14).text() ).trigger('change');
           $('#vehicle_id').val( trr.find('td').eq(15).attr('id') ).trigger('change');
           $('#advance').val( trr.find('td').eq(16).text() );
-          // $('#rent').val( trr.find('td').eq(17).text() );
+          $('#rent').val( trr.find('td').eq(17).text() );
           $('#balance').val( trr.find('td').eq(18).text() );
           $('#diesel').val( trr.find('td').eq(19).text() );
           // $('#party_charges').val( trr.find('td').eq(19).text() );
@@ -1209,14 +1210,14 @@ include 'footer.php';
 
          if( $(this).hasClass('update_form') ) 
          {
-            update(ce_id,container_number,vehicle_id,vehicle_number,advance,diesel,balance,color,mr_charges,remarks);
+            update(ce_id,container_number,vehicle_id,vehicle_number,advance,diesel,rent,balance,color,mr_charges,remarks);
          }
          else if( $(this).hasClass('add_entry_form') )
          {  
             <?php 
               if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL )
               {
-                echo 'add_entry('.$_SESSION['cm_id'].',container_number,vehicle_id,advance,diesel,balance,color,mr_charges,remarks)';  
+                echo 'add_entry('.$_SESSION['cm_id'].',container_number,vehicle_id,advance,diesel,rent,balance,color,mr_charges,remarks)';  
               }
             ?>
          }

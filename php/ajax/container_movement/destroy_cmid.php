@@ -16,6 +16,15 @@ $_SESSION['container_size'] = "";
 $_SESSION['party_charges'] = "";
 $_SESSION['line_id'] = "";
 
+
+$_SESSION['bl_cro_number'] = "";
+$_SESSION['job_number'] = "";
+$_SESSION['index_number'] = "";
+
+$_SESSION['container_id'] = "";
+$_SESSION['lolo_charges'] = "";
+$_SESSION['weight_charges'] = "";
+
 echo "<script>location.assign('../../container-entry.php');</script>";
 
 ?>

@@ -30,7 +30,7 @@
 		$_SESSION['bl_cro_number']    = $r['bl_cro_number'];
 		$_SESSION['job_number']       = $r['job_number'];
 		$_SESSION['index_number']     = $r['index_number'];
-		$_SESSION['rent']             = $r['rent'];
+		
 		$_SESSION['container_id']     = $r['container_id'];
 		$_SESSION['lolo_charges']     = $r['lolo_charges'];
 		$_SESSION['weight_charges']   = $r['weight_charges'];

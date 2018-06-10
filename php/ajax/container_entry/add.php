@@ -52,18 +52,19 @@
 	if( $rc['lot_of'] < $lot_of_limit )
 	{
 
-		$cm_id = $_GET['cm_id'];
-		$container_number = $_GET['container_number'];
-		$vehicle_id = $_GET['vehicle_id'];
-		$advance = $_GET['advance'];
-		$diesel = $_GET['diesel'];
-		$balance = $_GET['balance'];
-		$color = $_GET['color'];
-		$mr_charges = $_GET['mr_charges'];
-		$remarks = $_GET['remarks'];
+		$cm_id 			    = $_GET['cm_id'];
+		$container_number   = $_GET['container_number'];
+		$vehicle_id 		= $_GET['vehicle_id'];
+		$advance 			= $_GET['advance'];
+		$diesel 			= $_GET['diesel'];
+		$rent 				= $_GET['rent'];
+		$balance 			= $_GET['balance'];
+		$color 				= $_GET['color'];
+		$mr_charges 		= $_GET['mr_charges'];
+		$remarks 			= $_GET['remarks'];
 
 
-		$q = mysqli_query($mycon,"INSERT INTO container_entry(cm_id,container_number,vehicle_id,advance,diesel,balance,color,mr_charges,remarks) VALUES( $cm_id,'$container_number',$vehicle_id,$advance,$diesel,$balance,'$color',$mr_charges,'$remarks' ) ");
+		$q = mysqli_query($mycon,"INSERT INTO container_entry(cm_id,container_number,vehicle_id,advance,diesel,rent,balance,color,mr_charges,remarks) VALUES( $cm_id,'$container_number',$vehicle_id,$advance,$diesel,$rent,$balance,'$color',$mr_charges,'$remarks' ) ");
 
 		if(mysqli_affected_rows($mycon))
 		{
