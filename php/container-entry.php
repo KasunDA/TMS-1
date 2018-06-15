@@ -957,7 +957,7 @@ include 'footer.php';
               success:function(data){
                   if(data['inserted'] == 'true')
                   {
-                      $('#container_number,#advance,#balance,#remarks,#rent,#diesel').val("");
+                      $('#container_number,#advance,#balance,#remarks,#diesel').val("");
                       $('#mr_charges').val("0");
                       $('#color').val('white').trigger('change');
                       $('#vehicle_id').val("").trigger('change');
@@ -1095,7 +1095,7 @@ include 'footer.php';
 
           $('form').removeClass('update_form');
 
-          $('#container_number,#advance,#remarks,#diesel,#rent').val("");
+          $('#container_number,#advance,#remarks,#diesel').val("");
           $('#mr_charges').val("0"); 
           $('#color').val('white').trigger('change');
           $('#vehicle_id').val('').trigger('change');
