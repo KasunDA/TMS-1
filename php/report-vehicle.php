@@ -366,6 +366,11 @@ date_default_timezone_set("Asia/Karachi");
                         </div>
                         <div class="tools">
                             <!-- <a href="" class="expand"> </a> -->
+
+                            <!-- <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                        <input type="checkbox" class="group-checkable" data-set="#mytable .checkboxes" />
+                                        <span></span>
+                                    </label> -->
                         </div>
                     </div>
                     <div class="portlet-body table-both-scroll" >  <!-- style="display: none;" -->
@@ -373,10 +378,7 @@ date_default_timezone_set("Asia/Karachi");
                           <thead>
                               <tr>
                                   <th>
-                                    <!-- <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                        <input type="checkbox" class="group-checkable" data-set="#mytable .checkboxes" />
-                                        <span></span>
-                                    </label> -->
+                                    
                                   </th>
                                   <th> Index </th>
                                   <th> ID </th>

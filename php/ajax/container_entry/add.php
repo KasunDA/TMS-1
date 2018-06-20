@@ -87,5 +87,7 @@
 		$json['lot_of_limit'] = "Your Lot of limit has been reached. Please click on Add New Movement Button.";
 	}
 
+	$_SESSION['rent'] = $rent;
+
 	echo json_encode($json);
 ?>

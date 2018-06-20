@@ -361,7 +361,7 @@ date_default_timezone_set("Asia/Karachi");
 
                                                             <label class="col-md-1 control-label">Rent:</label>
                                                             <div class="col-md-2">
-                                                              <input type="number" min="0" class="form-control" placeholder="Rent" id="rent" name="rent" tabindex="17">
+                                                              <input type="number" min="0" class="form-control" placeholder="Rent" id="rent" name="rent" tabindex="17" <?php if( isset( $_SESSION['rent'] ) && $_SESSION['rent'] != NULL ) { echo 'value="'.$_SESSION['rent'].'"';}?> >
                                                             </div>
 
                                                             <label class="col-md-1 control-label">Lolo Charges:</label>
