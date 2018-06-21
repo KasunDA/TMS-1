@@ -637,6 +637,10 @@ include 'footer.php';
 
         loadData(from_datee,to_datee,from_yard_id,to_yard_id,coa_id,consignee_id,movement,empty_terminal_id,bl_cro_number,container_size,container_id,line_id);
 
+        $('html, body').animate({
+          scrollTop: 400
+          // scrollTop: $("#mytable_div").offset().top
+        }, 1000);
 
     });
 

@@ -566,7 +566,7 @@ date_default_timezone_set("Asia/Karachi");
                                                 <div class="">
                                                     <button type="submit" class="btn blue" id="btn_submit" tabindex="7">Submit</button> 
                                                     <button type="reset" class="btn default" id="btn_reset" tabindex="8">Cancel</button>
-                                                    <button type="reset" class="btn dark btn-outline" id="voucher_print" tabindex="9">Print</button>
+                                                    <button type="button" class="btn dark btn-outline" id="voucher_print" tabindex="9">Print</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -753,8 +753,8 @@ include 'footer.php';
           success: function(data)
           {
               $('#voucher_number').val(data['voucher_number']);
-          }
-          // error: function(){ alert('Error in get id Ajax.') }
+          },
+          error: function(){ alertMessage('Error Getting  Voucher ID.','error'); }
 
         })
     }
@@ -965,8 +965,9 @@ include 'footer.php';
                                       '</tr>'+
                                   '</tbody>'+
                                 '</table>'+
-                                '</div> </div> </div>');
-                                $(win.document.body).append('</div>');
+                                '</div> </div> </div>'+
+                                '<div class="col-md-12" style="margin-top:10%;"> <h3> Receivers Signature:_________________________________ </h3> </div>');
+                                $(win.document.body).append('</div> ');
                               }
                               // else
                               // {
