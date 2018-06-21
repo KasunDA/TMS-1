@@ -105,7 +105,7 @@ $cm_id = $_GET['cm_id'];
                         </div>
 
                     </div>
-                    <div class="row">
+                    <!-- <div class="row">
                         <div class="form-group">
                             <div class="col-md-9">
                                 <div class="">
@@ -114,7 +114,7 @@ $cm_id = $_GET['cm_id'];
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

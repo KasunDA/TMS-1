@@ -160,7 +160,7 @@
 		$json[$n]['bl_cro_number'] = $r['bl_cro_number'];
 		$json[$n]['job_number'] = $r['job_number'];
 		$json[$n]['index_number'] = $r['index_number'];
-		$json[$n]['rent'] = $r['rent'];
+		// $json[$n]['rent'] = $r['rent'];
 
 		$q1 = mysqli_query($mycon,"SELECT type from container where container_id=".$r['container_id']);
 		if($r1 = mysqli_fetch_array($q1))
