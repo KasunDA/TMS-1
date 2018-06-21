@@ -114,7 +114,7 @@
 		$json[$n]['45'] = 0;
 
 
-		$q1 = mysqli_query($mycon," SELECT * FROM container_movement where status=1 and coa_id=".$r['coa_id']." and movement='".$r['movement']."' and empty_terminal_id=".$r['empty_terminal_id']." and from_yard_id=".$r['from_yard_id']." and to_yard_id=".$r['to_yard_id']." and line_id=".$r['line_id']." and  index_number=".$r['index_number']." and  datee BETWEEN '$from_datee' AND '$to_datee' "); 
+		$q1 = mysqli_query($mycon," SELECT * FROM container_movement where status=1 and coa_id=".$r['coa_id']." and movement='".$r['movement']."' and empty_terminal_id=".$r['empty_terminal_id']." and from_yard_id=".$r['from_yard_id']." and to_yard_id=".$r['to_yard_id']." and line_id=".$r['line_id']." and  index_number='".$r['index_number']."' and  datee BETWEEN '$from_datee' AND '$to_datee' "); 
 		
 		while( $r1 = mysqli_fetch_array($q1) )
 		{

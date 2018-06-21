@@ -901,10 +901,51 @@ include 'footer.php';
 
                           $(win.document.body)
                               .css( 'font-size', '10pt' )
-                              .prepend('')
-                              .prepend('')
-                              .prepend( $('#mytable2_div').html() )
-                              .prepend('');
+                              .append('<br/><br/>')
+                              .append( $('#mytable2_div').html() );
+                              // .append( $('#voucher_div').html() );
+
+                              if( $("#voucher_div").css('display') != 'none' )
+                              {
+                                $(win.document.body)
+                                .append('<br/><br/>')
+                                .append('<table class="table table-hover table-light">'+
+                                  '<thead>'+
+                                    '<tr class="uppercase">'+
+                                        '<td> # </td>'+
+                                        '<td> Voucher # </td>'+
+                                        '<td>'+$('#voucher_number').val()+'</td>'+
+                                    '</tr>'+
+                                  '</thead>'+
+                                  '<tbody>'+
+                                      '<tr>'+
+                                          '<td> 1 </td>'+
+                                          '<td> Date </td>'+
+                                          '<td>'+$('#datee').val()+'</td>'+
+                                      '</tr>'+
+                                      '<tr>'+
+                                          '<td> 2 </td>'+
+                                          '<td> Payment Method </td>'+
+                                          '<td>'+$('input[name="method"]:checked').val()+'</td>'+
+                                      '</tr>'+
+                                      '<tr>'+
+                                          '<td> 3 </td>'+
+                                          '<td> Check # </td>'+
+                                          '<td>'+$('#check_number').val()+'</td>'+
+                                      '</tr>'+
+                                      '<tr>'+
+                                          '<td> 4 </td>'+
+                                          '<td> Bank Name </td>'+
+                                          '<td>'+$('#bank_id option:selected').text()+'</td>'+
+                                      '</tr>'+
+                                      '<tr>'+
+                                          '<td> 5 </td>'+
+                                          '<td> Amount </td>'+
+                                          '<td>'+$('#amount').val()+'</td>'+
+                                      '</tr>'+
+                                  '</tbody>'+
+                                '</table>');
+                              }
                       }
                     }
                   , {
