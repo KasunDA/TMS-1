@@ -373,7 +373,7 @@ date_default_timezone_set("Asia/Karachi");
                                     </label> -->
                         </div>
                     </div>
-                    <div class="portlet-body table-both-scroll" >  <!-- style="display: none;" -->
+                    <div class="portlet-body table-both-scroll"  >  <!-- style="display: none;" -->
                         <table class="table table-striped table-bordered table-hover table-checkable order-column" id="mytable">
                           <thead>
                               <tr>
@@ -566,6 +566,7 @@ date_default_timezone_set("Asia/Karachi");
                                                 <div class="">
                                                     <button type="submit" class="btn blue" id="btn_submit" tabindex="7">Submit</button> 
                                                     <button type="reset" class="btn default" id="btn_reset" tabindex="8">Cancel</button>
+                                                    <button type="reset" class="btn dark btn-outline" id="voucher_print" tabindex="9">Print</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -622,6 +623,10 @@ include 'footer.php';
 <script type="text/javascript">
  
  $(document).ready(function(){
+
+  $('#voucher_print').click(function(){
+    $('.table_print_btn').trigger('click');
+  });
 
     // $('#mytable').on( 'focusout', 'tbody td:not(:first-child)', function (e) {
         
@@ -896,20 +901,35 @@ include 'footer.php';
                   , buttons:[ {
                       extend:"print", title: 'Vehicle Report', orientation: 'landscape', pageSize: 'LEGAL', exportOptions: {
                           columns: ':visible', rows: '.selectedd'
-                      },className:"btn dark btn-outline",
+                      },className:"btn dark btn-outline table_print_btn",
                       customize: function ( win ) {
 
+                          $(win.document.body).append('<div class="row">');
                           $(win.document.body)
                               .css( 'font-size', '10pt' )
                               .append('<br/><br/>')
-                              .append( $('#mytable2_div').html() );
-                              // .append( $('#voucher_div').html() );
-
+                              .append('<div class="col-md-6">'+
+                                        '<div class="portlet light portlet-fit bordered ">'+
+                                        '<div class="portlet-body ">'+
+                                        '<h1> Summary <h1>'+
+                                        $('#mytable2_div').html()+
+                                        '</div> </div> </div>');
+                              
                               if( $("#voucher_div").css('display') != 'none' )
                               {
+                                var bank='';
+
+                                if($('#bank_id option:selected').val() != '' )
+                                {
+                                  bank = $('#bank_id option:selected').text();
+                                }
+
                                 $(win.document.body)
-                                .append('<br/><br/>')
-                                .append('<table class="table table-hover table-light">'+
+                                .append('<div class="col-md-6">'+
+                                        '<div class="portlet light portlet-fit bordered ">'+
+                                        '<div class="portlet-body ">'+
+                                        '<h1> Voucher <h1>'+
+                                  '<table class="table table-hover table-light">'+
                                   '<thead>'+
                                     '<tr class="uppercase">'+
                                         '<td> # </td>'+
@@ -936,7 +956,7 @@ include 'footer.php';
                                       '<tr>'+
                                           '<td> 4 </td>'+
                                           '<td> Bank Name </td>'+
-                                          '<td>'+$('#bank_id option:selected').text()+'</td>'+
+                                          '<td>'+bank+'</td>'+
                                       '</tr>'+
                                       '<tr>'+
                                           '<td> 5 </td>'+
@@ -944,8 +964,14 @@ include 'footer.php';
                                           '<td>'+$('#amount').val()+'</td>'+
                                       '</tr>'+
                                   '</tbody>'+
-                                '</table>');
+                                '</table>'+
+                                '</div> </div> </div>');
+                                $(win.document.body).append('</div>');
                               }
+                              // else
+                              // {
+                              //   $(win.document.body).append('</div>');
+                              // }
                       }
                     }
                   , {
@@ -1342,6 +1368,11 @@ include 'footer.php';
         movementt          = movement;
         line_idd           = line_id;
         // loadSummary(from_datee,to_datee,from_yard_id,to_yard_id,coa_id,movement);
+
+        $('html, body').animate({
+          scrollTop: 500
+          // scrollTop: $("#mytable_div").offset().top
+        }, 1000);
 
     });
 
