@@ -4,7 +4,7 @@
 	date_default_timezone_set("Asia/Karachi");
 
 	$json=NULL;
-	$date = date('m/d/Y');
+	$date = date('Y-m-d');
 
 	$q = mysqli_query($mycon,"SELECT * FROM accounts_entry WHERE status=1 and datee='$date' "); //ORDER BY ae_id DESC
 	$n  = 0;

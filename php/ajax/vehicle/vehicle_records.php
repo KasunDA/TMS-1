@@ -61,10 +61,10 @@
 		}
 
 		//Diesel sql query
-		$dieselsql = "SELECT SUM(total) as total_de_amount from diesel_entry where  status=1 and datee BETWEEN '$from_date' AND '$to_date' AND vehicle_id=$vehicle_id";
+		$dieselsql = "SELECT SUM(total) as total_de_amount from diesel_entry where  status=1 and datee BETWEEN '$from_datee' AND '$to_datee' AND vehicle_id=$vehicle_id";
 
 		//Repair & Maintainance sql query
-		$rmsql = "SELECT SUM(amount) as total_rm_amount FROM garage_entry  where status=1 and datee BETWEEN '$from_date' AND '$to_date' and vehicle_id=$vehicle_id";
+		$rmsql = "SELECT SUM(amount) as total_rm_amount FROM garage_entry  where status=1 and datee BETWEEN '$from_datee' AND '$to_datee' and vehicle_id=$vehicle_id";
 
 		//Driver Salary sql query
 		$dssql = "SELECT SUM(amount) as total_driver_salary FROM expenses where dd_id=4 and status=1 and datee BETWEEN '$from_datee' AND '$to_datee' and vehicle_id=$vehicle_id and name='$driver_name'";
@@ -90,10 +90,10 @@
 
 		
 		//Diesel sql query
-		$dieselsql = "SELECT SUM(total) as total_de_amount from diesel_entry where  status=1 and  datee BETWEEN '$from_date' AND '$to_date' ";
+		$dieselsql = "SELECT SUM(total) as total_de_amount from diesel_entry where  status=1 and  datee BETWEEN '$from_datee' AND '$to_datee' ";
 
 		//Repair & Maintainance sql query
-		$rmsql = "SELECT SUM(amount) as total_rm_amount FROM garage_entry  where status=1 and datee BETWEEN '$from_date' AND '$to_date' ";
+		$rmsql = "SELECT SUM(amount) as total_rm_amount FROM garage_entry  where status=1 and datee BETWEEN '$from_datee' AND '$to_datee' AND vehicle_id IN (".$_GET['vids'].") ";
 
 		//Driver Salary sql query
 		$dssql = "SELECT SUM(amount) as total_driver_salary FROM expenses where dd_id=4 and status=1 and datee BETWEEN '$from_datee' AND '$to_datee' ";	

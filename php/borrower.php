@@ -29,27 +29,28 @@ include 'nav.php';
                         <div class="portlet-title">
                             <div class="caption font-red-sunglo">
                                 <i class="icon-settings font-red-sunglo"></i>
-                                <span class="caption-subject bold uppercase"><?php $text = isset($_SESSION['disable_btn'])?'View':'Add New'; echo $text; ?> Daily Description</span>
+                                <span class="caption-subject bold uppercase"><?php $text = isset($_SESSION['disable_btn'])?'View':'Add New'; echo $text; ?> Borrower</span>
                             </div>
                         </div>
                         <div class="portlet-body form">
-                            <?php
+                        
+                        <?php
                                 if(!isset($_SESSION['disable_btn']) )
                                 {?>
                             <form class="form-horizontal" role="form" method="post">
                                 <div class="form-body">
                                     <div class="row"> 
                                         <div class="form-group">
-                                            <div class="hidden" id="dd_id_div"> 
+                                            <div class="hidden" id="borrower_id_div"> 
                                                 <label class="col-md-2 control-label">ID:</label>
                                                 <div class="col-md-3">
-                                                  <input type="number" name="dd_id" id="dd_id" readonly class="form-control">
+                                                  <input type="number" name="borrower_id" id="borrower_id" readonly class="form-control">
                                                 </div>
                                             </div>
 
-                                                <label class="col-md-2 control-label">Description Name:</label>
+                                                <label class="col-md-2 control-label"> Name:</label>
                                                 <div class="col-md-3">
-                                                  <input type="text" class="form-control" id="name" name="name" required tabindex="1" placeholder="Description Name" autofocus>
+                                                  <input type="text" class="form-control" id="name" name="name" required tabindex="1" placeholder="Borrower Name" autofocus />
                                                 </div>
                                     
                                          </div>  
@@ -85,7 +86,7 @@ include 'nav.php';
                                                    
                                                     <th> Action </th> 
                                                     <th> # </th>
-                                                    <th> Description Name </th>
+                                                    <th> Name </th>
                                                    
                                                 </tr>
                                             </thead>
@@ -126,7 +127,7 @@ include 'footer.php';
         {
           
             $.ajax({
-                url:'ajax/daily_description/fetch.php',
+                url:'ajax/borrower/fetch.php',
                 dataType:"JSON",
                 success:function(data){
 
@@ -138,44 +139,30 @@ include 'footer.php';
                     
                     $.each(data,function(index,value){
 
-                        if( value['dd_id'] == 1 ||  value['dd_id'] == 2 || value['dd_id'] == 3 || value['dd_id'] == 4 || value['dd_id'] == 5 || value['dd_id'] == 8 )
-                        {
 
-                            $('tbody').append('<tr index="'+i+'" class="odd gradeX">'+
-
+                        $('tbody').append('<tr index="'+i+'" class="odd gradeX">'+
+                            <?php
+                                if(!isset($_SESSION['disable_btn']) )
+                                {?>
+                                '<td>'+ 
+                                    '<ul class="addremove">'+
+                                        '<li> <button class="btn btn-xs green update_btn" id="'+value['borrower_id']+'" type="button">  '+
+                                        '<i class="fa fa-plus-square"></i>'+
+                                        '</button> </li>'+
+                                        '<li>  <button class="btn btn-xs red delete_btn" id="'+value['borrower_id']+'" type="button">  '+
+                                        '<i class="fa fa-minus-square"></i>'+
+                                        '</button> </li>'+
+                                    '</ul>'+
+                                '</td>'+              
+                                <?php }//END OF If
+                                else{?>
                                     '<td></td>'+
-                                    '<td>'+n+'</td>'+
-                                    '<td>'+value['name']+'</td>'+
+                                <?php }//END OF ELSE ?>            
 
-                                    '</tr>');
-                        }
-                        else
-                        {
-                            $('tbody').append('<tr index="'+i+'" class="odd gradeX">'+
+                                '<td>'+n+'</td>'+
+                                '<td>'+value['name']+'</td>'+
 
-                                    <?php
-                                    if(!isset($_SESSION['disable_btn']) )
-                                    {?>
-                                    '<td>'+ 
-                                        '<ul class="addremove">'+
-                                            '<li> <button class="btn btn-xs green update_btn" id="'+value['dd_id']+'" type="button">  '+
-                                            '<i class="fa fa-plus-square"></i>'+
-                                            '</button> </li>'+
-                                            '<li>  <button class="btn btn-xs red delete_btn" id="'+value['dd_id']+'" type="button">  '+
-                                            '<i class="fa fa-minus-square"></i>'+
-                                            '</button> </li>'+
-                                        '</ul>'+
-                                    '</td>'+    
-                                     <?php }//END OF If
-                                    else{?>
-                                        '<td></td>'+
-                                    <?php }//END OF ELSE ?>                    
-
-                                    '<td>'+n+'</td>'+
-                                    '<td>'+value['name']+'</td>'+
-
-                                    '</tr>');
-                        }
+                                '</tr>');
 
                         n++; i++;
                     })
@@ -190,7 +177,7 @@ include 'footer.php';
         function add(name)
         {
             $.ajax({
-                url:'ajax/daily_description/add.php?name='+encodeURIComponent(name),
+                url:'ajax/borrower/add.php?name='+encodeURIComponent(name),
                 type:"POST",
                 success:function(data){
                     if(data)
@@ -204,10 +191,10 @@ include 'footer.php';
             });
         }
 
-        function update(dd_id,name)
+        function update(borrower_id,name)
         {
             $.ajax({
-                url:'ajax/daily_description/update.php?dd_id='+dd_id+'&name='+encodeURIComponent(name),
+                url:'ajax/borrower/update.php?borrower_id='+borrower_id+'&name='+encodeURIComponent(name),
                 type:"POST",
                 success:function(data){
                     if(data)
@@ -229,10 +216,10 @@ include 'footer.php';
             });
         }
 
-        function deletetr(trr,dd_id)
+        function deletetr(trr,borrower_id)
         {
             $.ajax({
-                url:'ajax/daily_description/delete.php?dd_id='+dd_id,
+                url:'ajax/borrower/delete.php?borrower_id='+borrower_id,
                 type:"POST",
                 success:function(data){
                     trr.fadeOut(100,function(){
@@ -248,7 +235,7 @@ include 'footer.php';
 
             $('form').addClass('update_form');
 
-            $('#dd_id_div').removeClass('hidden');
+            $('#borrower_id_div').removeClass('hidden');
             $('#update_form_btn').removeClass('hidden');
             $('#add_new').removeClass('hidden');
 
@@ -266,7 +253,7 @@ include 'footer.php';
 
             $('#name').val('');
 
-            $('#dd_id_div').addClass('hidden');
+            $('#borrower_id_div').addClass('hidden');
             $('#update_form_btn').addClass('hidden');
             $('#add_new').addClass('hidden');
 
@@ -280,10 +267,10 @@ include 'footer.php';
         //DELETE 
         $(document).on('click','.delete_btn',function(){
 
-            var dd_id = $(this).attr('id'),
+            var borrower_id = $(this).attr('id'),
                 trr = $(this).closest('tr');
 
-            deletetr(trr,dd_id);
+            deletetr(trr,borrower_id);
         });
 
         //ADD NEW 
@@ -296,7 +283,7 @@ include 'footer.php';
 
             updateClick();
 
-            var dd_id = $(this).attr('id'),
+            var borrower_id = $(this).attr('id'),
                 trr = $(this).closest('tr');
 
             $('tr').each(function(){
@@ -308,7 +295,7 @@ include 'footer.php';
 
             trr.addClass('selectedd');   
 
-            $('#dd_id').val( dd_id );
+            $('#borrower_id').val( borrower_id );
             $('#name').val( trr.find('td').eq(2).text() );
 
         });
@@ -318,11 +305,11 @@ include 'footer.php';
            e.preventDefault();
            
            var name = $('#name').val(),
-               dd_id =  $('#dd_id').val();
+               borrower_id =  $('#borrower_id').val();
 
            if( $(this).hasClass('update_form') ) 
            {
-                update(dd_id,name);
+                update(borrower_id,name);
            }
            else
            {

@@ -65,6 +65,11 @@ else if ( $termid=='cmp_id' )
 	$term = 'name';
 	$sql = " SELECT * from company where status=1 ORDER BY cmp_id DESC ";
 }
+else if ( $termid=='borrower_id' ) 
+{
+	$term = 'name';
+	$sql = " SELECT * from borrower where status=1 ORDER BY borrower_id DESC ";
+}
 else if ( $termid=='dg_id' ) 
 {
 	$term = 'designation';

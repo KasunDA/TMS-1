@@ -190,6 +190,11 @@
                                         <span class="title">Company</span>
                                     </a>
                                 </li>
+                                <li class="nav-item  ">
+                                    <a href="borrower.php" class="nav-link ">
+                                        <span class="title">Borrower</span>
+                                    </a>
+                                </li>
                                <li class="nav-item  ">
                                    <a href="Banks.php" class="nav-link ">
                                        <span class="title">Banks</span>

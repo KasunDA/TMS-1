@@ -46,8 +46,22 @@ date_default_timezone_set("Asia/Karachi");
                                         
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">Date:</label>
+                                            <!-- <div class="col-md-3">
+                                                <div class="input-group input-medium date date-picker" data-date-format="yyyy-mm-dd">
+                                                    <input type="text" class="form-control"  size="16" id="datee" name="datee" value="<?php //echo date('Y-m-d'); ?>"  required tabindex="1">
+                                                    <span class="input-group-btn">
+                                                        <button class="btn default" type="button">
+                                                            <i class="fa fa-calendar"></i>
+                                                        </button>
+                                                    </span>
+                                                </div> --?
+                                                 /input-group -->
+                                                <!-- <span class="help-block"> Select date </span>
+                                            </div>  -->
+                                            
                                             <div class="col-md-3">
-                                              <input type="date-picker" class="form-control form-control-inline input-medium date-picker"  size="16" id="datee" name="datee" value="<?php echo date('m/d/Y'); ?>"  required tabindex="1">
+                                                <!-- date-picker -->
+                                              <input type="date" class="form-control form-control-inline input-medium "  size="16" data-date-format="yyyy-mm-dd"  id="datee" name="datee" value="<?php echo date('Y-m-d'); ?>"  required tabindex="1">
                                             </div>
                                     
                                             <label class="col-md-2 control-label">Description:</label>
@@ -248,7 +262,7 @@ include 'footer.php';
         function add(datee,description,vehicle_id,amount)
         {
             $.ajax({
-                url:'ajax/garage_entry/add.php?datee='+encodeURIComponent(datee)+'&description='+encodeURIComponent(description)+'&vehicle_id='+vehicle_id+'&amount='+amount,
+                url:'ajax/garage_entry/add.php?datee='+datee+'&description='+encodeURIComponent(description)+'&vehicle_id='+vehicle_id+'&amount='+amount,
                 type:"POST",
                 success:function(data){
                     if(data)

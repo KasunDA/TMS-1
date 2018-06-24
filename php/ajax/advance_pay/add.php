@@ -21,9 +21,6 @@
 		//echo '<script>alert("check_number is : '.$check_number.' and bank_id is : '.$bank_id.'")</script>';
 
 	$amount = $_GET['amount'];
-
-	$vehicle_id = $_GET['vehicle_id'];
-	
 	$name = $_GET['name'];
 	
 	
@@ -36,8 +33,19 @@
 		$description = NULL;	
 	}
 
+	if( $_GET['vehicle_id'] != NUll && $_GET['vehicle_id'] != 0 )
+	{
+		$vehicle_id = $_GET['vehicle_id'];
+		
+		$sql = "INSERT INTO income(datee, dd_id, method, check_number, bank_id, amount, vehicle_id,name, description) VALUES ( '$datee' , $dd_id, '$method', '".$check_number."' , ".$bank_id.", $amount, $vehicle_id, '$name','".$description."' ) ";
+	}
+	else
+	{
+		$borrower_id = $_GET['borrower_id'];
+		
+		$sql = "INSERT INTO income(datee, dd_id, method, check_number, bank_id, amount, borrower_id,name, description) VALUES ( '$datee' , $dd_id, '$method', '".$check_number."' , ".$bank_id.", $amount, $borrower_id, '$name','".$description."' ) ";	
+	}
 
-	$sql = "INSERT INTO income(datee, dd_id, method, check_number, bank_id, amount, vehicle_id,name, description) VALUES ( '$datee' , $dd_id, '$method', '".$check_number."' , ".$bank_id.", $amount, $vehicle_id, '$name','".$description."' ) ";
 
 // echo '<script>alert("'.$sql.'")</script>';
 

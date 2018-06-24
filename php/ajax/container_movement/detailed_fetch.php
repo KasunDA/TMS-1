@@ -104,8 +104,13 @@
 
 		$json[$n]['lolo_charges'] = $r['lolo_charges'];
 		$json[$n]['weight_charges'] = $r['weight_charges'];
+		
+		$q1 = mysqli_query($mycon,'SELECT SUM(mr_charges) as other_charges FROM container_entry WHERE cm_id='.$r['cm_id']);
+		$r1 = mysqli_fetch_array($q1);
+		$json[$n]['other_charges'] = $r1['other_charges'];
+
 		$json[$n]['party_charges'] = $r['party_charges'];
-		$json[$n]['total_party_charges'] = $r['party_charges']*$r['lot_of'];
+		$json[$n]['total_party_charges'] = $r['party_charges']*$r['lot_of']+$r1['other_charges'];
 
 		$n++;
 	}

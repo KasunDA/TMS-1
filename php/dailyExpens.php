@@ -159,11 +159,48 @@ date_default_timezone_set("Asia/Karachi");
 
                                             </div>
                                         </div>
-                                    
+                                        
+                                        <div class="form-group hidden" id="vb_select_div">
+                                          <label class="col-md-4 control-label">Vehicle OR Borrower:</label>
+                                          <div class="col-md-5">
+                                                <select class="form-control" id="vb_select" name="vb_select"  tabindex="8" >
+                                                    <option value="1">Vehicle</option>
+                                                    <option value="2">Borrower</option>
+                                                  </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group hidden" id="borrower_div">
+                                            <label class="col-md-4 control-label">Borrower:</label>
+                                            <div class="col-md-5">
+                                                <select class="form-control" id="borrower_id" name="borrower_id"  tabindex="9" >
+                                                    <option value="">Select Borrower</option>
+                                                      <?php 
+
+                                              $q = mysqli_query($mycon,'SELECT borrower_id,name from borrower where status=1 ORDER BY borrower_id DESC');
+
+                                              while( $r = mysqli_fetch_array($q) )
+                                                {?>
+                                                  <option value="<?php echo $r['borrower_id']; ?>"><?php echo $r['name']; ?></option>
+                                              <?php } //END OF WHILE ?>
+                                                  </select>
+                                            </div>
+
+                                            <div class="col-md-1">
+
+                                              <button class="btn btn-xs green borrower_id" para="borrower_id"  type="button">
+                                              
+                                                <i class="fa fa-refresh"></i>
+                                              
+                                              </button>
+
+                                            </div>
+                                        </div>
+  
                                         <div class="form-group hidden" id="vn_div">
                                             <label class="col-md-4 control-label">Vehicle #:</label>
                                             <div class="col-md-5">
-                                                <select class="form-control" id="vehicle_id" name="vehicle_id"  tabindex="8" >
+                                                <select class="form-control" id="vehicle_id" name="vehicle_id"  tabindex="9" >
                                                     <option value="">Select Vehicle</option>
                                                       <?php 
 
@@ -191,7 +228,7 @@ date_default_timezone_set("Asia/Karachi");
                                         <div class="form-group hidden" id="name_div">
                                             <label class="col-md-4 control-label">Name:</label>
                                             <div class="col-md-5">
-                                                <select class="form-control" id="name" name="name"  tabindex="9">
+                                                <select class="form-control" id="name" name="name"  tabindex="10">
                                                 </select>
                                             </div>
                                         </div>
@@ -199,17 +236,17 @@ date_default_timezone_set("Asia/Karachi");
                                         <div class="form-group">
                                             <label class="col-md-4 control-label">Description:</label>
                                             <div class="col-md-5">
-                                               <textarea class="form-control" name="description" id="description" rows="4" tabindex="10"  placeholder="Text Here"></textarea>
+                                               <textarea class="form-control" name="description" id="description" rows="4" tabindex="11"  placeholder="Text Here"></textarea>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <div class="col-md-5 col-md-push-4">
                                                 <div class="">
-                                                    <button type="submit" class="btn blue" id="btn_submit" tabindex="11">Submit</button> 
-                                                    <button type="reset" class="btn default" id="btn_reset" tabindex="12">Cancel</button>
+                                                    <button type="submit" class="btn blue" id="btn_submit" tabindex="12">Submit</button> 
+                                                    <button type="reset" class="btn default" id="btn_reset" tabindex="13">Cancel</button>
 
-                                                    <button type="submit" class="btn blue hidden" id="update_form_btn" tabindex="11">Update</button>
-                                                    <button type="button" class="btn default hidden"  id="add_new" tabindex="12">Add New</button>
+                                                    <button type="submit" class="btn blue hidden" id="update_form_btn" tabindex="12">Update</button>
+                                                    <button type="button" class="btn default hidden"  id="add_new" tabindex="13">Add New</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -423,6 +460,7 @@ date_default_timezone_set("Asia/Karachi");
                                          <th> Vehicle # </th>
                                          <th> Name </th>
                                          <th> Bike # </th>
+                                         <th> Borrower Name </th>
                                          <th> Description </th>    
                                      </tr>
                                  </thead>
@@ -580,6 +618,29 @@ include 'footer.php';
         $('#vehicle_id').val('').trigger('change');
     }
 
+    function borrowershow()
+    {
+        $('#borrower_div').removeClass('hidden');
+        $('#borrower_id').attr('required', 'required');
+    }
+
+    function borrowerhide()
+    {
+        $('#borrower_div').addClass('hidden');   
+        $('#borrower_id').removeAttr('required');
+        $('#borrower_id').val('').trigger('change');
+    }
+
+    function vbshow()
+    {
+        $('#vb_select_div').removeClass('hidden');
+    }
+
+    function vbhide()
+    {
+        $('#vb_select_div').addClass('hidden');   
+    }
+
     function nameshow()
     {
         $('#name_div').removeClass('hidden');   
@@ -606,6 +667,8 @@ include 'footer.php';
         $('#vehicle_id,#name').val('').trigger('change'); 
     }
 
+
+
     function bcshow()
     {
         $('#check_number,#bank_id').attr('required','required');
@@ -626,31 +689,49 @@ include 'footer.php';
 
         if( dd_id == 1 )
         {
+            vbhide();
             allhide();
             bikehide();
         }
         else if( dd_id == 2 )
         {
             allshow();
+            vbshow();
             bikehide();
         }
         else if( dd_id == 3 )
         {
             bikeshow();
             allhide();
+            vbhide();
         }
         else if( dd_id == 4 )
         {
+            vbhide();
             vehicleshow();
             namehide();
             bikehide();
         }
         else
         {
+            vbhide();
             allhide();
             bikehide();
         }
          
+    });
+
+    $('#vb_select').change(function(){
+      if($(this).val() == 1)
+      {
+        allshow();
+        borrowerhide();
+      }
+      else
+      {
+        allhide();
+        borrowershow();
+      }
     });
 
     function cmpshow()
@@ -719,7 +800,7 @@ include 'footer.php';
     }
 
     //Select2
-   $('#dd_id,#idd_id,#bank_id,#ibank_id,#vehicle_id,#name,#bike_id,#cmp_id').select2({
+   $('#dd_id,#idd_id,#bank_id,#ibank_id,#vehicle_id,#name,#bike_id,#cmp_id,#borrower_id').select2({
       width: 'resolve',
       theme: "classic"
    });
@@ -782,6 +863,14 @@ include 'footer.php';
                   $('#'+param).append('<option value="'+value['vehicle_id']+'">'+value['vehicle_number']+'</option> ');
                 });
               }
+              else if( param =='borrower_id' )
+              {
+                $('#'+param).html('<option value="">Select Borrower</option>');
+                
+                $.each(data,function(index,value){
+                  $('#'+param).append('<option value="'+value['borrower_id']+'">'+value['name']+'</option> ');
+                });
+              }
               else
               {
                 $('#'+param).html('<option value="">Select Company</option>');
@@ -802,7 +891,7 @@ include 'footer.php';
         });
       }
 
-      $(document).on('click','.dd_id,.idd_id,.bank_id,.ibank_id,.vehicle_id,.bike_id,.cmp_id', function()
+      $(document).on('click','.dd_id,.idd_id,.bank_id,.ibank_id,.vehicle_id,.bike_id,.cmp_id,.borrower_id', function()
       {
         updateField(''+$(this).attr('para')+'');
       });
@@ -877,6 +966,7 @@ include 'footer.php';
                             '<td id="'+value['vehicle_id']+'">'+value['vehicle_number']+'</td>'+
                             '<td>'+value['name']+'</td>'+
                             '<td id="'+value['bike_id']+'">'+value['bike_number']+'</td>'+
+                            '<td id="'+value['borrower_id']+'">'+value['borrower_name']+'</td>'+
                             '<td>'+value['description']+'</td>'+
                             '</tr>');
 
@@ -942,10 +1032,10 @@ include 'footer.php';
 
     iloadData();
 
-    function add(datee,dd_id,method,check_number,bank_id,amount,vehicle_id,name,bike_id,description)
+    function add(datee,dd_id,method,check_number,bank_id,amount,vehicle_id,name,bike_id,borrower_id,description)
     {
         $.ajax({
-            url:'ajax/expenses/add.php?datee='+datee+'&dd_id='+dd_id+'&method='+method+'&check_number='+check_number+'&bank_id='+bank_id+'&amount='+amount+'&vehicle_id='+vehicle_id+'&name='+name+'&bike_id='+bike_id+'&description='+encodeURIComponent(description),
+            url:'ajax/expenses/add.php?datee='+datee+'&dd_id='+dd_id+'&method='+method+'&check_number='+check_number+'&bank_id='+bank_id+'&amount='+amount+'&vehicle_id='+vehicle_id+'&name='+name+'&bike_id='+bike_id+'&borrower_id='+borrower_id+'&description='+encodeURIComponent(description),
             type:"POST",
             success:function(data){
                 if(data)
@@ -1257,13 +1347,13 @@ include 'footer.php';
            name = $('#name').val() ,
            bike_id = $('#bike_id').val() ,
            bike_number = $('#bike_id option:selected').text() ,
+           borrower_id = $('#borrower_id').val() ,
            description = $('#description').val() ,
            expense_id =  $('#expense_id').val();
 
            if( check_number == '' )
            {
                 check_number = null;
-               
            }
            if( bank_id == '' )
            {
@@ -1279,6 +1369,10 @@ include 'footer.php';
            {
                 name = null;
            }
+           if( borrower_id == '' )
+           {
+                borrower_id = null;
+           }
            if( bike_id == '' )
            {
                 bike_id = null;
@@ -1291,7 +1385,7 @@ include 'footer.php';
        }
        else
        {
-            add(datee,dd_id,method,check_number,bank_id,amount,vehicle_id,name,bike_id,description);
+            add(datee,dd_id,method,check_number,bank_id,amount,vehicle_id,name,bike_id,borrower_id,description);
        }
 
        $('#datee').focus();

@@ -32,7 +32,7 @@ date_default_timezone_set("Asia/Karachi");
             <!-- BEGIN PAGE BREADCRUMB -->
             <ul class="page-breadcrumb breadcrumb">
                 <li>
-                    <a href="index.html">Home</a>
+                    <a href="#">Home</a>
                     <i class="fa fa-circle"></i>
                 </li>
                 <li>
@@ -69,7 +69,16 @@ date_default_timezone_set("Asia/Karachi");
                                     
                                                 <label class="col-md-2 control-label">Transaction Date:</label>
                                                 <div class="col-md-3">
-                                                  <input type="date" class="form-control" id="datee" name="datee" required tabindex="1" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) { echo 'value="'.$_SESSION['datee'].'" readonly disabled';} else{ echo 'value="'.date('Y-m-d').'"'; } ?>  />
+                                                  <?php
+                                                    $last_date = date('Y-m-d');
+                                                    $q = mysqli_query($mycon,'SELECT * FROM container_movement ORDER BY cm_id DESC LIMIT 1');
+                                                    
+                                                    if($r = mysqli_fetch_array($q))
+                                                    {
+                                                      $last_date = $r['datee'];
+                                                    }
+                                                  ?>
+                                                  <input type="date" class="form-control" id="datee" name="datee" required tabindex="1" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) { echo 'value="'.$_SESSION['datee'].'" readonly disabled';} else{ echo 'value="'.$last_date.'"'; } ?>  />
                                                 </div>
                                          </div>  
                                      </div>
@@ -175,7 +184,8 @@ date_default_timezone_set("Asia/Karachi");
                                                         <option value="empty">Empty</option>
                                                         <option value="import">Import</option>
                                                         <option value="export">Export</option> 
-                                                        <option value="open_cargo">Open Cargo</option> 
+                                                        <option value="open_cargo">Open Cargo</option>
+                                                        <option value="detain">Detain</option> 
                                                     </select>
                                                 </div>
                                                 
@@ -492,7 +502,7 @@ date_default_timezone_set("Asia/Karachi");
                                                                     <option value="yellow">Yellow</option> 
                                                                 </select>
                                                             </div>
-                                                                     <label class="col-md-2 control-label">Maintenance & Repair Charges:</label>
+                                                                     <label class="col-md-2 control-label">Other Charges:</label>
                                                                    <div class="col-md-3">
                                                                      <input type="number" min="0" step="0.01" value="0" class="form-control" placeholder="Charges" id="mr_charges" name="mr_charges"  tabindex="26">
                                                                    </div>

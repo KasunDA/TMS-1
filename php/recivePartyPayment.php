@@ -164,6 +164,7 @@ date_default_timezone_set("Asia/Karachi");
                                                 <option value="import">Import</option>
                                                 <option value="export">Export</option> 
                                                 <option value="open_cargo">Open Cargo</option> 
+                                                <option value="detain">Detain</option> 
                                             </select>
                                         </div>
                                         
@@ -333,6 +334,7 @@ date_default_timezone_set("Asia/Karachi");
                                     <th> Lolo Charges </th>
                                     <th> Weight Charges </th>
                                     <th> Party Charges </th>
+                                    <th> Other Charges </th>
                                     <th> Total Party Bill </th>
                                 </tr>
                             </thead>
@@ -399,6 +401,36 @@ date_default_timezone_set("Asia/Karachi");
                 </div>
                 <!-- END BORDERED TABLE PORTLET-->
             </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 "> <!-- col-md-push-6 -->
+                <!-- BEGIN BORDERED TABLE PORTLET-->
+                <div class="portlet light portlet-fit bordered ">
+                    
+                    <div class="portlet-body ">
+                        <div class="table-scrollable  table-scrollable-borderless">
+                            <table class="table table-hover table-light">
+                                <thead>
+                                    <tr class="uppercase">
+                                        <th> # </th>
+                                        <th> Total Paid & Unpaid Bills </th>
+                                        <th id="total_paid_unpaid_bills"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td> 1 </td>
+                                        <td> Total Paid & Unpaid Party Bill </td>
+                                        <td id="total_paid_unpaid_party_charges"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- END BORDERED TABLE PORTLET-->
+            </div>
+
         </div>
     <!-- END CONTENT BODY -->
         </div>
@@ -597,6 +629,7 @@ include 'footer.php';
                             '<td>'+value['lolo_charges']+'</td>'+
                             '<td>'+value['weight_charges']+'</td>'+
                             '<td>'+value['party_charges']+'</td>'+
+                            '<td>'+value['other_charges']+'</td>'+
                             '<td name="total_party_charges">'+value['total_party_charges']+'</td>'+
 
                             '</tr>');
@@ -611,6 +644,9 @@ include 'footer.php';
 
                 $('#total_paid_bills').html(pq);
                 $('#total_paid_party_charges').html(psum);
+
+                $('#total_paid_unpaid_bills').html(pq+uq);
+                $('#total_paid_unpaid_party_charges').html(psum+usum);
 
             },
             error:function(){ alertMessage("Failed Fetch Ajax Call.",'error') }

@@ -160,6 +160,7 @@ date_default_timezone_set("Asia/Karachi");
                                                         <option value="import">Import</option>
                                                         <option value="export">Export</option> 
                                                         <option value="open_cargo">Open Cargo</option> 
+                                                        <option value="detain">Detain</option> 
                                                     </select>
                                                 </div>
                                                 

@@ -4,7 +4,7 @@
 	date_default_timezone_set("Asia/Karachi");
 
 	$json=NULL;
-	$date = date('m/d/Y');
+	$date = date('Y-m-d');
 
 	$q = mysqli_query($mycon,"SELECT * FROM diesel_entry WHERE status=1 and datee='$date' ORDER BY de_id DESC ");
 	$n  = 0;
@@ -41,11 +41,11 @@
 			$json[$n]['to_yard'] = $rtq['short_form'];
 		}
 		
-		$json[$n]['litre_rate'] = $r['litre_rate'];
-		$json[$n]['litres'] = $r['litres'];
+		$json[$n]['litre_rate']   = $r['litre_rate'];
+		$json[$n]['litres'] 	  = $r['litres'];
 		$json[$n]['extra_litres'] = $r['extra_litres'];
-		$json[$n]['total'] = $r['total'];
-		$json[$n]['description'] = $r['description'];
+		$json[$n]['total'] 		  = $r['total'];
+		$json[$n]['description']  = $r['description'];
 
 		$n++;
 	}

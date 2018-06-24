@@ -65,6 +65,7 @@ $cm_id = $_GET['cm_id'];
                                     <th> Lolo Charges </th>
                                     <th> Weight Charges </th>
                                     <th> Party Charges </th>
+                                    <th> Other Charges </th>
                                     <th> Total Party Bill </th>
                                 </tr>
                             </thead>
@@ -463,6 +464,7 @@ include 'footer.php';
                             '<td>'+value['lolo_charges']+'</td>'+
                             '<td>'+value['weight_charges']+'</td>'+
                             '<td>'+value['party_charges']+'</td>'+
+                            '<td>'+value['other_charges']+'</td>'+
                             '<td id="total_party_charges">'+value['total_party_charges']+'</td>'+
 
                             '</tr>');

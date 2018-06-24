@@ -46,7 +46,8 @@ date_default_timezone_set("Asia/Karachi");
                                         <div class="form-group">
                                             <label class="col-md-2 control-label">Date:</label>
                                             <div class="col-md-3">
-                                              <input type="text" class="form-control form-control-inline input-medium date-picker"  size="16" id="datee" name="datee" value="<?php echo date('m/d/Y'); ?>"  required tabindex="1">
+                                                <!-- date-picker -->
+                                              <input type="date" class="form-control form-control-inline input-medium "  size="16" id="datee" name="datee" value="<?php echo date('Y-m-d'); ?>"  required tabindex="1">
                                             </div>
                                             
                                             <label class="col-md-2 control-label">vehicle #:</label>

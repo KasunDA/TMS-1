@@ -4,13 +4,14 @@ include 'nav.php';
 require 'connection.php';
 date_default_timezone_set("Asia/Karachi");
 
-if( !isset( $_GET['vehicle_id']) ||  $_GET['vehicle_id'] == NULL || !isset( $_GET['name']) ||  $_GET['name'] == NULL )
+if( !isset( $_GET['vehicle_id']) || !isset( $_GET['borrower_id']) || !isset( $_GET['name']) ||  $_GET['name'] == NULL )
 {
     echo '<script>location.assign("dailyAdvanceRecover.php");</script>';
 }
 
-$vehicle_id = $_GET['vehicle_id'];
-$name = $_GET['name'];
+$name        = $_GET['name'];
+$vehicle_id  = $_GET['vehicle_id'];
+$borrower_id = $_GET['borrower_id'];
  ?>
 
     <!-- BEGIN CONTENT -->
@@ -124,6 +125,11 @@ $name = $_GET['name'];
                                      </div>   
                                     <div class="row">
                                         <div class="form-group">    
+                                            <?php 
+
+                                                if( $vehicle_id != NULL )
+                                                {
+                                            ?>
                                             <label class="col-md-2 control-label">Vehicle #:</label>
                                             <div class="col-md-3">
                                                 <select class="form-control" id="vehicle_id" disabled name="vehicle_id" tabindex="-1" >
@@ -133,11 +139,15 @@ $name = $_GET['name'];
                                                   $q = mysqli_query($mycon,'SELECT vehicle_id,vehicle_number from vehicle where status=1 ORDER BY vehicle_id DESC');
 
                                                   while( $r = mysqli_fetch_array($q) )
-                                                    {?>
-                                                      <option value="<?php echo $r['vehicle_id']; ?>"><?php echo $r['vehicle_number']; ?></option>
-                                              <?php } //END OF WHILE ?>
+                                                    {
+                                                     echo '<option value="'.$r['vehicle_id'].'">'.$r['vehicle_number'].'</option>';
+                                                    } ?>
                                                   </select>
                                             </div>
+
+                                            <?php 
+                                            }//END OF IF ?>
+
 
                                             <label class="col-md-2 control-label">Name</label>
                                             <div class="col-md-3">
@@ -265,7 +275,7 @@ include 'footer.php';
        });
        $('.select2-selection').addClass('select');
        
-       $('#vehicle_id').val(<?php echo $vehicle_id; ?>).trigger('change');
+       
        //$('#vehicle_id').attr('disabled');
 
        function updateField(param)
@@ -384,10 +394,10 @@ include 'footer.php';
         var total_advance = 0,
             total_advance_pay = 0;
 
-        function loadData(vehicle_id,name)
+        function loadData(vehicle_id,borrower_id,name)
         {
             $.ajax({
-                url:'ajax/advance_pay/fetch_details.php?vehicle_id='+vehicle_id+'&name='+name,
+                url:'ajax/advance_pay/fetch_details.php?vehicle_id='+vehicle_id+'&borrower_id='+borrower_id+'&name='+name,
                 dataType:"JSON",
                 success:function(data){
                     var n = 1;
@@ -410,7 +420,7 @@ include 'footer.php';
                                 '</tr>');
 
                         n++;
-                    })
+                    });
 
                     myDataTable();
                 },
@@ -418,15 +428,13 @@ include 'footer.php';
             });
         }
 
-        loadData(<?php echo $vehicle_id.',"'.$name.'"';?>);
-
 
         //<?php// echo $vehicle_id; ?> <?php //echo '"'.$name.'"';?>
 
-        function iloadData(vehicle_id,name)
+        function iloadData(vehicle_id,borrower_id,name)
         {
             $.ajax({
-                url:'ajax/advance_pay/ifetch.php?vehicle_id='+vehicle_id+'&name='+name,
+                url:'ajax/advance_pay/ifetch.php?vehicle_id='+vehicle_id+'&borrower_id='+borrower_id+'&name='+name,
                 dataType:"JSON",
                 success:function(data){
                     var n = 1;
@@ -466,12 +474,26 @@ include 'footer.php';
             });
         }
 
-        iloadData(<?php echo $vehicle_id.',"'.$name.'"';?>);
+        <?php 
+            if($vehicle_id != NULL ) 
+            {
+                echo  "$('#vehicle_id').val(".$vehicle_id.").trigger('change');";
+                echo  'loadData('.$vehicle_id.',0,"'.$name.'");';
+                echo 'iloadData('.$vehicle_id.',0,"'.$name.'");';
+            }    
+            else
+            {
+                echo  'loadData(0,'.$borrower_id.',"'.$name.'");';
+                echo 'iloadData(0,'.$borrower_id.',"'.$name.'");';
+            }
+        ?>
 
-        function add(datee,method,check_number,bank_id,amount,vehicle_id,name,description)
+        
+
+        function add(datee,method,check_number,bank_id,amount,vehicle_id,borrower_id,name,description)
         {
             $.ajax({
-                url:'ajax/advance_pay/add.php?datee='+datee+'&method='+method+'&check_number='+check_number+'&bank_id='+bank_id+'&amount='+amount+'&vehicle_id='+vehicle_id+'&name='+encodeURIComponent(name)+'&description='+encodeURIComponent(description),
+                url:'ajax/advance_pay/add.php?datee='+datee+'&method='+method+'&check_number='+check_number+'&bank_id='+bank_id+'&amount='+amount+'&vehicle_id='+vehicle_id+'&borrower_id='+borrower_id+'&name='+encodeURIComponent(name)+'&description='+encodeURIComponent(description),
                 type:"POST",
                 success:function(data){
                     if(data)
@@ -482,7 +504,18 @@ include 'footer.php';
                         
                         alertMessage('Added Successfully.','success');
                         // loadData();
-                        iloadData(<?php echo $vehicle_id.',"'.$name.'"';?>);
+
+                        <?php 
+                            if($vehicle_id != NULL ) 
+                            {
+                                echo 'iloadData('.$vehicle_id.',0,"'.$name.'");';
+                            }    
+                            else
+                            {
+                                echo 'iloadData(0,'.$borrower_id.',"'.$name.'");';
+                            }
+                        ?>
+
                     }
                 },
                 error:function(){ alertMessage("Error in Add Ajax Call.",'error') }
@@ -505,7 +538,7 @@ include 'footer.php';
                description = $('#description').val();
                //expense_id =  $('#expense_id').val();
 
-            add(datee,method,check_number,bank_id,amount,vehicle_id,name,description);
+            add(datee,method,check_number,bank_id,amount,vehicle_id,<?php echo '"'.$borrower_id.'"';?>,name,description);
            
         });
 

@@ -164,6 +164,7 @@ date_default_timezone_set("Asia/Karachi");
                                                 <option value="import">Import</option>
                                                 <option value="export">Export</option> 
                                                 <option value="open_cargo">Open Cargo</option> 
+                                                <option value="detain">Detain</option> 
                                             </select>
                                         </div>
                                         
@@ -429,18 +430,18 @@ date_default_timezone_set("Asia/Karachi");
                                 <tbody>
                                     <tr>
                                         <td> 1 </td>
+                                        <td> Rent </td>
+                                        <td id="total_rent"></td>
+                                    </tr>
+                                    <tr>
+                                        <td> 2 </td>
                                         <td> Advance Taken (Driver) or (All) </td>
                                         <td id="advance_taken"></td>
                                     </tr>
                                     <tr>
-                                        <td> 2 </td>
+                                        <td> 3 </td>
                                         <td> Advance Taken Owner</td>
                                         <td id="advance_taken_owner"></td>
-                                    </tr>
-                                    <tr>
-                                        <td> 3 </td>
-                                        <td> Balance (Total of all trips) </td>
-                                        <td id="balance_trips"></td>
                                     </tr>
                                     <tr>
                                         <td> 4 </td>
@@ -459,11 +460,16 @@ date_default_timezone_set("Asia/Karachi");
                                     </tr>
                                     <tr>
                                         <td> 7 </td>
+                                        <td> Balance (Total of all trips) </td>
+                                        <td id="balance_trips"></td>
+                                    </tr>
+                                    <tr>
+                                        <td> 8 </td>
                                         <td> Paid </td>
                                         <td id="paid_salary"></td>
                                     </tr>
                                     <tr>
-                                        <td> 8 </td>
+                                        <td> 9 </td>
                                         <td> Total Balance </td>
                                         <td id="total_balance"></td>
                                     </tr>
@@ -566,7 +572,7 @@ date_default_timezone_set("Asia/Karachi");
                                                 <div class="">
                                                     <button type="submit" class="btn blue" id="btn_submit" tabindex="7">Submit</button> 
                                                     <button type="reset" class="btn default" id="btn_reset" tabindex="8">Cancel</button>
-                                                    <button type="button" class="btn dark btn-outline" id="voucher_print" tabindex="9">Print</button>
+                                                    <button type="button" class="btn blue btn-outline" id="voucher_print" tabindex="9">Print</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -598,6 +604,25 @@ date_default_timezone_set("Asia/Karachi");
                     <th> 40 </th>
                     <th> 45 </th>
                     <th> Total </th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+
+        
+          </table>
+        </div>
+        
+        <div class="row hidden" id="mrTable_div" style="page-break-inside: avoid;">
+          <table class="table table-striped table-bordered table-hover table-checkable order-column no-footer dataTable"  id="mrTable" >
+
+            <thead>
+                <tr>
+                    <th> Index </th>
+                    <th> Date </th>
+                    <th> Description </th>
+                    <th> vehicle # </th>
+                    <th> Amount </th>
                 </tr>
             </thead>
             <tbody>
@@ -687,6 +712,7 @@ include 'footer.php';
 
       var i         = $(this).parents('tr').attr('index'),
       tableData     = $('#mytable').DataTable().row(i).data(),
+      total_rent    = tableData[17],
       total_diesel  = tableData[19],
       total_rm      = tableData[20], 
       balance_trips = tableData[21];
@@ -694,6 +720,7 @@ include 'footer.php';
       if( !$(this).parents('tr').hasClass('selectedd') )
       {                  
         $('#total_trips').html( $('#total_trips').html()/1 -1 );
+        $('#total_rent').html( $('#total_rent').html()/1 - total_rent);
         $('#total_diesel').html( $('#total_diesel').html()/1 - total_diesel);
         $('#total_rm').html( $('#total_rm').html()/1 - total_rm);
         $('#balance_trips').html( $('#balance_trips').html()/1 - balance_trips);
@@ -701,6 +728,7 @@ include 'footer.php';
       else
       {
         $('#total_trips').html( $('#total_trips').html()/1 + 1 );
+        $('#total_rent').html( parseFloat($('#total_rent').html()) + parseFloat(total_rent) ) ;
         $('#total_diesel').html( parseFloat($('#total_diesel').html()) + parseFloat(total_diesel) ) ;
         $('#total_rm').html( parseFloat( $('#total_rm').html() ) + parseFloat(total_rm) );
         $('#balance_trips').html( parseFloat( $('#balance_trips').html() ) + parseFloat(balance_trips) ); 
@@ -898,81 +926,89 @@ include 'footer.php';
                       }
                       , emptyTable:"No data available in table", info:"Showing _START_ to _END_ of _TOTAL_ entries", infoEmpty:"No entries found", infoFiltered:"(filtered1 from _MAX_ total entries)", lengthMenu:"_MENU_ entries", search:"Search:", zeroRecords:"No matching records found"
                   }
+                  ,dom: 'Bfrtip'
                   , buttons:[ {
-                      extend:"print", title: 'Vehicle Report', orientation: 'landscape', pageSize: 'LEGAL', exportOptions: {
+                      extend:"print", title: 'Vehicle Report', orientation: 'landscape', pageSize: 'LEGAL', autoPrint: true, exportOptions: {
                           columns: ':visible', rows: '.selectedd'
                       },className:"btn dark btn-outline table_print_btn",
                       customize: function ( win ) {
 
-                          $(win.document.body).append('<div class="row">');
+                          var newTable = '';
+  
+                          if( $("#voucher_div").css('display') != 'none' )
+                          {
+                            var bank='';
+
+                            if($('#bank_id option:selected').val() != '' )
+                            {
+                              bank = $('#bank_id option:selected').text();
+                            }
+
+                            newTable =  '<div class="col-md-6" style="page-break-inside: avoid;">'+
+                                    '<div class="portlet light portlet-fit bordered ">'+
+                                    '<div class="portlet-body ">'+
+                                    '<div class="table-scrollable  table-scrollable-borderless">'+
+                                    '<h1> Voucher <h1>'+
+                              '<table class="table table-hover table-light">'+
+                              '<thead>'+
+                                '<tr class="uppercase">'+
+                                    '<td> # </td>'+
+                                    '<td> Voucher # </td>'+
+                                    '<td>'+$('#voucher_number').val()+'</td>'+
+                                '</tr>'+
+                              '</thead>'+
+                              '<tbody>'+
+                                  '<tr>'+
+                                      '<td> 1 </td>'+
+                                      '<td> Date </td>'+
+                                      '<td>'+$('#datee').val()+'</td>'+
+                                  '</tr>'+
+                                  '<tr>'+
+                                      '<td> 2 </td>'+
+                                      '<td> Payment Method </td>'+
+                                      '<td>'+$('input[name="method"]:checked').val()+'</td>'+
+                                  '</tr>'+
+                                  '<tr>'+
+                                      '<td> 3 </td>'+
+                                      '<td> Check # </td>'+
+                                      '<td>'+$('#check_number').val()+'</td>'+
+                                  '</tr>'+
+                                  '<tr>'+
+                                      '<td> 4 </td>'+
+                                      '<td> Bank Name </td>'+
+                                      '<td>'+bank+'</td>'+
+                                  '</tr>'+
+                                  '<tr>'+
+                                      '<td> 5 </td>'+
+                                      '<td> Amount </td>'+
+                                      '<td>'+$('#amount').val()+'</td>'+
+                                  '</tr>'+
+                              '</tbody>'+
+                              '</table>'+
+                              '</div> </div> </div> </div> </div>';
+                          }
+                          // else
+                          // {
+                          //   $(win.document.body).append('</div>');
+                          // }  
+
                           $(win.document.body)
-                              .css( 'font-size', '10pt' )
-                              .append('<br/><br/>')
-                              .append('<div class="col-md-6">'+
-                                        '<div class="portlet light portlet-fit bordered ">'+
-                                        '<div class="portlet-body ">'+
-                                        '<h1> Summary <h1>'+
-                                        $('#mytable2_div').html()+
-                                        '</div> </div> </div>');
-                              
-                              if( $("#voucher_div").css('display') != 'none' )
-                              {
-                                var bank='';
+                            .css({
+                              'page-break-inside': 'avoid',
+                              'font-size': '10pt'
+                            })
+                            .append('<br/><br/> <div class="row" style="page-break-inside: avoid;">'+ 
+                                      '<div class="col-md-6">'+
+                                      '<div class="portlet light portlet-fit bordered ">'+
+                                      '<div class="portlet-body ">'+
+                                      '<h1> Summary <h1>'+
+                                      $('#mytable2_div').html()+
+                                      '</div> </div> </div>'+
+                                      newTable+
+                                      '<br/><br/> <div class="row" style="page-break-inside: avoid;">'+ 
+                                      $('#mrTable_div').html()+
+                                      '<div class="col-md-12" style="margin-top:10%;"> <h3> Receivers Signature:_________________________________ </h3> </div> </div>');
 
-                                if($('#bank_id option:selected').val() != '' )
-                                {
-                                  bank = $('#bank_id option:selected').text();
-                                }
-
-                                $(win.document.body)
-                                .append('<div class="col-md-6">'+
-                                        '<div class="portlet light portlet-fit bordered ">'+
-                                        '<div class="portlet-body ">'+
-                                        '<h1> Voucher <h1>'+
-                                  '<table class="table table-hover table-light">'+
-                                  '<thead>'+
-                                    '<tr class="uppercase">'+
-                                        '<td> # </td>'+
-                                        '<td> Voucher # </td>'+
-                                        '<td>'+$('#voucher_number').val()+'</td>'+
-                                    '</tr>'+
-                                  '</thead>'+
-                                  '<tbody>'+
-                                      '<tr>'+
-                                          '<td> 1 </td>'+
-                                          '<td> Date </td>'+
-                                          '<td>'+$('#datee').val()+'</td>'+
-                                      '</tr>'+
-                                      '<tr>'+
-                                          '<td> 2 </td>'+
-                                          '<td> Payment Method </td>'+
-                                          '<td>'+$('input[name="method"]:checked').val()+'</td>'+
-                                      '</tr>'+
-                                      '<tr>'+
-                                          '<td> 3 </td>'+
-                                          '<td> Check # </td>'+
-                                          '<td>'+$('#check_number').val()+'</td>'+
-                                      '</tr>'+
-                                      '<tr>'+
-                                          '<td> 4 </td>'+
-                                          '<td> Bank Name </td>'+
-                                          '<td>'+bank+'</td>'+
-                                      '</tr>'+
-                                      '<tr>'+
-                                          '<td> 5 </td>'+
-                                          '<td> Amount </td>'+
-                                          '<td>'+$('#amount').val()+'</td>'+
-                                      '</tr>'+
-                                  '</tbody>'+
-                                '</table>'+
-                                '</div> </div> </div>'+
-                                '<div class="col-md-12" style="margin-top:10%;"> <h3> Receivers Signature:_________________________________ </h3> </div>');
-                                $(win.document.body).append('</div> ');
-                              }
-                              // else
-                              // {
-                              //   $(win.document.body).append('</div>');
-                              // }
                       }
                     }
                   , {
@@ -1020,9 +1056,9 @@ include 'footer.php';
                         }
                  
                         //insert
-                        var r1 = Addrow(1, [{ k: 'A', v: 'TOTAL TRIPS' }, { k: 'B', v: "Advance Taken Driver or All" }, { k: 'C', v: "Advance Taken Owner " }, { k: 'D', v: "Balance Total of all trips" } , { k: 'E', v: "Diesel" } , { k: 'F', v: "Repair and Maintenance" } , { k: 'G', v: "Driver Salary" } , { k: 'H', v: 'Paid' } , { k: 'I', v: "Total Balance" } ]);
-                        var r2 = Addrow(2, [{ k: 'A', v: $('#total_trips').html() }, { k: 'B', v: $('#advance_taken').html() }, { k: 'C', v: $('#advance_taken_owner').html() }, { k: 'D', v: $('#balance_trips').html() }, { k: 'E', v: $('#total_diesel').html() }, { k: 'F', v: $('#total_rm').html() }, { k: 'G', v: $('#driver_salary').html() }, { k: 'H', v: $('#paid_salary').html() }, { k: 'I', v: $('#total_balance').html() } ]);
-                        var r3 = Addrow(3, [{ k: 'A', v: '' }, { k: 'B', v: '' }, { k: 'C', v: '' },{ k: 'D', v: '' },{ k: 'E', v: '' },{ k: 'F', v: '' },{ k: 'G', v: '' },{ k: 'H', v: '' },{ k: 'I', v: '' }]);
+                        var r1 = Addrow(1, [{ k: 'A', v: 'TOTAL TRIPS' }, { k: 'B', v: "Rent" } , { k: 'C', v: "Advance Taken Driver or All" }, { k: 'D', v: "Advance Taken Owner " } , { k: 'E', v: "Diesel" } , { k: 'F', v: "Repair and Maintenance" } , { k: 'G', v: "Driver Salary" } , { k: 'H', v: "Balance Total of all trips" } ,{ k: 'I', v: 'Paid' } , { k: 'J', v: "Total Balance" } ]);
+                        var r2 = Addrow(2, [{ k: 'A', v: $('#total_trips').html() }, { k: 'B', v: $('#total_rent').html() } ,{ k: 'C', v: $('#advance_taken').html() }, { k: 'D', v: $('#advance_taken_owner').html() }, { k: 'E', v: $('#total_diesel').html() }, { k: 'F', v: $('#total_rm').html() }, { k: 'G', v: $('#driver_salary').html() }, { k: 'H', v: $('#balance_trips').html() } ,{ k: 'I', v: $('#paid_salary').html() }, { k: 'J', v: $('#total_balance').html() } ]);
+                        var r3 = Addrow(3, [{ k: 'A', v: '' }, { k: 'B', v: '' }, { k: 'C', v: '' },{ k: 'D', v: '' },{ k: 'E', v: '' },{ k: 'F', v: '' },{ k: 'G', v: '' },{ k: 'H', v: '' },{ k: 'I', v: '' },{ k: 'J', v: '' }]);
                         //var r4 = Addrow(4, [{ k: 'A', v: '' }, { k: 'B', v: '' }, { k: 'C', v: '' },{ k: 'D', v: '' },{ k: 'E', v: '' },{ k: 'F', v: '' },{ k: 'G', v: '' },{ k: 'H', v: '' },{ k: 'I', v: '' } ]);
                         
                         sheet.childNodes[0].childNodes[1].innerHTML = r1 + r2 + r3 + sheet.childNodes[0].childNodes[1].innerHTML;
@@ -1057,9 +1093,12 @@ include 'footer.php';
             {
                 var n = 1,
                     i = 0,
-                    total_trips = 0,
+                    total_trips   = 0,
                     balance_trips = 0,
-                    total_diesel = 0;
+                    total_diesel  = 0,
+                    total_rent    = 0,
+                    vids          = [];
+
 
                 $('#mytable').DataTable().destroy();
                 $('#mytable tbody').html("");
@@ -1068,6 +1107,8 @@ include 'footer.php';
 
                     balance_trips +=  value['balance']/1;
                     total_diesel  +=  value['diesel']/1;
+                    total_rent    +=  value['rent']/1;
+                    vids.push(value['vehicle_id']);
 
                     $('#mytable tbody').append('<tr class="odd gradeX selectedd" index="'+i+'">'+
                             
@@ -1111,11 +1152,12 @@ include 'footer.php';
                 $('#total_trips').html(total_trips);
                 $('#balance_trips').html(balance_trips);
                 $('#total_diesel').html(total_diesel);
+                $('#total_rent').html(total_rent);
 
-                getRecords(from_datee,to_datee,vehicle_id);
+                getRecords(from_datee,to_datee,vehicle_id,vids);
 
                 //Voucher Form
-                if( data !=null && vehicle_id!=0 )
+                if( data !=null && ( vehicle_id!=0 || owner_name !='' ) )
                 {
                     if( $('#owner_name').html() == 'butt brothers' )
                     {
@@ -1135,6 +1177,34 @@ include 'footer.php';
         });
     }
 
+    //Repair and Maintenance Table Code
+    function loadMR(from_datee,to_datee,vehicle_id,vids)
+    {
+      $.ajax({
+        url:'ajax/garage_entry/rm_fetch.php?from_datee='+from_datee+'&to_datee='+to_datee+'&vehicle_id='+vehicle_id+'&vids='+vids,
+        dataType:'JSON',
+        success:function(data){
+            var n=1;
+
+            $('#mrTable tbody').html("");
+
+            $.each(data,function(index,value){
+
+                $('#mrTable tbody').append('<tr class="odd gradeX">'+
+                            '<td>'+n+'</td>'+
+                            '<td>'+value['datee']+'</td>'+
+                            '<td>'+value['description']+'</td>'+
+                            '<td id="'+value['vehicle_id']+'">'+value['vehicle_number']+'</td>'+
+                            '<td>'+value['amount']+'</td>'+
+                            '</tr>');
+                  n++;
+                });
+        },
+        error:function(){ alertMessage("Failed Fetch Repair & Maintenance Ajax Call.",'error') }
+      })
+    }
+
+    // NOT USING
     function getSelectedRecords()
     {
       var tableData     = $('#mytable').Datatable().rows().data(),
@@ -1289,10 +1359,10 @@ include 'footer.php';
         return sum;
     }
 
-    function getRecords(from_datee,to_datee,vehicle_id)
+    function getRecords(from_datee,to_datee,vehicle_id,vids)
     {
         $.ajax({
-            url:'ajax/vehicle/vehicle_records.php?from_datee='+from_datee+'&to_datee='+to_datee+'&vehicle_id='+vehicle_id,
+            url:'ajax/vehicle/vehicle_records.php?from_datee='+from_datee+'&to_datee='+to_datee+'&vehicle_id='+vehicle_id+'&vids='+vids,
             dataType:"JSON",
             success: function(data){
                 
@@ -1305,6 +1375,8 @@ include 'footer.php';
                     $('#paid_salary').html(value['total_paid_salary']);
 
                     calculations();
+
+                    loadMR(from_datee,to_datee,vehicle_id,vids);
                 });
             },
             error: function(){ alertMessage("Failed Fetch Records.",'error') }, 
@@ -1401,8 +1473,8 @@ include 'footer.php';
       var elem = document.getElementById("mytable1");
       var res = doc.autoTableHtmlToJson(elem);
 
-      var elem1 = document.getElementById("mytable2");
-      var res1 = doc.autoTableHtmlToJson(elem1);
+      // var elem1 = document.getElementById("mytable2");
+      // var res1 = doc.autoTableHtmlToJson(elem1);
 
       var text = 'Transaction Container Movement From Date '+from_date+' To Date '+to_date,
       // xOffset = (doc.internal.pageSize.width/2 ) - (doc.getStringUnitWidth(text) * doc.internal.getFontSize() / 2)
@@ -1410,7 +1482,7 @@ include 'footer.php';
       doc.text(text, xOffset, 20); 
       
       doc.autoTable(res.columns, res.data,{startY: 50 , theme: 'grid'});
-      doc.autoTable(res1.columns, res1.data,{startY: 50 , theme: 'grid' , startY: doc.autoTableEndPosY() + 50});
+      // doc.autoTable(res1.columns, res1.data,{startY: 50 , theme: 'grid' , startY: doc.autoTableEndPosY() + 50});
       doc.save("Vehicle Summary.pdf");
     }
 

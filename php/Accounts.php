@@ -46,7 +46,8 @@ date_default_timezone_set("Asia/Karachi");
                                         <div class="form-group">
                                             <label class="control-label col-md-2">Date:</label>
                                             <div class="col-md-3">
-                                                <input class="form-control form-control-inline input-medium date-picker" size="16" type="date-picker"  placeholder="Today Date" id="datee" name="datee" value="<?php echo date('m/d/Y'); ?>"  required tabindex="1" />
+                                              <!-- date-picker -->
+                                                <input type="date" class="form-control form-control-inline input-medium " size="16" type="date-picker"   id="datee" name="datee" value="<?php echo date('Y-m-d'); ?>"  required tabindex="1" />
                                             </div>
                                             <label class="col-md-2 control-label">Bank:</label>
                                             <div class="col-md-3">

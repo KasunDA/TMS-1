@@ -91,7 +91,7 @@ include 'footer.php';
 
                                 '<td>'+ 
                                     '<ul class="addremove">'+
-                                        '<li> <button class="btn btn-xs green update_btn" id="'+value['vehicle_id']+'" type="button">'+
+                                        '<li> <button class="btn btn-xs green update_btn" vehicle_id="'+value['vehicle_id']+'" borrower_id="'+value['borrower_id']+'" type="button">'+
                                         '<i class="fa fa-plus-square"></i>'+
                                         '</button> </li>'+
                                     '</ul>'+
@@ -107,7 +107,7 @@ include 'footer.php';
 
                     myDataTable();
                 },
-                error:function(){ alert("Failed Fetch Ajax Call.") }
+                error:function(){ alertMessage('Failed Fetch Ajax Call.','error'); }
             });
         }
 
@@ -115,11 +115,12 @@ include 'footer.php';
 
         $(document).on('click','.update_btn',function(){
 
-            var id = $(this).attr('id'),
+            var vehicle_id  = $(this).attr('vehicle_id'),
+                borrower_id = $(this).attr('borrower_id'),
                 trr = $(this).closest('tr'),
                 name = trr.find('td').eq(2).text();
 
-            location.assign('dailyAdvancePay.php?vehicle_id='+id+'&name='+encodeURIComponent(name));
+            location.assign('dailyAdvancePay.php?vehicle_id='+vehicle_id+'&borrower_id='+borrower_id+'&name='+encodeURIComponent(name));
 
         });
 

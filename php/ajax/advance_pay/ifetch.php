@@ -2,12 +2,25 @@
 
 	require '../../connection.php';
 
-	$json=NULL;
-	$vehicle_id =  $_GET['vehicle_id'];
-	$name =  $_GET['name'];
+	$json =NULL;
+	$n    = 0;
+	$sql  = "";
 
-	$q = mysqli_query($mycon,"SELECT * FROM income WHERE dd_id=2 and vehicle_id=$vehicle_id and name='$name' and status=1 ORDER BY income_id DESC ");
-	$n  = 0;
+	$name =  $_GET['name'];
+	
+	
+	if( $_GET['vehicle_id'] != NULL && $_GET['vehicle_id'] != 0 )
+	{
+		$vehicle_id =  $_GET['vehicle_id'];
+		$sql = "SELECT * FROM income WHERE dd_id=2 and vehicle_id=$vehicle_id and name='$name' and status=1 ORDER BY income_id DESC ";
+	}
+	else
+	{
+		$borrower_id =  $_GET['borrower_id'];
+		$sql = "SELECT * FROM income WHERE dd_id=2 and borrower_id=$borrower_id and status=1 ORDER BY income_id DESC ";	
+	}
+
+	$q = mysqli_query($mycon,$sql);
 	while($r = mysqli_fetch_array($q))
 	{
 		$json[$n]['income_id'] = $r['income_id'];  

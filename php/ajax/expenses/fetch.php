@@ -62,6 +62,19 @@
 			$json[$n]['bike_number'] = NULL;
 		}
 
+		$json[$n]['borrower_id'] = $r['borrower_id'];
+
+		if( $r['borrower_id'] != NULL )
+		{
+			$q1 = mysqli_query($mycon,'SELECT name FROM borrower where borrower_id='.$r['borrower_id']);
+			$r1 = mysqli_fetch_array($q1);
+			$json[$n]['borrower_name'] = $r1['name'];
+		}
+		else
+		{
+			$json[$n]['borrower_name'] = NULL;
+		}
+
 		$json[$n]['description'] = $r['description'];
 		$n++;
 	}

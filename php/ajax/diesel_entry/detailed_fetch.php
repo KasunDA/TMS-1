@@ -4,8 +4,8 @@
 
 	$json=NULL;
 	$sql='';
-	$from_datee = $_GET['from_datee'];
-	$to_datee = $_GET['to_datee']; //date('Y-m-d', strtotime(
+	$from_datee = date('Y-m-d', strtotime($_GET['from_datee']));
+	$to_datee = date('Y-m-d', strtotime($_GET['to_datee'])); //date('Y-m-d', strtotime(
 	
 
 	if( isset($_GET['vehicle_id']) && $_GET['vehicle_id'] != NULL )

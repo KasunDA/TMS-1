@@ -43,11 +43,17 @@
 			$json[$n]['bank_name'] = NULL;
 		}
 		
-
-		$q1 = mysqli_query($mycon,"SELECT vehicle_number from vehicle WHERE vehicle_id=".$r['vehicle_id']);
-		$r1 = mysqli_fetch_array($q1);
-
-		$json[$n]['vehicle_number'] = $r1['vehicle_number'];
+		if( $r['vehicle_id'] != NULL )
+		{
+			$q1 = mysqli_query($mycon,"SELECT vehicle_number from vehicle WHERE vehicle_id=".$r['vehicle_id']);
+			$r1 = mysqli_fetch_array($q1);
+			
+			$json[$n]['vehicle_number'] = $r1['vehicle_number'];	
+		}
+		else
+		{
+			$json[$n]['vehicle_number'] = 'null';	
+		}
 
 		$json[$n]['amount'] = $r['amount'];
 

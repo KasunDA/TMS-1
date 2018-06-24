@@ -124,9 +124,9 @@
 	{
 		if( isset($_GET['owner_name']) && $_GET['owner_name'] != NULL )
 		{
-			$owner_name = $_GET['owner_name'];
+			$owner_name = strtolower($_GET['owner_name']);
 
-			if( $r['owner_name'] == $owner_name )
+			if( strtolower($r['owner_name']) == $owner_name )
 			{
 				$json[$n]['transaction_id'] = $r['ce_id'];  
 				$json[$n]['datee'] = $r['datee'];
