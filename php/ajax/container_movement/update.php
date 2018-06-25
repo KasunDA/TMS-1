@@ -1,6 +1,33 @@
 <?php 
 
 	require '../../connection.php';
+
+	function updateDescription($mycon,$cm_id)
+	{
+		// Fetching data of movement
+		$dq    = mysqli_query($mycon,'SELECT datee,lot_of,container_size,coa_id,to_yard_id,index_number FROM container_movement WHERE cm_id='.$cm_id);
+		$rdq   = mysqli_fetch_array($dq); 
+		$datee = $rdq['datee'];
+		$lot   = $rdq['lot_of'].'x'.$rdq['container_size'];
+		$index_number = $rdq['index_number'];
+
+		// Fetching chart of account
+		$cq  = mysqli_query($mycon,'SELECT full_form FROM chart_of_account WHERE coa_id='.$rdq['coa_id']);
+		$rcq = mysqli_fetch_array($cq);
+		$chart_of_account = $rcq['full_form'];
+
+		// Fetching to destination
+		$tdq  = mysqli_query($mycon,'SELECT full_form FROM yard WHERE yard_id='.$rdq['to_yard_id']);
+		$rtdq = mysqli_fetch_array($tdq);
+		$to_yard = $rtdq['full_form'];
+
+		$description = $lot.'\n To Destination :'.$to_yard.' \n Party Name:'.$chart_of_account.' \n Index Number: '.$index_number;
+
+		//Expense SQL CODE 		
+		$sql  = "UPDATE expenses SET description='$description' WHERE cm_id".$cm_id;
+	
+		$eq = mysqli_query($mycon,$sql);
+	}
 	
 	$cm_id = $_GET['cm_id'];
 	$datee = $_GET['datee'];
@@ -53,6 +80,14 @@
 		$_SESSION['container_id'] = $container_id;
 		$_SESSION['lolo_charges'] = $lolo_charges;
 		$_SESSION['weight_charges'] = $weight_charges;
+
+
+		$q1 = mysqli_query($mycon,"SELECT * FROM expenses WHERE (dd_id=5 OR dd_id=8)  AND cm_id=".$cm_id);
+
+		if( $r1 = mysqli_fetch_array($q1) )
+		{
+			updateDescription($mycon,$cm_id);
+		}
 
 	}
 

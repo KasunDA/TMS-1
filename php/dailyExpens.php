@@ -54,7 +54,7 @@ date_default_timezone_set("Asia/Karachi");
                                                          <option value="">Select Description</option>
                                                          <?php 
 
-                                                          $q = mysqli_query($mycon,'SELECT dd_id,name from daily_description where status=1 and dd_id!=6 and dd_id!=7 ORDER BY dd_id DESC');
+                                                          $q = mysqli_query($mycon,'SELECT dd_id,name from daily_description where status=1 and dd_id NOT IN (5,6,7,8) ORDER BY dd_id DESC');
 
                                                           while( $r = mysqli_fetch_array($q) )
                                                             {?>
@@ -299,7 +299,7 @@ date_default_timezone_set("Asia/Karachi");
                                                          <option value="">Select Description</option>
                                                          <?php 
 
-                                                          $q = mysqli_query($mycon,'SELECT dd_id,name from daily_description where status=1 and dd_id!=6 and dd_id!=7 ORDER BY dd_id DESC');
+                                                          $q = mysqli_query($mycon,'SELECT dd_id,name from daily_description where status=1 and dd_id NOT IN (5,6,7,8) ORDER BY dd_id DESC');
 
                                                           while( $r = mysqli_fetch_array($q) )
                                                             {?>

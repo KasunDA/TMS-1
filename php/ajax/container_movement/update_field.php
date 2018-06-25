@@ -48,7 +48,7 @@ else if ( $termid=='dd_id' || $termid=='idd_id' )
 {
 	$stermid = 'dd_id';
 	$term = 'name';
-	$sql = " SELECT dd_id,name from daily_description where status=1 and dd_id!=6 and dd_id!=7 ORDER BY dd_id DESC ";
+	$sql = " SELECT dd_id,name from daily_description where status=1 and dd_id NOT IN (5,6,7,8) ORDER BY dd_id DESC ";
 }
 else if ( $termid=='bank_id' || $termid=='ibank_id') 
 {

@@ -53,7 +53,7 @@ date_default_timezone_set("Asia/Karachi");
                                     
                                                 <label class="col-md-2 control-label">Transaction Date:</label>
                                                 <div class="col-md-3">
-                                                  <input type="date" class="form-control" id="datee" name="datee" value="<?php echo date('Y-m-d'); ?>" required tabindex="1" />
+                                                  <input type="date" class="form-control" id="datee" name="datee" value="<?php echo date('Y-m-d'); ?>" readonly required tabindex="1" />
                                                 </div>
                                          </div>  
                                      </div>

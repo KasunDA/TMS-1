@@ -101,6 +101,8 @@
 		addExpense($mycon,$advance_esql,$datee,$total_advance);
 		addExpense($mycon,$diesel_esql,$datee,$total_diesel);
 
+		updateData($mycon,$datee);
+
 	}
 
 	$json;
@@ -130,17 +132,10 @@
 
 		if($q)
 		{
-			//OLD CODE MAINTANENCE & REPAIR CHARGES
-			// if( $mr_charges != 0 && $mr_charges != NULL )
-			// {
-			// 	$dq = mysqli_query($mycon,'SELECT datee from container_movement where cm_id='.$cm_id);
-			// 	$rdq = mysqli_fetch_array($dq);
-			// 	$datee =   date('m/d/Y', strtotime($rdq['datee']));
-
-			// 	$qg = mysqli_query($mycon,"INSERT INTO garage_entry(datee,vehicle_id,amount,description) VALUES ( '$datee',$vehicle_id,$mr_charges,'NILL') ");				
-			// }
-
-			
+			if( $rc['lot_of'] == $lot_of_limit )
+			{
+				fetchingData($mycon,$cm_id);
+			}
 
 			$json['inserted'] = "true";
 			$_SESSION['rent'] = $rent;
