@@ -4,11 +4,11 @@
 	date_default_timezone_set("Asia/Karachi");
 
 	$json=NULL;
-	$from_datee = $_GET['from_datee'];
-	$to_datee = $_GET['to_datee'];
+	$from_datee = date('Y-m-d', strtotime($_GET['from_datee']));
+	$to_datee = date('Y-m-d', strtotime($_GET['to_datee']));
 	//$ = date(,strtotime("-1 days"));
 	$newdate = strtotime ( "-1 days" , strtotime ( $from_datee ) ) ;
-	$ydate = date ( 'm/d/Y' , $newdate );
+	$ydate = date ( 'Y-m-d' , $newdate );
 	$n=0;
 	
 	//echo '<script>alert("From Date='.$date.' and -1 ='.$ydate.'")</script>';

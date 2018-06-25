@@ -4,9 +4,9 @@
 	date_default_timezone_set("Asia/Karachi");
 
 	$json=NULL;
-	$date = date('m/d/Y');
+	$date = date('Y-m-d');
 	//$date = '05/07/2018';
-	$ydate = date('m/d/Y',strtotime("-1 days"));	
+	$ydate = date('Y-m-d',strtotime("-1 days"));	
 	$n=0;
 	
 	//echo '<script>alert("-1 ='.$ydate.'")</script>';

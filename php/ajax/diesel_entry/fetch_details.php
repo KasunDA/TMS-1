@@ -4,7 +4,7 @@
 	date_default_timezone_set("Asia/Karachi");
 
 	$json=NULL;
-	$date = date('m/d/Y');
+	$date = date('Y-m-d');
 
 	$q = mysqli_query($mycon,"Select litre_rate,SUM(litres) as total_litres,SUM(extra_litres) as total_extra_litres , SUM(total) as total_price  from diesel_entry where status =1 and datee='".$date."' ORDER By de_id DESC limit 1");
 	$n  = 0;
