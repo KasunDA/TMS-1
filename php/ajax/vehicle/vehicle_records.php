@@ -17,15 +17,15 @@
 	$json[0]['total_driver_salary'] = 0;
 	$json[0]['total_paid_salary'] = 0;
 
-	$from_datee =  date('Y-m-d', strtotime($_GET['from_datee'])) ;
-	$to_datee = date('Y-m-d', strtotime($_GET['to_datee']));
+	$from_datee =  date('Y-m-d', strtotime($_POST['from_datee'])) ;
+	$to_datee = date('Y-m-d', strtotime($_POST['to_datee']));
 
-	$from_date =  $_GET['from_datee'] ; //date('Y-m-d', strtotime(
-	$to_date = $_GET['to_datee'];
+	$from_date =  $_POST['from_datee'] ; //date('Y-m-d', strtotime(
+	$to_date = $_POST['to_datee'];
 
-	if( isset($_GET['vehicle_id']) && $_GET['vehicle_id'] != NULL )
+	if( isset($_POST['vehicle_id']) && $_POST['vehicle_id'] != NULL )
 	{
-		$vehicle_id = $_GET['vehicle_id'];
+		$vehicle_id = $_POST['vehicle_id'];
 		
 		$vehicle_query = mysqli_query($mycon,"SELECT owner_name,driver_name FROM vehicle WHERE vehicle_id=$vehicle_id");
 		$r_vehicle = mysqli_fetch_array($vehicle_query);
@@ -92,9 +92,11 @@
 		//Diesel sql query
 		$dieselsql = "SELECT SUM(total) as total_de_amount from diesel_entry where  status=1 and  datee BETWEEN '$from_datee' AND '$to_datee' ";
 
-		//Repair & Maintainance sql query
-		$rmsql = "SELECT SUM(amount) as total_rm_amount FROM garage_entry  where status=1 and datee BETWEEN '$from_datee' AND '$to_datee' AND vehicle_id IN (".$_GET['vids'].") ";
+		$vids = str_replace( str_split("[]"),"",$_POST['vids']);
 
+		//Repair & Maintainance sql query
+		$rmsql = "SELECT SUM(amount) as total_rm_amount FROM garage_entry  where status=1 and datee BETWEEN '$from_datee' AND '$to_datee' AND vehicle_id IN (".$vids.") ";
+		
 		//Driver Salary sql query
 		$dssql = "SELECT SUM(amount) as total_driver_salary FROM expenses where dd_id=4 and status=1 and datee BETWEEN '$from_datee' AND '$to_datee' ";	
 

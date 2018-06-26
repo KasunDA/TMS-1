@@ -920,11 +920,13 @@ include 'footer.php';
           {
               var e=$("#mytable");
               e.dataTable({
+                  processing: true,
+                  "deferRender": true,
                   language: {
                       aria: {
                           sortAscending: ": activate to sort column ascending", sortDescending: ": activate to sort column descending"
                       }
-                      , emptyTable:"No data available in table", info:"Showing _START_ to _END_ of _TOTAL_ entries", infoEmpty:"No entries found", infoFiltered:"(filtered1 from _MAX_ total entries)", lengthMenu:"_MENU_ entries", search:"Search:", zeroRecords:"No matching records found"
+                      , emptyTable:"No data available in table", info:"Showing _START_ to _END_ of _TOTAL_ entries", infoEmpty:"No entries found", infoFiltered:"(filtered1 from _MAX_ total entries)", lengthMenu:"_MENU_ entries", search:"Search:", zeroRecords:"No matching records found",paginate:{previous:"Prev",next:"Next",last:"Last",first:"First"}
                   }
                   ,dom: 'Bfrtip'
                   , buttons:[ {
@@ -1073,7 +1075,7 @@ include 'footer.php';
                   , {
                       extend: "colvis", title: 'Vehicle Report', className: "btn green btn-outline", text: "Columns"
                   }
-                  ],order:[[0, "asc"]], lengthMenu:[[5, 10, 15, 20, -1], [5, 10, 15, 20, "All"]], pageLength:10, dom:"<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
+                  ],order:[[0, "asc"]], lengthMenu:[[5, 10, 15, 20, -1], [5, 10, 15, 20, "All"]], pageLength:10,pagingType:"bootstrap_full_number", dom:"<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
               })
           }
           //responsive:!0,
@@ -1089,6 +1091,7 @@ include 'footer.php';
         $.ajax({
             url:'ajax/vehicle/detailed_fetch.php?from_datee='+from_datee+'&to_datee='+to_datee+'&from_yard_id='+from_yard_id+'&to_yard_id='+to_yard_id+'&coa_id='+coa_id+'&consignee_id='+consignee_id+'&movement='+movement+'&empty_terminal_id='+empty_terminal_id+'&container_number='+container_number+'&bl_cro_number='+bl_cro_number+'&container_size='+container_size+'&container_id='+container_id+'&vehicle_id='+vehicle_id+'&owner_name='+owner_name+'&line_id='+line_id,
             dataType:"JSON",
+            async:true,
             success:function(data)
             {
                 var n = 1,
@@ -1097,18 +1100,29 @@ include 'footer.php';
                     balance_trips = 0,
                     total_diesel  = 0,
                     total_rent    = 0,
-                    vids          = [];
+                    vids          = new Array('0');
 
 
+                if( vehicle_id == '' )
+                {
+                  vids = data['vids'];
+                }
+
+                $('#mytable').DataTable().clear().draw();
                 $('#mytable').DataTable().destroy();
                 $('#mytable tbody').html("");
                 
                 $.each(data,function(index,value){
 
+                    if( isNaN(index) )
+                    {
+                      return;
+                    }
+
                     balance_trips +=  value['balance']/1;
                     total_diesel  +=  value['diesel']/1;
                     total_rent    +=  value['rent']/1;
-                    vids.push(value['vehicle_id']);
+                    
 
                     $('#mytable tbody').append('<tr class="odd gradeX selectedd" index="'+i+'">'+
                             
@@ -1145,7 +1159,8 @@ include 'footer.php';
 
                     n++; total_trips++; i++;
                 });
-	
+   
+
                 myDataTable();
                 // $('#total_amount').html(getTotal('total_amount'));
 
@@ -1181,7 +1196,9 @@ include 'footer.php';
     function loadMR(from_datee,to_datee,vehicle_id,vids)
     {
       $.ajax({
-        url:'ajax/garage_entry/rm_fetch.php?from_datee='+from_datee+'&to_datee='+to_datee+'&vehicle_id='+vehicle_id+'&vids='+vids,
+        url:'ajax/garage_entry/rm_fetch.php',
+        data:{from_datee:from_datee,to_datee:to_datee,vehicle_id:vehicle_id,vids:JSON.stringify(vids)},
+        type:'POST',
         dataType:'JSON',
         success:function(data){
             var n=1;
@@ -1362,7 +1379,9 @@ include 'footer.php';
     function getRecords(from_datee,to_datee,vehicle_id,vids)
     {
         $.ajax({
-            url:'ajax/vehicle/vehicle_records.php?from_datee='+from_datee+'&to_datee='+to_datee+'&vehicle_id='+vehicle_id+'&vids='+vids,
+            url:'ajax/vehicle/vehicle_records.php',
+            data:{from_datee:from_datee,to_datee:to_datee,vehicle_id:vehicle_id,vids:JSON.stringify(vids)},
+            type:'POST',
             dataType:"JSON",
             success: function(data){
                 

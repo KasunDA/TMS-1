@@ -5,16 +5,18 @@
 	$json=NULL;
 	$n  = 0;
 	$sql='';
-	$from_datee =  date('Y-m-d', strtotime($_GET['from_datee'])) ; //date('Y-m-d', strtotime(
-	$to_datee = date('Y-m-d', strtotime($_GET['to_datee']));
+	$from_datee =  date('Y-m-d', strtotime($_POST['from_datee'])) ; //date('Y-m-d', strtotime(
+	$to_datee = date('Y-m-d', strtotime($_POST['to_datee']));
 
-	if( isset($_GET['vehicle_id']) && $_GET['vehicle_id'] != NULL )
+	if( isset($_POST['vehicle_id']) && $_POST['vehicle_id'] != NULL )
 	{
-		$sql = "SELECT * FROM garage_entry  where status=1 and datee BETWEEN '$from_datee' AND '$to_datee' AND vehicle_id=".$_GET['vehicle_id'];
+		$sql = "SELECT * FROM garage_entry  where status=1 and datee BETWEEN '$from_datee' AND '$to_datee' AND vehicle_id=".$_POST['vehicle_id'];
 	}
 	else
 	{
-		$sql = "SELECT * FROM garage_entry  where status=1 and datee BETWEEN '$from_datee' AND '$to_datee' AND vehicle_id IN (".$_GET['vids'].") ";
+		$vids = str_replace( str_split("[]"),"",$_POST['vids']);
+
+		$sql = "SELECT * FROM garage_entry  where status=1 and datee BETWEEN '$from_datee' AND '$to_datee' AND vehicle_id IN (".$vids.") ";
 	}
 
 	$q = mysqli_query($mycon,$sql);

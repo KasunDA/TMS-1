@@ -62,13 +62,44 @@ date_default_timezone_set("Asia/Karachi");
 
                                         </div>
                                     </div>
+                                    <div class="row">
+                                      <div class="form-group">
+
+                                        <label class="col-md-2 control-label">Owner Name:</label>
+                                        <div class="col-md-3">
+                                            <select class="form-control" id="owner_name" name="owner_name" tabindex="4">
+                                                <option value="">All</option>
+                                                <?php 
+
+                                                    $q = mysqli_query($mycon,'SELECT owner_name from vehicle where status=1 GROUP BY owner_name');
+
+                                                    while( $r = mysqli_fetch_array($q) )
+                                                    {?>
+                                                        <option value="<?php echo $r['owner_name']; ?>"><?php echo $r['owner_name']; ?></option>
+                                                    <?php } //END OF WHILE ?>         
+                                            </select>
+                                        </div>   
+
+                                        <div class="col-md-1">
+
+                                          <button class="btn btn-xs green owner_name" para="owner_name"  type="button">
+                                          
+                                            <i class="fa fa-refresh"></i>
+                                          
+                                          </button>
+
+                                        </div>     
+                                      </div>
+  
+                                    </div>
+                                    
                                     <div class="form-group">
                                         
                                     </div>
                                     <div class="form-group">
                                         <div class="col-md-9 col-md-push-2">
                                             <div class="">
-                                                <button type="submit" class="btn blue" id="btn_submit" tabindex="4">Check</button>
+                                                <button type="submit" class="btn blue" id="btn_submit" tabindex="5">Check</button>
                                                 <!-- <button type="button" class="btn default">Cancel</button> -->
                                             </div>
                                         </div>
@@ -109,6 +140,7 @@ date_default_timezone_set("Asia/Karachi");
                                                     <th> Date </th>
                                                     <th> Description </th>
                                                     <th> vehicle # </th>
+                                                    <th> Owner Name </th>
                                                     <th> Amount </th>
                                                    
                                                 </tr>
@@ -142,7 +174,7 @@ include 'footer.php';
  $(document).ready(function(){
 
     //Select2
-   $('#vehicle_id').select2({
+   $('#vehicle_id,#owner_name').select2({
       width: 'resolve',
       theme: "classic"
    });
@@ -155,12 +187,22 @@ include 'footer.php';
           dataType:'JSON',
           success:function(data){
 
-
-            $('#'+param).html('<option value="">All</option>');
-            
-            $.each(data,function(index,value){
-              $('#'+param).append('<option value="'+value['vehicle_id']+'">'+value['vehicle_number']+'</option> ');
-            });
+            if( param =='owner_name' )
+            {
+              $('#'+param).html('<option value="">All</option>');
+              
+              $.each(data,function(index,value){
+                $('#'+param).append('<option value="'+value['owner_name']+'">'+value['owner_name']+'</option> ');
+              });
+            }
+            else
+            {  
+              $('#'+param).html('<option value="">All</option>');
+              
+              $.each(data,function(index,value){
+                $('#'+param).append('<option value="'+value['vehicle_id']+'">'+value['vehicle_number']+'</option> ');
+              });
+            }
 
           $('#'+param).select2({
             width: 'resolve',
@@ -172,7 +214,7 @@ include 'footer.php';
         });
     }    
 
-    $(document).on('click','.vehicle_id', function()
+    $(document).on('click','.vehicle_id,.owner_name', function()
     {
     updateField(''+$(this).attr('para')+'');
     });
@@ -187,10 +229,12 @@ include 'footer.php';
 
     var total_amount = 0;
 
-    function loadData(from_datee,to_datee,vehicle_id)
+    function loadData(from_datee,to_datee,vehicle_id,owner_name)
     {
         $.ajax({
-            url:'ajax/garage_entry/detailed_fetch.php?from_datee='+from_datee+'&to_datee='+to_datee+'&vehicle_id='+vehicle_id,
+            url:'ajax/garage_entry/detailed_fetch.php',
+            data:{from_datee:from_datee,to_datee:to_datee,vehicle_id:vehicle_id,owner_name:owner_name},
+            type:"GET",
             dataType:"JSON",
             success:function(data){
                 var n = 1;
@@ -211,6 +255,7 @@ include 'footer.php';
                             '<td>'+value['datee']+'</td>'+
                             '<td>'+value['description']+'</td>'+
                             '<td id="'+value['vehicle_id']+'">'+value['vehicle_number']+'</td>'+
+                            '<td>'+value['owner_name']+'</td>'+
                             '<td name="total_amount">'+value['amount']+'</td>'+
                             '</tr>');
 
@@ -246,10 +291,11 @@ include 'footer.php';
        e.preventDefault();
        
        var from_datee = $('#from_datee').val() ,
-           to_datee = $('#to_datee').val() ,
-           vehicle_id = $('#vehicle_id').val();
+           to_datee   = $('#to_datee').val() ,
+           vehicle_id = $('#vehicle_id').val(),
+           owner_name = $('#owner_name').val();
 
-        loadData(from_datee,to_datee,vehicle_id);
+        loadData(from_datee,to_datee,vehicle_id,owner_name);
 
     });
 

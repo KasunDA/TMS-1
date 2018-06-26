@@ -391,6 +391,21 @@ include 'footer.php';
             e.dataTable({language:{aria:{sortAscending:": activate to sort column ascending",sortDescending:": activate to sort column descending"},emptyTable:"No data available in table",info:"Showing _START_ to _END_ of _TOTAL_ records",infoEmpty:"No records found",infoFiltered:"(filtered1 from _MAX_ total records)",lengthMenu:"Show _MENU_",search:"Search:",zeroRecords:"No matching records found",paginate:{previous:"Prev",next:"Next",last:"Last",first:"First"}},bStateSave:!0,columnDefs:[{targets:0,orderable:!1,searchable:!1}],lengthMenu:[[5,15,20,-1],[5,15,20,"All"]],pageLength:5,pagingType:"bootstrap_full_number",columnDefs:[{orderable:!1,targets:[0]},{searchable:!1,targets:[0]}],order:[[1,"asc"]]});
         }
 
+
+         <?php 
+            if($vehicle_id != NULL ) 
+            {
+                echo  "$('#vehicle_id').val(".$vehicle_id.").trigger('change');";
+                echo  'loadData('.$vehicle_id.',0,"'.$name.'");';
+                echo 'iloadData('.$vehicle_id.',0,"'.$name.'");';
+            }    
+            else
+            {
+                echo  'loadData(0,'.$borrower_id.',"'.$name.'");';
+                echo 'iloadData(0,'.$borrower_id.',"'.$name.'");';
+            }
+        ?>
+
         var total_advance = 0,
             total_advance_pay = 0;
 
@@ -473,21 +488,6 @@ include 'footer.php';
                 error:function(){ alertMessage("Failed iFetch Ajax Call.",'error'); }
             });
         }
-
-        <?php 
-            if($vehicle_id != NULL ) 
-            {
-                echo  "$('#vehicle_id').val(".$vehicle_id.").trigger('change');";
-                echo  'loadData('.$vehicle_id.',0,"'.$name.'");';
-                echo 'iloadData('.$vehicle_id.',0,"'.$name.'");';
-            }    
-            else
-            {
-                echo  'loadData(0,'.$borrower_id.',"'.$name.'");';
-                echo 'iloadData(0,'.$borrower_id.',"'.$name.'");';
-            }
-        ?>
-
         
 
         function add(datee,method,check_number,bank_id,amount,vehicle_id,borrower_id,name,description)

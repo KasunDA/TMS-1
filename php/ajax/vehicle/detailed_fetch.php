@@ -3,6 +3,7 @@
 	require '../../connection.php';
 
 	$json=NULL;
+	$vids=[0];
 	$sql='';
 	$from_datee =  date('Y-m-d', strtotime($_GET['from_datee'])) ; //date('Y-m-d', strtotime(
 	$to_datee = date('Y-m-d', strtotime($_GET['to_datee']));
@@ -266,9 +267,16 @@
 			$json[$n]['balance'] = $r['balance'];
 			$json[$n]['remarks'] = $r['remarks'];
 		}
+
+		if( !in_array($r['vehicle_id'] , $vids) )
+		{
+			array_push($vids ,$r['vehicle_id']);
+		}
 			
 		$n++;
 	}
+
+	$json['vids'] = $vids;
 
 	echo json_encode($json);
 
