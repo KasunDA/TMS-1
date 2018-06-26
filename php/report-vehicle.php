@@ -902,9 +902,9 @@ include 'footer.php';
       });
 
 
-  function getWidthOfText(txt) {
-    return txt.length ;
-  }
+    function getWidthOfText(txt) {
+      return txt.length ;
+    }
 
     function myDataTable()
     {

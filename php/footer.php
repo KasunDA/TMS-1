@@ -73,7 +73,7 @@
         <script src="../assets/pages/scripts/dashboard.min.js" type="text/javascript"></script>
         <script src="../assets/global/plugins/typeahead/handlebars.min.js" type="text/javascript"></script>
         <script src="../assets/global/plugins/typeahead/typeahead.bundle.min.js" type="text/javascript"></script>
-        <script src="../assets/pages/scripts/components-typeahead.js" type="text/javascript"></script>
+        <!-- <script src="../assets/pages/scripts/components-typeahead.js" type="text/javascript"></script> -->
         <script src="../assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
         <script src="../assets/pages/scripts/components-date-time-pickers.min.js" type="text/javascript"></script>
         <!-- END PAGE LEVEL SCRIPTS -->
