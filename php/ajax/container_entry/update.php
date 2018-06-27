@@ -67,18 +67,20 @@
 
 
 		// Fetching Total Advance
-		$tadq  = mysqli_query($mycon,'SELECT SUM(advance) as total_advance FROM container_entry where cm_id='.$cm_id);
+		$tadq  = mysqli_query($mycon,'SELECT SUM(advance) as total_advance FROM container_entry where status=1 AND cm_id='.$cm_id);
 		$rtadq = mysqli_fetch_array($tadq);
 		$total_advance = $rtadq['total_advance'];
 
 		//Expense SQL CODE 
-		$advance_esql = "UPDATE expenses SET amount=$total_advance , description='$description' WHERE expense_id".$a_expense_id;
+		$advance_esql = "UPDATE expenses SET amount=$total_advance , description='$description' WHERE expense_id=".$a_expense_id;
 		
+		// echo $advance_esql;
+
 		$eq = mysqli_query($mycon,$advance_esql);
 
 		if( mysqli_affected_rows($mycon) )
 		{
-			$previous_balance_q = mysqli_query($mycon,"SELECT current_balance from exin WHERE datee<='$datee' AND expense_id!=$d_expense_id ORDER BY exin_id DESC limit 1");
+			$previous_balance_q = mysqli_query($mycon,"SELECT current_balance from exin WHERE datee<='$datee' AND expense_id!=$a_expense_id AND expense_id!=$d_expense_id ORDER BY exin_id DESC limit 1");
 			$r_previous_balance = mysqli_fetch_array($previous_balance_q);
 
 			$previous_balance = $r_previous_balance['current_balance'];
@@ -111,22 +113,24 @@
 
 
 		// Fetching Total Diesel
-		$tadq  = mysqli_query($mycon,'SELECT SUM(diesel) as total_diesel FROM container_entry where cm_id='.$cm_id);
+		$tadq  = mysqli_query($mycon,'SELECT SUM(diesel) as total_diesel FROM container_entry where status=1 AND cm_id='.$cm_id);
 		$rtadq = mysqli_fetch_array($tadq);
 		$total_diesel  = $rtadq['total_diesel'];
 
 		//Expense SQL CODE 		
-		$diesel_esql  = "UPDATE expenses SET amount=$total_diesel ,  description='$description' WHERE expense_id".$expense_id;
-	
+		$diesel_esql  = "UPDATE expenses SET amount=$total_diesel ,  description='$description' WHERE expense_id=".$expense_id;
+		
+		// echo $diesel_esql;
+
 		$eq = mysqli_query($mycon,$diesel_esql);
 
 		if( mysqli_affected_rows($mycon) )
 		{
-			$previous_balance_q = mysqli_query($mycon,"SELECT current_balance from exin WHERE datee<='$datee' ORDER BY exin_id DESC limit 1");
+			$previous_balance_q = mysqli_query($mycon,"SELECT current_balance from exin WHERE datee<='$datee' AND expense_id!=$expense_id ORDER BY exin_id DESC limit 1");
 			$r_previous_balance = mysqli_fetch_array($previous_balance_q);
 
 			$previous_balance = $r_previous_balance['current_balance'];
-			$current_balance  = $previous_balance - $total_advance;
+			$current_balance  = $previous_balance - $total_diesel;
 
 			$q1 = mysqli_query($mycon,"UPDATE exin SET previous_balance=$previous_balance , current_balance=$current_balance WHERE expense_id=".$expense_id);
 

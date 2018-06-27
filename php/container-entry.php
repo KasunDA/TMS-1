@@ -625,7 +625,7 @@ include 'footer.php';
    		$('#update_records_btn').click(function(event) {
           
           <?php 
-            if(isset($_SESSION['']))
+            if(isset($_SESSION['cm_id']))
             {
               echo 'loadData("'.$_SESSION['cm_id'].'")'; 
             }
