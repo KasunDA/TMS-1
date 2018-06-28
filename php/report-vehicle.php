@@ -372,7 +372,10 @@ date_default_timezone_set("Asia/Karachi");
                                         <input type="checkbox" class="group-checkable" data-set="#mytable .checkboxes" />
                                         <span></span>
                                     </label> -->
+
+  
                         </div>
+                          <img src="ajax/loading.gif" id="loading" style="margin-left: 30%; display: none;" height="40" width="40" >
                     </div>
                     <div class="portlet-body table-both-scroll"  >  <!-- style="display: none;" -->
                         <table class="table table-striped table-bordered table-hover table-checkable order-column" id="mytable">
@@ -1088,6 +1091,8 @@ include 'footer.php';
 
     function loadData(from_datee,to_datee,from_yard_id,to_yard_id,coa_id,consignee_id,movement,empty_terminal_id,container_number,bl_cro_number,container_size,container_id,vehicle_id,owner_name,line_id)
     {
+        $('#loading').show();
+
         $.ajax({
             url:'ajax/vehicle/detailed_fetch.php?from_datee='+from_datee+'&to_datee='+to_datee+'&from_yard_id='+from_yard_id+'&to_yard_id='+to_yard_id+'&coa_id='+coa_id+'&consignee_id='+consignee_id+'&movement='+movement+'&empty_terminal_id='+empty_terminal_id+'&container_number='+container_number+'&bl_cro_number='+bl_cro_number+'&container_size='+container_size+'&container_id='+container_id+'&vehicle_id='+vehicle_id+'&owner_name='+owner_name+'&line_id='+line_id,
             dataType:"JSON",
@@ -1112,7 +1117,7 @@ include 'footer.php';
                 $('#mytable').DataTable().destroy();
                 $('#mytable tbody').html("");
                 
-                $.each(data,function(index,value){
+                var table = $.each(data,function(index,value){
 
                     if( isNaN(index) )
                     {
@@ -1160,6 +1165,9 @@ include 'footer.php';
                     n++; total_trips++; i++;
                 });
    
+                $.when(table).done(function(){
+                  $('#loading').hide();
+                });
 
                 myDataTable();
                 // $('#total_amount').html(getTotal('total_amount'));
@@ -1188,8 +1196,9 @@ include 'footer.php';
                     $('#voucher_div').hide();
                 } 
             },
-            error:function(){ alertMessage("Failed Fetch Ajax Call.",'error') }
+            error:function(){ alertMessage("Failed Fetch Ajax Call.",'error'); $('#loading').hide(); }
         });
+        
     }
 
     //Repair and Maintenance Table Code

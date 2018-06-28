@@ -103,6 +103,7 @@ include 'nav.php';
                              <div class="tools">
                                  <a href="" class="collapse"> </a>
                              </div>
+                             <img src="ajax/loading.gif" id="loading" style="margin-left: 45%; display: block;" height="40" width="40" >
                          </div>
                          <div class="portlet-body table-both-scroll">
                              <table class="table table-striped table-bordered table-hover table-checkable order-column" id="mytable">
@@ -148,6 +149,8 @@ include 'footer.php';
 
         function loadData()
         {
+            $('#loading').show();
+
             $.ajax({
                 url:'ajax/bank/fetch.php',
                 dataType:"JSON",
@@ -159,7 +162,7 @@ include 'footer.php';
                     $('#mytable').DataTable().destroy();
                     $('tbody').html("");
                     
-                    $.each(data,function(index,value){
+                    var table = $.each(data,function(index,value){
 
                         $('tbody').append('<tr index="'+i+'" class="odd gradeX">'+
 
@@ -192,10 +195,15 @@ include 'footer.php';
                                 '</tr>');
 
                         n++; i++;
-                    })
+                    });
+
+                    $.when(table).done(function(){
+                      $('#loading').hide();
+                    });
+
                     myDataTable();
                 },
-                error:function(){ alertMessage("Failed Fetch Ajax Call.",'error') }
+                error:function(){ alertMessage("Failed Fetch Ajax Call.",'error'); $('#loading').hide(); }
             });
         }
 

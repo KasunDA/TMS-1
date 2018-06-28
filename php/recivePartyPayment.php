@@ -307,6 +307,8 @@ date_default_timezone_set("Asia/Karachi");
                             <!-- <a href="" class="collapse"> </a>
                             <a href="" class="remove"> </a> -->
                         </div>
+
+                        <img src="ajax/loading.gif" id="loading" style="margin-left: 32%; display: none;" height="40" width="40" >
                     </div>
                     <div class="portlet-body table-both-scroll">
                         <table class="table table-striped table-bordered table-hover order-column" id="mytable">
@@ -567,6 +569,8 @@ include 'footer.php';
 
     function loadData(from_datee,to_datee,from_yard_id,to_yard_id,coa_id,consignee_id,movement,empty_terminal_id,bl_cro_number,container_size,container_id,line_id)
     {
+        $('#loading').show();
+
         $.ajax({
             url:'ajax/container_movement/received_fetch.php?from_datee='+from_datee+'&to_datee='+to_datee+'&from_yard_id='+from_yard_id+'&to_yard_id='+to_yard_id+'&coa_id='+coa_id+'&consignee_id='+consignee_id+'&movement='+movement+'&empty_terminal_id='+empty_terminal_id+'&bl_cro_number='+bl_cro_number+'&container_size='+container_size+'&container_id='+container_id+'&line_id='+line_id,
             dataType:"JSON",
@@ -581,7 +585,7 @@ include 'footer.php';
                 $('#mytable').DataTable().destroy();
                 $('#mytable tbody').html("");
                 
-                $.each(data,function(index,value){
+                var table = $.each(data,function(index,value){
 
 
                     if( value['paid_status'] == 1 )
@@ -635,7 +639,11 @@ include 'footer.php';
                             '</tr>');
 
                     n++; 
-                })
+                });
+
+                $.when(table).done(function(){
+                  $('#loading').hide();
+                });
 
                 myDataTable();
 
@@ -649,7 +657,7 @@ include 'footer.php';
                 $('#total_paid_unpaid_party_charges').html(psum+usum);
 
             },
-            error:function(){ alertMessage("Failed Fetch Ajax Call.",'error') }
+            error:function(){ alertMessage("Failed Fetch Ajax Call.",'error'); $('#loading').hide(); }
         });
     }
     

@@ -62,6 +62,7 @@ date_default_timezone_set("Asia/Karachi");
 
                                         </div>
                                     </div>
+ 
                                     <div class="row">
                                       <div class="form-group">
 
@@ -93,9 +94,7 @@ date_default_timezone_set("Asia/Karachi");
   
                                     </div>
                                     
-                                    <div class="form-group">
-                                        
-                                    </div>
+                                    
                                     <div class="form-group">
                                         <div class="col-md-9 col-md-push-2">
                                             <div class="">
@@ -130,6 +129,8 @@ date_default_timezone_set("Asia/Karachi");
                                 <!-- BEGIN EXAMPLE TABLE PORTLET-->
                                 <div class="portlet light bordered">
                                     
+                                    <img src="ajax/loading.gif" id="loading" style="margin-left: 45%; display: none; " height="40" width="40" >
+
                                     <div class="portlet-body">
                                  
                                         <table class="table table-striped table-bordered table-hover table-checkable order-column" id="mytable">
@@ -231,6 +232,8 @@ include 'footer.php';
 
     function loadData(from_datee,to_datee,vehicle_id,owner_name)
     {
+        $('#loading').show();
+
         $.ajax({
             url:'ajax/garage_entry/detailed_fetch.php',
             data:{from_datee:from_datee,to_datee:to_datee,vehicle_id:vehicle_id,owner_name:owner_name},
@@ -243,7 +246,7 @@ include 'footer.php';
                 $('#mytable').DataTable().destroy();
                 $('#mytable tbody').html("");
                 
-                $.each(data,function(index,value){
+                var table = $.each(data,function(index,value){
 
                   total_amount += value['amount']/1;
 
@@ -260,12 +263,16 @@ include 'footer.php';
                             '</tr>');
 
                     n++; 
-                })
+                });
+
+                $.when(table).done(function(){
+                  $('#loading').hide();
+                });
 
                 myDataTable();
                 $('#total_amount').html(total_amount); 
             },
-            error:function(){ alertMessage("Failed Fetch Ajax Call.",'error') }
+            error:function(){ alertMessage("Failed Fetch Ajax Call.",'error'); $('#loading').hide(); }
         });
     }
 

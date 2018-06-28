@@ -199,6 +199,8 @@ $borrower_id = $_GET['borrower_id'];
                              <!-- <div class="tools">
                                  <a href="" class="expand"> </a>
                              </div> -->
+
+                             <img src="ajax/loading.gif" id="loading" style="margin-left: 22%; display: none;" height="40" width="40" >
                          </div>
                          <div class="portlet-body table-both-scroll" > <!-- style="display: none;" -->
                              <table class="table table-striped table-bordered table-hover table-checkable order-column" id="mytable">
@@ -229,6 +231,8 @@ $borrower_id = $_GET['borrower_id'];
                              <!-- <div class="tools">
                                  <a href="" class="expand"> </a>
                              </div> -->
+
+                             <img src="ajax/loading.gif" id="iloading" style="margin-left: 22%; display: none;" height="40" width="40" >
                          </div>
                          <div class="portlet-body table-both-scroll" >  <!-- style="display: none;" -->
                              <table class="table table-striped table-bordered table-hover table-checkable order-column" id="imytable">
@@ -266,7 +270,7 @@ include 'footer.php';
 <script src="../assets/global/scripts/select2.full.min.js"></script>
  <script type="text/javascript">
      
-     $(document).ready(function(){
+    $(document).ready(function(){
 
         //Select2
        $('#bank_id').select2({
@@ -278,30 +282,31 @@ include 'footer.php';
        
        //$('#vehicle_id').attr('disabled');
 
-       function updateField(param)
-      {
-        $.ajax({
-          url:'ajax/container_movement/update_field.php?id='+param,
-          dataType:'JSON',
-          success:function(data){
+        function updateField(param)
+        {
+            $.ajax({
+              url:'ajax/container_movement/update_field.php?id='+param,
+              dataType:'JSON',
+              success:function(data){
 
-                $('#'+param+'_full_form').val('');
-                $('#'+param).html('<option value="">Select Bank</option>');
-                
-                $.each(data,function(index,value){
-                  $('#'+param).append('<option value="'+value['bank_id']+'">'+value['short_form']+'</option> ');
-                });
+                    $('#'+param+'_full_form').val('');
+                    $('#'+param).html('<option value="">Select Bank</option>');
+                    
+                    $.each(data,function(index,value){
+                      $('#'+param).append('<option value="'+value['bank_id']+'">'+value['short_form']+'</option> ');
+                    });
 
 
-                  $('#'+param).select2({
-                    width: 'resolve',
-                    theme: "classic"
-                  });
+                      $('#'+param).select2({
+                        width: 'resolve',
+                        theme: "classic"
+                      });
 
-          },
-          error:function(){  alertMessage('Error in Updating Field Ajax Call.','error') }
-        });
-      }
+              },
+              error:function(){  alertMessage('Error in Updating Field Ajax Call.','error') }
+            });
+        }
+
 
       $(document).on('click','.bank_id', function()
       {
@@ -391,6 +396,20 @@ include 'footer.php';
             e.dataTable({language:{aria:{sortAscending:": activate to sort column ascending",sortDescending:": activate to sort column descending"},emptyTable:"No data available in table",info:"Showing _START_ to _END_ of _TOTAL_ records",infoEmpty:"No records found",infoFiltered:"(filtered1 from _MAX_ total records)",lengthMenu:"Show _MENU_",search:"Search:",zeroRecords:"No matching records found",paginate:{previous:"Prev",next:"Next",last:"Last",first:"First"}},bStateSave:!0,columnDefs:[{targets:0,orderable:!1,searchable:!1}],lengthMenu:[[5,15,20,-1],[5,15,20,"All"]],pageLength:5,pagingType:"bootstrap_full_number",columnDefs:[{orderable:!1,targets:[0]},{searchable:!1,targets:[0]}],order:[[1,"asc"]]});
         }
 
+        function getFields(vehicle_id,borrower_id,name)
+        {
+            $.ajax({
+              url:'ajax/advance_pay/get_fields.php',
+              data:{vehicle_id:vehicle_id,borrower_id:borrower_id,name:name},
+              type:'GET',
+              dataType:'JSON',
+              success:function(data){
+                    $('#total_amount').val(data['amount']);
+                    $('#amount').attr('max', data['amount']);
+              },
+              error:function(){  alertMessage('Error in Updating Field Ajax Call.','error') }
+            });
+        }
 
          <?php 
             if($vehicle_id != NULL ) 
@@ -398,11 +417,13 @@ include 'footer.php';
                 echo  "$('#vehicle_id').val(".$vehicle_id.").trigger('change');";
                 echo  'loadData('.$vehicle_id.',0,"'.$name.'");';
                 echo 'iloadData('.$vehicle_id.',0,"'.$name.'");';
+                echo 'getFields('.$vehicle_id.',0,"'.$name.'");';
             }    
             else
             {
                 echo  'loadData(0,'.$borrower_id.',"'.$name.'");';
                 echo 'iloadData(0,'.$borrower_id.',"'.$name.'");';
+                echo 'getFields(0,'.$borrower_id.',"'.$name.'");';
             }
         ?>
 
@@ -411,6 +432,8 @@ include 'footer.php';
 
         function loadData(vehicle_id,borrower_id,name)
         {
+            $('#loading').show();
+
             $.ajax({
                 url:'ajax/advance_pay/fetch_details.php?vehicle_id='+vehicle_id+'&borrower_id='+borrower_id+'&name='+name,
                 dataType:"JSON",
@@ -421,7 +444,7 @@ include 'footer.php';
                     $('#mytable').DataTable().destroy();
                     $('tbody').html("");
                     
-                    $.each(data,function(index,value){
+                    var table = $.each(data,function(index,value){
 
                         total_advance+= value['amount']/1;
 
@@ -437,9 +460,13 @@ include 'footer.php';
                         n++;
                     });
 
+                    $.when(table).done(function(){
+                      $('#loading').hide();
+                    });
+
                     myDataTable();
                 },
-                error:function(){ alertMessage("Failed Fetch Ajax Call.",'error') }
+                error:function(){ alertMessage("Failed Fetch Ajax Call.",'error'); $('#loading').hide(); }
             });
         }
 
@@ -448,6 +475,8 @@ include 'footer.php';
 
         function iloadData(vehicle_id,borrower_id,name)
         {
+            $('#iloading').show();
+
             $.ajax({
                 url:'ajax/advance_pay/ifetch.php?vehicle_id='+vehicle_id+'&borrower_id='+borrower_id+'&name='+name,
                 dataType:"JSON",
@@ -458,7 +487,7 @@ include 'footer.php';
                     $('#imytable').DataTable().destroy();
                     $('#imytable tbody').html("");
                     
-                    var loop =  $.each(data,function(index,value){
+                    var table = $.each(data,function(index,value){
 
                         total_advance_pay += value['amount']/1;
 
@@ -474,18 +503,22 @@ include 'footer.php';
                         n++;
                     });
 
-                    $.when(loop).done(function(x){
-                        imyDataTable();
-
-                        var total = total_advance-total_advance_pay;
-
-                        $('#total_amount').val(total);
-                        $('#amount').attr('max', total);
-                        
+                    $.when(table).done(function(){
+                        $('#iloading').hide();                        
                     });
 
+                    imyDataTable();
+
+                    if( vehicle_id != '' ) 
+                    {
+                        getFields(vehicle_id,0,name);
+                    }    
+                    else
+                    {
+                        getFields(0,borrower_id,name);
+                    }
                 },
-                error:function(){ alertMessage("Failed iFetch Ajax Call.",'error'); }
+                error:function(){ alertMessage("Failed iFetch Ajax Call.",'error');  $('#iloading').hide(); }
             });
         }
         

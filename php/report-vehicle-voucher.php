@@ -97,6 +97,8 @@ date_default_timezone_set("Asia/Karachi");
                         <div class="tools">
                             <a href="" class="expand"> </a>
                         </div>
+
+                        <img src="ajax/loading.gif" id="loading" style="margin-left: 28%;  display: none;" height="40" width="40" >
                     </div>
                     <div class="portlet-body table-both-scroll" >  <!-- style="display: none;" -->
                         <table class="table table-striped table-bordered table-hover table-checkable order-column" id="mytable">
@@ -235,6 +237,8 @@ include 'footer.php';
 
     function loadData(from_datee,to_datee,vehicle_id)
     {
+        $('#loading').show();
+
         $.ajax({
             url:'ajax/voucher/fetch_voucher.php?from_datee='+from_datee+'&to_datee='+to_datee+'&vehicle_id='+vehicle_id,
             dataType:"JSON",
@@ -244,7 +248,7 @@ include 'footer.php';
                 $('#mytable').DataTable().destroy();
                 $('#mytable tbody').html("");
                 
-                $.each(data,function(index,value){
+                var table = $.each(data,function(index,value){
 
                     $('#mytable tbody').append('<tr class="odd gradeX">'+
 
@@ -260,12 +264,16 @@ include 'footer.php';
                             '</tr>');
 
                     n++;
-                })
+                });
+
+                $.when(table).done(function(){
+                  $('#loading').hide();
+                });
 
                 myDataTable();
 
             },
-            error:function(){ alertMessage("Failed Fetch Ajax Call.",'error') }
+            error:function(){ alertMessage("Failed Fetch Ajax Call.",'error'); $('#loading').hide(); }
         });
     }
 

@@ -555,6 +555,8 @@ date_default_timezone_set("Asia/Karachi");
 		                                 <a href="" class="collapse "> </a>
 
 		                             </div>
+
+                                 <img src="ajax/loading.gif" id="loading" style="margin-left: 45%; display: none;" height="40" width="40" >
                          		</div>
 
                                 <div class="portlet-body">
@@ -845,6 +847,8 @@ include 'footer.php';
 
       function loadData(cm_id)
       {
+        $('#loading').show();
+
         $.ajax({
             url:'ajax/container_entry/fetch.php?cm_id='+cm_id,
             dataType:"JSON",
@@ -856,7 +860,7 @@ include 'footer.php';
                 $('#mytable').DataTable().destroy();
                 $('tbody').html("");
                 
-                $.each(data,function(index,value){
+                var table = $.each(data,function(index,value){
 
                   var c= '';
                   if(value['color'] == 'red'){
@@ -928,11 +932,15 @@ include 'footer.php';
                             '</tr>');
 
                     n++; i++;
-                })
+                });
+
+                $.when(table).done(function(){
+                  $('#loading').hide();
+                });
 
                 myDataTable();
             },
-            error:function(){ alert("Failed Fetch Ajax Call.") }
+            error:function(){ alert("Failed Fetch Ajax Call."); $('#loading').hide(); }
         });
       }
 

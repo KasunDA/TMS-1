@@ -38,12 +38,9 @@
 
 			$uq = mysqli_query($mycon,$usql);
 
-			if(mysqli_affected_rows($mycon))
-			{
-				$previous_balance = $total;
-			}
+			$previous_balance = $total;
 		}
 
  	}
 
- 	// updateData($mycon,'2018-05-13');
+ 	updateData($mycon,'2018-05-13');

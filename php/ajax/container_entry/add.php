@@ -59,16 +59,14 @@
 
 		$eq = mysqli_query($mycon,$advance_esql);
 
-		if( mysqli_affected_rows($mycon) )
-		{
-			$previous_balance_q = mysqli_query($mycon,"SELECT current_balance from exin WHERE datee<='$datee' AND expense_id!=$a_expense_id AND expense_id!=$d_expense_id ORDER BY exin_id DESC limit 1");
-			$r_previous_balance = mysqli_fetch_array($previous_balance_q);
+		$previous_balance_q = mysqli_query($mycon,"SELECT current_balance from exin WHERE datee<='$datee' AND expense_id!=$a_expense_id AND expense_id!=$d_expense_id ORDER BY exin_id DESC limit 1");
+		$r_previous_balance = mysqli_fetch_array($previous_balance_q);
 
-			$previous_balance = $r_previous_balance['current_balance'];
-			$current_balance  = $previous_balance - $total_advance;
+		$previous_balance = $r_previous_balance['current_balance'];
+		$current_balance  = $previous_balance - $total_advance;
 
-			$q1 = mysqli_query($mycon,"UPDATE exin SET previous_balance=$previous_balance , current_balance=$current_balance WHERE expense_id=".$a_expense_id);
-		}
+		$q1 = mysqli_query($mycon,"UPDATE exin SET previous_balance=$previous_balance , current_balance=$current_balance WHERE expense_id=".$a_expense_id);
+		
 	}
 
 	function fetchingDataDiesel($mycon,$cm_id,$expense_id)
@@ -105,21 +103,17 @@
 
 		$eq = mysqli_query($mycon,$diesel_esql);
 
-		if( mysqli_affected_rows($mycon) )
-		{
-			$previous_balance_q = mysqli_query($mycon,"SELECT current_balance from exin WHERE datee<='$datee' AND expense_id!=$expense_id ORDER BY exin_id DESC limit 1");
-			$r_previous_balance = mysqli_fetch_array($previous_balance_q);
+		$previous_balance_q = mysqli_query($mycon,"SELECT current_balance from exin WHERE datee<='$datee' AND expense_id!=$expense_id ORDER BY exin_id DESC limit 1");
+		$r_previous_balance = mysqli_fetch_array($previous_balance_q);
 
-			$previous_balance = $r_previous_balance['current_balance'];
-			$current_balance  = $previous_balance - $total_diesel;
+		$previous_balance = $r_previous_balance['current_balance'];
+		$current_balance  = $previous_balance - $total_diesel;
 
-			$q1 = mysqli_query($mycon,"UPDATE exin SET previous_balance=$previous_balance , current_balance=$current_balance WHERE expense_id=".$expense_id);
+		$q1 = mysqli_query($mycon,"UPDATE exin SET previous_balance=$previous_balance , current_balance=$current_balance WHERE expense_id=".$expense_id);
 
-			if( mysqli_affected_rows($mycon) )
-			{
-				updateData($mycon,$datee);
-			}
-		}
+		
+		updateData($mycon,$datee);
+		
 	}
 
 	function updateData($mycon,$datee)
@@ -158,10 +152,7 @@
 
 			$uq = mysqli_query($mycon,$usql);
 
-			if(mysqli_affected_rows($mycon))
-			{
-				$previous_balance = $total;
-			}
+			$previous_balance = $total;
 		}
 
  	}

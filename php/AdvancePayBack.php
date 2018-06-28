@@ -189,6 +189,9 @@ $name = $_GET['name'];
                              <!-- <div class="tools">
                                  <a href="" class="expand"> </a>
                              </div> -->
+
+                             <img src="ajax/loading.gif" id="loading" style="margin-left: 22%; display: none;" height="40" width="40" >
+
                          </div>
                          <div class="portlet-body table-both-scroll" > <!-- style="display: none;" -->
                              <table class="table table-striped table-bordered table-hover table-checkable order-column" id="mytable">
@@ -218,6 +221,7 @@ $name = $_GET['name'];
                              <!-- <div class="tools">
                                  <a href="" class="expand"> </a>
                              </div> -->
+                             <img src="ajax/loading.gif" id="iloading" style="margin-left: 22%; display: none;" height="40" width="40" >
                          </div>
                          <div class="portlet-body table-both-scroll" >  <!-- style="display: none;" -->
                              <table class="table table-striped table-bordered table-hover table-checkable order-column" id="imytable">
@@ -386,8 +390,26 @@ include 'footer.php';
         var total_advance = 0,
             total_advance_pay = 0;
 
+
+        function getFields(cmp_id)
+        {
+            $.ajax({
+              url:'ajax/advance_taken/get_fields.php',
+              data:{cmp_id:cmp_id},
+              type:'GET',
+              dataType:'JSON',
+              success:function(data){
+                    $('#total_amount').val(data['amount']);
+                    $('#amount').attr('max', data['amount']);
+              },
+              error:function(){  alertMessage('Error in Updating Field Ajax Call.','error') }
+            });
+        }
+
         function loadData(cmp_id)
         {
+            $('#loading').show();
+
             $.ajax({
                 url:'ajax/advance_taken/fetch_details.php?cmp_id='+cmp_id,
                 dataType:"JSON",
@@ -398,7 +420,7 @@ include 'footer.php';
                     $('#mytable').DataTable().destroy();
                     $('tbody').html("");
                     
-                    $.each(data,function(index,value){
+                    var table = $.each(data,function(index,value){
 
                         total_advance+= value['amount']/1;
 
@@ -411,11 +433,15 @@ include 'footer.php';
                                 '</tr>');
 
                         n++;
-                    })
+                    });
+
+                    $.when(table).done(function(){
+                      $('#loading').hide();
+                    });
 
                     myDataTable();
                 },
-                error:function(){ alertMessage("Failed Fetch Ajax Call.",'error') }
+                error:function(){ alertMessage("Failed Fetch Ajax Call.",'error'); $('#loading').hide(); }
             });
         }
 
@@ -423,6 +449,8 @@ include 'footer.php';
 
         function iloadData(cmp_id)
         {
+            $('#iloading').show();
+
             $.ajax({
                 url:'ajax/advance_taken/ifetch.php?cmp_id='+cmp_id,
                 dataType:"JSON",
@@ -433,7 +461,7 @@ include 'footer.php';
                     $('#imytable').DataTable().destroy();
                     $('#imytable tbody').html("");
                     
-                    var loop = $.each(data,function(index,value){
+                    var table = $.each(data,function(index,value){
 
                         total_advance_pay += value['amount']/1;
 
@@ -451,18 +479,16 @@ include 'footer.php';
                         n++;
                     });
 
-                    $.when(loop).done(function(x){
-                        imyDataTable();
-                        
-                        var total = total_advance-total_advance_pay;
-
-                        $('#total_amount').val(total);
-                        $('#amount').attr('max', total);
-
+                    $.when(table).done(function(){
+                        $('#iloading').hide();
                     });
+                    
+                    imyDataTable();
+
+                    getFields(cmp_id);
 
                 },
-                error:function(){ alertMessage("Failed iFetch Ajax Call.",'error') }
+                error:function(){ alertMessage("Failed iFetch Ajax Call.",'error'); $('#iloading').hide(); }
             });
         }
 

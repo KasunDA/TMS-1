@@ -14,19 +14,19 @@
 	
 	//echo '<script>alert("-1 ='.$ydate.'")</script>';
 
-	$exin_q = mysqli_query($mycon,"SELECT current_balance FROM exin WHERE datee='$ydate' ORDER BY exin_id DESC limit 1");
+	$exin_q = mysqli_query($mycon,"SELECT exin_id,datee,current_balance FROM exin WHERE datee<='$ydate' ORDER BY datee DESC");
 
 	if($r_exin = mysqli_fetch_array($exin_q))
 	{					
 		$json[$n]['previous_balance'] = $r_exin['current_balance'];
 	}
-	else
-	{
-		$q1 = mysqli_query($mycon,"SELECT current_balance from exin WHERE datee<'$ydate' ORDER BY exin_id DESC limit 1");
-		$r1 = mysqli_fetch_array($q1);
+	// else
+	// {
+	// 	$q1 = mysqli_query($mycon,"SELECT current_balance from exin WHERE datee<'$ydate' ORDER BY exin_id DESC limit 1");
+	// 	$r1 = mysqli_fetch_array($q1);
 		
-		$json[$n]['previous_balance'] = $r1['current_balance'];
-	}
+	// 	$json[$n]['previous_balance'] = $r1['current_balance'];
+	// }
 
 
 	// TOTAL INCOME WORK

@@ -97,6 +97,8 @@ date_default_timezone_set("Asia/Karachi");
                             <a href="" class="expand"> </a>
                             <a href="" class="remove"> </a>
                         </div> -->
+
+                        <img src="ajax/loading.gif" id="loading" style="margin-left: 22%; display: none;" height="40" width="40" >
                     </div>
                     <div class="portlet-body table-both-scroll" > <!-- style="display: none;" -->
                         <table class="table table-striped table-bordered table-hover order-column" id="mytable">
@@ -135,6 +137,8 @@ date_default_timezone_set("Asia/Karachi");
                             <a href="" class="expand"> </a>
                             <a href="" class="remove"> </a>
                         </div> -->
+
+                        <img src="ajax/loading.gif" id="iloading" style="margin-left: 22%; display: none;" height="40" width="40" >
                     </div>
                     <div class="portlet-body table-both-scroll" > <!-- style="display: none;" -->
                         <table class="table table-striped table-bordered table-hover order-column" id="imytable">
@@ -290,6 +294,8 @@ include 'footer.php';
 
     function loadData(from_datee,to_datee,dd_id)
     {
+        $('#loading').show();
+
         $.ajax({
             url:'ajax/expenses/detailed_fetch.php?from_datee='+from_datee+'&to_datee='+to_datee+'&dd_id='+dd_id,
             dataType:"JSON",
@@ -299,7 +305,7 @@ include 'footer.php';
                 $('#mytable').DataTable().destroy();
                 $('#mytable tbody').html("");
                 
-                $.each(data,function(index,value){
+                var table = $.each(data,function(index,value){
 
                     $('#mytable tbody').append('<tr class="odd gradeX">'+
 
@@ -319,16 +325,22 @@ include 'footer.php';
                             '</tr>');
 
                     n++; 
-                })
+                });
+
+                $.when(table).done(function(){
+                  $('#loading').hide();
+                });
 
                 myDataTable();
             },
-            error:function(){ alertMessage("Failed Fetch Ajax Call.",'error') }
+            error:function(){ alertMessage("Failed Fetch Ajax Call.",'error'); $('#loading').hide(); }
         });
     }
 
     function iloadData(from_datee,to_datee,dd_id)
     {
+        $('#iloading').show();
+
         $.ajax({
             url:'ajax/income/detailed_fetch.php?from_datee='+from_datee+'&to_datee='+to_datee+'&dd_id='+dd_id,
             dataType:"JSON",
@@ -338,7 +350,7 @@ include 'footer.php';
                 $('#imytable').DataTable().destroy();
                 $('#imytable tbody').html("");
                 
-                $.each(data,function(index,value){
+                var table = $.each(data,function(index,value){
 
                     $('#imytable tbody').append('<tr class="odd gradeX">'+
 
@@ -358,11 +370,15 @@ include 'footer.php';
                             '</tr>');
 
                     n++;
-                })
+                });
+
+                $.when(table).done(function(){
+                  $('#iloading').hide();
+                });
 
                 imyDataTable();
             },
-            error:function(){ alertMessage("Failed iFetch Ajax Call.",'error') }
+            error:function(){ alertMessage("Failed iFetch Ajax Call.",'error'); $('#iloading').hide(); }
         });
     }
     

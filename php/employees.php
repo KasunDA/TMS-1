@@ -279,6 +279,8 @@ require 'connection.php';
                          <div class="col-md-12">
                                 <!-- BEGIN EXAMPLE TABLE PORTLET-->
                                 <div class="portlet light bordered">
+
+                                    <img src="ajax/loading.gif" id="loading" style="margin-left: 45%; display: none; " height="40" width="40" >
                                     
                                     <div class="portlet-body">
                                         <table class="table table-striped table-bordered table-hover table-checkable order-column" id="mytable">
@@ -433,6 +435,8 @@ include 'footer.php';
 
         function loadData()
         {
+            $('#loading').show();
+
             $.ajax({
                 url:'ajax/employee/fetch.php',
                 dataType:"JSON",
@@ -443,7 +447,7 @@ include 'footer.php';
                     $('#mytable').DataTable().destroy();
                     $('#mytable tbody').html("");
                     
-                    $.each(data,function(index,value){
+                    var table = $.each(data,function(index,value){
 
                         $('tbody').append('<tr index="'+i+'" class="odd gradeX">'+
 
@@ -491,12 +495,16 @@ include 'footer.php';
                             '</tr>');
 
                         n++; i++;
-                    })
+                    });
+
+                    $.when(table).done(function(){
+                      $('#loading').hide();
+                    });
 
                     myDataTable();
                     getId();
                 },
-                error:function(){ alertMessage("Failed Fetch Ajax Call.",'error') }
+                error:function(){ alertMessage("Failed Fetch Ajax Call.",'error'); $('#loading').hide(); }
             });
         }
 

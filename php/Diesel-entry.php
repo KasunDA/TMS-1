@@ -163,6 +163,8 @@ date_default_timezone_set("Asia/Karachi");
                              <div class="tools">
                                  <a href="" class="expand"> </a>
                              </div>
+
+                             <img src="ajax/loading.gif" id="loading"  style="margin-left: 35%; display: none;" height="40" width="40" >
                          </div>
                          <div class="portlet-body table-both-scroll" >
                              <table class="table table-striped table-bordered table-hover table-checkable order-column" id="mytable">
@@ -324,6 +326,8 @@ include 'footer.php';
 
         function loadData()
         {
+            $('#loading').show();
+
             $.ajax({
                 url:'ajax/diesel_entry/fetch.php',
                 dataType:"JSON",
@@ -335,7 +339,7 @@ include 'footer.php';
                     $('#mytable').DataTable().destroy();
                     $('#mytable tbody').html("");
                     
-                    $.each(data,function(index,value){
+                    var table = $.each(data,function(index,value){
 
                         $('#mytable tbody').append('<tr index="'+i+'" class="odd gradeX">'+
                              <?php
@@ -370,10 +374,15 @@ include 'footer.php';
                                 '</tr>');
 
                         n++; i++;
-                    })
+                    });
+
+                    $.when(table).done(function(){
+                      $('#loading').hide();
+                    });
+
                     myDataTable();
                 },
-                error:function(){ alertMessage("Failed Fetch Ajax Call.",'error') }
+                error:function(){ alertMessage("Failed Fetch Ajax Call.",'error'); $('#loading').hide(); }
             });
         }
 

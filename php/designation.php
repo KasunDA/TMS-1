@@ -73,6 +73,8 @@ include 'nav.php';
                          <div class="col-md-12">
                                 <!-- BEGIN EXAMPLE TABLE PORTLET-->
                                 <div class="portlet light bordered">
+
+                                    <img src="ajax/loading.gif" id="loading" style="margin-left: 42%; display: none;" height="40" width="40" >
                                     
                                     <div class="portlet-body">
                                  
@@ -121,7 +123,8 @@ include 'footer.php';
 
         function loadData()
         {
-          
+            $('#loading').show();
+
             $.ajax({
                 url:'ajax/designation/fetch.php',
                 dataType:"JSON",
@@ -133,7 +136,7 @@ include 'footer.php';
                     $('#mytable').DataTable().destroy();
                     $('tbody').html("");
                     
-                    $.each(data,function(index,value){
+                    var table = $.each(data,function(index,value){
 
                         $('tbody').append('<tr index="'+i+'" class="odd gradeX">'+
 
@@ -161,10 +164,15 @@ include 'footer.php';
                                 '</tr>');
 
                         n++; i++;
-                    })
+                    });
+
+                    $.when(table).done(function(){
+                      $('#loading').hide();
+                    });
+
                     myDataTable();
                 },
-                error:function(){ alertMessage("Failed Fetch Ajax Call.",'error') }
+                error:function(){ alertMessage("Failed Fetch Ajax Call.",'error'); $('#loading').hide(); }
             });
         }
 
