@@ -11,7 +11,7 @@
 	
 	//echo '<script>alert("-1 ='.$ydate.'")</script>';
 
-	$sql = "SELECT exin_id,datee,current_balance FROM exin WHERE datee<='$ydate' ORDER BY datee DESC";
+	$sql = "SELECT exin_id,datee,current_balance FROM exin WHERE datee<='$ydate' ORDER BY exin_id DESC , datee limit 1";
 	
 	// echo $sql;
 

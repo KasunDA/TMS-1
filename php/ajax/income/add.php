@@ -1,12 +1,14 @@
 <?php 
 
 	require '../../connection.php';
+	date_default_timezone_set("Asia/Karachi");
 
 	$datee		 = $_GET['datee'];
 	$dd_id 		 = $_GET['dd_id'];
 	$method 	 = $_GET['method'];
 	$amount 	 = $_GET['amount'];
 	$description = $_GET['description'];
+	$date   = date('Y-m-d');
 
 
 	if( isset($_GET['cmp_id']) && $_GET['cmp_id'] != NULL  )
@@ -33,12 +35,13 @@
 	
 	$q = mysqli_query($mycon,$sql);
 
-	if($q)
+	if( mysqli_affected_rows($mycon) )
 	{
 		$income_id_q = mysqli_query($mycon,'SELECT income_id from income ORDER BY income_id DESC limit 1');
 		$r_income_id = mysqli_fetch_array($income_id_q);
 
-		$previous_balance_q = mysqli_query($mycon,'SELECT current_balance from exin ORDER BY exin_id DESC limit 1');
+		// $previous_balance_q = mysqli_query($mycon,'SELECT current_balance from exin ORDER BY exin_id DESC limit 1');
+		$previous_balance_q = mysqli_query($mycon,"SELECT exin_id,datee,current_balance FROM exin WHERE datee<='$date' ORDER BY exin_id DESC, datee limit 1");
 		$r_previous_balance = mysqli_fetch_array($previous_balance_q);
 
 		$income_id = $r_income_id['income_id'];
@@ -47,7 +50,7 @@
 
 		$q1 = mysqli_query($mycon,"INSERT INTO exin (income_id, datee, previous_balance, current_balance) VALUES ($income_id,'$datee',$previous_balance,$current_balance) ");
 
-		if($q1)
+		if( mysqli_affected_rows($mycon) )
 		{
 			echo "true";	
 		}
