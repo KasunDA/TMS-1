@@ -23,8 +23,7 @@
 	else
 	{
 		$q1 = mysqli_query($mycon,"SELECT exin_id,datee,current_balance FROM exin ORDER BY exin_id ASC limit 1");
-		$r1 = mysqli_fetch_array($q1);
-		
+		$r1 = mysqli_fetch_array($q1);	
 		$json[$n]['previous_balance'] = $r1['current_balance'];
 	}
 
