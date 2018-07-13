@@ -61,7 +61,15 @@ date_default_timezone_set("Asia/Karachi");
                                             
                                             <div class="col-md-3">
                                                 <!-- date-picker -->
-                                              <input type="date" class="form-control form-control-inline input-medium "  size="16" data-date-format="yyyy-mm-dd"  id="datee" name="datee" value="<?php echo date('Y-m-d'); ?>"  required tabindex="1">
+
+                                                <?php  
+                                                    $ldatee = date('Y-m-d');
+                                                    $q = mysqli_query($mycon,' SELECT * FROM garage_entry ORDER BY ge_id DESC LIMIT 1');
+                                                    if( $r = mysqli_fetch_array($q) )
+                                                        $ldatee = $r['datee'];
+                                                    
+                                                 ?>
+                                              <input type="date" class="form-control form-control-inline input-medium "  size="16" data-date-format="yyyy-mm-dd"  id="datee" name="datee" value="<?php echo $ldatee; ?>"  required tabindex="1">
                                             </div>
                                     
                                             <label class="col-md-2 control-label">Description:</label>
@@ -198,6 +206,12 @@ include 'footer.php';
           error:function(){  alertMessage('Error in Updating Field Ajax Call.','error') }
         });
       }
+      
+      $('#btn_reset').click(function(e){
+        e.preventDefault();
+        $('#description,#amount').val('');
+        $('#vehicle_id').val('').trigger('change');
+      });
 
       $(document).on('click','.vehicle_id', function()
       {

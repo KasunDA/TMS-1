@@ -97,6 +97,8 @@
 		//Repair & Maintainance sql query
 		$rmsql = "SELECT SUM(amount) as total_rm_amount FROM garage_entry  where status=1 and datee BETWEEN '$from_datee' AND '$to_datee' AND vehicle_id IN (".$vids.") ";
 		
+		// echo $rmsql;
+		
 		//Driver Salary sql query
 		$dssql = "SELECT SUM(amount) as total_driver_salary FROM expenses where dd_id=4 and status=1 and datee BETWEEN '$from_datee' AND '$to_datee' ";	
 
