@@ -10,14 +10,10 @@
 	if(isset($_GET['vehicle_id']) && $_GET['vehicle_id'] != NULL)
 	{
 		$vehicle_id = $_GET['vehicle_id'];
-		
 		$sql = "SELECT * FROM voucher  WHERE status=1 and datee BETWEEN '$from_datee' AND '$to_datee' and vehicle_id=$vehicle_id";
 	}
 	else
-	{
 		$sql = "SELECT *  FROM voucher  WHERE status=1 and datee BETWEEN '$from_datee' AND '$to_datee' ";
-	}
-
 
 	$q = mysqli_query($mycon,$sql);
 	
@@ -25,7 +21,6 @@
 	
 	while($r = mysqli_fetch_array($q))
 	{
-
 		$json[$n]['voucher_number'] = $r['voucher_number'];
 		$json[$n]['datee'] = $r['datee'];
 		$json[$n]['method'] = $r['method'];
@@ -51,11 +46,10 @@
 			$json[$n]['vehicle_number'] = $r1['vehicle_number'];	
 		}
 		else
-		{
 			$json[$n]['vehicle_number'] = 'null';	
-		}
 
 		$json[$n]['amount'] = $r['amount'];
+		$json[$n]['description'] = $r['description'];
 
 		$n++;
 	}

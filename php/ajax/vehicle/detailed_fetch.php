@@ -9,9 +9,15 @@
 	$to_datee = date('Y-m-d', strtotime($_GET['to_datee']));
 
 
-	$sql = "SELECT a.*, b.*,c.owner_name,c.driver_name,c.vehicle_number FROM container_entry a , container_movement b , vehicle c  WHERE a.status=1 and b.status=1 and a.cm_id = b.cm_id and a.vehicle_id=c.vehicle_id and b.datee BETWEEN '$from_datee' AND '$to_datee' ";
+	$sql = "SELECT a.*,a.paid_status as ppaid_status, b.*,c.owner_name,c.driver_name,c.vehicle_number FROM container_entry a , container_movement b , vehicle c  WHERE a.status=1 and b.status=1 and a.cm_id = b.cm_id and a.vehicle_id=c.vehicle_id and b.datee BETWEEN '$from_datee' AND '$to_datee' ";
 
 	
+	if( isset($_GET['paid_status']) && $_GET['paid_status'] != NULL )
+	{
+		$paid_status = $_GET['paid_status'];
+		$sql .= " and a.paid_status=$paid_status ";
+	}
+
 	if( isset($_GET['movement']) && $_GET['movement'] != NULL )
 	{
 		$movement = $_GET['movement'];
@@ -89,10 +95,11 @@
 		$line_id = $_GET['line_id'];
 		$sql .= " and b.line_id=$line_id ";
 	}
+
     
 	// $sql = "SELECT a.*, b.* FROM container_entry a , container_movement b WHERE a.status=1 and b.status=1 and a.cm_id = b.cm_id and b.datee BETWEEN '$from_datee' AND '$to_datee' ";
 	
-	// echo '<script>alert("'.$sql.'")</script>';
+	// echo $sql;
 
 	$q = mysqli_query($mycon,$sql);
 	$n  = 0;
@@ -159,6 +166,7 @@
 		$json[$n]['mr_charges'] = $r['mr_charges'];
 		$json[$n]['balance'] = $r['balance'];
 		$json[$n]['remarks'] = $r['remarks'];
+		$json[$n]['paid_status'] = $r['ppaid_status'];
 		
 		if( !in_array($r['vehicle_id'] , $vids) )
 			array_push($vids ,$r['vehicle_id']);

@@ -332,7 +332,16 @@ date_default_timezone_set("Asia/Karachi");
                                           
                                           </button>
 
-                                        </div>                              
+                                        </div>
+
+                                        <label class="col-md-1 control-label">Status:</label>
+                                          <div class="col-md-3">
+                                              <select class="form-control" id="paid_status" name="paid_status"  tabindex="16" >
+                                                  <option value="">All</option>
+                                                  <option value="1">Paid</option>
+                                                  <option value="0">UnPaid</option>
+                                              </select>
+                                          </div>                              
                                     </div>  
                                 </div>
                                 
@@ -569,7 +578,12 @@ date_default_timezone_set("Asia/Karachi");
                                                <input type="number" min="1"  name="amount" id="amount" required tabindex="6" class="form-control" placeholder="58680">
                                             </div>
                                         </div>
-
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label">Description</label>
+                                            <div class="col-md-5">
+                                               <textarea class="form-control" name="description" id="description" required tabindex="7" rows="4" style="resize: none;"></textarea>
+                                            </div>
+                                        </div>
                                         <div class="form-group">
                                             <div class="col-md-5 col-md-push-4">
                                                 <div class="">
@@ -793,7 +807,7 @@ include 'footer.php';
     getId();
 
     //Select2
-   $('#from_yard_id,#to_yard_id,#coa_id,#consignee_id,#movement,#empty_terminal_id,#container_size,#container_id,#line_id,#vehicle_id,#owner_name,#bank_id').select2({
+   $('#from_yard_id,#to_yard_id,#coa_id,#consignee_id,#movement,#empty_terminal_id,#container_size,#container_id,#line_id,#vehicle_id,#owner_name,#bank_id,#paid_status').select2({
       width: 'resolve',
       theme: "classic"
    });
@@ -1089,12 +1103,14 @@ include 'footer.php';
 
     myDataTable();
 
-    function loadData(from_datee,to_datee,from_yard_id,to_yard_id,coa_id,consignee_id,movement,empty_terminal_id,container_number,bl_cro_number,container_size,container_id,vehicle_id,owner_name,line_id)
+    var ce_ids = new Array();
+
+    function loadData(from_datee,to_datee,from_yard_id,to_yard_id,coa_id,consignee_id,movement,empty_terminal_id,container_number,bl_cro_number,container_size,container_id,vehicle_id,owner_name,line_id,paid_status)
     {
         $('#loading').show();
 
         $.ajax({
-            url:'ajax/vehicle/detailed_fetch.php?from_datee='+from_datee+'&to_datee='+to_datee+'&from_yard_id='+from_yard_id+'&to_yard_id='+to_yard_id+'&coa_id='+coa_id+'&consignee_id='+consignee_id+'&movement='+movement+'&empty_terminal_id='+empty_terminal_id+'&container_number='+container_number+'&bl_cro_number='+bl_cro_number+'&container_size='+container_size+'&container_id='+container_id+'&vehicle_id='+vehicle_id+'&owner_name='+owner_name+'&line_id='+line_id,
+            url:'ajax/vehicle/detailed_fetch.php?from_datee='+from_datee+'&to_datee='+to_datee+'&from_yard_id='+from_yard_id+'&to_yard_id='+to_yard_id+'&coa_id='+coa_id+'&consignee_id='+consignee_id+'&movement='+movement+'&empty_terminal_id='+empty_terminal_id+'&container_number='+container_number+'&bl_cro_number='+bl_cro_number+'&container_size='+container_size+'&container_id='+container_id+'&vehicle_id='+vehicle_id+'&owner_name='+owner_name+'&line_id='+line_id+'&paid_status='+paid_status,
             dataType:"JSON",
             async:true,
             success:function(data)
@@ -1106,6 +1122,7 @@ include 'footer.php';
                     total_diesel  = 0,
                     total_rent    = 0,
                     vids          = new Array('0');
+                    ce_ids        = new Array();
 
 
                 if( vehicle_id == '' )
@@ -1128,8 +1145,13 @@ include 'footer.php';
                     total_diesel  +=  value['diesel']/1;
                     total_rent    +=  value['rent']/1;
                     
+                    ce_ids.push(value['transaction_id']);
 
-                    $('#mytable tbody').append('<tr class="odd gradeX selectedd" index="'+i+'">'+
+                    var c;
+                    if( value['paid_status'] == 1 )
+                      c = 'style="background-color:#32c5d2; color: #fff;"';
+
+                    $('#mytable tbody').append('<tr class="odd gradeX selectedd" index="'+i+'" '+c+'>'+
                             
                             '<td>'+
                               '<label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">'+
@@ -1411,20 +1433,25 @@ include 'footer.php';
         });
     }
 
-    function add(vehicle_id,datee,method,check_number,bank_id,amount)
+    function add(vehicle_id,datee,method,check_number,bank_id,amount,description,ce_ids)
     {
         $.ajax({
-            url:'ajax/vehicle/voucher_add.php?vehicle_id='+vehicle_id+'&datee='+datee+'&method='+method+'&check_number='+check_number+'&bank_id='+bank_id+'&amount='+amount,
+            url:'ajax/vehicle/voucher_add.php',
+            data:{vehicle_id:vehicle_id,datee:datee,method:method,check_number:check_number,bank_id:bank_id,amount:amount,description:description,ce_ids:JSON.stringify(ce_ids)},
             type:"POST",
+            dataType:'JSON',
             success:function(data){
-                if(data)
+                if(data['inserted'] == 'true')
                 {
-                    $('#btn_reset').trigger('click');
-                    
-                    $('#form').trigger('submit');
+                  $('#btn_reset').trigger('click');
+                  $('#form').trigger('submit');
+                }
+                else
+                {
+                  alertMessage("Error in Voucher Add.",'error')    
                 }
             },
-            error:function(){ alertMessage("Error in Add Ajax Call.",'error') }
+            error:function(){ alertMessage("Error in Voucher Add.",'error') }
         });
     }
 
@@ -1455,10 +1482,11 @@ include 'footer.php';
             container_id = $('#container_id').val(),
             vehicle_id = $('#vehicle_id').val(),
             owner_name = $('#owner_name').val(),
-            line_id = $('#line_id').val();
+            line_id = $('#line_id').val(),
+            paid_status = $('#paid_status').val();
 
 
-        loadData(from_datee,to_datee,from_yard_id,to_yard_id,coa_id,consignee_id,movement,empty_terminal_id,container_number,bl_cro_number,container_size,container_id,vehicle_id,owner_name,line_id);
+        loadData(from_datee,to_datee,from_yard_id,to_yard_id,coa_id,consignee_id,movement,empty_terminal_id,container_number,bl_cro_number,container_size,container_id,vehicle_id,owner_name,line_id,paid_status);
 
         from_date          = from_datee;
         to_date            = to_datee;
@@ -1474,22 +1502,20 @@ include 'footer.php';
           scrollTop: 500
           // scrollTop: $("#mytable_div").offset().top
         }, 1000);
-
     });
 
     //Add voucher
     $('#voucher_form').submit(function(e){
        e.preventDefault();
-       
        var datee = $('#datee').val() ,
            method = $('input[name="method"]:checked').val() ,
            check_number = $('#check_number').val() ,
            bank_id = $('#bank_id').val() ,
            amount = $('#amount').val(),
+           description = $('#description').val(),
            vehicle_id = $('#vehicle_id').val();
 
-        add(vehicle_id,datee,method,check_number,bank_id,amount);   
-
+        add(vehicle_id,datee,method,check_number,bank_id,amount,description,ce_ids);
     });
 
     function printPDF() {

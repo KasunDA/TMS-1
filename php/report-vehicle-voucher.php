@@ -113,6 +113,7 @@ date_default_timezone_set("Asia/Karachi");
                                                 <th> Bank Name  </th>
                                                 <th> Vehicle # </th>
                                                 <th> Amount </th>
+                                                <th> Description </th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -261,6 +262,7 @@ include 'footer.php';
                             '<td>'+value['bank_name']+'</td>'+
                             '<td>'+value['vehicle_number']+'</td>'+
                             '<td>'+value['amount']+'</td>'+
+                            '<td>'+value['description']+'</td>'+
                             '</tr>');
 
                     n++;
