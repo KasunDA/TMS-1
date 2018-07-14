@@ -53,7 +53,7 @@ date_default_timezone_set("Asia/Karachi");
                                     
                                                 <label class="col-md-2 control-label">Transaction Date:</label>
                                                 <div class="col-md-3">
-                                                  <input type="date" class="form-control" id="datee" name="datee" value="<?php echo date('Y-m-d'); ?>" readonly required tabindex="1" />
+                                                  <input type="date" class="form-control" id="datee" name="datee" value="<?php echo date('Y-m-d'); ?>" required tabindex="1" />
                                                 </div>
                                          </div>  
                                      </div>
@@ -764,8 +764,8 @@ include 'footer.php';
       function update(cm_id,datee,agent_id,agent_name,coa_id,coa,consignee_id,consignee,movement,empty_terminal_id,empty_terminal,from_yard_id,from_yard,to_yard_id,to_yard,container_size,party_charges,lot_of,line_id,line,bl_cro_number,job_number,index_number,container_id,container_type,lolo_charges,weight_charges)
       {
           $.ajax({
-              url:'ajax/container_movement/update.php?cm_id='+cm_id+'&datee='+encodeURIComponent(datee)+'&agent_id='+agent_id+'&coa_id='+coa_id+'&consignee_id='+consignee_id+'&movement='+movement+'&empty_terminal_id='+empty_terminal_id+'&from_yard_id='+from_yard_id+'&to_yard_id='+to_yard_id+'&container_size='+container_size+'&party_charges='+party_charges+'&lot_of='+lot_of+'&line_id='+line_id+'&bl_cro_number='+bl_cro_number+'&job_number='+job_number+'&index_number='+index_number+'&container_id='+container_id+'&lolo_charges='+lolo_charges+'&weight_charges='+weight_charges,
-              type:"POST",
+              url:'ajax/container_movement/update.php?cm_id='+cm_id+'&datee='+datee+'&agent_id='+agent_id+'&coa_id='+coa_id+'&consignee_id='+consignee_id+'&movement='+movement+'&empty_terminal_id='+empty_terminal_id+'&from_yard_id='+from_yard_id+'&to_yard_id='+to_yard_id+'&container_size='+container_size+'&party_charges='+party_charges+'&lot_of='+lot_of+'&line_id='+line_id+'&bl_cro_number='+bl_cro_number+'&job_number='+job_number+'&index_number='+index_number+'&container_id='+container_id+'&lolo_charges='+lolo_charges+'&weight_charges='+weight_charges,
+              type:"GET",
               success:function(data){
                   if(data)
                   {
