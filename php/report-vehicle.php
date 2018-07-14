@@ -255,8 +255,8 @@ date_default_timezone_set("Asia/Karachi");
                                     <div class="form-group">
                                         <label class="col-md-2 control-label">Select Vehicle:</label>
                                         <div class="col-md-3">
-                                            <select class="form-control" name="vehicle_id" id="vehicle_id" tabindex="13">
-                                                <option value="">All</option>
+                                            <select class="form-control" name="vehicle_id" id="vehicle_id" multiple="multiple" tabindex="13">
+                                                <!-- <option value="">All</option> -->
                                                 <?php 
 
                                                     $q = mysqli_query($mycon,'SELECT vehicle_id,vehicle_number from vehicle where status=1 ORDER BY vehicle_id DESC');
@@ -1110,7 +1110,9 @@ include 'footer.php';
         $('#loading').show();
 
         $.ajax({
-            url:'ajax/vehicle/detailed_fetch.php?from_datee='+from_datee+'&to_datee='+to_datee+'&from_yard_id='+from_yard_id+'&to_yard_id='+to_yard_id+'&coa_id='+coa_id+'&consignee_id='+consignee_id+'&movement='+movement+'&empty_terminal_id='+empty_terminal_id+'&container_number='+container_number+'&bl_cro_number='+bl_cro_number+'&container_size='+container_size+'&container_id='+container_id+'&vehicle_id='+vehicle_id+'&owner_name='+owner_name+'&line_id='+line_id+'&paid_status='+paid_status,
+            url:'ajax/vehicle/detailed_fetch.php',
+            data:{from_datee:from_datee,to_datee:to_datee,from_yard_id:from_yard_id,to_yard_id:to_yard_id,coa_id:coa_id,consignee_id:consignee_id,movement:movement,empty_terminal_id:empty_terminal_id,container_number:container_number,bl_cro_number:bl_cro_number,container_size:container_size,container_id:container_id,vehicle_id:JSON.stringify(vehicle_id),owner_name:owner_name,line_id:line_id,paid_status:paid_status},
+            type:'GET',
             dataType:"JSON",
             async:true,
             success:function(data)
@@ -1125,7 +1127,7 @@ include 'footer.php';
                     ce_ids        = new Array();
 
 
-                if( vehicle_id == '' )
+                if( vehicle_id == null )
                 {
                   vids = data['vids'];
                 }
@@ -1228,8 +1230,8 @@ include 'footer.php';
     {
       $.ajax({
         url:'ajax/garage_entry/rm_fetch.php',
-        data:{from_datee:from_datee,to_datee:to_datee,vehicle_id:vehicle_id,vids:JSON.stringify(vids)},
-        type:'POST',
+        data:{from_datee:from_datee,to_datee:to_datee,vehicle_id:JSON.stringify(vehicle_id),vids:JSON.stringify(vids)},
+        type:'GET',
         dataType:'JSON',
         success:function(data){
             var n=1;
@@ -1411,8 +1413,8 @@ include 'footer.php';
     {
         $.ajax({
             url:'ajax/vehicle/vehicle_records.php',
-            data:{from_datee:from_datee,to_datee:to_datee,vehicle_id:vehicle_id,vids:JSON.stringify(vids)},
-            type:'POST',
+            data:{from_datee:from_datee,to_datee:to_datee,vehicle_id:JSON.stringify(vehicle_id),vids:JSON.stringify(vids)},
+            type:'GET',
             dataType:"JSON",
             success: function(data){
                 

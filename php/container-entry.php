@@ -513,7 +513,7 @@ date_default_timezone_set("Asia/Karachi");
                                                                   <label class="col-md-2 control-label">Remarks:</label>
                                                                 
                                                                   <div class="col-md-8">
-                                                                   <textarea class="form-control" rows="5" id="remarks" name="remarks" tabindex="27"></textarea>
+                                                                   <textarea class="form-control" rows="5" id="remarks" name="remarks" tabindex="27" style="resize: none;"></textarea>
                                                                   </div>
                                                               </div> 
                                                         </div>                                     

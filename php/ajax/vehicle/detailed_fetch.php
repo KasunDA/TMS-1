@@ -78,10 +78,10 @@
 		$sql .= " and b.container_id=$container_id ";
 	}
 	
-    if( isset($_GET['vehicle_id']) && $_GET['vehicle_id'] != NULL )
+    if( isset($_GET['vehicle_id']) && $_GET['vehicle_id'] != NULL && $_GET['vehicle_id'] != 'null' )
 	{
-		$vehicle_id = $_GET['vehicle_id'];
-		$sql .= " and a.vehicle_id =$vehicle_id ";
+		$vehicle_id = str_replace( str_split("[]"),"",$_GET['vehicle_id']);
+		$sql .= " and a.vehicle_id IN (".$vehicle_id.")  ";
 	}
 
 	if( isset($_GET['owner_name']) && $_GET['owner_name'] != NULL )
