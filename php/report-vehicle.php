@@ -1315,7 +1315,7 @@ include 'footer.php';
       // alert( "advance taken owner="+$('#advance_taken_owner').html()+ " advance taken"+ $('#advance_taken').html() + " total diesel = " + $('#total_diesel').html() + " total repair maintenance =  " + $('#total_rm').html() );
       // + $('#total_diesel').html()/1
       
-      $('#total_balance').html( $('#balance_trips').html()/1 - ( $('#advance_taken_owner').html()/1 + $('#advance_taken').html()/1 + $('#total_rm').html()/1 ) );
+      $('#total_balance').html( $('#balance_trips').html()/1 - ( $('#advance_taken_owner').html()/1 + $('#advance_taken').html()/1 + $('#total_rm').html()/1 + $('#driver_salary').html()/1  + $('#paid_salary').html()/1 ) );
     }
  
     function loadSummary(from_datee,to_datee,empty_terminal_id,from_yard_id,to_yard_id,coa_id,movement,line_id)
