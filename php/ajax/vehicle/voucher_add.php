@@ -2,24 +2,22 @@
 
 	require '../../connection.php';
 
-	function updateStatus($mycon,$ce_id)
+	function updateStatus($mycon,$ce_id,$voucher_number)
 	{
-		$q = mysqli_query($mycon,'UPDATE container_entry SET paid_status=1 WHERE ce_id='.$ce_id);
+		$q = mysqli_query($mycon,'UPDATE container_entry SET paid_status=1 , voucher_number='.$voucher_number.' WHERE ce_id='.$ce_id);
 		if ( mysqli_affected_rows($mycon) )
-		{
 			return true;
-		}
 	}
 
 	$json['inserted'] = 'false';
 	$sql  = '';
 	$isql = '';
-	$vehicle_id  = $_POST['vehicle_id'];
-	$datee 		 = $_POST['datee'];
-	$method 	 = $_POST['method'];
-	$amount 	 = $_POST['amount'];
-	$description = $_POST['description'];
-	$ce_ids 	 = json_decode($_POST['ce_ids']);
+	$vehicle_number  = str_replace( str_split("[]"),"",$_POST['vehicle_number']);
+	$datee 		 	 = $_POST['datee'];
+	$method 	 	 = $_POST['method'];
+	$amount 	     = $_POST['amount'];
+	$description 	 = $_POST['description'];
+	$ce_ids 	 	 = json_decode($_POST['ce_ids']);
 	
 	
 	if( $_POST['bank_id'] != NULL && $_POST['check_number'] != NULL  )
@@ -27,13 +25,13 @@
 		$check_number = $_POST['check_number'];
 		$bank_id  	  = $_POST['bank_id'];	
 
-		$sql = "INSERT INTO voucher(datee, method, check_number, bank_id, amount, vehicle_id) VALUES ( '$datee' , '$method', '".$check_number."' , ".$bank_id.", $amount, $vehicle_id ) ";
+		$sql = "INSERT INTO voucher(datee, method, check_number, bank_id, amount, vehicle_number) VALUES ( '$datee' , '$method', '".$check_number."' , ".$bank_id.", $amount, '$vehicle_number' ) ";
 
 		$isql = "INSERT INTO expenses(datee, dd_id, method, check_number, bank_id, amount, description) VALUES ( '$datee' , 7, '$method', '".$check_number."' , ".$bank_id.", $amount ,'$description' ) ";
 	}
 	else
 	{
-		$sql  = "INSERT INTO voucher(datee, method, amount, vehicle_id) VALUES ( '$datee' , '$method', $amount, $vehicle_id ) ";
+		$sql  = "INSERT INTO voucher(datee, method, amount, vehicle_number) VALUES ( '$datee' , '$method', $amount, '$vehicle_number' ) ";
 
 		$isql = "INSERT INTO expenses(datee, dd_id, method, amount, description) VALUES ( '$datee' , 7, '$method', $amount ,'$description' ) ";
 	}
@@ -41,6 +39,10 @@
 	$q = mysqli_query($mycon,$sql);
 	if(mysqli_affected_rows($mycon))
 	{
+		$vnq  = mysqli_query($mycon,'SELECT voucher_number from voucher ORDER BY voucher_number DESC LIMIT 1');
+		if ( $rvnq = mysqli_fetch_array($vnq) )
+			$voucher_number = $rvnq['voucher_number'];
+		
 		if($method == 'check')
 		{
 			//Account Code
@@ -74,7 +76,7 @@
 			$r_income_id = mysqli_fetch_array($income_id_q);
 
 			//Previous Balance from exin Table
-			$previous_balance_q = mysqli_query($mycon,'SELECT current_balance from exin ORDER BY exin_id DESC limit 1');
+			$previous_balance_q = mysqli_query($mycon," SELECT exin_id,datee,current_balance FROM exin WHERE datee<='$datee' ORDER BY exin_id DESC , datee limit 1 ");
 			$r_previous_balance = mysqli_fetch_array($previous_balance_q);
 		
 			$income_id = $r_income_id['income_id'];
@@ -90,7 +92,7 @@
 		$r_expense_id = mysqli_fetch_array($expense_id_q);
 
 		//Previous Balance from exin Table
-		$previous_balance_q = mysqli_query($mycon,'SELECT current_balance from exin ORDER BY exin_id DESC limit 1');
+		$previous_balance_q = mysqli_query($mycon,"SELECT exin_id,datee,current_balance FROM exin WHERE datee<='$datee' ORDER BY exin_id DESC , datee limit 1 ");
 		$r_previous_balance = mysqli_fetch_array($previous_balance_q);
 
 		$expense_id 	  = $r_expense_id['expense_id'];
@@ -107,7 +109,7 @@
 
 			$l = count($ce_ids);
 			for ($i=0; $i < $l ; $i++) { 
-					echo updateStatus($mycon,$ce_ids[$i]);
+					updateStatus($mycon,$ce_ids[$i],$voucher_number);
 				}	
 		}
 	}

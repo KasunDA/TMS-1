@@ -37,21 +37,22 @@ date_default_timezone_set("Asia/Karachi");
                                                 <input type="text" class="form-control" id="to_datee" name="to_datee" required tabindex="2" <?php echo 'value="'.date('m/d/Y').'"'; ?> placeholder="mm/dd/yyyy"> </div>
                                             <!-- /input-group -->
                                         </div>
-                                        <label class="col-md-2 control-label">Select Vehicle:</label>
+                                       
+                                       <!--  <label class="col-md-2 control-label">Select Vehicle:</label>
                                         <div class="col-md-3">
                                              <select class="form-control" name="vehicle_id" id="vehicle_id" tabindex="3">
                                                          <option value="">All</option>
                                                          <?php 
 
-                                                          $q = mysqli_query($mycon,'SELECT vehicle_id,vehicle_number from vehicle where status=1 ORDER BY vehicle_id DESC');
+                                                          // $q = mysqli_query($mycon,'SELECT vehicle_id,vehicle_number from vehicle where status=1 ORDER BY vehicle_id DESC');
 
-                                                          while( $r = mysqli_fetch_array($q) )
+                                                          // while( $r = mysqli_fetch_array($q) )
                                                             {?>
-                                                              <option value="<?php echo $r['vehicle_id']; ?>"><?php echo $r['vehicle_number']; ?></option>
+                                                              <option value="<?php //echo $r['vehicle_id']; ?>"><?php //echo $r['vehicle_number']; ?></option>
                                                           <?php } //END OF WHILE ?>
                                                           
                                                      </select>
-                                        </div>
+                                        </div> 
 
                                         <div class="col-md-1">
 
@@ -61,7 +62,7 @@ date_default_timezone_set("Asia/Karachi");
                                           
                                           </button>
 
-                                        </div>
+                                        </div>  -->
                                     </div>
                                     <div class="form-group">
                                         
@@ -112,6 +113,7 @@ date_default_timezone_set("Asia/Karachi");
                                                 <th> Check # </th>
                                                 <th> Bank Name  </th>
                                                 <th> Vehicle # </th>
+                                                <th> Container Movement ID </th>
                                                 <th> Amount </th>
                                                 <th> Description </th>
                                             </tr>
@@ -236,12 +238,12 @@ include 'footer.php';
 
     myDataTable();
 
-    function loadData(from_datee,to_datee,vehicle_id)
+    function loadData(from_datee,to_datee)
     {
         $('#loading').show();
 
         $.ajax({
-            url:'ajax/voucher/fetch_voucher.php?from_datee='+from_datee+'&to_datee='+to_datee+'&vehicle_id='+vehicle_id,
+            url:'ajax/voucher/fetch_voucher.php?from_datee='+from_datee+'&to_datee='+to_datee,
             dataType:"JSON",
             success:function(data){
                 var n = 1;
@@ -260,7 +262,8 @@ include 'footer.php';
                             '<td>'+value['method']+'</td>'+
                             '<td>'+value['check_number']+'</td>'+
                             '<td>'+value['bank_name']+'</td>'+
-                            '<td>'+value['vehicle_number']+'</td>'+
+                            '<td>'+value['vehicle_numbers']+'</td>'+
+                            '<td>'+value['cm_id']+'</td>'+
                             '<td>'+value['amount']+'</td>'+
                             '<td>'+value['description']+'</td>'+
                             '</tr>');
@@ -338,12 +341,9 @@ include 'footer.php';
        e.preventDefault();
        
        var from_datee = $('#from_datee').val() ,
-           to_datee = $('#to_datee').val() ,
-           vehicle_id = $('#vehicle_id').val();
+           to_datee = $('#to_datee').val();
 
-
-        loadData(from_datee,to_datee,vehicle_id);
-
+        loadData(from_datee,to_datee);
     });
 
     //Add & Update expense 

@@ -1016,6 +1016,7 @@ include 'footer.php';
                               'page-break-inside': 'avoid',
                               'font-size': '10pt'
                             })
+                            .prepend('<img src="http://<?php echo $_SERVER['SERVER_NAME']; ?>/TMS/php/ajax/header.jpg" style="top:0; left:0;" />')
                             .append('<br/><br/> <div class="row" style="page-break-inside: avoid;">'+ 
                                       '<div class="col-md-6">'+
                                       '<div class="portlet light portlet-fit bordered ">'+
@@ -1026,7 +1027,8 @@ include 'footer.php';
                                       newTable+
                                       '<br/><br/> <div class="row" style="page-break-inside: avoid;">'+ 
                                       $('#mrTable_div').html()+
-                                      '<div class="col-md-12" style="margin-top:10%;"> <h3> Receivers Signature:_________________________________ </h3> </div> </div>');
+                                      '<div class="col-md-12" style="margin-top:10%;"> <h3 style="margin-left:20px;"> Receivers Signature:_________________________________ </h3> </div>'+
+                                      '<img src="http://<?php echo $_SERVER['SERVER_NAME']; ?>/TMS/php/ajax/footer.jpg" style="" /> </div>');
 
                       }
                     }
@@ -1103,7 +1105,8 @@ include 'footer.php';
 
     myDataTable();
 
-    var ce_ids = new Array();
+    var ce_ids         = new Array(),
+        vehicle_number = new Array();
 
     function loadData(from_datee,to_datee,from_yard_id,to_yard_id,coa_id,consignee_id,movement,empty_terminal_id,container_number,bl_cro_number,container_size,container_id,vehicle_id,owner_name,line_id,paid_status)
     {
@@ -1119,18 +1122,24 @@ include 'footer.php';
             {
                 var n = 1,
                     i = 0,
-                    total_trips   = 0,
-                    balance_trips = 0,
-                    total_diesel  = 0,
-                    total_rent    = 0,
-                    vids          = new Array('0');
-                    ce_ids        = new Array();
+                    total_trips      = 0,
+                    balance_trips    = 0,
+                    total_diesel     = 0,
+                    total_rent       = 0,
+                    vids             = new Array('0'),
+                    voucher_numbers  = new Array();
+
+                    ce_ids          = new Array();
+                    vehicle_number  = new Array();
 
 
                 if( vehicle_id == null )
                 {
                   vids = data['vids'];
                 }
+
+                vehicle_number  = data['vnumbers'];
+                voucher_numbers = data['voucher_numbers'];
 
                 $('#mytable').DataTable().clear().draw();
                 $('#mytable').DataTable().destroy();
@@ -1201,7 +1210,7 @@ include 'footer.php';
                 $('#total_diesel').html(total_diesel);
                 $('#total_rent').html(total_rent);
 
-                getRecords(from_datee,to_datee,vehicle_id,vids);
+                getRecords(from_datee,to_datee,vehicle_id,vids,voucher_numbers);
 
                 //Voucher Form
                 if( data !=null && ( vehicle_id!=0 || owner_name !='' ) )
@@ -1409,11 +1418,11 @@ include 'footer.php';
         return sum;
     }
 
-    function getRecords(from_datee,to_datee,vehicle_id,vids)
+    function getRecords(from_datee,to_datee,vehicle_id,vids,voucher_numbers)
     {
         $.ajax({
             url:'ajax/vehicle/vehicle_records.php',
-            data:{from_datee:from_datee,to_datee:to_datee,vehicle_id:JSON.stringify(vehicle_id),vids:JSON.stringify(vids)},
+            data:{from_datee:from_datee,to_datee:to_datee,vehicle_id:JSON.stringify(vehicle_id),vids:JSON.stringify(vids),voucher_numbers:JSON.stringify(voucher_numbers)},
             type:'GET',
             dataType:"JSON",
             success: function(data){
@@ -1435,11 +1444,11 @@ include 'footer.php';
         });
     }
 
-    function add(vehicle_id,datee,method,check_number,bank_id,amount,description,ce_ids)
+    function add(vehicle_number,datee,method,check_number,bank_id,amount,description,ce_ids)
     {
         $.ajax({
             url:'ajax/vehicle/voucher_add.php',
-            data:{vehicle_id:vehicle_id,datee:datee,method:method,check_number:check_number,bank_id:bank_id,amount:amount,description:description,ce_ids:JSON.stringify(ce_ids)},
+            data:{vehicle_number:JSON.stringify(vehicle_number),datee:datee,method:method,check_number:check_number,bank_id:bank_id,amount:amount,description:description,ce_ids:JSON.stringify(ce_ids)},
             type:"POST",
             dataType:'JSON',
             success:function(data){
@@ -1514,10 +1523,9 @@ include 'footer.php';
            check_number = $('#check_number').val() ,
            bank_id = $('#bank_id').val() ,
            amount = $('#amount').val(),
-           description = $('#description').val(),
-           vehicle_id = $('#vehicle_id').val();
+           description = $('#description').val();
 
-        add(vehicle_id,datee,method,check_number,bank_id,amount,description,ce_ids);
+        add(vehicle_number,datee,method,check_number,bank_id,amount,description,ce_ids);
     });
 
     function printPDF() {

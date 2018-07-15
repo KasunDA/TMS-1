@@ -4,6 +4,8 @@
 
 	$json=NULL;
 	$vids=[0];
+	$vehicle_number=[];
+	$voucher_numbers=[];
 	$sql='';
 	$from_datee =  date('Y-m-d', strtotime($_GET['from_datee'])) ; //date('Y-m-d', strtotime(
 	$to_datee = date('Y-m-d', strtotime($_GET['to_datee']));
@@ -95,7 +97,6 @@
 		$line_id = $_GET['line_id'];
 		$sql .= " and b.line_id=$line_id ";
 	}
-
     
 	// $sql = "SELECT a.*, b.* FROM container_entry a , container_movement b WHERE a.status=1 and b.status=1 and a.cm_id = b.cm_id and b.datee BETWEEN '$from_datee' AND '$to_datee' ";
 	
@@ -170,9 +171,27 @@
 		
 		if( !in_array($r['vehicle_id'] , $vids) )
 			array_push($vids ,$r['vehicle_id']);
-			
+
+		if (empty($vehicle_number)) 
+		    array_push($vehicle_number ,$r['vehicle_number']);	
+		else
+		{
+			if( !in_array($r['vehicle_number'] , $vehicle_number) )
+				array_push($vehicle_number ,$r['vehicle_number']);			
+		}
+
+		if (empty($voucher_numbers)) 
+		    array_push($voucher_numbers ,$r['voucher_number']);	
+		else
+		{
+			if( !in_array($r['voucher_number'] , $voucher_numbers) )
+				array_push($voucher_numbers ,$r['voucher_number']);			
+		}
+
 		$n++;
 	}
-	$json['vids'] = $vids;
+	$json['vids'] 	  		 = $vids;
+	$json['vnumbers'] 		 = $vehicle_number;
+	$json['voucher_numbers'] = $voucher_numbers;
 	echo json_encode($json);
 ?>
