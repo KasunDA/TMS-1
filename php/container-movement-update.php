@@ -712,9 +712,33 @@ include 'footer.php';
                                     '<i class="fa fa-info"></i>'+
                                     '</button> </li>'+
 
-                                    '<li>  <button class="btn btn-xs red delete_btn" id="'+value['cm_id']+'" type="button">  '+
-                                    '<i class="fa fa-minus-square"></i>'+
-                                    '</button> </li>'+
+                                    '<!-- Trigger the modal with a button -->'+                                        
+                                        '<li>  <button type="button" class="btn btn-xs red" data-toggle="modal" data-target="#myModal'+value['cm_id']+'" >'+
+                                        '<i class="fa fa-minus-square"></i>'+
+                                        '</button> </li>'+
+
+                                        '<!-- Modal -->'+
+                                        '<div id="myModal'+value['cm_id']+'" class="modal fade" role="dialog">'+
+                                          '<div class="modal-dialog">'+
+
+                                            '<!-- Modal content-->'+
+                                            '<div class="modal-content">'+
+                                              '<div class="modal-header">'+
+                                                '<button type="button" class="close" data-dismiss="modal">&times;</button>'+
+                                                '<h4 class="modal-title">Delete</h4>'+
+                                              '</div>'+
+                                              '<div class="modal-body">'+
+                                                '<p>Are you sure you want to delete Container Movement #<strong>'+value['cm_id']+'</strong> ?</p>'+
+                                              '</div>'+
+                                              '<div class="modal-footer">'+
+                                                '<button type="button" class="btn btn-default btn-success pull-left" data-dismiss="modal">Close</button>'+
+                                                '<button type="button" class="btn btn-default red delete_btn" data-dismiss="modal" id="'+value['cm_id']+'">Delete</button>'+
+                                              '</div>'+
+                                            '</div>'+
+
+                                          '</div>'+
+                                        '</div>'+
+
                                 '</ul>'+
                             '</td>'+        
                             <?php }//END OF If
@@ -736,14 +760,12 @@ include 'footer.php';
                             '<td>'+value['party_charges']+'</td>'+
                             '<td>'+value['lot_of']+'</td>'+
                             '<td id="'+value['line_id']+'">'+value['line']+'</td>'+
-
                             '<td>'+value['bl_cro_number']+'</td>'+
                             '<td>'+value['job_number']+'</td>'+
                             '<td>'+value['index_number']+'</td>'+
                             '<td id="'+value['container_id']+'">'+value['container_type']+'</td>'+
                             '<td>'+value['lolo_charges']+'</td>'+
                             '<td>'+value['weight_charges']+'</td>'+
-
                             '</tr>');
 
                     n++; i++;

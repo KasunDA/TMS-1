@@ -9,12 +9,12 @@ $name =  $_GET['name'];
 if( $_GET['vehicle_id'] != NULL && $_GET['vehicle_id'] != 0   )
 {
 	$vehicle_id =  $_GET['vehicle_id'];
-	$sql = "SELECT * FROM expenses where dd_id=2 and vehicle_id=".$vehicle_id." and name='".$name."'";
+	$sql = "SELECT * FROM expenses where dd_id=2  AND status=1 AND vehicle_id=".$vehicle_id." and name='".$name."'";
 }
 else
 {
 	$borrower_id =  $_GET['borrower_id'];
-	$sql = "SELECT * FROM expenses where dd_id=2 and borrower_id=".$borrower_id;	
+	$sql = "SELECT * FROM expenses where dd_id=2 AND status=1 AND borrower_id=".$borrower_id;	
 }
 
 $q = mysqli_query($mycon,$sql);

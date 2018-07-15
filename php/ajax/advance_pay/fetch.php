@@ -21,7 +21,7 @@ while ( $r = mysqli_fetch_array($q) )
 		$json[$n]['vehicle_number'] = $rq1['vehicle_number'];	
 
 
-		$sql = "SELECT SUM(amount) as received_amount from income where vehicle_id=".$r['vehicle_id']." and name='".$r['name']."' ";
+		$sql = "SELECT SUM(amount) as received_amount from income where status=1 AND vehicle_id=".$r['vehicle_id']." and name='".$r['name']."' ";
 		
 	}
 	else if ( $r['borrower_id'] != NULL  &&  $r['name'] != NULL )
@@ -35,7 +35,7 @@ while ( $r = mysqli_fetch_array($q) )
 		// $rq1 = mysqli_fetch_array($bq1);
 		
 
-		$sql = "SELECT SUM(amount) as received_amount from income where borrower_id=".$r['borrower_id'];
+		$sql = "SELECT SUM(amount) as received_amount from income where status=1 AND borrower_id=".$r['borrower_id'];
 	}
 	
 	$json[$n]['name'] = $r['name'];

@@ -7,9 +7,9 @@ $isql   = "";
 $cmp_id =  $_GET['cmp_id'];
 
 
-$sql  = "SELECT SUM(amount) AS total_taken_amount FROM  income where dd_id=2  AND cmp_id=".$cmp_id;
+$sql  = "SELECT SUM(amount) AS total_taken_amount FROM  income where status=1 AND dd_id=2  AND cmp_id=".$cmp_id;
 
-$isql = "SELECT SUM(amount) as total_given_amount FROM expenses where dd_id=2  AND cmp_id=".$cmp_id;
+$isql = "SELECT SUM(amount) as total_given_amount FROM expenses where status=1 AND dd_id=2  AND cmp_id=".$cmp_id;
 
 
 $q = mysqli_query($mycon,$sql);

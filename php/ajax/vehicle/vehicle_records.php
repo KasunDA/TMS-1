@@ -62,7 +62,7 @@
 		}
 
 		//Driver Salary Code
-		$dssql = "SELECT SUM(amount) as total_driver_salary FROM expenses where dd_id=4 and status=1 and datee BETWEEN '$from_datee' AND '$to_datee' and vehicle_id=$cvehicle_id and name='$driver_name'";
+		$dssql = "SELECT SUM(amount) as total_driver_salary FROM expenses where dd_id=4 and status=1 and datee BETWEEN '$from_datee' AND '$to_datee' and vehicle_id=".$cvehicle_id;
 		$dsq = mysqli_query($mycon,$dssql);
 		
 		if( $r = mysqli_fetch_array($dsq) )

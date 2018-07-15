@@ -23,47 +23,32 @@
 
 	$amount = $_GET['amount'];
 
-	if( $_GET['vehicle_id'] != NULL )	
-	{
+	if( isset($_GET['vehicle_id']) && $_GET['vehicle_id'] != NULL && $_GET['vehicle_id'] != 'null' )	
 		$vehicle_id = $_GET['vehicle_id'];
-	}
 	else
-	{
 		$vehicle_id = NULL;	
-	}
 	
 	
-	if( $_GET['name'] != NULL )	
-	{
+	if( isset($_GET['name']) &&  $_GET['name'] != NULL && $_GET['name'] != 'null' )	
 		$name = $_GET['name'];
-	}
 	else
-	{
-		$name = NULL;
-	}
+		$name = 'NULL';
 	
-	
-	if( $_GET['bike_id'] != NULL )	
-	{
-		$bike_id = $_GET['bike_id'];
-	}
-	else
-	{
-		$bike_id = NULL;	
-	}
 
-	if( $_GET['borrower_id'] != NULL )	
+	if( isset($_GET['bike_id']) &&  $_GET['bike_id'] != NULL && $_GET['bike_id'] != 'null' )	
+		$bike_id = $_GET['bike_id'];
+	else
+		$bike_id = 'NULL';
+
+	if( isset($_GET['borrower_id']) && $_GET['borrower_id'] != NULL && $_GET['borrower_id'] != 'null' )	
 	{
 		$borrower_id = $_GET['borrower_id'];
-
 		$bq1  = mysqli_query($mycon,'SELECT name FROM borrower WHERE borrower_id='.$_GET['borrower_id']);
 		$rq1  = mysqli_fetch_array($bq1);
 		$name = $rq1['name'];
 	}
 	else
-	{
-		$borrower_id = NULL;	
-	}
+		$borrower_id = 'NULL';	
 
 
 	$description = $_GET['description'];
@@ -90,10 +75,11 @@
 	// 	}
 	// }
 
-	$sql = "INSERT INTO expenses(datee, dd_id, method, check_number, bank_id, amount, vehicle_id,name, bike_id , borrower_id , description) VALUES ( '$datee' , $dd_id, '$method', '".$check_number."' , ".$bank_id.", $amount, $vehicle_id, '$name', ".$bike_id.", ".$borrower_id." ,'$description' ) ";
+	$sql = "INSERT INTO expenses(datee, dd_id, method, check_number, bank_id, amount, vehicle_id,name, bike_id , borrower_id , description) VALUES ( '$datee' , $dd_id, '$method', '".$check_number."' , ".$bank_id.", $amount, ".$vehicle_id.", '".$name."', ".$bike_id.", ".$borrower_id." ,'$description' ) ";
 
 		// $sql = "INSERT INTO expenses(datee, dd_id, method, amount, vehicle_id,name, description) VALUES ( '$datee' , $dd_id, '$method', $amount, $vehicle_id, '$name', '$description' ) ";
 	
+	// echo $sql;
 	
 	$q = mysqli_query($mycon,$sql);
 

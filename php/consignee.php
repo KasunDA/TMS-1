@@ -158,9 +158,34 @@ include 'footer.php';
                                         '<li> <button class="btn btn-xs green update_btn" id="'+value['consignee_id']+'" type="button">  '+
                                         '<i class="fa fa-plus-square"></i>'+
                                         '</button> </li>'+
-                                        '<li>  <button class="btn btn-xs red delete_btn" id="'+value['consignee_id']+'" type="button">  '+
+
+                                        '<!-- Trigger the modal with a button -->'+                                        
+                                        '<li>  <button type="button" class="btn btn-xs red" data-toggle="modal" data-target="#myModal'+value['consignee_id']+'" >'+
                                         '<i class="fa fa-minus-square"></i>'+
                                         '</button> </li>'+
+
+                                        '<!-- Modal -->'+
+                                        '<div id="myModal'+value['consignee_id']+'" class="modal fade" role="dialog">'+
+                                          '<div class="modal-dialog">'+
+
+                                            '<!-- Modal content-->'+
+                                            '<div class="modal-content">'+
+                                              '<div class="modal-header">'+
+                                                '<button type="button" class="close" data-dismiss="modal">&times;</button>'+
+                                                '<h4 class="modal-title">Delete</h4>'+
+                                              '</div>'+
+                                              '<div class="modal-body">'+
+                                                '<p>Are you sure you want to delete <strong>'+value['full_form']+'</strong> ?</p>'+
+                                              '</div>'+
+                                              '<div class="modal-footer">'+
+                                                '<button type="button" class="btn btn-default btn-success pull-left" data-dismiss="modal">Close</button>'+
+                                                '<button type="button" class="btn btn-default red delete_btn" data-dismiss="modal" id="'+value['consignee_id']+'">Delete</button>'+
+                                              '</div>'+
+                                            '</div>'+
+
+                                          '</div>'+
+                                        '</div>'+
+                                        
                                     '</ul>'+
                                 '</td>'+           
 
