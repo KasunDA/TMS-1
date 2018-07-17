@@ -246,12 +246,19 @@ include 'footer.php';
         function deletetr(trr,bike_id)
         {
             $.ajax({
-                url:'ajax/bike/delete.php?bike_id='+bike_id,
-                type:"POST",
+                url:'ajax/bike/delete.php',
+                data:{bike_id:bike_id},
+                type:'POST',
+                dataType:'JSON',
                 success:function(data){
-                    trr.fadeOut(100,function(){
-                       trr.remove(); 
-                    });
+                    if( data['deleted'] == 'true' )
+                    {
+                        trr.fadeOut(100,function(){
+                           trr.remove(); 
+                        });
+                    }
+                    else
+                        alertMessage("Not Deleted!",'error');
                 },
                 error:function(){ alertMessage("Error in Delete ajax Call.",'error') }
             });

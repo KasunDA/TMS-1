@@ -280,14 +280,21 @@ include 'footer.php';
         function deletetr(trr,vehicle_id)
         {
             $.ajax({
-                url:'ajax/vehicle/delete.php?vehicle_id='+vehicle_id,
-                type:"POST",
+                url:'ajax/vehicle/delete.php',
+                data:{vehicle_id:vehicle_id},
+                type:'POST',
+                dataType:'JSON',
                 success:function(data){
-                    trr.fadeOut(100,function(){
-                       trr.remove(); 
-                    });
+                    if(data['deleted'] == 'true')
+                    {
+                        trr.fadeOut(100,function(){
+                           trr.remove(); 
+                        });
+                    }
+                    else
+                        alertMessage("Not Deleted!",'error');
                 },
-                error:function(){ alertMessage("Error in Delete ajax Call.",'error') }
+                error:function(){ alertMessage("Error in Delete ajax Call.",'error'); }
             });
         }
 

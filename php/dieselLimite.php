@@ -296,12 +296,19 @@ include 'footer.php';
         function deletetr(trr,dl_id)
         {
             $.ajax({
-                url:'ajax/diesel_limit/delete.php?dl_id='+dl_id,
-                type:"POST",
+                url:'ajax/diesel_limit/delete.php',
+                data:{dl_id:dl_id},
+                type:'POST',
+                dataType:'JSON',
                 success:function(data){
-                    trr.fadeOut(100,function(){
-                       trr.remove(); 
-                    });
+                    if( data['deleted'] == 'true' )
+                    {
+                        trr.fadeOut(100,function(){
+                           trr.remove(); 
+                        });
+                    }
+                    else
+                        alertMessage("Not Deleted!",'error');
                 },
                 error:function(){ alertMessage("Error in Delete ajax Call.",'error') }
             });

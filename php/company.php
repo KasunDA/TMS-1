@@ -252,12 +252,19 @@ include 'footer.php';
         function deletetr(trr,cmp_id)
         {
             $.ajax({
-                url:'ajax/company/delete.php?cmp_id='+cmp_id,
-                type:"POST",
+                url:'ajax/company/delete.php',
+                data:{cmp_id:cmp_id},
+                type:'POST',
+                dataType:'JSON',
                 success:function(data){
-                    trr.fadeOut(100,function(){
-                       trr.remove(); 
-                    });
+                    if( data['deleted'] == 'true' )
+                    {
+                        trr.fadeOut(100,function(){
+                           trr.remove(); 
+                        });
+                    }
+                    else
+                        alertMessage("Not Deleted!",'error');
                 },
                 error:function(){ alertMessage("Error in Delete ajax Call.",'error') }
             });

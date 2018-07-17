@@ -22,12 +22,9 @@
 			$json[$n]['bank_name'] = $r1['short_form'];		
 		}
 		else
-		{
 			$json[$n]['bank_name'] = NULL;			
-		};
 		
 		$json[$n]['amount'] = $r['amount'];
-
 		$json[$n]['description'] = $r['description'];
 		$n++;
 	}

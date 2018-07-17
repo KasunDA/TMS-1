@@ -33,56 +33,50 @@
 
 	if(mysqli_affected_rows($mycon))
 	{
-
-
-
 		//Income Code 
 	
 		$income_q = mysqli_query($mycon,$isql);
 
-		$income_id_q = mysqli_query($mycon,'SELECT income_id from income ORDER BY income_id DESC limit 1');
-		$r_income_id = mysqli_fetch_array($income_id_q);
+		// $income_id_q = mysqli_query($mycon,'SELECT income_id from income ORDER BY income_id DESC limit 1');
+		// $r_income_id = mysqli_fetch_array($income_id_q);
 
-		//Previous Balance from exin Table
-		$previous_balance_q = mysqli_query($mycon,'SELECT current_balance from exin ORDER BY exin_id DESC limit 1');
-		$r_previous_balance = mysqli_fetch_array($previous_balance_q);
+		// //Previous Balance from exin Table
+		// $previous_balance_q = mysqli_query($mycon,'SELECT current_balance from exin ORDER BY exin_id DESC limit 1');
+		// $r_previous_balance = mysqli_fetch_array($previous_balance_q);
 	
-		$income_id = $r_income_id['income_id'];
-		$previous_balance = $r_previous_balance['current_balance'];
-		$current_balance = $previous_balance + $amount;
+		// $income_id = $r_income_id['income_id'];
+		// $previous_balance = $r_previous_balance['current_balance'];
+		// $current_balance = $previous_balance + $amount;
 
-		$q1 = mysqli_query($mycon,"INSERT INTO exin (income_id, datee, previous_balance, current_balance) VALUES ($income_id,'$datee',$previous_balance,$current_balance) ");
+		// $q1 = mysqli_query($mycon,"INSERT INTO exin (income_id, datee, previous_balance, current_balance) VALUES ($income_id,'$datee',$previous_balance,$current_balance) ");
 
 
 		if($method == 'check')
 		{
-
 			//Expense Code
 			$sql = "INSERT INTO expenses(datee, dd_id, method, check_number, bank_id, amount, description) VALUES ( '$datee' , 6, '$method', '".$check_number."' , ".$bank_id.", $amount ,'$description' ) ";
 
 			$expense_q = mysqli_query($mycon,$sql);
 
-			$expense_id_q = mysqli_query($mycon,'SELECT expense_id from expenses ORDER BY expense_id DESC limit 1');
-			$r_expense_id = mysqli_fetch_array($expense_id_q);
+			// $expense_id_q = mysqli_query($mycon,'SELECT expense_id from expenses ORDER BY expense_id DESC limit 1');
+			// $r_expense_id = mysqli_fetch_array($expense_id_q);
 
-			//Previous Balance from exin Table
-			$previous_balance_q = mysqli_query($mycon,'SELECT current_balance from exin ORDER BY exin_id DESC limit 1');
-			$r_previous_balance = mysqli_fetch_array($previous_balance_q);
+			// //Previous Balance from exin Table
+			// $previous_balance_q = mysqli_query($mycon,'SELECT current_balance from exin ORDER BY exin_id DESC limit 1');
+			// $r_previous_balance = mysqli_fetch_array($previous_balance_q);
 
 
-			$expense_id = $r_expense_id['expense_id'];
-			$previous_balance = $r_previous_balance['current_balance'];
-			$current_balance = $previous_balance - $amount;
+			// $expense_id = $r_expense_id['expense_id'];
+			// $previous_balance = $r_previous_balance['current_balance'];
+			// $current_balance = $previous_balance - $amount;
 
-			$q1 = mysqli_query($mycon,"INSERT INTO exin (expense_id, datee, previous_balance, current_balance) VALUES ($expense_id,'$datee',$previous_balance,$current_balance) ");
+			// $q1 = mysqli_query($mycon,"INSERT INTO exin (expense_id, datee, previous_balance, current_balance) VALUES ($expense_id,'$datee',$previous_balance,$current_balance) ");
 
 
 			//Account Code
-
 			$action = 'credit';
 			$current_balance=0;
 			$previous_balance=0;
-
 
 			$aq = mysqli_query($mycon,'SELECT current_balance from accounts_entry where bank_id='.$bank_id.' ORDER BY ae_id DESC limit 1');
 

@@ -832,16 +832,23 @@ include 'footer.php';
 
       function deletetr(trr,cm_id)
       {
-          $.ajax({
-              url:'ajax/container_movement/delete.php?cm_id='+cm_id,
-              type:"POST",
-              success:function(data){
+        $.ajax({
+            url:'ajax/container_movement/delete.php',
+            data:{cm_id:cm_id},
+            type:'POST',
+            dataType:'JSON',
+            success:function(data){
+                if(data['deleted']=='true')
+                {
                   trr.fadeOut(100,function(){
                      trr.remove(); 
                   });
-              },
-              error:function(){ alertMessage("Error in Delete ajax Call.",'error') }
-          });
+                }
+                else
+                  alertMessage('Not Deleted!','error'); 
+            },
+            error:function(){ alertMessage("Error in Delete ajax Call.",'error') }
+        });
       }
 
       function updateClick()

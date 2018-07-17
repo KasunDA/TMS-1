@@ -260,12 +260,19 @@ include 'footer.php';
         function deletetr(trr,line_id)
         {
             $.ajax({
-                url:'ajax/line/delete.php?line_id='+line_id,
-                type:"POST",
+                url:'ajax/line/delete.php',
+                data:{line_id:line_id},
+                type:'POST',
+                dataType:'JSON',
                 success:function(data){
-                    trr.fadeOut(100,function(){
-                       trr.remove(); 
-                    });
+                    if( data['deleted'] == 'true' )
+                    {
+                        trr.fadeOut(100,function(){
+                           trr.remove(); 
+                        });
+                    }
+                    else
+                        alertMessage("Not Deleted!",'error');
                 },
                 error:function(){ alertMessage("Error in Delete ajax Call.",'error') }
             });

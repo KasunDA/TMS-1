@@ -278,12 +278,19 @@ include 'footer.php';
         function deletetr(trr,agent_id)
         {
             $.ajax({
-                url:'ajax/agent/delete.php?agent_id='+agent_id,
-                type:"POST",
+                url:'ajax/agent/delete.php',
+                data:{agent_id:agent_id},
+                type:'POST',
+                dataType:'JSON',
                 success:function(data){
-                    trr.fadeOut(100,function(){
-                       trr.remove(); 
-                    });
+                    if( data['deleted'] == 'true' )
+                    {
+                        trr.fadeOut(100,function(){
+                           trr.remove(); 
+                        });
+                    }
+                    else
+                        alertMessage("Not Deleted!",'error');
                 },
                 error:function(){ alertMessage("Error in Delete ajax Call.",'error'); }
             });

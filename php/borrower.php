@@ -252,12 +252,19 @@ include 'footer.php';
         function deletetr(trr,borrower_id)
         {
             $.ajax({
-                url:'ajax/borrower/delete.php?borrower_id='+borrower_id,
-                type:"POST",
+                url:'ajax/borrower/delete.php',
+                data:{borrower_id:borrower_id},
+                type:'POST',
+                dataType:'JSON',
                 success:function(data){
-                    trr.fadeOut(100,function(){
-                       trr.remove(); 
-                    });
+                    if( data['deleted'] == 'true' )
+                    {
+                        trr.fadeOut(100,function(){
+                           trr.remove(); 
+                        });
+                    }
+                    else
+                        alertMessage("Not Deleted!",'error');
                 },
                 error:function(){ alertMessage("Error in Delete ajax Call.",'error') }
             });

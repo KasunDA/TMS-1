@@ -22,11 +22,10 @@ $n = 0;
 
 while ( $r = mysqli_fetch_array($q) ) 
 {
-	$json[$n]['expense_id'] = $r['expense_id'];
-	$json[$n]['datee'] = $r['datee'];
-	// $json[$n]['name'] = $r['name'];
+	$json[$n]['expense_id']  = $r['expense_id'];
+	$json[$n]['datee'] 	 	 = $r['datee'];
 	$json[$n]['description'] = $r['description'];
-	$json[$n]['amount'] = $r['amount'];
+	$json[$n]['amount'] 	 = $r['amount'];
 
 	$n++;
 }

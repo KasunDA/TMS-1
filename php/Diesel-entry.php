@@ -474,12 +474,19 @@ include 'footer.php';
         function deletetr(trr,de_id)
         {
             $.ajax({
-                url:'ajax/diesel_entry/delete.php?de_id='+de_id,
-                type:"POST",
+                url:'ajax/diesel_entry/delete.php',
+                data:{de_id:de_id},
+                type:'POST',
+                dataType:'JSON',
                 success:function(data){
-                    trr.fadeOut(100,function(){
-                       trr.remove(); 
-                    });
+                    if( data['deleted'] == 'true' )
+                    {
+                        trr.fadeOut(100,function(){
+                           trr.remove(); 
+                        });
+                    }
+                    else
+                        alertMessage("Not Deleted!",'error');
                     dt();
                 },
                 error:function(){ alertMessage("Error in Delete ajax Call.",'error') }

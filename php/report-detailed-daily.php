@@ -227,14 +227,10 @@ include 'footer.php';
             dataType:"JSON",
             success:function(data){
                 
-                $.each(data,function(index,value){
-
-                    $('#previous_balance').html(value['previous_balance']);
-                    $('#total_income').html(value['total_income']);
-                    $('#total_expense').html(value['total_expense']);
-                    $('#balance').html(value['balance']);
-
-                })
+                $('#previous_balance').html(data['previous_balance']);
+                $('#total_income').html(data['total_income']);
+                $('#total_expense').html(data['total_expense']);
+                $('#balance').html(data['balance']);
             },
             error:function(){ alertMessage("Failed Get Previous Balance Fetch Ajax Call.",'error') }
         });

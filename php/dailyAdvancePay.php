@@ -37,17 +37,27 @@ $borrower_id = $_GET['borrower_id'];
                                 if(!isset($_SESSION['disable_btn']) )
                                 {?>
                             <form class="form-horizontal" role="form">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div id="income_id_div" class="hidden">
+                                              <label class="col-md-2 control-label">ID:</label>
+                                              <div class="col-md-3">
+                                                <input type="text" class="form-control" id="income_id" name="income_id" readonly >
+                                              </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="form-body">
                                     <div class="row"> 
                                         <div class="form-group">  
                                             <label class="col-md-2 control-label">Date:</label>
                                             <div class="col-md-3">
-                                              <input type="date" class="form-control" id="datee" readonly name="datee" value="<?php echo date('Y-m-d'); ?>" required  />
+                                              <input type="date" class="form-control" id="datee" name="datee" value="<?php echo date('Y-m-d'); ?>" required  />
                                             </div>
                                         
                                             <label class="col-md-2 control-label">Description:</label>
                                             <div class="col-md-3">
-                                               <select class="form-control" name="dd_id" id="dd_id" readonly >
+                                               <select class="form-control" name="dd_id" id="dd_id" readonly disabled >
                                                          <option value="2">Advance</option>
                                                 </select>                                                
                                             </div>
@@ -171,10 +181,10 @@ $borrower_id = $_GET['borrower_id'];
                                             <div class="col-md-5 col-md-push-4">
                                                 <div class="">
                                                     <button type="submit" class="btn blue" id="btn_submit" tabindex="7">Submit</button> 
-                                                    <!-- <button type="reset" class="btn default" id="btn_reset" tabindex="8">Cancel</button> -->
+                                                    <button type="reset" class="btn default" id="btn_reset" tabindex="8">Cancel</button>
 
-                                                   <!--  <button type="submit" class="btn blue hidden" id="update_form_btn" tabindex="11">Update</button>
-                                                    <button type="button" class="btn default hidden"  id="add_new" tabindex="12">Add New</button> -->
+                                                    <button type="submit" class="btn blue hidden" id="update_form_btn" tabindex="7">Update</button>
+                                                    <button type="button" class="btn default hidden" id="add_new" tabindex="8">Add New</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -208,7 +218,6 @@ $borrower_id = $_GET['borrower_id'];
                                      <tr>
                                          <th> # </th>
                                          <th> Date </th>
-                                         <!-- <th> Name </th> -->
                                          <th> Description </th>    
                                          <th> Amount </th>
                                          
@@ -238,6 +247,7 @@ $borrower_id = $_GET['borrower_id'];
                              <table class="table table-striped table-bordered table-hover table-checkable order-column" id="imytable">
                                  <thead>
                                      <tr>
+                                         <th></th>
                                          <th> # </th>
                                          <th> Date </th>
                                          <th> Method </th>
@@ -272,13 +282,25 @@ include 'footer.php';
      
     $(document).ready(function(){
 
+        $('#btn_reset').click(function(e){
+            // e.preventDefault();
+            bchide();
+            
+            <?php 
+                if($vehicle_id != NULL ) 
+                    echo 'getFields('.$vehicle_id.',0,"'.$name.'");';
+                     
+                else
+                    echo 'getFields(0,'.$borrower_id.',"'.$name.'");';
+            ?>
+        });
+
         //Select2
        $('#bank_id').select2({
           width: 'resolve',
           theme: "classic"
        });
        $('.select2-selection').addClass('select');
-       
        
        //$('#vehicle_id').attr('disabled');
 
@@ -296,7 +318,6 @@ include 'footer.php';
                       $('#'+param).append('<option value="'+value['bank_id']+'">'+value['short_form']+'</option> ');
                     });
 
-
                       $('#'+param).select2({
                         width: 'resolve',
                         theme: "classic"
@@ -307,16 +328,15 @@ include 'footer.php';
             });
         }
 
-
-      $(document).on('click','.bank_id', function()
-      {
-        updateField(''+$(this).attr('para')+'');
-      });
-
-       function bcshow()
+        $(document).on('click','.bank_id', function()
         {
-            $('#check_number,#bank_id').attr('required','required');
-            $('#check_number_div').removeClass('hidden');
+            updateField(''+$(this).attr('para')+'');
+        });
+
+        function bcshow()
+        {
+        $('#check_number,#bank_id').attr('required','required');
+        $('#check_number_div').removeClass('hidden');
         }
 
         function bchide()
@@ -330,14 +350,10 @@ include 'footer.php';
       $('input[name="method"]').change(function(){
 
             if( $(this).val() == 'check' )
-            {
                 bcshow();
-            }
-            else
-            {
-                bchide();
-            }
 
+            else
+                bchide();
         });
 
         function calculateSumTR()
@@ -382,12 +398,12 @@ include 'footer.php';
             return sum;
         }
 
-
-
         function myDataTable()
         {
+            //columnDefs:[{targets:0,orderable:!1,searchable:!1}] 
+            //columnDefs:[{orderable:!1,targets:[0]},{searchable:!1,targets:[0]}]
             var e=$("#mytable");
-            e.dataTable({language:{aria:{sortAscending:": activate to sort column ascending",sortDescending:": activate to sort column descending"},emptyTable:"No data available in table",info:"Showing _START_ to _END_ of _TOTAL_ records",infoEmpty:"No records found",infoFiltered:"(filtered1 from _MAX_ total records)",lengthMenu:"Show _MENU_",search:"Search:",zeroRecords:"No matching records found",paginate:{previous:"Prev",next:"Next",last:"Last",first:"First"}},bStateSave:!0,columnDefs:[{targets:0,orderable:!1,searchable:!1}],lengthMenu:[[5,15,20,-1],[5,15,20,"All"]],pageLength:5,pagingType:"bootstrap_full_number",columnDefs:[{orderable:!1,targets:[0]},{searchable:!1,targets:[0]}],order:[[1,"asc"]]});
+            e.dataTable({language:{aria:{sortAscending:": activate to sort column ascending",sortDescending:": activate to sort column descending"},emptyTable:"No data available in table",info:"Showing _START_ to _END_ of _TOTAL_ records",infoEmpty:"No records found",infoFiltered:"(filtered1 from _MAX_ total records)",lengthMenu:"Show _MENU_",search:"Search:",zeroRecords:"No matching records found",paginate:{previous:"Prev",next:"Next",last:"Last",first:"First"}},bStateSave:!0,lengthMenu:[[5,15,20,-1],[5,15,20,"All"]],pageLength:5,pagingType:"bootstrap_full_number",order:[[0,"asc"]]});
         }
 
         function imyDataTable()
@@ -406,6 +422,10 @@ include 'footer.php';
               success:function(data){
                     $('#total_amount').val(data['amount']);
                     $('#amount').attr('max', data['amount']);
+                    <?php 
+                        if($vehicle_id != NULL ) 
+                            echo  "$('#vehicle_id').val(".$vehicle_id.").trigger('change');";
+                    ?>
               },
               error:function(){  alertMessage('Error in Updating Field Ajax Call.','error') }
             });
@@ -450,9 +470,41 @@ include 'footer.php';
 
                         $('#mytable tbody').append('<tr class="odd gradeX">'+
 
+                                // '<td>'+ 
+                                //   '<ul class="addremove">'+
+
+                                //       '<!-- Trigger the modal with a button -->'+                                        
+                                //           '<li>  <button type="button" class="btn btn-xs red" data-toggle="modal" data-target="#myModal'+value['expense_id']+'" >'+
+                                //           '<i class="fa fa-minus-square"></i>'+
+                                //           '</button> </li>'+
+
+                                //           '<!-- Modal -->'+
+                                //           '<div id="myModal'+value['expense_id']+'" class="modal fade" role="dialog">'+
+                                //             '<div class="modal-dialog">'+
+
+                                //               '<!-- Modal content-->'+
+                                //               '<div class="modal-content">'+
+                                //                 '<div class="modal-header">'+
+                                //                   '<button type="button" class="close" data-dismiss="modal">&times;</button>'+
+                                //                   '<h4 class="modal-title">Delete</h4>'+
+                                //                 '</div>'+
+                                //                 '<div class="modal-body">'+
+                                //                   '<p>Are you sure you want to delete row <strong>'+n+'</strong>?</p>'+
+                                //                 '</div>'+
+                                //                 '<div class="modal-footer">'+
+                                //                   '<button type="button" class="btn btn-default btn-success pull-left" data-dismiss="modal">Close</button>'+
+                                //                   '<button type="button" class="btn btn-default red delete_btn" data-dismiss="modal" id="'+value['expense_id']+'">Delete</button>'+
+                                //                 '</div>'+
+                                //               '</div>'+
+
+                                //             '</div>'+
+                                //           '</div>'+
+
+                                //   '</ul>'+
+                                // '</td>'+
+
                                 '<td>'+n+'</td>'+
                                 '<td>'+value['datee']+'</td>'+
-                                // '<td>'+value['name']+'</td>'+
                                 '<td>'+value['description']+'</td>'+
                                 '<td name="total">'+value['amount']+'</td>'+
                                 '</tr>');
@@ -470,7 +522,6 @@ include 'footer.php';
             });
         }
 
-
         //<?php// echo $vehicle_id; ?> <?php //echo '"'.$name.'"';?>
 
         function iloadData(vehicle_id,borrower_id,name)
@@ -481,7 +532,8 @@ include 'footer.php';
                 url:'ajax/advance_pay/ifetch.php?vehicle_id='+vehicle_id+'&borrower_id='+borrower_id+'&name='+name,
                 dataType:"JSON",
                 success:function(data){
-                    var n = 1;
+                    var n = 1,
+                        i = 0;
                     total_advance_pay = 0;
 
                     $('#imytable').DataTable().destroy();
@@ -491,7 +543,44 @@ include 'footer.php';
 
                         total_advance_pay += value['amount']/1;
 
-                        $('#imytable tbody').append('<tr class="odd gradeX">'+
+                        $('#imytable tbody').append('<tr index="'+i+'" class="odd gradeX">'+
+                                
+                                '<td>'+ 
+                                  '<ul class="addremove">'+
+                                      '<li> <button class="btn btn-xs green update_btn" id="'+value['income_id']+'" type="button">  '+
+                                      '<i class="fa fa-plus-square"></i>'+
+                                      '</button> </li>'+
+
+                                      '<!-- Trigger the modal with a button -->'+                                        
+                                          '<li>  <button type="button" class="btn btn-xs red" data-toggle="modal" data-target="#myModal'+value['income_id']+'" >'+
+                                          '<i class="fa fa-minus-square"></i>'+
+                                          '</button> </li>'+
+
+                                          '<!-- Modal -->'+
+                                          '<div id="myModal'+value['income_id']+'" class="modal fade" role="dialog">'+
+                                            '<div class="modal-dialog">'+
+
+                                              '<!-- Modal content-->'+
+                                              '<div class="modal-content">'+
+                                                '<div class="modal-header">'+
+                                                  '<button type="button" class="close" data-dismiss="modal">&times;</button>'+
+                                                  '<h4 class="modal-title">Delete</h4>'+
+                                                '</div>'+
+                                                '<div class="modal-body">'+
+                                                  '<p>Are you sure you want to delete row <strong>'+n+'</strong>?</p>'+
+                                                '</div>'+
+                                                '<div class="modal-footer">'+
+                                                  '<button type="button" class="btn btn-default btn-success pull-left" data-dismiss="modal">Close</button>'+
+                                                  '<button type="button" class="btn btn-default red delete_btn" data-dismiss="modal" id="'+value['income_id']+'">Delete</button>'+
+                                                '</div>'+
+                                              '</div>'+
+
+                                            '</div>'+
+                                          '</div>'+
+
+                                  '</ul>'+
+                                '</td>'+
+
                                 '<td>'+n+'</td>'+
                                 '<td>'+value['datee']+'</td>'+
                                 '<td>'+value['method']+'</td>'+
@@ -500,7 +589,7 @@ include 'footer.php';
                                 '<td name="paid_amount">'+value['amount']+'</td>'+
                                 '<td>'+value['description']+'</td>'+
                                 '</tr>');
-                        n++;
+                        n++; i++;
                     });
 
                     $.when(table).done(function(){
@@ -522,14 +611,15 @@ include 'footer.php';
             });
         }
         
-
         function add(datee,method,check_number,bank_id,amount,vehicle_id,borrower_id,name,description)
         {
             $.ajax({
-                url:'ajax/advance_pay/add.php?datee='+datee+'&method='+method+'&check_number='+check_number+'&bank_id='+bank_id+'&amount='+amount+'&vehicle_id='+vehicle_id+'&borrower_id='+borrower_id+'&name='+encodeURIComponent(name)+'&description='+encodeURIComponent(description),
-                type:"POST",
+                url:'ajax/advance_pay/add.php',
+                data:{datee:datee,method:method,check_number:check_number,bank_id:bank_id,amount:amount,vehicle_id:vehicle_id,borrower_id:borrower_id,name:name,description:description},
+                type:"GET",
+                dataType:'JSON',
                 success:function(data){
-                    if(data)
+                    if(data['inserted']=='true')
                     {
                         // $('input[name="method"]').reset();
                         $('#bank_id').val("").trigger('change');
@@ -550,12 +640,128 @@ include 'footer.php';
                         ?>
 
                     }
+                    else
+                        alertMessage("Not Added!",'error')
                 },
                 error:function(){ alertMessage("Error in Add Ajax Call.",'error') }
             });
         }
 
-        //Add Form Code
+        function update(income_id,datee,method,check_number,bank_id,bank_name,amount,vehicle_id,borrower_id,name,description)
+        {
+            $.ajax({
+                url:'ajax/advance_pay/update.php',
+                data:{income_id:income_id,datee:datee,method:method,check_number:check_number,bank_id:bank_id,amount:amount,vehicle_id:vehicle_id,borrower_id:borrower_id,name:name,description:description},
+                type:"GET",
+                dataType:'JSON',
+                success:function(data){
+                    if(data['updated']=='true')
+                    {
+                       var i = $('.selectedd').attr('index');
+                        var temp = $('#imytable').DataTable().row(i).data();
+                        
+                        addNewClick();
+
+                        temp[2] = datee;
+                        temp[3] = method;
+                        temp[4] = check_number;
+                        temp[5] = bank_name;
+                        temp[6] = amount;
+                        temp[7] = description;
+
+                        $('#imytable').DataTable().row(i).data(temp).draw();
+
+                        alertMessage('Updated Successfully.','success');
+                    }
+                    else
+                      alertMessage('Not Updated!','error');   
+                },
+                error:function(){ alertMessage("Error in Update Ajax Call.",'error') }
+            });
+        }
+
+        function deletetr(trr,income_id)
+        {
+            $.ajax({
+                url:'ajax/income/delete.php',
+                data:{income_id:income_id},
+                type:'POST',
+                dataType:'JSON',
+                success:function(data){
+                  if(data['deleted']=='true')
+                  {
+                    trr.fadeOut(100,function(){
+                       trr.remove(); 
+                    });
+                    <?php 
+                        if($vehicle_id != NULL ) 
+                            echo 'getFields('.$vehicle_id.',0,"'.$name.'");';
+                             
+                        else
+                            echo 'getFields(0,'.$borrower_id.',"'.$name.'");';
+                    ?>
+                  }
+                  else
+                    alertMessage('Not Deleted!','error');   
+                },
+                error:function(){ alertMessage("Error in iDelete ajax Call.",'error') }
+            });
+        }
+
+        function updateClick()
+        {
+            $('form').addClass('update_form');
+            $('#income_id_div,#update_form_btn,#add_new').removeClass('hidden');
+            $('#btn_submit,#btn_reset').addClass('hidden');
+            $('#datee').focus();
+        }
+
+        //UPDATE 
+        $(document).on('click','.update_btn',function(){
+
+            updateClick();
+
+            var income_id = $(this).attr('id'),
+                trr = $(this).closest('tr');
+
+            $('#imytable tr').each(function(){
+                if( $(this).hasClass('selectedd') )
+                    $(this).removeClass('selectedd'); 
+            });
+
+            trr.addClass('selectedd');   
+
+            $('#income_id').val( income_id );
+            $('#datee').val( trr.find('td').eq(2).text() );
+            $('form input[value="'+trr.find('td').eq(3).text()+'"]').prop('checked', true).trigger('change');
+            $('#check_number').val( trr.find('td').eq(4).text() );
+            $('#bank_id').val( trr.find('td').eq(5).attr('id') ).trigger('change');
+            $('#amount').val( trr.find('td').eq(6).text() );
+            $('#description').val( trr.find('td').eq(7).text() );
+        });
+
+        function addNewClick()
+        {
+            $('form').removeClass('update_form');
+            $('#income_id_div,#update_form_btn,#add_new').addClass('hidden');
+            $('#btn_submit,#btn_reset').removeClass('hidden');
+            $('#btn_reset').trigger('click');
+        }
+
+        //ADD NEW  
+        $(document).on('click','#add_new',function(){
+            addNewClick();
+        });
+
+        //DELETE
+        $(document).on('click','.delete_btn',function(){
+            var income_id = $(this).attr('id'),
+                trr = $(this).closest('tr');
+
+            deletetr(trr,income_id);
+        });
+
+        //Add & Update
         $('form').submit(function(e){
            e.preventDefault();
            
@@ -563,19 +769,29 @@ include 'footer.php';
                method = $('input[name="method"]:checked').val() ,
                check_number = $('#check_number').val() ,
                bank_id = $('#bank_id').val() ,
-               //bank_name = $('#bank_id option:selected').text() ,
+               bank_name = $('#bank_id option:selected').text() ,
                amount = $('#amount').val() ,
                vehicle_id = $('#vehicle_id').val() ,
-               //vehicle_number = $('#vehicle_id option:selected').text() ,
                name = $('#name').val() ,
                description = $('#description').val();
-               //expense_id =  $('#expense_id').val();
+               income_id =  $('#income_id').val();
 
-            add(datee,method,check_number,bank_id,amount,vehicle_id,<?php echo '"'.$borrower_id.'"';?>,name,description);
-           
+           if( check_number == '' )
+              check_number = null;
+
+           if( bank_id == '' )
+           {
+              bank_name = null;
+              bank_id = null;
+           }
+
+           if( $(this).hasClass('update_form') ) 
+                update(income_id,datee,method,check_number,bank_id,bank_name,amount,vehicle_id,<?php echo '"'.$borrower_id.'"';?>,name,description);
+
+           else
+                add(datee,method,check_number,bank_id,amount,vehicle_id,<?php echo '"'.$borrower_id.'"';?>,name,description);
+
+           $('#datee').focus();
         });
-
-
-
      });
  </script>

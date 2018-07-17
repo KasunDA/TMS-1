@@ -2,13 +2,14 @@
 
 	require '../../connection.php';
 
-	$agent_id = $_GET['agent_id'];
+	$json['deleted'] = 'false';
+	$agent_id 		 = $_POST['agent_id'];
 
 	$q = mysqli_query($mycon,'UPDATE agent SET status=0 WHERE agent_id='.$agent_id);
 
 	if(mysqli_affected_rows($mycon))
-	{
-		echo "true";
-	}
+		$json['deleted'] = "true";
+
+	echo json_encode($json);
 
 ?>

@@ -287,12 +287,19 @@ include 'footer.php';
         function deletetr(trr,bank_id)
         {
             $.ajax({
-                url:'ajax/bank/delete.php?bank_id='+bank_id,
-                type:"POST",
+                url:'ajax/bank/delete.php',
+                data:{bank_id:bank_id},
+                type:'POST',
+                dataType:'JSON',
                 success:function(data){
-                    trr.fadeOut(100,function(){
-                       trr.remove(); 
-                    });
+                    if( data['deleted'] == 'true' )
+                    {
+                        trr.fadeOut(100,function(){
+                           trr.remove(); 
+                        });
+                    }
+                    else
+                        alertMessage("Not Deleted!",'error');
                 },
                 error:function(){ alertMessage("Error in Delete ajax Call.",'error') }
             });

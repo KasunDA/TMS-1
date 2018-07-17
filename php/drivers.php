@@ -450,12 +450,19 @@ include 'footer.php';
         function deletetr(trr,driver_id)
         {
             $.ajax({
-                url:'ajax/driver/delete.php?driver_id='+driver_id,
-                type:"POST",
+                url:'ajax/driver/delete.php',
+                data:{driver_id:driver_id},
+                type:'POST',
+                dataType:'JSON',
                 success:function(data){
-                    trr.fadeOut(100,function(){
-                       trr.remove(); 
-                    });
+                    if( data['deleted'] == 'true' )
+                    {
+                        trr.fadeOut(100,function(){
+                           trr.remove(); 
+                        });
+                    }
+                    else
+                        alertMessage("Not Deleted!",'error');
                 },
                 error:function(){ alertMessage("Error in Delete ajax Call.",'error') }
             });

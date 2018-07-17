@@ -3,43 +3,36 @@
 	require '../../connection.php';
 	date_default_timezone_set("Asia/Karachi");
 
+	$json['inserted'] = 'false';
+	$datee  		  = $_GET['datee'];
+	$dd_id  		  = $_GET['dd_id'];
+	$method 		  = $_GET['method'];
+	$amount 		  = $_GET['amount'];
+	$check_number 	  = NULL;
+	$bank_id 		  = 'NULL';
+	$vehicle_id 	  = 'NULL';	
+	$name 			  = 'NULL';
+	$bike_id 		  = 'NULL';
+	$borrower_id 	  = 'NULL';	
+	$description      = $_GET['description'];
 
-	$datee  = $_GET['datee'];
-	$dd_id  = $_GET['dd_id'];
-	$method = $_GET['method'];
-	$date   = date('Y-m-d');
-	
+	$date   		  = date('Y-m-d');
 	
 	if( $_GET['bank_id'] != NULL && $_GET['check_number'] != NULL  )
 	{
 		$check_number = $_GET['check_number'];
 		$bank_id = $_GET['bank_id'];	
 	}
-	else
-	{
-		$check_number = NULL;
-		$bank_id = NULL;
-	}
-
-	$amount = $_GET['amount'];
 
 	if( isset($_GET['vehicle_id']) && $_GET['vehicle_id'] != NULL && $_GET['vehicle_id'] != 'null' )	
 		$vehicle_id = $_GET['vehicle_id'];
-	else
-		$vehicle_id = NULL;	
 	
-	
-	if( isset($_GET['name']) &&  $_GET['name'] != NULL && $_GET['name'] != 'null' )	
-		$name = $_GET['name'];
-	else
-		$name = 'NULL';
-	
+	if( isset($_GET['name']) && $_GET['name'] != NULL && $_GET['name'] != 'null' )	
+		$name = $_GET['name'];	
 
 	if( isset($_GET['bike_id']) &&  $_GET['bike_id'] != NULL && $_GET['bike_id'] != 'null' )	
 		$bike_id = $_GET['bike_id'];
-	else
-		$bike_id = 'NULL';
-
+	
 	if( isset($_GET['borrower_id']) && $_GET['borrower_id'] != NULL && $_GET['borrower_id'] != 'null' )	
 	{
 		$borrower_id = $_GET['borrower_id'];
@@ -47,12 +40,8 @@
 		$rq1  = mysqli_fetch_array($bq1);
 		$name = $rq1['name'];
 	}
-	else
-		$borrower_id = 'NULL';	
+		
 
-
-	$description = $_GET['description'];
-	
 	// if( $check_number != NULL )
 	// {
 	// 	$sql = "INSERT INTO income(datee, dd_id, method, check_number, bank_id, amount, description) VALUES ( '$datee' , $dd_id, '$method', '$check_number', $bank_id, $amount,'$description' ) ";
@@ -82,26 +71,27 @@
 	// echo $sql;
 	
 	$q = mysqli_query($mycon,$sql);
-
 	if( mysqli_affected_rows($mycon) )
 	{
-		$expense_id_q = mysqli_query($mycon,'SELECT expense_id from expenses ORDER BY expense_id DESC limit 1');
-		$r_expense_id = mysqli_fetch_array($expense_id_q);
+		$json['inserted'] = 'true';	
+
+		// $expense_id_q = mysqli_query($mycon,'SELECT expense_id from expenses ORDER BY expense_id DESC limit 1');
+		// $r_expense_id = mysqli_fetch_array($expense_id_q);
 
 		// $previous_balance_q = mysqli_query($mycon,'SELECT current_balance from exin ORDER BY exin_id DESC limit 1');
-		$previous_balance_q = mysqli_query($mycon,"SELECT exin_id,datee,current_balance FROM exin WHERE datee<='$date' ORDER BY exin_id DESC , datee limit 1");
-		$r_previous_balance = mysqli_fetch_array($previous_balance_q);
+		// $previous_balance_q = mysqli_query($mycon,"SELECT exin_id,datee,current_balance FROM exin WHERE datee<='$date' ORDER BY exin_id DESC , datee limit 1");
+		// $r_previous_balance = mysqli_fetch_array($previous_balance_q);
 
-		$expense_id = $r_expense_id['expense_id'];
-		$previous_balance = $r_previous_balance['current_balance'];
-		$current_balance = $previous_balance - $amount;
+		// $expense_id = $r_expense_id['expense_id'];
+		// $previous_balance = $r_previous_balance['current_balance'];
+		// $current_balance = $previous_balance - $amount;
 
-		$q1 = mysqli_query($mycon,"INSERT INTO exin (expense_id, datee, previous_balance, current_balance) VALUES ($expense_id,'$datee',$previous_balance,$current_balance) ");
+		// $q1 = mysqli_query($mycon,"INSERT INTO exin (expense_id, datee, previous_balance, current_balance) VALUES ($expense_id,'$datee',$previous_balance,$current_balance) ");
 		
-		if( mysqli_affected_rows($mycon) )
-		{
-			echo "true";	
-		}
+		// if( mysqli_affected_rows($mycon) )
+		// {
+		// 	echo "true";	
+		// }
 
 		// if( $check_number != NULL )
 		// {
@@ -141,4 +131,5 @@
 		// }	
 	}
 
+	echo json_encode($json);
 ?>

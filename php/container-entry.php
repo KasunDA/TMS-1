@@ -1106,14 +1106,21 @@ include 'footer.php';
       function deletetr(trr,ce_id)
       {
           $.ajax({
-              url:'ajax/container_entry/delete.php?ce_id='+ce_id,
-              type:"POST",
+              url:'ajax/container_entry/delete.php',
+              data:{ce_id:ce_id},
+              type:'POST',
+              dataType:'JSON',
               success:function(data){
-                  trr.fadeOut(100,function(){
-                     trr.remove(); 
-                  });
+                  if( data['deleted'] == 'true' )
+                  {
+                    trr.fadeOut(100,function(){
+                       trr.remove(); 
+                    });
+                  }
+                  else 
+                    alertMessage("Not Deleted!",'error');
               },
-              error:function(){ alert("Error in Delete ajax Call.") }
+              error:function(){ alertMessage("Error in Delete ajax Call.",'error'); }
           });
       }
 

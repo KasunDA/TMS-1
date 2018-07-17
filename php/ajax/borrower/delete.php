@@ -2,13 +2,14 @@
 
 	require '../../connection.php';
 
-	$borrower_id = $_GET['borrower_id'];
+	$json['deleted'] = 'false';
+	$borrower_id = $_POST['borrower_id'];
 
 	$q = mysqli_query($mycon,'UPDATE borrower SET status=0 WHERE borrower_id='.$borrower_id);
 
 	if(mysqli_affected_rows($mycon))
-	{
-		echo "true";
-	}
+		$json['deleted'] = "true";
+
+	echo json_encode($json);
 
 ?>

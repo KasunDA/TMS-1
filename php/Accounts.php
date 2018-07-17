@@ -506,12 +506,19 @@ include 'footer.php';
         function deletetr(trr,ae_id)
         {
             $.ajax({
-                url:'ajax/accounts_entry/delete.php?ae_id='+ae_id,
-                type:"POST",
+                url:'ajax/accounts_entry/delete.php',
+                data:{ae_id:ae_id},
+                type:'POST',
+                dataType:'JSON',
                 success:function(data){
-                    trr.fadeOut(100,function(){
-                       trr.remove(); 
-                    });
+                    if( data['deleted'] == 'true' )
+                    {
+                        trr.fadeOut(100,function(){
+                           trr.remove(); 
+                        });
+                    }
+                    else
+                        alertMessage("Not Deleted!",'error');
                     dt();
                 },
                 error:function(){ alertMessage("Error in Delete ajax Call.",'error') }

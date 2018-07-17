@@ -36,17 +36,27 @@ $name = $_GET['name'];
                                 if(!isset($_SESSION['disable_btn']) )
                                 {?>
                             <form class="form-horizontal" role="form">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div id="expense_id_div" class="hidden">
+                                              <label class="col-md-2 control-label">ID:</label>
+                                              <div class="col-md-3">
+                                                <input type="text" class="form-control" id="expense_id" name="expense_id" readonly >
+                                              </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="form-body">
                                     <div class="row"> 
                                         <div class="form-group">  
                                             <label class="col-md-2 control-label">Date:</label>
                                             <div class="col-md-3">
-                                              <input type="date" class="form-control" id="datee" readonly name="datee" value="<?php echo date('Y-m-d'); ?>" required  />
+                                              <input type="date" class="form-control" id="datee" name="datee" value="<?php echo date('Y-m-d'); ?>" required  />
                                             </div>
                                         
                                             <label class="col-md-2 control-label">Description:</label>
                                             <div class="col-md-3">
-                                               <select class="form-control" name="dd_id" id="dd_id" readonly >
+                                               <select class="form-control" name="dd_id" id="dd_id" readonly disabled >
                                                          <option value="2">Advance</option>
                                                 </select>                                                
                                             </div>
@@ -127,7 +137,6 @@ $name = $_GET['name'];
                                             <label class="col-md-2 control-label">Company </label>
                                             <div class="col-md-3">
                                                 <select class="form-control" id="cmp_id" disabled name="cmp_id" tabindex="-1" >
-                                                    <option value="">Select Vehicle</option>
                                                       <?php 
 
                                                   $q = mysqli_query($mycon,'SELECT * from company where status=1 ORDER BY cmp_id DESC');
@@ -161,10 +170,10 @@ $name = $_GET['name'];
                                             <div class="col-md-5 col-md-push-4">
                                                 <div class="">
                                                     <button type="submit" class="btn blue" id="btn_submit" tabindex="7">Submit</button> 
-                                                    <!-- <button type="reset" class="btn default" id="btn_reset" tabindex="8">Cancel</button> -->
+                                                    <button type="reset" class="btn default" id="btn_reset" tabindex="8">Cancel</button>
 
-                                                   <!--  <button type="submit" class="btn blue hidden" id="update_form_btn" tabindex="11">Update</button>
-                                                    <button type="button" class="btn default hidden"  id="add_new" tabindex="12">Add New</button> -->
+                                                    <button type="submit" class="btn blue hidden" id="update_form_btn" tabindex="7">Update</button>
+                                                    <button type="button" class="btn default hidden"  id="add_new" tabindex="8">Add New</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -227,6 +236,7 @@ $name = $_GET['name'];
                              <table class="table table-striped table-bordered table-hover table-checkable order-column" id="imytable">
                                  <thead>
                                      <tr>
+                                         <th></th>
                                          <th> # </th>
                                          <th> Date </th>
                                          <th> Method </th>
@@ -262,6 +272,14 @@ include 'footer.php';
  <script type="text/javascript">
      
      $(document).ready(function(){
+
+        $('#btn_reset').click(function(e){
+            // e.preventDefault();
+            bchide();
+            <?php 
+                echo 'getFields('.$cmp_id.');';                     
+            ?>
+        });
 
         //Select2
        $('#bank_id').select2({
@@ -321,14 +339,9 @@ include 'footer.php';
       $('input[name="method"]').change(function(){
 
             if( $(this).val() == 'check' )
-            {
                 bcshow();
-            }
             else
-            {
                 bchide();
-            }
-
         });
 
         function calculateSumTR()
@@ -373,12 +386,12 @@ include 'footer.php';
             return sum;
         }
 
-
-
         function myDataTable()
         {
+            //columnDefs:[{targets:0,orderable:!1,searchable:!1}],
+            //columnDefs:[{orderable:!1,targets:[0]},{searchable:!1,targets:[0]}],
             var e=$("#mytable");
-            e.dataTable({language:{aria:{sortAscending:": activate to sort column ascending",sortDescending:": activate to sort column descending"},emptyTable:"No data available in table",info:"Showing _START_ to _END_ of _TOTAL_ records",infoEmpty:"No records found",infoFiltered:"(filtered1 from _MAX_ total records)",lengthMenu:"Show _MENU_",search:"Search:",zeroRecords:"No matching records found",paginate:{previous:"Prev",next:"Next",last:"Last",first:"First"}},bStateSave:!0,columnDefs:[{targets:0,orderable:!1,searchable:!1}],lengthMenu:[[5,15,20,-1],[5,15,20,"All"]],pageLength:5,pagingType:"bootstrap_full_number",columnDefs:[{orderable:!1,targets:[0]},{searchable:!1,targets:[0]}],order:[[1,"asc"]]});
+            e.dataTable({language:{aria:{sortAscending:": activate to sort column ascending",sortDescending:": activate to sort column descending"},emptyTable:"No data available in table",info:"Showing _START_ to _END_ of _TOTAL_ records",infoEmpty:"No records found",infoFiltered:"(filtered1 from _MAX_ total records)",lengthMenu:"Show _MENU_",search:"Search:",zeroRecords:"No matching records found",paginate:{previous:"Prev",next:"Next",last:"Last",first:"First"}},bStateSave:!0,lengthMenu:[[5,15,20,-1],[5,15,20,"All"]],pageLength:5,pagingType:"bootstrap_full_number",order:[[1,"asc"]]});
         }
 
         function imyDataTable()
@@ -389,7 +402,6 @@ include 'footer.php';
 
         var total_advance = 0,
             total_advance_pay = 0;
-
 
         function getFields(cmp_id)
         {
@@ -455,7 +467,8 @@ include 'footer.php';
                 url:'ajax/advance_taken/ifetch.php?cmp_id='+cmp_id,
                 dataType:"JSON",
                 success:function(data){
-                    var n = 1;
+                    var n = 1,
+                        i = 0;
                     total_advance_pay = 0;
 
                     $('#imytable').DataTable().destroy();
@@ -465,7 +478,43 @@ include 'footer.php';
 
                         total_advance_pay += value['amount']/1;
 
-                        $('#imytable tbody').append('<tr class="odd gradeX">'+
+                        $('#imytable tbody').append('<tr index="'+i+'" class="odd gradeX">'+
+
+                                '<td>'+ 
+                                  '<ul class="addremove">'+
+                                      '<li> <button class="btn btn-xs green update_btn" id="'+value['expense_id']+'" type="button">  '+
+                                      '<i class="fa fa-plus-square"></i>'+
+                                      '</button> </li>'+
+
+                                      '<!-- Trigger the modal with a button -->'+                                        
+                                          '<li>  <button type="button" class="btn btn-xs red" data-toggle="modal" data-target="#myModal'+value['expense_id']+'" >'+
+                                          '<i class="fa fa-minus-square"></i>'+
+                                          '</button> </li>'+
+
+                                          '<!-- Modal -->'+
+                                          '<div id="myModal'+value['expense_id']+'" class="modal fade" role="dialog">'+
+                                            '<div class="modal-dialog">'+
+
+                                              '<!-- Modal content-->'+
+                                              '<div class="modal-content">'+
+                                                '<div class="modal-header">'+
+                                                  '<button type="button" class="close" data-dismiss="modal">&times;</button>'+
+                                                  '<h4 class="modal-title">Delete</h4>'+
+                                                '</div>'+
+                                                '<div class="modal-body">'+
+                                                  '<p>Are you sure you want to delete row <strong>'+n+'</strong>?</p>'+
+                                                '</div>'+
+                                                '<div class="modal-footer">'+
+                                                  '<button type="button" class="btn btn-default btn-success pull-left" data-dismiss="modal">Close</button>'+
+                                                  '<button type="button" class="btn btn-default red delete_btn" data-dismiss="modal" id="'+value['expense_id']+'">Delete</button>'+
+                                                '</div>'+
+                                              '</div>'+
+
+                                            '</div>'+
+                                          '</div>'+
+
+                                  '</ul>'+
+                                '</td>'+
 
                                 '<td>'+n+'</td>'+
                                 '<td>'+value['datee']+'</td>'+
@@ -476,7 +525,7 @@ include 'footer.php';
                                 '<td>'+value['description']+'</td>'+
                                 '</tr>');
 
-                        n++;
+                        n++; i++;
                     });
 
                     $.when(table).done(function(){
@@ -484,9 +533,7 @@ include 'footer.php';
                     });
                     
                     imyDataTable();
-
                     getFields(cmp_id);
-
                 },
                 error:function(){ alertMessage("Failed iFetch Ajax Call.",'error'); $('#iloading').hide(); }
             });
@@ -497,24 +544,135 @@ include 'footer.php';
         function add(datee,method,check_number,bank_id,amount,cmp_id,description)
         {
             $.ajax({
-                url:'ajax/advance_taken/add.php?datee='+datee+'&method='+method+'&check_number='+check_number+'&bank_id='+bank_id+'&amount='+amount+'&cmp_id='+cmp_id+'&description='+encodeURIComponent(description),
-                type:"POST",
+                url:'ajax/advance_taken/add.php',
+                data:{datee:datee,method:method,check_number:check_number,bank_id:bank_id,amount:amount,cmp_id:cmp_id,description:description},
+                type:'GET',
+                dataType:'JSON',
                 success:function(data){
-                    if(data)
+                    if(data['inserted']=='true')
                     {
                         // $('input[name="method"]').reset();
                         $('#bank_id').val("").trigger('change');
                         $('#amount,#check_number,#description').val("");
                         
                         alertMessage('Added Successfully.','success');
-
                         // loadData();
                         iloadData(<?php echo $cmp_id; ?>);
                     }
+                    else
+                        alertMessage('Not Added!','error');
                 },
                 error:function(){ alertMessage("Error in Add Ajax Call.",'error') }
             });
         }
+
+        function update(expense_id,datee,method,check_number,bank_id,bank_name,amount,cmp_id,description)
+        {
+            $.ajax({
+                url:'ajax/advance_taken/update.php',
+                data:{expense_id:expense_id,datee:datee,method:method,check_number:check_number,bank_id:bank_id,amount:amount,cmp_id:cmp_id,description:description},
+                type:"GET",
+                dataType:'JSON',
+                success:function(data){
+                    if(data['updated']=='true')
+                    {
+                       var i = $('.selectedd').attr('index');
+                        var temp = $('#imytable').DataTable().row(i).data();
+                        
+                        addNewClick();
+
+                        temp[2] = datee;
+                        temp[3] = method;
+                        temp[4] = check_number;
+                        temp[5] = bank_name;
+                        temp[6] = amount;
+                        temp[7] = description;
+
+                        $('#imytable').DataTable().row(i).data(temp).draw();
+
+                        alertMessage('Updated Successfully.','success');
+                    }
+                    else
+                      alertMessage('Not Updated!','error');   
+                },
+                error:function(){ alertMessage("Error in Update Ajax Call.",'error') }
+            });
+        }
+
+        function deletetr(trr,expense_id)
+        {
+            $.ajax({
+                url:'ajax/expenses/delete.php',
+                data:{expense_id:expense_id},
+                type:'POST',
+                dataType:'JSON',
+                success:function(data){
+                  if(data['deleted']=='true')
+                  {
+                    trr.fadeOut(100,function(){
+                       trr.remove(); 
+                    });
+                    <?php echo 'getFields('.$cmp_id.');'; ?>
+                  }
+                  else
+                    alertMessage('Not Deleted!','error');   
+                },
+                error:function(){ alertMessage("Error in iDelete ajax Call.",'error') }
+            });
+        }
+
+        function updateClick()
+        {
+            $('form').addClass('update_form');
+            $('#expense_id_div,#update_form_btn,#add_new').removeClass('hidden');
+            $('#btn_submit,#btn_reset').addClass('hidden');
+            $('#datee').focus();
+        }
+
+        //UPDATE 
+        $(document).on('click','.update_btn',function(){
+
+            updateClick();
+
+            var expense_id = $(this).attr('id'),
+                trr = $(this).closest('tr');
+
+            $('#imytable tr').each(function(){
+                if( $(this).hasClass('selectedd') )
+                    $(this).removeClass('selectedd'); 
+            });
+
+            trr.addClass('selectedd');   
+
+            $('#expense_id').val( expense_id );
+            $('#datee').val( trr.find('td').eq(2).text() );
+            $('form input[value="'+trr.find('td').eq(3).text()+'"]').prop('checked', true).trigger('change');
+            $('#check_number').val( trr.find('td').eq(4).text() );
+            $('#bank_id').val( trr.find('td').eq(5).attr('id') ).trigger('change');
+            $('#amount').val( trr.find('td').eq(6).text() );
+            $('#description').val( trr.find('td').eq(7).text() );
+        });
+
+        function addNewClick()
+        {
+            $('form').removeClass('update_form');
+            $('#expense_id_div,#update_form_btn,#add_new').addClass('hidden');
+            $('#btn_submit,#btn_reset').removeClass('hidden');
+            $('#btn_reset').trigger('click');
+        }
+
+        //ADD NEW  
+        $(document).on('click','#add_new',function(){
+            addNewClick();
+        });
+
+        //DELETE
+        $(document).on('click','.delete_btn',function(){
+            var expense_id = $(this).attr('id'),
+                trr = $(this).closest('tr');
+
+            deletetr(trr,expense_id);
+        });
 
         //Add & Update
         $('form').submit(function(e){
@@ -524,12 +682,19 @@ include 'footer.php';
                method = $('input[name="method"]:checked').val() ,
                check_number = $('#check_number').val() ,
                bank_id = $('#bank_id').val() ,
+               bank_name = $('#bank_id option:selected').text() ,
                amount = $('#amount').val() ,
                cmp_id = $('#cmp_id').val() ,
-               description = $('#description').val();
+               description = $('#description').val(),
+               expense_id =  $('#expense_id').val();
 
-            add(datee,method,check_number,bank_id,amount,cmp_id,description);
+           if( $(this).hasClass('update_form') ) 
+                update(expense_id,datee,method,check_number,bank_id,bank_name,amount,cmp_id,description);
+
+           else
+                add(datee,method,check_number,bank_id,amount,cmp_id,description);
            
+           $('#datee').focus();
         });
 
 

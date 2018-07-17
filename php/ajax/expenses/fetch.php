@@ -6,11 +6,14 @@
 	$json=NULL;
 	$date = date('Y-m-d');
 
-	$q = mysqli_query($mycon,"SELECT * FROM expenses WHERE status=1 and datee='$date' ORDER BY expense_id DESC ");
+	$q = mysqli_query($mycon,"SELECT * FROM expenses WHERE status=1 AND datee='$date'  ORDER BY expense_id DESC ");
 	$n  = 0;
 	while($r = mysqli_fetch_array($q))
 	{
-		$json[$n]['expense_id'] = $r['expense_id'];  
+		if($r['cmp_id']!= NULL )
+			continue;
+
+		$json[$n]['expense_id'] = $r['expense_id'];
 		$json[$n]['datee'] = $r['datee'];
 		$json[$n]['dd_id'] = $r['dd_id'];
 

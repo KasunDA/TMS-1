@@ -597,12 +597,19 @@ include 'footer.php';
         function deletetr(trr,employee_id)
         {
             $.ajax({
-                url:'ajax/employee/delete.php?employee_id='+employee_id,
-                type:"POST",
+                url:'ajax/employee/delete.php',
+                data:{employee_id:employee_id},
+                type:'POST',
+                dataType:'JSON',
                 success:function(data){
-                    trr.fadeOut(100,function(){
-                       trr.remove(); 
-                    });
+                    if( data['deleted'] == 'true' )
+                    {
+                        trr.fadeOut(100,function(){
+                           trr.remove(); 
+                        });
+                    }
+                    else
+                        alertMessage("Not Deleted!",'error');
                 },
                 error:function(){ alertMessage("Error in Delete ajax Call.",'error') }
             });

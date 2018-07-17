@@ -1051,7 +1051,7 @@ include 'footer.php';
                                       '<br/><br/> <div class="row" style="page-break-inside: avoid;">'+ 
                                       $('#mrTable_div').html()+
                                       '<div class="col-md-12" style="margin-top:10%;"> <h3 style="margin-left:20px;"> Receivers Signature:_________________________________ </h3> </div>'+
-                                      '<img src="http://<?php echo $_SERVER['SERVER_NAME']=='panel.buttbrothers.com.pk'?$_SERVER['SERVER_NAME']:$_SERVER['SERVER_NAME'].'/TMS' ?>/php/ajax/footer.jpg" style="width:100%; position: relative;" /> </div>');
+                                      '<img src="http://<?php echo $_SERVER['SERVER_NAME']=='panel.buttbrothers.com.pk'?$_SERVER['SERVER_NAME']:$_SERVER['SERVER_NAME'].'/TMS' ?>/php/ajax/footer.jpg" style="width:100%; margin-top:10px;" /> </div>');
 
                       }
                     }

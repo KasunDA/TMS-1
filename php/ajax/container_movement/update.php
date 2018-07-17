@@ -70,18 +70,18 @@
 		$eq = mysqli_query($mycon,$sql);
 
 		//Updating Date in Exin (Advance Expense id)
-		$q1 = mysqli_query($mycon,"SELECT * FROM expenses WHERE dd_id=5  AND cm_id=".$cm_id);
-		$r1 = mysqli_fetch_array($q1) ;
-		$expense_advance = $r1['expense_id'];
-		updateDateExin($mycon,$expense_advance);
+		// $q1 = mysqli_query($mycon,"SELECT * FROM expenses WHERE dd_id=5  AND cm_id=".$cm_id);
+		// $r1 = mysqli_fetch_array($q1) ;
+		// $expense_advance = $r1['expense_id'];
+		// updateDateExin($mycon,$expense_advance);
 
-		//Updating Date in Exin (Diesel Expense id) 
-		$q2 = mysqli_query($mycon,"SELECT * FROM expenses WHERE  dd_id=8 AND cm_id=".$cm_id);
-		$r2 = mysqli_fetch_array($q2);
-		$expense_diesel  = $r2['expense_id'];
-		updateDateExin($mycon,$expense_diesel);
+		// //Updating Date in Exin (Diesel Expense id) 
+		// $q2 = mysqli_query($mycon,"SELECT * FROM expenses WHERE  dd_id=8 AND cm_id=".$cm_id);
+		// $r2 = mysqli_fetch_array($q2);
+		// $expense_diesel  = $r2['expense_id'];
+		// updateDateExin($mycon,$expense_diesel);
 
-		updateData($mycon,$datee);
+		// updateData($mycon,$datee);
 	}
 	
 	$cm_id 			   = $_GET['cm_id'];

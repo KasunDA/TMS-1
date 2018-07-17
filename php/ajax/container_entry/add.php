@@ -11,17 +11,18 @@
 
 		if($eq)
 		{
-			$expense_id_q = mysqli_query($mycon,'SELECT expense_id from expenses ORDER BY expense_id DESC limit 1');
-			$r_expense_id = mysqli_fetch_array($expense_id_q);
+			return 'true';
+			// $expense_id_q = mysqli_query($mycon,'SELECT expense_id from expenses ORDER BY expense_id DESC limit 1');
+			// $r_expense_id = mysqli_fetch_array($expense_id_q);
 
-			$previous_balance_q = mysqli_query($mycon,"SELECT current_balance from exin WHERE datee<='$datee' ORDER BY exin_id DESC limit 1");
-			$r_previous_balance = mysqli_fetch_array($previous_balance_q);
+			// $previous_balance_q = mysqli_query($mycon,"SELECT current_balance from exin WHERE datee<='$datee' ORDER BY exin_id DESC limit 1");
+			// $r_previous_balance = mysqli_fetch_array($previous_balance_q);
 
-			$expense_id = $r_expense_id['expense_id'];
-			$previous_balance = $r_previous_balance['current_balance'];
-			$current_balance = $previous_balance - $amount;
+			// $expense_id = $r_expense_id['expense_id'];
+			// $previous_balance = $r_previous_balance['current_balance'];
+			// $current_balance = $previous_balance - $amount;
 
-			$q1 = mysqli_query($mycon,"INSERT INTO exin (expense_id, datee, previous_balance, current_balance) VALUES ($expense_id,'$datee',$previous_balance,$current_balance) ");
+			// $q1 = mysqli_query($mycon,"INSERT INTO exin (expense_id, datee, previous_balance, current_balance) VALUES ($expense_id,'$datee',$previous_balance,$current_balance) ");
 		}
 	}
 
@@ -53,19 +54,18 @@
 		$total_advance = $rtadq['total_advance'];
 
 		//Expense SQL CODE 
-		$advance_esql = "UPDATE expenses SET amount=$total_advance , description='$description' WHERE expense_id=".$a_expense_id;
-		
+		$advance_esql = "UPDATE expenses SET amount=$total_advance , description='$description' WHERE expense_id=".$a_expense_id;		
 		// echo $advance_esql;
 
 		$eq = mysqli_query($mycon,$advance_esql);
 
-		$previous_balance_q = mysqli_query($mycon,"SELECT current_balance from exin WHERE datee<='$datee' AND expense_id!=$a_expense_id AND expense_id!=$d_expense_id ORDER BY exin_id DESC limit 1");
-		$r_previous_balance = mysqli_fetch_array($previous_balance_q);
+		// $previous_balance_q = mysqli_query($mycon,"SELECT current_balance from exin WHERE datee<='$datee' AND expense_id!=$a_expense_id AND expense_id!=$d_expense_id ORDER BY exin_id DESC limit 1");
+		// $r_previous_balance = mysqli_fetch_array($previous_balance_q);
 
-		$previous_balance = $r_previous_balance['current_balance'];
-		$current_balance  = $previous_balance - $total_advance;
+		// $previous_balance = $r_previous_balance['current_balance'];
+		// $current_balance  = $previous_balance - $total_advance;
 
-		$q1 = mysqli_query($mycon,"UPDATE exin SET previous_balance=$previous_balance , current_balance=$current_balance WHERE expense_id=".$a_expense_id);
+		// $q1 = mysqli_query($mycon,"UPDATE exin SET previous_balance=$previous_balance , current_balance=$current_balance WHERE expense_id=".$a_expense_id);
 		
 	}
 
@@ -98,22 +98,19 @@
 
 		//Expense SQL CODE 		
 		$diesel_esql  = "UPDATE expenses SET amount=$total_diesel ,  description='$description' WHERE expense_id=".$expense_id;
-		
 		// echo $diesel_esql;
 
 		$eq = mysqli_query($mycon,$diesel_esql);
 
-		$previous_balance_q = mysqli_query($mycon,"SELECT current_balance from exin WHERE datee<='$datee' AND expense_id!=$expense_id ORDER BY exin_id DESC limit 1");
-		$r_previous_balance = mysqli_fetch_array($previous_balance_q);
+		// $previous_balance_q = mysqli_query($mycon,"SELECT current_balance from exin WHERE datee<='$datee' AND expense_id!=$expense_id ORDER BY exin_id DESC limit 1");
+		// $r_previous_balance = mysqli_fetch_array($previous_balance_q);
 
-		$previous_balance = $r_previous_balance['current_balance'];
-		$current_balance  = $previous_balance - $total_diesel;
+		// $previous_balance = $r_previous_balance['current_balance'];
+		// $current_balance  = $previous_balance - $total_diesel;
 
-		$q1 = mysqli_query($mycon,"UPDATE exin SET previous_balance=$previous_balance , current_balance=$current_balance WHERE expense_id=".$expense_id);
+		// $q1 = mysqli_query($mycon,"UPDATE exin SET previous_balance=$previous_balance , current_balance=$current_balance WHERE expense_id=".$expense_id);
 
-		
-		updateData($mycon,$datee);
-		
+		// updateData($mycon,$datee);
 	}
 
 	function updateData($mycon,$datee)

@@ -265,14 +265,21 @@ include 'footer.php';
         function deletetr(trr,dd_id)
         {
             $.ajax({
-                url:'ajax/daily_description/delete.php?dd_id='+dd_id,
-                type:"POST",
+                url:'ajax/daily_description/delete.php',
+                data:{dd_id:dd_id},
+                type:'POST',
+                dataType:'JSON',
                 success:function(data){
-                    trr.fadeOut(100,function(){
-                       trr.remove(); 
-                    });
+                    if(data['deleted'] == 'true')
+                    {
+                        trr.fadeOut(100,function(){
+                           trr.remove(); 
+                        });    
+                    }
+                    else
+                        alertMessage("Not Deleted!",'error');
                 },
-                error:function(){ alertMessage("Error in Delete ajax Call.",'error') }
+                error:function(){ alertMessage("Error in Delete ajax Call.",'error'); }
             });
         }
 

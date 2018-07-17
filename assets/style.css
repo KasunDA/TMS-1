@@ -114,12 +114,21 @@ div.progress-bar > span {
     padding: 0px;
 }
 
-table#mytable th:after {
+table#mytable th:after , table#imytable th:after {
     content: "";
 }
 
-table#mytable th {
+/*table#imytable th:after {
+    content: "";
+}*/
+
+table#mytable th, table#imytable th {
     padding: 0px 6px 6px 6px;
     font-size: 12px;
     font-weight: 500;
+}
+
+textarea
+{
+    resize: none;
 }

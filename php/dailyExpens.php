@@ -574,7 +574,17 @@ include 'footer.php';
 <script src="../assets/global/scripts/select2.full.min.js"></script>
 <script type="text/javascript">
  
- $(document).ready(function(){
+$(document).ready(function(){
+
+  $('#btn_reset').click(function(e){
+    $('#dd_id').val("").trigger('change');
+    bchide(); //allhide(); bikehide();
+  });
+
+  $('#ibtn_reset').click(function(e){
+    $('#idd_id').val("").trigger('change');
+    ibchide(); //allhide(); bikehide();
+  });
 
     function getPreviousBalance()
     {
@@ -582,15 +592,11 @@ include 'footer.php';
             url:'ajax/get_previous_balance.php',
             dataType:"JSON",
             success:function(data){
-                
-                $.each(data,function(index,value){
-
-                    $('#previous_balance').html(value['previous_balance']);
-                    $('#total_income').html(value['total_income']);
-                    $('#total_expense').html(value['total_expense']);
-                    $('#balance').html(value['balance']);
-
-                })
+              
+              $('#previous_balance').html(data['previous_balance']);
+              $('#total_income').html(data['total_income']);
+              $('#total_expense').html(data['total_expense']);
+              $('#balance').html(data['balance']);
             },
             error:function(){ alertMessage("Failed Get Previous Balance Fetch Ajax Call.",'error') }
         });
@@ -637,31 +643,31 @@ include 'footer.php';
 
     function vbshow()
     {
-        $('#vb_select_div').removeClass('hidden');
+      $('#vb_select_div').removeClass('hidden');
     }
 
     function vbhide()
     {
-        $('#vb_select_div').addClass('hidden');   
+      $('#vb_select_div').addClass('hidden');   
     }
 
     function nameshow()
     {
-        $('#name_div').removeClass('hidden');   
-        $('#name').attr('required', 'required');
+      $('#name_div').removeClass('hidden');   
+      $('#name').attr('required', 'required');
     }
 
     function namehide()
     {
-        $('#name_div').addClass('hidden');   
-        $('#name').removeAttr('required');
-        $('#name').val('').trigger('change');
+      $('#name_div').addClass('hidden');   
+      $('#name').removeAttr('required');
+      $('#name').val('').trigger('change');
     }
 
     function allshow()
     {
-        $('#name_div,#vn_div').removeClass('hidden'); 
-        $('#vehicle_id,#name').attr('required', 'required');  
+      $('#name_div,#vn_div').removeClass('hidden'); 
+      $('#vehicle_id,#name').attr('required', 'required');  
     }
 
     function allhide()
@@ -670,8 +676,6 @@ include 'footer.php';
         $('#vehicle_id,#name').removeAttr('required'); 
         $('#vehicle_id,#name').val('').trigger('change'); 
     }
-
-
 
     function bcshow()
     {
@@ -693,7 +697,7 @@ include 'footer.php';
 
         if( dd_id == 1 )
         {
-            vbhide();
+            vbhide(); borrowerhide();
             allhide();
             bikehide();
         }
@@ -707,22 +711,21 @@ include 'footer.php';
         {
             bikeshow();
             allhide();
-            vbhide();
+            vbhide(); borrowerhide();
         }
         else if( dd_id == 4 )
         {
-            vbhide();
+            vbhide(); borrowerhide();
             vehicleshow();
             namehide();
             bikehide();
         }
         else
         {
-            vbhide();
+            vbhide(); borrowerhide();
             allhide();
             bikehide();
         }
-         
     });
 
     $('#vb_select').change(function(){
@@ -772,18 +775,19 @@ include 'footer.php';
             url:'ajax/expenses/getname.php?vehicle_id='+vehicle_id,
             dataType:'JSON',
             success:function(data){
+                
                 $('#name').html('');
-
                 if( data['owner_name'] != '' && data['driver_name'] != '' )
                 {
-                    $('#name').html('<option value=""> Select Name </option>'+
-                        '<option value="'+data['owner_name']+'"> '+data['owner_name']+' </option>'+
-                        '<option value="'+data['driver_name']+'"> '+data['driver_name']+' </option>');    
+                  $('#name').html('<option value=""> Select Name </option>'+
+                      '<option value="'+data['owner_name']+'"> '+data['owner_name']+' </option>'+
+                      '<option value="'+data['driver_name']+'"> '+data['driver_name']+' </option>');  
+
+                  if( $('#expense_form').hasClass('update_form') )
+                    $('#name').val( $('.selectedd').find('td').eq(9).text() ).trigger('change');
                 }
                 else
-                {
-                    $('#name').html('<option value=""> Select Name </option>');
-                }
+                  $('#name').html('<option value=""> Select Name </option>');
                 
             },
             error:function(){ alertMessage(' Failed Ajax Call Get Names.','error'); },
@@ -901,35 +905,32 @@ include 'footer.php';
       });
 
    $('input[name="method"],input[name="imethod"]').change(function(){
-
-        if($(this).attr('name') == 'method')
-        {
-            if( $(this).val() == 'check' )
-            {
-                bcshow();
-            }
-            else
-            {
-                bchide();
-            }
-        }
-        else
-        {
-            if( $(this).val() == 'check' )
-            {
-                $('#icheck_number').attr('required','required');
-                $('#ibank_id').attr('required','required');
-                $('#icheck_number_div').removeClass('hidden');
-            }
-            else
-            {
-                $('#icheck_number,#ibank_id').removeAttr('required');
-                $('#icheck_number,#ibank_id').val('').trigger('change');
-                $('#icheck_number_div').addClass('hidden');   
-            }
-        }
         
+      if( $(this).val() == 'check' )
+        bcshow();
+      else
+        bchide();
+   });
 
+   function ibcshow()
+   {
+      $('#icheck_number').attr('required','required');
+      $('#ibank_id').attr('required','required');
+      $('#icheck_number_div').removeClass('hidden');
+   }
+   function ibchide()
+   {
+      $('#icheck_number,#ibank_id').removeAttr('required');
+      $('#icheck_number,#ibank_id').val('').trigger('change');
+      $('#icheck_number_div').addClass('hidden'); 
+   }
+
+   $('input[name="imethod"]').change(function(){
+
+      if( $(this).val() == 'check' )
+        ibcshow();
+      else
+        ibchide();  
    });
 
     function loadData()
@@ -941,27 +942,64 @@ include 'footer.php';
             dataType:"JSON",
             success:function(data){
                 var n = 1;
-                var i = 0;
+                var i = 0,
+                    code = '';  
 
                 $('#mytable').DataTable().destroy();
                 $('#mytable tbody').html("");
                 
                 var table = $.each(data,function(index,value){
 
+                  if( value['dd_id'] != '5' && value['dd_id'] != '6' && value['dd_id'] != '7' && value['dd_id'] != '8' )
+                  {
+                    code = '<td>'+ 
+                              '<ul class="addremove">'+
+                                  '<li> <button class="btn btn-xs green update_btn" id="'+value['expense_id']+'" type="button">  '+
+                                  '<i class="fa fa-plus-square"></i>'+
+                                  '</button> </li>'+
+
+                                  '<!-- Trigger the modal with a button -->'+                                        
+                                      '<li>  <button type="button" class="btn btn-xs red" data-toggle="modal" data-target="#myModal'+value['expense_id']+'" >'+
+                                      '<i class="fa fa-minus-square"></i>'+
+                                      '</button> </li>'+
+
+                                      '<!-- Modal -->'+
+                                      '<div id="myModal'+value['expense_id']+'" class="modal fade" role="dialog">'+
+                                        '<div class="modal-dialog">'+
+
+                                          '<!-- Modal content-->'+
+                                          '<div class="modal-content">'+
+                                            '<div class="modal-header">'+
+                                              '<button type="button" class="close" data-dismiss="modal">&times;</button>'+
+                                              '<h4 class="modal-title">Delete</h4>'+
+                                            '</div>'+
+                                            '<div class="modal-body">'+
+                                              '<p>Are you sure you want to delete <strong>'+n+'</strong>?</p>'+
+                                            '</div>'+
+                                            '<div class="modal-footer">'+
+                                              '<button type="button" class="btn btn-default btn-success pull-left" data-dismiss="modal">Close</button>'+
+                                              '<button type="button" class="btn btn-default red delete_btn" data-dismiss="modal" id="'+value['expense_id']+'">Delete</button>'+
+                                            '</div>'+
+                                          '</div>'+
+
+                                        '</div>'+
+                                      '</div>'+
+
+                              '</ul>'+
+                          '</td>';        
+                  }
+                  else
+                    code = '<td></td>';
+
                     $('#mytable tbody').append('<tr index="'+i+'" class="odd gradeX">'+
 
-                            // '<td>'+ 
-                            //     '<ul class="addremove">'+
-                            //         '<li> <button class="btn btn-xs green update_btn" id="'+value['expense_id']+'" type="button">  '+
-                            //         '<i class="fa fa-plus-square"></i>'+
-                            //         '</button> </li>'+
-                            //         '<li>  <button class="btn btn-xs red delete_btn" id="'+value['expense_id']+'" type="button">  '+
-                            //         '<i class="fa fa-minus-square"></i>'+
-                            //         '</button> </li>'+
-                            //     '</ul>'+
-                            // '</td>'+                       
+                          <?php
+                            if(!isset($_SESSION['disable_btn']) )
+                            {?> code+ <?php }//END OF If
+                            else{?>
+                                '<td></td>'+
+                          <?php }//END OF ELSE ?>
 
-                            '<td></td>'+
                             '<td>'+n+'</td>'+
                             '<td>'+value['datee']+'</td>'+
                             '<td id="'+value['dd_id']+'">'+value['dd_name']+'</td>'+
@@ -1001,26 +1039,64 @@ include 'footer.php';
             dataType:"JSON",
             success:function(data){
                 var n = 1;
-                var i = 0;
+                var i = 0,
+                    code = '';
 
                 $('#imytable').DataTable().destroy();
                 $('#imytable tbody').html("");
                 
                 var table = $.each(data,function(index,value){
 
+                  if( value['dd_id'] != '5' && value['dd_id'] != '6' && value['dd_id'] != '7' && value['dd_id'] != '8' )
+                  {
+                    code = '<td>'+ 
+                              '<ul class="addremove">'+
+                                  '<li> <button class="btn btn-xs green iupdate_btn" id="'+value['income_id']+'" type="button">  '+
+                                  '<i class="fa fa-plus-square"></i>'+
+                                  '</button> </li>'+
+
+                                  '<!-- Trigger the modal with a button -->'+                                        
+                                      '<li>  <button type="button" class="btn btn-xs red" data-toggle="modal" data-target="#myModal'+value['income_id']+'" >'+
+                                      '<i class="fa fa-minus-square"></i>'+
+                                      '</button> </li>'+
+
+                                      '<!-- Modal -->'+
+                                      '<div id="myModal'+value['income_id']+'" class="modal fade" role="dialog">'+
+                                        '<div class="modal-dialog">'+
+
+                                          '<!-- Modal content-->'+
+                                          '<div class="modal-content">'+
+                                            '<div class="modal-header">'+
+                                              '<button type="button" class="close" data-dismiss="modal">&times;</button>'+
+                                              '<h4 class="modal-title">Delete</h4>'+
+                                            '</div>'+
+                                            '<div class="modal-body">'+
+                                              '<p>Are you sure you want to delete <strong>'+n+'</strong>?</p>'+
+                                            '</div>'+
+                                            '<div class="modal-footer">'+
+                                              '<button type="button" class="btn btn-default btn-success pull-left" data-dismiss="modal">Close</button>'+
+                                              '<button type="button" class="btn btn-default red idelete_btn" data-dismiss="modal" id="'+value['income_id']+'">Delete</button>'+
+                                            '</div>'+
+                                          '</div>'+
+
+                                        '</div>'+
+                                      '</div>'+
+
+                              '</ul>'+
+                          '</td>';        
+                  }
+                  else
+                    code = '<td></td>';
+
                     $('#imytable tbody').append('<tr index="'+i+'" class="odd gradeX">'+
 
-                            // '<td>'+ 
-                            //     '<ul class="addremove">'+
-                            //         '<li> <button class="btn btn-xs green iupdate_btn" id="'+value['income_id']+'" type="button">  '+
-                            //         '<i class="fa fa-plus-square"></i>'+
-                            //         '</button> </li>'+
-                            //         '<li>  <button class="btn btn-xs red idelete_btn" id="'+value['income_id']+'" type="button">  '+
-                            //         '<i class="fa fa-minus-square"></i>'+
-                            //         '</button> </li>'+
-                            //     '</ul>'+
-                            // '</td>'+                       
-                            '<td></td>'+
+                            <?php
+                              if(!isset($_SESSION['disable_btn']) )
+                              {?> code+ <?php }//END OF If
+                              else{?>
+                                  '<td></td>'+
+                            <?php }//END OF ELSE ?>
+
                             '<td>'+n+'</td>'+
                             '<td>'+value['datee']+'</td>'+
                             '<td id="'+value['dd_id']+'">'+value['dd_name']+'</td>'+
@@ -1051,22 +1127,20 @@ include 'footer.php';
     function add(datee,dd_id,method,check_number,bank_id,amount,vehicle_id,name,bike_id,borrower_id,description)
     {
         $.ajax({
-            url:'ajax/expenses/add.php?datee='+datee+'&dd_id='+dd_id+'&method='+method+'&check_number='+check_number+'&bank_id='+bank_id+'&amount='+amount+'&vehicle_id='+vehicle_id+'&name='+name+'&bike_id='+bike_id+'&borrower_id='+borrower_id+'&description='+encodeURIComponent(description),
-            type:"POST",
+            url:'ajax/expenses/add.php',
+            data:{datee:datee,dd_id:dd_id,method:method,check_number:check_number,bank_id:bank_id,amount:amount,vehicle_id:vehicle_id,name:name,bike_id:bike_id,borrower_id:borrower_id,description:description},
+            type:"GET",
+            dataType:'JSON',
             success:function(data){
-                if(data)
+                if(data['inserted']=='true')
                 {
-                    $('#btn_reset').trigger('click');
-                    $('#dd_id').val("").trigger('change');
-                    bchide();
-                    allhide();
-                    bikehide();
-                    
+                    $('#btn_reset').trigger('click');                    
                     alertMessage('Added Successfully.','success');
-
                     loadData();
-                    iloadData();
+                    // iloadData();
                 }
+                else
+                  alertMessage('Not Added.','error');                  
             },
             error:function(){ alertMessage("Error in Add Ajax Call.",'error') }
         });
@@ -1075,54 +1149,58 @@ include 'footer.php';
     function iadd(idatee,idd_id,imethod,icheck_number,ibank_id,iamount,cmp_id,idescription)
     {
         $.ajax({
-            url:'ajax/income/add.php?datee='+idatee+'&dd_id='+idd_id+'&method='+imethod+'&check_number='+icheck_number+'&bank_id='+ibank_id+'&amount='+iamount+'&cmp_id='+cmp_id+'&description='+encodeURIComponent(idescription),
-            type:"POST",
+            url:'ajax/income/add.php',
+            data:{datee:idatee,dd_id:idd_id,method:imethod,check_number:icheck_number,bank_id:ibank_id,amount:iamount,cmp_id:cmp_id,description:idescription},
+            type:"GET",
+            dataType:'JSON',
             success:function(data){
-                if(data)
+                if(data['inserted']=='true')
                 {
-                    $('#ibtn_reset').trigger('click');
-                    $('#idd_id,#ibank_id').val("").trigger('change');
-                    $('#icheck_number,#ibank_id').removeAttr('required');
-                    $('#icheck_number_div').addClass('hidden'); 
-
-                    cmphide();  
-
-                    alertMessage('Added Successfully.','success');
-                    
-                    iloadData();
-                    loadData();
+                  $('#ibtn_reset').trigger('click');
+                  alertMessage('Added Successfully.','success');
+                  iloadData();
+                  // loadData();
                 }
+                else
+                  alertMessage('Not Added.','error');   
             },
             error:function(){ alertMessage("Error in iAdd Ajax Call.",'error') }
         });
     }
 
-    function update(expense_id,datee,dd_id,dd_name,method,check_number,bank_id,bank_name,amount,vehicle_id,vehicle_number,name,bike_id,bike_number,description)
+    function update(expense_id,datee,dd_id,dd_name,method,check_number,bank_id,bank_name,amount,vehicle_id,vehicle_number,name,bike_id,bike_number,borrower_id,borrower_name,description)
     {
         $.ajax({
-            url:'ajax/expenses/update.php?expense_id='+expense_id+'&datee='+datee+'&dd_id='+dd_id+'&method='+method+'&check_number='+check_number+'&bank_id='+bank_id+'&amount='+amount+'&vehicle_id='+vehicle_id+'&name='+name+'&bike_id='+bike_id+'&description='+encodeURIComponent(description),
-            type:"POST",
+            url:'ajax/expenses/update.php',
+            data:{expense_id:expense_id,datee:datee,dd_id:dd_id,method:method,check_number:check_number,bank_id:bank_id,amount:amount,vehicle_id:vehicle_id,name:name,bike_id:bike_id,borrower_id:borrower_id,description:description},
+            type:"GET",
+            dataType:'JSON',
             success:function(data){
-                if(data)
+                if(data['updated']=='true')
                 {
                    var i = $('.selectedd').attr('index');
                     var temp = $('#mytable').DataTable().row(i).data();
                     
                     addNewClick();
 
-                    temp[2] = datee;
-                    temp[3] = dd_name;
-                    temp[4] = method;
-                    temp[5] = check_number;
-                    temp[6] = bank_name;
-                    temp[7] = amount;
-                    temp[8] = vehicle_number;
-                    temp[9] = name;
+                    temp[2]  = datee;
+                    temp[3]  = dd_name;
+                    temp[4]  = method;
+                    temp[5]  = check_number;
+                    temp[6]  = bank_name;
+                    temp[7]  = amount;
+                    temp[8]  = vehicle_number;
+                    temp[9]  = name;
                     temp[10] = bike_number;
-                    temp[11] = description;
+                    temp[11] = borrower_name;
+                    temp[12] = description;
 
                     $('#mytable').DataTable().row(i).data(temp).draw();
+
+                    alertMessage('Expense Updated Successfully.','success');
                 }
+                else
+                  alertMessage('Not Updated.','error');   
             },
             error:function(){ alertMessage("Error in Update Ajax Call.",'error') }
         });
@@ -1131,10 +1209,12 @@ include 'footer.php';
     function iupdate(income_id,idatee,idd_id,idd_name,imethod,icheck_number,ibank_id,ibank_name,iamount,cmp_id,cmp_name,idescription)
     {
         $.ajax({
-            url:'ajax/income/update.php?income_id='+income_id+'&datee='+idatee+'&dd_id='+idd_id+'&method='+imethod+'&check_number='+icheck_number+'&bank_id='+ibank_id+'&amount='+iamount+'&cmp_id='+cmp_id+'&description='+encodeURIComponent(idescription),
-            type:"POST",
+            url:'ajax/income/update.php',
+            data:{income_id:income_id,datee:idatee,dd_id:idd_id,method:imethod,check_number:icheck_number,bank_id:ibank_id,amount:iamount,cmp_id:cmp_id,description:idescription},
+            type:"GET",
+            dataType:'JSON',
             success:function(data){
-                if(data)
+                if(data['updated']=='true')
                 {
                    var i = $('.iselectedd').attr('index');
                     var temp = $('#imytable').DataTable().row(i).data();
@@ -1151,7 +1231,11 @@ include 'footer.php';
                     temp[9] = idescription;
 
                     $('#imytable').DataTable().row(i).data(temp).draw();
+
+                    alertMessage('Income Updated Successfully.','success');
                 }
+                else
+                  alertMessage('Not Updated!','error');   
             },
             error:function(){ alertMessage("Error in iUpdate Ajax Call.",'error') }
         });
@@ -1160,12 +1244,19 @@ include 'footer.php';
     function deletetr(trr,expense_id)
     {
         $.ajax({
-            url:'ajax/expenses/delete.php?expense_id='+expense_id,
-            type:"POST",
+            url:'ajax/expenses/delete.php',
+            data:{expense_id:expense_id},
+            type:'POST',
+            dataType:'JSON',
             success:function(data){
+              if(data['deleted']=='true')
+              {
                 trr.fadeOut(100,function(){
                    trr.remove(); 
                 });
+              }
+              else
+                alertMessage('Not Deleted!','error');   
             },
             error:function(){ alertMessage("Error in Delete ajax Call.",'error') }
         });
@@ -1174,12 +1265,19 @@ include 'footer.php';
     function ideletetr(trr,income_id)
     {
         $.ajax({
-            url:'ajax/income/delete.php?income_id='+income_id,
-            type:"POST",
+            url:'ajax/income/delete.php',
+            data:{income_id:income_id},
+            type:'POST',
+            dataType:'JSON',
             success:function(data){
+              if(data['deleted']=='true')
+              {
                 trr.fadeOut(100,function(){
                    trr.remove(); 
                 });
+              }
+              else
+                alertMessage('Not Deleted!','error');   
             },
             error:function(){ alertMessage("Error in iDelete ajax Call.",'error') }
         });
@@ -1187,75 +1285,34 @@ include 'footer.php';
 
     function updateClick()
     {
-
-        $('#expense_form').addClass('update_form');
-
-        $('#expense_id_div').removeClass('hidden');
-        $('#update_form_btn').removeClass('hidden');
-        $('#add_new').removeClass('hidden');
-
-        $('#btn_submit').addClass('hidden');
-        $('#btn_reset').addClass('hidden');
-
-        $('#datee').focus();
-
+      $('#expense_form').addClass('update_form');
+      $('#expense_id_div,#update_form_btn,#add_new').removeClass('hidden');
+      $('#btn_submit,#btn_reset').addClass('hidden');
+      $('#datee').focus();
     }
 
     function iupdateClick()
     {
-
-        $('#income_form').addClass('update_form');
-
-        $('#income_id_div').removeClass('hidden');
-        $('#iupdate_form_btn').removeClass('hidden');
-        $('#iadd_new').removeClass('hidden');
-
-        $('#ibtn_submit').addClass('hidden');
-        $('#ibtn_reset').addClass('hidden');
-
-        $('#idatee').focus();
-
+      $('#income_form').addClass('update_form');
+      $('#income_id_div,#iupdate_form_btn,#iadd_new').removeClass('hidden');
+      $('#ibtn_submit,#ibtn_reset').addClass('hidden');
+      $('#idatee').focus();
     }
 
     function addNewClick()
     {
-
-        $('#expense_form').removeClass('update_form');
-
-        $('#btn_reset').trigger('click');
-        $('#dd_id').val("").trigger('change');
-        bchide();
-        allhide();
-        bikehide();
-
-        $('#expense_id_div').addClass('hidden');
-        $('#update_form_btn').addClass('hidden');
-        $('#add_new').addClass('hidden');
-
-        $('#btn_submit').removeClass('hidden');
-        $('#btn_reset').removeClass('hidden');
-
+      $('#expense_form').removeClass('update_form');
+      $('#expense_id_div,#update_form_btn,#add_new').addClass('hidden');
+      $('#btn_submit,#btn_reset').removeClass('hidden');
+      $('#btn_reset').trigger('click');
     }
 
     function iaddNewClick()
     {
-
-        $('#income_form').removeClass('update_form');
-
-        $('#ibtn_reset').trigger('click');
-        $('#idd_id,#ibank_id').val("").trigger('change');
-        $('#icheck_number').removeAttr('required');
-        $('#ibank_id').removeAttr('required');
-        $('#icheck_number_div').addClass('hidden');   
-
-
-        $('#income_id_div').addClass('hidden');
-        $('#iupdate_form_btn').addClass('hidden');
-        $('#iadd_new').addClass('hidden');
-
-        $('#ibtn_submit').removeClass('hidden');
-        $('#ibtn_reset').removeClass('hidden');
-
+      $('#income_form').removeClass('update_form');
+      $('#income_id_div,#iupdate_form_btn,#iadd_new').addClass('hidden');
+      $('#ibtn_submit,#ibtn_reset').removeClass('hidden');
+      $('#ibtn_reset').trigger('click');
     }
 
     //DELETE  expense
@@ -1281,7 +1338,7 @@ include 'footer.php';
         addNewClick();
     });
 
-    //ADD NEW expense 
+    //ADD NEW INCOME 
     $(document).on('click','#iadd_new',function(){
         iaddNewClick();
     });
@@ -1296,9 +1353,7 @@ include 'footer.php';
 
         $('#mytable tr').each(function(){
             if( $(this).hasClass('selectedd') )
-            {
-                $(this).removeClass('selectedd'); 
-            }
+              $(this).removeClass('selectedd'); 
         });
 
         trr.addClass('selectedd');   
@@ -1310,11 +1365,23 @@ include 'footer.php';
         $('#check_number').val( trr.find('td').eq(5).text() );
         $('#bank_id').val( trr.find('td').eq(6).attr('id') ).trigger('change');
         $('#amount').val( trr.find('td').eq(7).text() );
-        $('#vehicle_id').val( trr.find('td').eq(8).attr('id') ).trigger('change');
+
+        var vehicle_id = trr.find('td').eq(8).attr('id');
+        if( vehicle_id != '' && vehicle_id != 'null' )
+        {
+          $('#vb_select').val('1').trigger('change');
+          $('#vehicle_id').val( trr.find('td').eq(8).attr('id') ).trigger('change');
+        }
         $('#name').val( trr.find('td').eq(9).text() ).trigger('change');
         $('#bike_id').val( trr.find('td').eq(10).attr('id') ).trigger('change');
-        $('#description').val( trr.find('td').eq(11).text() );
-
+        
+        var borrower_id = trr.find('td').eq(11).attr('id');
+        if( borrower_id != '' && borrower_id != 'null' )
+        {
+          $('#vb_select').val('2').trigger('change');
+          $('#borrower_id').val( trr.find('td').eq(11).attr('id') ).trigger('change');
+        }
+        $('#description').val( trr.find('td').eq(12).text() );
     });
 
     //UPDATE INCOME
@@ -1343,7 +1410,6 @@ include 'footer.php';
         $('#iamount').val( trr.find('td').eq(7).text() );
         $('#cmp_id').val( trr.find('td').eq(8).attr('id') ).trigger('change');
         $('#idescription').val( trr.find('td').eq(9).text() );
-
     });
 
     //Add & Update expense 
@@ -1364,40 +1430,37 @@ include 'footer.php';
            bike_id = $('#bike_id').val() ,
            bike_number = $('#bike_id option:selected').text() ,
            borrower_id = $('#borrower_id').val() ,
+           borrower_name = $('#borrower_id option:selected').text() ,
            description = $('#description').val() ,
            expense_id =  $('#expense_id').val();
 
            if( check_number == '' )
-           {
-                check_number = null;
-           }
+              check_number = null;
+
            if( bank_id == '' )
            {
-                bank_name = null;
-                bank_id = null;
+              bank_name = null;
+              bank_id = null;
            }
 
            if( vehicle_id == '' )
-           {
-                vehicle_id = null;
-           }
+              vehicle_id = null;
+          
            if( name == '' )
-           {
-                name = null;
-           }
+              name = null;
+
            if( borrower_id == '' )
-           {
-                borrower_id = null;
-           }
+              borrower_id = null;
+
            if( bike_id == '' )
            {
-                bike_id = null;
-                bike_number = null;
+              bike_id = null;
+              bike_number = null;
            }
 
        if( $(this).hasClass('update_form') ) 
        {
-            update(expense_id,datee,dd_id,dd_name,method,check_number,bank_id,bank_name,amount,vehicle_id,vehicle_number,name,bike_id,bike_number,description);
+            update(expense_id,datee,dd_id,dd_name,method,check_number,bank_id,bank_name,amount,vehicle_id,vehicle_number,name,bike_id,bike_number,borrower_id,borrower_name,description);
        }
        else
        {
@@ -1426,8 +1489,8 @@ include 'footer.php';
 
            if( icheck_number == '' && ibank_id == '' )
            {
-                icheck_number = null;
-                ibank_name = null;
+              icheck_number = null;
+              ibank_name = null;
            }
 
        if( $(this).hasClass('update_form') ) 

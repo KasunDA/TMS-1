@@ -13,19 +13,12 @@ $isql = "SELECT SUM(amount) as total_given_amount FROM expenses where status=1 A
 
 
 $q = mysqli_query($mycon,$sql);
-
 if ( $r = mysqli_fetch_array($q) ) 
-{
 	$json['total_taken_amount'] = $r['total_taken_amount'];
-}
-
 
 $q1 = mysqli_query($mycon,$isql);
-
 if ( $r1 = mysqli_fetch_array($q1) ) 
-{
 	$json['total_given_amount'] = $r1['total_given_amount'];
-}
 
 $json['amount'] =  $json['total_taken_amount'] - $json['total_given_amount'];
 

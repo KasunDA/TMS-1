@@ -248,12 +248,19 @@ include 'footer.php';
         function deletetr(trr,container_id)
         {
             $.ajax({
-                url:'ajax/container/delete.php?container_id='+container_id,
-                type:"POST",
+                url:'ajax/container/delete.php',
+                data:{container_id:container_id},
+                type:'POST',
+                dataType:'JSON',
                 success:function(data){
-                    trr.fadeOut(100,function(){
-                       trr.remove(); 
-                    });
+                    if( data['deleted'] == 'true' )
+                    {
+                        trr.fadeOut(100,function(){
+                           trr.remove(); 
+                        });
+                    }
+                    else
+                        alertMessage("Not Deleted!",'error');
                 },
                 error:function(){ alertMessage("Error in Delete ajax Call.",'error') }
             });
