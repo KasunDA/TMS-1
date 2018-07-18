@@ -673,10 +673,10 @@ include 'footer.php';
 
 
       function myDataTable()
-        {
-            var e=$("#mytable");
-            e.dataTable({language:{aria:{sortAscending:": activate to sort column ascending",sortDescending:": activate to sort column descending"},emptyTable:"No data available in table",info:"Showing _START_ to _END_ of _TOTAL_ records",infoEmpty:"No records found",infoFiltered:"(filtered1 from _MAX_ total records)",lengthMenu:"Show _MENU_",search:"Search:",zeroRecords:"No matching records found",paginate:{previous:"Prev",next:"Next",last:"Last",first:"First"}},bStateSave:!0,columnDefs:[{targets:0,orderable:!1,searchable:!1}],lengthMenu:[[5,15,20,-1],[5,15,20,"All"]],pageLength:5,pagingType:"bootstrap_full_number",columnDefs:[{orderable:!1,targets:[0]},{searchable:!1,targets:[0]}],order:[[1,"asc"]]});
-        }
+      {
+          var e=$("#mytable");
+          e.dataTable({language:{aria:{sortAscending:": activate to sort column ascending",sortDescending:": activate to sort column descending"},emptyTable:"No data available in table",info:"Showing _START_ to _END_ of _TOTAL_ records",infoEmpty:"No records found",infoFiltered:"(filtered1 from _MAX_ total records)",lengthMenu:"Show _MENU_",search:"Search:",zeroRecords:"No matching records found",paginate:{previous:"Prev",next:"Next",last:"Last",first:"First"}},bStateSave:!0,columnDefs:[{targets:0,orderable:!1,searchable:!1}],lengthMenu:[[5,15,20,-1],[5,15,20,"All"]],pageLength:5,pagingType:"bootstrap_full_number",columnDefs:[{orderable:!1,targets:[0]},{searchable:!1,targets:[0]}],order:[[1,"asc"]]});
+      }
 
       myDataTable();
 
@@ -711,6 +711,10 @@ include 'footer.php';
                                     '<li>  <button class="btn btn-xs blue cupdate_btn" id="'+value['cm_id']+'" type="button">  '+
                                     '<i class="fa fa-info"></i>'+
                                     '</button> </li>'+
+
+                                    '<li>  <a href="container-movement-update-rent.php?cm_id='+value['cm_id']+'" target="_blank" class="btn btn-xs dark rupdate_btn">'+
+                                    '<i class="fa fa-edit"></i>'+
+                                    '</a> </li>'+
 
                                     '<!-- Trigger the modal with a button -->'+                                        
                                         '<li>  <button type="button" class="btn btn-xs red" data-toggle="modal" data-target="#myModal'+value['cm_id']+'" >'+
