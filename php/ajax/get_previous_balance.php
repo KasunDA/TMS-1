@@ -7,8 +7,13 @@
 	$json['ytotal_income']  = 0;
 	$json['total_income'] 	= 0;
 	$json['total_expense']  = 0;	
-	$date  = date('Y-m-d');
-	$ydate = date('Y-m-d',strtotime("-1 days"));	
+	
+	$q = mysqli_query($mycon,"SELECT * FROM exin");
+	$r = mysqli_fetch_array($q);
+	$date = $r['datee'];
+	// $ydate = date('Y-m-d',strtotime("-1 days"));
+	$newdate = strtotime ( "-1 days" , strtotime($date) ) ;
+	$ydate = date ( 'Y-m-d' , $newdate );	
 	
 	//total income 
 	$sql = "SELECT expense_id,datee,SUM(amount) as ytotal_expense FROM expenses WHERE datee<='$ydate' ";

@@ -433,6 +433,62 @@ date_default_timezone_set("Asia/Karachi");
                 </div>
             </div>
             <div class="row">
+              <div class="col-md-6">
+                    <div class="portlet light bordered">
+                        <div class="portlet-title">
+                            <div class="caption font-red-sunglo">
+                                <i class="icon-settings font-red-sunglo"></i>
+                                <span class="caption-subject bold uppercase"><?php $text = isset($_SESSION['disable_btn'])?'View':'Update Entries'; echo $text; ?> Current Date:</span>
+                            </div>
+                        </div>
+                        <div class="portlet-body form">
+                           <?php
+                                if(!isset($_SESSION['disable_btn']) )
+                                {?>
+                            <form class="form-horizontal" id="exin_form" role="form" method="post">
+                                <div class="form-body">
+                                    <div class="row">
+                                      <?php
+                                        $q = mysqli_query($mycon,"SELECT * from exin");
+                                        $r = mysqli_fetch_array($q);
+                                      ?>
+                                        <div class="form-group">
+                                            <div id="exin_id_div" class="hidden">
+                                                  <label class="col-md-4 control-label">ID:</label>
+                                                  <div class="col-md-5">
+                                                    <input type="text" class="form-control" id="exin_id" name="exin_id" required readonly value="<?php echo $r['exin_id']; ?>" >
+                                                  </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row"> 
+                                        <div class="form-group">
+
+                                            <label class="col-md-4 control-label">Date:</label>
+                                            <div class="col-md-5">
+                                              <input type="date" class="form-control" id="exin_datee" name="exin_datee" value="<?php echo $r['datee']; ?>" required tabindex="" />
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <div class="col-md-5 col-md-push-4">
+                                                <div class="">
+                                                    <button type="submit" class="btn blue" id="" tabindex="">Update</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <?php }//END OF IF?> 
+                        </div>
+                        <!-- Form ends -->
+                        <!-- end table -->
+                        
+                    </div> 
+                </div>
+            </div>
+            <div class="row">
                  <div class="col-md-6">
                      <!-- BEGIN EXAMPLE TABLE PORTLET-->
                      <div class="portlet light bordered">
@@ -1505,5 +1561,31 @@ $(document).ready(function(){
        $('#idatee').focus();
     });
 
+    function updateExinDate(exin_id,datee)
+    {
+      $.ajax({
+        url:'ajax/exin/update.php',
+        data:{exin_id:exin_id,datee:datee},
+        type:'POST',
+        dataType:'JSON',
+        success:function(data){
+          if(data['updated']=='true')
+          {
+            alertMessage('Entries Date Updated Successfully.','success');
+            loadData(); iloadData();
+          }
+          else
+            alertMessage('Entries Date Not Updated!','error');
+        },
+        error:function(){alertMessage('Error in Entries Date Call.','error');}
+      });
+    }
+
+    $('#exin_form').submit(function(e) {
+      e.preventDefault();
+      var datee   = $('#exin_datee').val(),
+          exin_id = $('#exin_id').val();
+      updateExinDate(exin_id,datee);
+    });
  });
 </script>

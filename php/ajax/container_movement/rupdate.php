@@ -3,6 +3,7 @@
 	
 	$json['updated'] = 'false';
 	$cm_id 			 = $_GET['cm_id'];
+	$ce_ids 	 	 = str_replace( str_split("[]"),"",$_GET['ce_ids']);
 	$rent 			 = $_GET['rent'];
 	$lolo_charges    = 0;
 	$weight_charges  = 0;
@@ -16,7 +17,7 @@
 
 	$a = $rent + $lolo_charges + $weight_charges;
 
-	$q = mysqli_query($mycon,"SELECT * FROM container_entry WHERE status=1 AND cm_id=".$cm_id);
+	$q = mysqli_query($mycon,"SELECT * FROM container_entry WHERE status=1 AND  ce_id IN (".$ce_ids.") AND cm_id=".$cm_id);
 	while ( $r=mysqli_fetch_array($q) ) 
 	{
 		$advance = $r['advance'];

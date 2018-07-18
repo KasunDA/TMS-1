@@ -4,10 +4,13 @@
 	date_default_timezone_set("Asia/Karachi");
 
 	$json=NULL;
-	$date = date('Y-m-d');
+	$n  = 0;
+	
+	$q = mysqli_query($mycon,"SELECT * FROM exin");
+	$r = mysqli_fetch_array($q);
+	$date = $r['datee'];
 
 	$q = mysqli_query($mycon,"SELECT * FROM expenses WHERE status=1 AND datee='$date'  ORDER BY expense_id DESC ");
-	$n  = 0;
 	while($r = mysqli_fetch_array($q))
 	{
 		if($r['cmp_id']!= NULL )
