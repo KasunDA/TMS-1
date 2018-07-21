@@ -531,6 +531,7 @@ date_default_timezone_set("Asia/Karachi");
                             <i class="icon-settings font-red-sunglo"></i>
                             <span class="caption-subject bold uppercase">Debit:</span>
                         </div>
+                        <img src="ajax/loading.gif" id="vloading" style="margin-left: 30%; display: none;" height="40" width="40" >
                     </div>
                     <div class="portlet-body form">
                         <form class="form-horizontal" role="form" id="voucher_form" method="post">
@@ -699,6 +700,29 @@ include 'footer.php';
     $('.table_print_btn').trigger('click');
   });
 
+  function removeA(arr) 
+  {
+    var what, a = arguments, L = a.length, ax;
+    while (L > 1 && arr.length) {
+        what = a[--L];
+        while ((ax= arr.indexOf(what)) !== -1) {
+            arr.splice(ax, 1);
+        }
+    }
+    return arr;
+  }
+
+  function removeArr(arr)
+  {
+   var what, a = arguments, L = a.length, ax;
+    while (L > 1 && arr.length) {
+        what = a[--L];
+        if ((ax= arr.indexOf(what)) !== -1) {
+            arr.splice(ax, 1);
+        }
+    }
+    return arr; 
+  }
     // $('#mytable').on( 'focusout', 'tbody td:not(:first-child)', function (e) {
         
     //     var i = $(this).closest('tr').attr('index');
@@ -756,13 +780,36 @@ include 'footer.php';
       $(this).parents("tr").toggleClass("active");
       $(this).parents("tr").toggleClass("selectedd");
 
+      if( $(this).parents("tr").hasClass('active') )
+        $(this).parents("tr").css('color','#000');
+      else
+      {
+        if( $(this).parents("tr").css('background-color') == '#32c5d2' || $(this).parents("tr").css('background-color') =='rgb(50, 197, 210)' )
+          $(this).parents("tr").css('color','#fff');
+        else
+          $(this).parents("tr").css('color','#000');
+      }
+
       var i         = $(this).parents('tr').attr('index'),
       tableData     = $('#mytable').DataTable().row(i).data(),
+      t_id          = tableData[2],
+      v_id          = $(this).parents('tr').find('td').eq(14).attr('id'),
+      v_number      = tableData[14],
       total_rent    = tableData[17],
       total_diesel  = tableData[19],
-      total_rm      = tableData[20], 
+      total_rm      = tableData[20],
       balance_trips = tableData[21];
 
+      if( $(this).parents('tr').attr('paid_status') == 1 )
+      {
+        if( !$(this).parents('tr').hasClass('selectedd') )
+          $('#total_trips').html( $('#total_trips').html()/1 -1 );
+        else
+          $('#total_trips').html( $('#total_trips').html()/1 + 1 );
+    
+        return;
+      }
+      
       if( !$(this).parents('tr').hasClass('selectedd') )
       {                  
         $('#total_trips').html( $('#total_trips').html()/1 -1 );
@@ -770,6 +817,10 @@ include 'footer.php';
         $('#total_diesel').html( $('#total_diesel').html()/1 - total_diesel);
         $('#total_rm').html( $('#total_rm').html()/1 - total_rm);
         $('#balance_trips').html( $('#balance_trips').html()/1 - balance_trips);
+
+        removeA(ce_ids,t_id);
+        removeA(vehicle_number,t_id+'-'+v_number+'-'+balance_trips);
+        removeArr(vids,v_id);
       }
       else
       {
@@ -777,11 +828,14 @@ include 'footer.php';
         $('#total_rent').html( parseFloat($('#total_rent').html()) + parseFloat(total_rent) ) ;
         $('#total_diesel').html( parseFloat($('#total_diesel').html()) + parseFloat(total_diesel) ) ;
         $('#total_rm').html( parseFloat( $('#total_rm').html() ) + parseFloat(total_rm) );
-        $('#balance_trips').html( parseFloat( $('#balance_trips').html() ) + parseFloat(balance_trips) ); 
+        $('#balance_trips').html( parseFloat( $('#balance_trips').html() ) + parseFloat(balance_trips) );
+
+        ce_ids.push(t_id);
+        vehicle_number.push(t_id+'-'+v_number+'-'+balance_trips);
+        vids.push(v_id);
       }
-
       calculations();
-
+      getRecords(from_date,to_date,null,vids,voucher_numbers);
     });
 
       //RESET BUTTON CODE
@@ -818,19 +872,16 @@ include 'footer.php';
 
    });
 
-
     function getId()
     {
-        $.ajax({
-          url :'ajax/voucher/fetchid_voucher.php',
-          dataType:'JSON',
-          success: function(data)
-          {
-              $('#voucher_number').val(data['voucher_number']);
-          },
-          error: function(){ alertMessage('Error Getting  Voucher ID.','error'); }
-
-        })
+      $.ajax({
+        url :'ajax/voucher/fetchid_voucher.php',
+        dataType:'JSON',
+        success: function(data){
+          $('#voucher_number').val(data['voucher_number']);
+        },
+        error: function(){ alertMessage('Error Getting Voucher ID.','error'); }
+      });
     }
 
     getId();
@@ -1051,7 +1102,8 @@ include 'footer.php';
                                       '<br/><br/> <div class="row" style="page-break-inside: avoid;">'+ 
                                       $('#mrTable_div').html()+
                                       '<div class="col-md-12" style="margin-top:10%;"> <h3 style="margin-left:20px;"> Receivers Signature:_________________________________ </h3> </div>'+
-                                      '<img src="http://<?php echo $_SERVER['SERVER_NAME']=='panel.buttbrothers.com.pk'?$_SERVER['SERVER_NAME']:$_SERVER['SERVER_NAME'].'/TMS' ?>/php/ajax/footer.jpg" style="width:100%; margin-top:10px;" /> </div>');
+                                      '</div>');
+                            //'<img src="http://<?php //echo $_SERVER['SERVER_NAME']=='panel.buttbrothers.com.pk'?$_SERVER['SERVER_NAME']:$_SERVER['SERVER_NAME'].'/TMS' ?>/php/ajax/footer.jpg" style="width:100%; margin-top:10px;" /> 
 
                       }
                     }
@@ -1128,8 +1180,10 @@ include 'footer.php';
 
     myDataTable();
 
-    var ce_ids         = new Array(),
-        vehicle_number = new Array();
+    var ce_ids           = new Array(),
+        vids             = new Array(),
+        voucher_numbers  = new Array(),
+        vehicle_number   = new Array();
 
     function loadData(from_datee,to_datee,from_yard_id,to_yard_id,coa_id,consignee_id,movement,empty_terminal_id,container_number,bl_cro_number,container_size,container_id,vehicle_id,owner_name,line_id,paid_status)
     {
@@ -1148,18 +1202,15 @@ include 'footer.php';
                     total_trips      = 0,
                     balance_trips    = 0,
                     total_diesel     = 0,
-                    total_rent       = 0,
-                    vids             = new Array('0'),
-                    voucher_numbers  = new Array();
-
+                    total_rent       = 0;
+                    
+                    vids            = new Array();
                     ce_ids          = new Array();
                     vehicle_number  = new Array();
+                    voucher_numbers  = new Array();
 
-
-                if( vehicle_id == null )
-                {
+                if(vehicle_id==null)
                   vids = data['vids'];
-                }
 
                 vehicle_number  = data['vnumbers'];
                 voucher_numbers = data['voucher_numbers'];
@@ -1171,21 +1222,21 @@ include 'footer.php';
                 var table = $.each(data,function(index,value){
 
                     if( isNaN(index) )
-                    {
                       return;
-                    }
 
-                    balance_trips +=  value['balance']/1;
-                    total_diesel  +=  value['diesel']/1;
-                    total_rent    +=  value['rent']/1;
-                    
                     ce_ids.push(value['transaction_id']);
 
                     var c;
                     if( value['paid_status'] == 1 )
                       c = 'style="background-color:#32c5d2; color: #fff;"';
-
-                    $('#mytable tbody').append('<tr class="odd gradeX selectedd" index="'+i+'" '+c+'>'+
+                    else
+                    {
+                      balance_trips +=  value['balance']/1;
+                      total_diesel  +=  value['diesel']/1;
+                      total_rent    +=  value['rent']/1;  
+                    }
+                    
+                    $('#mytable tbody').append('<tr class="odd gradeX selectedd" paid_status="'+value['paid_status']+'" index="'+i+'" '+c+'>'+
                             
                             '<td>'+
                               '<label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">'+
@@ -1226,37 +1277,30 @@ include 'footer.php';
                 });
 
                 myDataTable();
-                // $('#total_amount').html(getTotal('total_amount'));
 
                 $('#total_trips').html(total_trips);
                 $('#balance_trips').html(balance_trips);
                 $('#total_diesel').html(total_diesel);
                 $('#total_rent').html(total_rent);
-
                 getRecords(from_datee,to_datee,vehicle_id,vids,voucher_numbers);
 
                 //Voucher Form
                 if( data !=null && ( vehicle_id!=0 || owner_name !='' ) )
                 {
-                    if( $('#owner_name').html() == 'butt brothers' )
-                    {
-                        $('#voucher_div').hide();
-                    }
-                    else
-                    {
-                        $('#voucher_div').show();
-                    }
+                  if( $('#owner_name').html() == 'butt brothers' )
+                    $('#voucher_div').hide();
+                  else
+                    $('#voucher_div').show();
                 }
                 else
-                {
-                    $('#voucher_div').hide();
-                } 
+                  $('#voucher_div').hide();
             },
             error:function(){ alertMessage("Failed Fetch Ajax Call.",'error'); $('#loading').hide(); }
         });
         
     }
 
+    var ge_ids = new Array();
     //Repair and Maintenance Table Code
     function loadMR(from_datee,to_datee,vehicle_id,vids)
     {
@@ -1267,18 +1311,21 @@ include 'footer.php';
         dataType:'JSON',
         success:function(data){
             var n=1;
+            ge_ids = data['ge_ids'];
 
             $('#mrTable tbody').html("");
-
             $.each(data,function(index,value){
+                
+                if(isNaN(index))
+                  return;
 
                 $('#mrTable tbody').append('<tr class="odd gradeX">'+
-                            '<td>'+n+'</td>'+
-                            '<td>'+value['datee']+'</td>'+
-                            '<td>'+value['description']+'</td>'+
-                            '<td id="'+value['vehicle_id']+'">'+value['vehicle_number']+'</td>'+
-                            '<td>'+value['amount']+'</td>'+
-                            '</tr>');
+                    '<td>'+n+'</td>'+
+                    '<td>'+value['datee']+'</td>'+
+                    '<td>'+value['description']+'</td>'+
+                    '<td id="'+value['vehicle_id']+'">'+value['vehicle_number']+'</td>'+
+                    '<td>'+value['amount']+'</td>'+
+                '</tr>');
                   n++;
                 });
         },
@@ -1286,45 +1333,24 @@ include 'footer.php';
       })
     }
 
-    // NOT USING
-    function getSelectedRecords()
-    {
-      var tableData     = $('#mytable').Datatable().rows().data(),
-          total_trips   = 0,
-          balance_trips = 0,
-          total_diesel  = 0,
-          total_rm      = 0,
-          index         = 0; 
-                
-      for(index ; index <= tableData.length ; index++ )
-      {
-          // total_trips   += tableData[17];
-          total_diesel  += tableData[18];
-          balance_trips += tableData[19]; //continue
-      }
-
-      $('#total_trips').html(tableData.length);
-      $('#balance_trips').html(balance_trips);
-      $('#total_diesel').html(total_diesel);
-      $('#total_rm').html(total_rm);
-
-      calculations();        
-    }
-
     function calculations(){
       // alert( "advance taken owner="+$('#advance_taken_owner').html()+ " advance taken"+ $('#advance_taken').html() + " total diesel = " + $('#total_diesel').html() + " total repair maintenance =  " + $('#total_rm').html() );
       // + $('#total_diesel').html()/1
       
       $('#total_balance').html( $('#balance_trips').html()/1 - ( $('#advance_taken_owner').html()/1 + $('#advance_taken').html()/1 + $('#total_rm').html()/1 + $('#driver_salary').html()/1  + $('#paid_salary').html()/1 ) );
+
+      var total_balance = $('#total_balance').html()/1;
+      if( total_balance <= 0 )
+        $('#amount').attr({'max':0,'min':0});
+      else  
+        $('#amount').attr({'max':$('#total_balance').html(),'min':$('#total_balance').html()});
     }
  
     function loadSummary(from_datee,to_datee,empty_terminal_id,from_yard_id,to_yard_id,coa_id,movement,line_id)
     {
-        
         var ids = [],
             tableData = $('#mytable').DataTable().rows().data();
             
-        
         for(var index = 0 ; index < tableData.length ; index++ )
         {
           var table     = $('#mytable').DataTable(),
@@ -1334,20 +1360,8 @@ include 'footer.php';
               $checkbox = $tr.find('td:first-child input[type="checkbox"]');
           
           if($checkbox.is(':checked'))
-          {
-            // $checkbox.prop('checked', false);
             ids.push( rowData[2] );
-          }
-
-          // if( cb.hasClass('faded') )
-          // {
-          //   ids.push( rowData[2] );
-          // }
-
         }
-
-        // alert("ids are "+ids);
-
 
         $.ajax({
             url:'ajax/container_movement/summary.php?from_datee='+from_datee+'&to_datee='+to_datee+'&empty_terminal_id='+empty_terminal_id+'&from_yard_id='+from_yard_id+'&to_yard_id='+to_yard_id+'&coa_id='+coa_id+'&movement='+movement+'&line_id='+line_id,
@@ -1361,9 +1375,7 @@ include 'footer.php';
                     m45_total  = 0,
                     vr_total   = 0;
 
-    
-                $('#mytable1 tbody').html("");
-                
+                $('#mytable1 tbody').html("");                
                 var t = $.each(data,function(index,value){
 
                   if( value['20']==0 && value['40']==0 && value['45']==0)
@@ -1392,10 +1404,8 @@ include 'footer.php';
                             '<td>'+value['hr_total']+'</td>'+
                             
                             '</tr>');
-
                     n++; 
                 }); //END OF EACH
-
 
                 $.when(t).done(function(){
 
@@ -1418,35 +1428,23 @@ include 'footer.php';
                 });
 
                  printPDF();
-
-                
             },
             error:function(){ alertMessage("Failed Fetch Summary Ajax Call.",'error') }
         });
     }
 
-    function getTotal(name)
-    {
-        var sum = 0,
-            value = null;
-
-        $('td[name="'+name+'"]').each(function(){
-            value = $(this).text()/1;
-
-            if( !isNaN(value) && value != null )
-            {
-                sum +=value; 
-            }
-        });
-
-        return sum;
+    Array.prototype.unique = function() {
+      return this.filter(function (value, index, self) { 
+        return self.indexOf(value) === index;
+      });
     }
 
     function getRecords(from_datee,to_datee,vehicle_id,vids,voucher_numbers)
     {
+      var vvids = vids.unique();
         $.ajax({
             url:'ajax/vehicle/vehicle_records.php',
-            data:{from_datee:from_datee,to_datee:to_datee,vehicle_id:JSON.stringify(vehicle_id),vids:JSON.stringify(vids),voucher_numbers:JSON.stringify(voucher_numbers)},
+            data:{from_datee:from_datee,to_datee:to_datee,vehicle_id:JSON.stringify(vehicle_id),vids:JSON.stringify(vvids),voucher_numbers:JSON.stringify(voucher_numbers)},
             type:'GET',
             dataType:"JSON",
             success: function(data){
@@ -1461,33 +1459,41 @@ include 'footer.php';
 
                     calculations();
 
-                    loadMR(from_datee,to_datee,vehicle_id,vids);
+                    loadMR(from_datee,to_datee,vehicle_id,vvids);
                 });
             },
             error: function(){ alertMessage("Failed Fetch Records.",'error') }, 
         });
     }
 
-    function add(vehicle_number,datee,method,check_number,bank_id,amount,description,ce_ids)
+    function add(vehicle_number,datee,method,check_number,bank_id,amount,description,ce_ids,ge_ids,vids,from_date,to_date)
     {
-        $.ajax({
-            url:'ajax/vehicle/voucher_add.php',
-            data:{vehicle_number:JSON.stringify(vehicle_number),datee:datee,method:method,check_number:check_number,bank_id:bank_id,amount:amount,description:description,ce_ids:JSON.stringify(ce_ids)},
-            type:"POST",
-            dataType:'JSON',
-            success:function(data){
-                if(data['inserted'] == 'true')
-                {
-                  $('#btn_reset').trigger('click');
-                  $('#form').trigger('submit');
-                }
-                else
-                {
-                  alertMessage("Error in Voucher Add.",'error')    
-                }
-            },
-            error:function(){ alertMessage("Error in Voucher Add.",'error') }
-        });
+      $('#btn_submit').attr("disabled", 'disabled');
+      $('#vloading').show();   
+      var vvids = vids.unique();
+      $.ajax({
+          url:'ajax/vehicle/voucher_add.php',
+          data:{vehicle_number:JSON.stringify(vehicle_number),datee:datee,method:method,check_number:check_number,bank_id:bank_id,amount:amount,description:description,ce_ids:JSON.stringify(ce_ids),ge_ids:JSON.stringify(ge_ids),vids:JSON.stringify(vvids),from_date:from_date,to_date:to_date},
+          type:"POST",
+          dataType:'JSON',
+          success:function(data){
+              if(data['inserted'] == 'true')
+              {
+                $('#btn_reset').trigger('click');
+                $('#form').trigger('submit');
+              }
+              else
+                alertMessage("Error in Voucher Add.",'error')    
+
+              $('#vloading').hide();   
+              $('#btn_submit').removeAttr("disabled", 'disabled');
+          },
+          error:function(){ 
+            alertMessage("Error in Voucher Add.",'error');
+            $('#vloading').hide();   
+            $('#btn_submit').removeAttr("disabled", 'disabled');
+          }
+      });
     }
 
     var from_date          = null,
@@ -1520,7 +1526,6 @@ include 'footer.php';
             line_id = $('#line_id').val(),
             paid_status = $('#paid_status').val();
 
-
         loadData(from_datee,to_datee,from_yard_id,to_yard_id,coa_id,consignee_id,movement,empty_terminal_id,container_number,bl_cro_number,container_size,container_id,vehicle_id,owner_name,line_id,paid_status);
 
         from_date          = from_datee;
@@ -1549,7 +1554,7 @@ include 'footer.php';
            amount = $('#amount').val(),
            description = $('#description').val();
 
-        add(vehicle_number,datee,method,check_number,bank_id,amount,description,ce_ids);
+        add(vehicle_number,datee,method,check_number,bank_id,amount,description,ce_ids,ge_ids,from_date,to_date);
     });
 
     function printPDF() {

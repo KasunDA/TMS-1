@@ -1,11 +1,9 @@
 <?php 
-
 	require '../../connection.php';
-
+	
 	$json=NULL;
-
+	$n = 0;
 	$q = mysqli_query($mycon,'SELECT * FROM container_movement WHERE status=1 ORDER BY cm_id DESC ');
-	$n  = 0;
 	while($r = mysqli_fetch_array($q))
 	{
 		$json[$n]['cm_id'] = $r['cm_id'];
@@ -70,7 +68,6 @@
 		$json[$n]['job_number'] = $r['job_number'];
 		$json[$n]['index_number'] = $r['index_number'];
 		
-
 		$q1 = mysqli_query($mycon,"SELECT type from container where container_id=".$r['container_id']);
 		if($r1 = mysqli_fetch_array($q1))
 		{ 
@@ -78,8 +75,9 @@
 			$json[$n]['container_type'] = $r1['type'];
 		}
 
-		$json[$n]['lolo_charges'] = $r['lolo_charges'];
-		$json[$n]['weight_charges'] = $r['weight_charges'];
+		$json[$n]['lolo_charges']	 = $r['lolo_charges'];
+		$json[$n]['weight_charges']  = $r['weight_charges'];
+		$json[$n]['advance_charges'] = $r['advance_charges'];
 
 		$n++;
 	}

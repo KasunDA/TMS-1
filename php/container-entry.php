@@ -4,21 +4,6 @@ include 'nav.php';
 
 require 'connection.php';
 date_default_timezone_set("Asia/Karachi");
-
-// $_SESSION['cm_id'] = 4;
-// $_SESSION['lot_of'] = 3;
-// $_SESSION['datee'] = '2018-04-21';
-// $_SESSION['agent_id'] = 2;
-// $_SESSION['coa_id'] = 8;
-// $_SESSION['consignee_id'] = 3;
-// $_SESSION['movement'] = 'export';
-// $_SESSION['empty_terminal_id'] = 3;
-// $_SESSION['from_yard_id'] = 6;
-// $_SESSION['to_yard_id'] = 2;
-// $_SESSION['container_size'] = 45;
-// $_SESSION['party_charges'] = 20000;
-// $_SESSION['line_id'] = 2;
-
  ?>
 
     <!-- BEGIN CONTENT -->
@@ -54,489 +39,488 @@ date_default_timezone_set("Asia/Karachi");
                           <?php
                                 if(!isset($_SESSION['disable_btn']) )
                                 {?>
-                            <form class="form-horizontal <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'add_entry_form' ?>" role="form" method="post" autocomplete="off">
-                                <div class="form-body">
-                                   
-                                    <div class="row"> 
-                                        <div class="form-group">
-                                                <!-- id="ce_id_div" class="hidden" -->
-                                                <div  >
-                                                  <label class="col-md-2 control-label">Transaction ID:</label>
-                                                  <div class="col-md-3">
-                                                    <input type="text" class="form-control" id="ce_id" tabindex="-1" name="ce_id" required readonly >
+                          <form class="form-horizontal <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'add_entry_form' ?>" role="form" method="post" autocomplete="off">
+                            <div class="form-body">   
+                              <div class="row"> 
+                                <div class="form-group">
+                                  <!-- id="ce_id_div" class="hidden" -->
+                                  <div  >
+                                    <label class="col-md-2 control-label">Transaction ID:</label>
+                                    <div class="col-md-3">
+                                      <input type="text" class="form-control" id="ce_id" tabindex="-1" name="ce_id" required readonly >
+                                    </div>
+                                  </div>
+                      
+                                  <label class="col-md-2 control-label">Transaction Date:</label>
+                                  <div class="col-md-3">
+                                    <?php
+                                      $last_date = date('Y-m-d');
+                                      $q = mysqli_query($mycon,'SELECT * FROM container_movement ORDER BY cm_id DESC LIMIT 1');
+                                      
+                                      if($r = mysqli_fetch_array($q))
+                                      {
+                                        $last_date = $r['datee'];
+                                      }
+                                    ?>
+                                    <input type="date" class="form-control" id="datee" name="datee" required tabindex="1" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) { echo 'value="'.$_SESSION['datee'].'" readonly disabled';} else{ echo 'value="'.$last_date.'"'; } ?>  />
+                                  </div>
+                                </div>  
+                              </div>
+                              <div class="row"> 
+                                <div class="form-group">
+                                  <label class="col-md-2 control-label"> Clearing Agent:</label>
+                                  <div class="col-md-3">
+                                       <select class="form-control" name="agent_id" id="agent_id" required tabindex="2" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'disabled' ?> >
+                                           <option value="">Select Agent</option>
+                                           <?php 
+
+                                            $q = mysqli_query($mycon,'SELECT agent_id,name from agent where status=1 ORDER BY agent_id DESC');
+
+                                            while( $r = mysqli_fetch_array($q) )
+                                              {?>
+                                                <option value="<?php echo $r['agent_id']; ?>"><?php echo $r['name']; ?></option>
+                                            <?php } //END OF WHILE ?>
+                                            
+                                       </select>
+                                  </div>
+
+                                  <div class="col-md-1">
+                                    <button class="btn btn-xs green agent_id" para="agent_id"  type="button">       
+                                      <i class="fa fa-refresh"></i>
+                                    </button>
+                                  </div>
+                                       
+                                </div> 
+                              </div>
+                              <div class="row"> 
+                                    <div class="form-group">
+                                          <label class="col-md-2 control-label">On Account Of:</label>
+                                          <div class="col-md-3">
+                                              <select class="form-control" id="coa_id" name="coa_id" required tabindex="3" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'disabled' ?> >
+                                                  <option value="">Select Account</option>
+                                                  <?php 
+
+                                                    $q = mysqli_query($mycon,'SELECT coa_id,short_form from chart_of_account where status=1 ORDER BY coa_id DESC');
+
+                                                    while( $r = mysqli_fetch_array($q) )
+                                                      {?>
+                                                        <option value="<?php echo $r['coa_id']; ?>"><?php echo $r['short_form']; ?></option>
+                                                    <?php } //END OF WHILE ?>
+                                              </select>
+                                          </div>
+
+                                          <div class="col-md-1">
+
+                                                      <button class="btn btn-xs green coa_id" para="coa_id"  type="button">
+                                                      
+                                                        <i class="fa fa-refresh"></i>
+                                                      
+                                                      </button>
+
+                                          </div>
+
+                                          <div class="col-md-4">
+                                            <input type="text" class="form-control" placeholder="Full Form" id="coa_id_full_form" tabindex="-1" readonly>
+                                          </div>
+                                      </div> 
+                              </div>
+                                      <div class="row"> 
+                                      <div class="form-group">
+                                            <label class="col-md-2 control-label">Consignee:</label>
+                                            <div class="col-md-3">
+                                                <select class="form-control" id="consignee_id" name="consignee_id" required tabindex="4" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'disabled' ?> >
+                                                    <option value="">Select Consignee</option>
+                                                    <?php 
+
+                                                      $q = mysqli_query($mycon,'SELECT consignee_id,short_form from consignee where status=1 ORDER BY consignee_id DESC');
+
+                                                      while( $r = mysqli_fetch_array($q) )
+                                                        {?>
+                                                          <option value="<?php echo $r['consignee_id']; ?>"><?php echo $r['short_form']; ?></option>
+                                                      <?php } //END OF WHILE ?>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-1">
+
+                                                        <button class="btn btn-xs green consignee_id" para="consignee_id"  type="button">
+                                                        
+                                                          <i class="fa fa-refresh"></i>
+                                                        
+                                                        </button>
+
                                                   </div>
-                                                </div>
-                                    
-                                                <label class="col-md-2 control-label">Transaction Date:</label>
-                                                <div class="col-md-3">
-                                                  <?php
-                                                    $last_date = date('Y-m-d');
-                                                    $q = mysqli_query($mycon,'SELECT * FROM container_movement ORDER BY cm_id DESC LIMIT 1');
-                                                    
-                                                    if($r = mysqli_fetch_array($q))
-                                                    {
-                                                      $last_date = $r['datee'];
-                                                    }
-                                                  ?>
-                                                  <input type="date" class="form-control" id="datee" name="datee" required tabindex="1" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) { echo 'value="'.$_SESSION['datee'].'" readonly disabled';} else{ echo 'value="'.$last_date.'"'; } ?>  />
-                                                </div>
-                                         </div>  
-                                     </div>
-                                     <div class="row"> 
-                                           <div class="form-group">
-                                                 <label class="col-md-2 control-label"> Clearing Agent:</label>
-                                                 <div class="col-md-3">
-                                                     <select class="form-control" name="agent_id" id="agent_id" required tabindex="2" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'disabled' ?> >
-                                                         <option value="">Select Agent</option>
-                                                         <?php 
 
-                                                          $q = mysqli_query($mycon,'SELECT agent_id,name from agent where status=1 ORDER BY agent_id DESC');
+                                            <div class="col-md-4">
+                                              <input type="text" class="form-control" placeholder="Full Form" id="consignee_id_full_form" tabindex="-1" readonly>
+                                            </div>
+                                        </div> 
+                                  </div>
+                                <div class="row"> 
+                                      <div class="form-group">
+                                            <label class="col-md-2 control-label"> Movement:</label>
+                                            <div class="col-md-3">
+                                                <select class="form-control" id="movement" name="movement" tabindex="5" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'disabled' ?> >
+                                                    <option value="empty">Empty</option>
+                                                    <option value="import">Import</option>
+                                                    <option value="export">Export</option> 
+                                                    <option value="open_cargo">Open Cargo</option>
+                                                    <option value="detain">Detain</option> 
+                                                </select>
+                                            </div>
+                                            
+                                        </div> 
+                                  </div>
+                                  <div class="row"> 
+                                        <div class="form-group">
+                                              <label class="col-md-2 control-label"> Empty Terminal:</label>
+                                              <div class="col-md-3">
+                                                  <select class="form-control" id="empty_terminal_id" name="empty_terminal_id" required tabindex="6" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'disabled' ?> >
+                                                      <option value="">Select Terminal</option>
+                                                      <?php 
 
-                                                          while( $r = mysqli_fetch_array($q) )
-                                                            {?>
-                                                              <option value="<?php echo $r['agent_id']; ?>"><?php echo $r['name']; ?></option>
-                                                          <?php } //END OF WHILE ?>
-                                                          
-                                                     </select>
-                                                 </div>
+                                                      $q = mysqli_query($mycon,'SELECT yard_id,short_form from yard where status=1 ORDER BY yard_id DESC');
 
-                                                 <div class="col-md-1">
+                                                      while( $r = mysqli_fetch_array($q) )
+                                                        {?>
+                                                          <option value="<?php echo $r['yard_id']; ?>"><?php echo $r['short_form']; ?></option>
+                                                      <?php } //END OF WHILE ?>
+                                                  </select>
+                                              </div>
 
-                                                            <button class="btn btn-xs green agent_id" para="agent_id"  type="button">
-                                                            
-                                                              <i class="fa fa-refresh"></i>
-                                                            
-                                                            </button>
+                                              <div class="col-md-1">
 
-                                                </div>
-                                                 
-                                             </div> 
-                                       </div>
-                                     <div class="row"> 
-                                          <div class="form-group">
-                                                <label class="col-md-2 control-label">On Account Of:</label>
-                                                <div class="col-md-3">
-                                                    <select class="form-control" id="coa_id" name="coa_id" required tabindex="3" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'disabled' ?> >
-                                                        <option value="">Select Account</option>
-                                                        <?php 
+                                                        <button class="btn btn-xs green empty_terminal_id" para="empty_terminal_id"  type="button">
+                                                        
+                                                          <i class="fa fa-refresh"></i>
+                                                        
+                                                        </button>
 
-                                                          $q = mysqli_query($mycon,'SELECT coa_id,short_form from chart_of_account where status=1 ORDER BY coa_id DESC');
+                                                  </div>
 
-                                                          while( $r = mysqli_fetch_array($q) )
-                                                            {?>
-                                                              <option value="<?php echo $r['coa_id']; ?>"><?php echo $r['short_form']; ?></option>
-                                                          <?php } //END OF WHILE ?>
-                                                    </select>
-                                                </div>
-
-                                                <div class="col-md-1">
-
-                                                            <button class="btn btn-xs green coa_id" para="coa_id"  type="button">
-                                                            
-                                                              <i class="fa fa-refresh"></i>
-                                                            
-                                                            </button>
-
-                                                </div>
-
-                                                <div class="col-md-4">
-                                                  <input type="text" class="form-control" placeholder="Full Form" id="coa_id_full_form" tabindex="-1" readonly>
-                                                </div>
-                                            </div> 
-                                      </div>
-                                          <div class="row"> 
-                                          <div class="form-group">
-                                                <label class="col-md-2 control-label">Consignee:</label>
-                                                <div class="col-md-3">
-                                                    <select class="form-control" id="consignee_id" name="consignee_id" required tabindex="4" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'disabled' ?> >
-                                                        <option value="">Select Consignee</option>
-                                                        <?php 
-
-                                                          $q = mysqli_query($mycon,'SELECT consignee_id,short_form from consignee where status=1 ORDER BY consignee_id DESC');
-
-                                                          while( $r = mysqli_fetch_array($q) )
-                                                            {?>
-                                                              <option value="<?php echo $r['consignee_id']; ?>"><?php echo $r['short_form']; ?></option>
-                                                          <?php } //END OF WHILE ?>
-                                                    </select>
-                                                </div>
-
-                                                <div class="col-md-1">
-
-                                                            <button class="btn btn-xs green consignee_id" para="consignee_id"  type="button">
-                                                            
-                                                              <i class="fa fa-refresh"></i>
-                                                            
-                                                            </button>
-
-                                                      </div>
-
-                                                <div class="col-md-4">
-                                                  <input type="text" class="form-control" placeholder="Full Form" id="consignee_id_full_form" tabindex="-1" readonly>
-                                                </div>
-                                            </div> 
-                                      </div>
+                                              <div class="col-md-4">
+                                                <input type="text" class="form-control" placeholder="Full Form" id="empty_terminal_id_full_form" tabindex="-1" readonly>
+                                              </div>
+                                          </div> 
+                                    </div>
                                     <div class="row"> 
                                           <div class="form-group">
-                                                <label class="col-md-2 control-label"> Movement:</label>
+                                                <label class="col-md-2 control-label">From Destination:</label>
                                                 <div class="col-md-3">
-                                                    <select class="form-control" id="movement" name="movement" tabindex="5" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'disabled' ?> >
-                                                        <option value="empty">Empty</option>
-                                                        <option value="import">Import</option>
-                                                        <option value="export">Export</option> 
-                                                        <option value="open_cargo">Open Cargo</option>
-                                                        <option value="detain">Detain</option> 
+                                                    <select class="form-control" id="from_yard_id" name="from_yard_id" required tabindex="7" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'disabled' ?> >
+                                                        <option value="">Select Destination</option>
+                                                        <?php 
+
+                                                      $q = mysqli_query($mycon,'SELECT yard_id,short_form from yard where status=1 ORDER BY yard_id DESC');
+
+                                                      while( $r = mysqli_fetch_array($q) )
+                                                        {?>
+                                                          <option value="<?php echo $r['yard_id']; ?>"><?php echo $r['short_form']; ?></option>
+                                                      <?php } //END OF WHILE ?>
+                                                        
                                                     </select>
                                                 </div>
-                                                
+
+
+                                                <div class="col-md-1">
+
+                                                        <button class="btn btn-xs green from_yard_id" para="from_yard_id"  type="button">
+                                                        
+                                                          <i class="fa fa-refresh"></i>
+                                                        
+                                                        </button>
+
+                                                  </div>
+
+                                                <div class="col-md-4">
+                                                  <input type="text" class="form-control" placeholder="Full Form" id="from_yard_id_full_form" tabindex="-1" readonly>
+                                                </div>
                                             </div> 
                                       </div>
                                       <div class="row"> 
                                             <div class="form-group">
-                                                  <label class="col-md-2 control-label"> Empty Terminal:</label>
+                                                  <label class="col-md-2 control-label">To Destination:</label>
                                                   <div class="col-md-3">
-                                                      <select class="form-control" id="empty_terminal_id" name="empty_terminal_id" required tabindex="6" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'disabled' ?> >
-                                                          <option value="">Select Terminal</option>
-                                                          <?php 
+                                                      <select class="form-control" id="to_yard_id" name="to_yard_id" required tabindex="8" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'disabled' ?> >
+                                                          <option value="">Select Destination</option>
+                                                            <?php 
 
-                                                          $q = mysqli_query($mycon,'SELECT yard_id,short_form from yard where status=1 ORDER BY yard_id DESC');
+                                                      $q = mysqli_query($mycon,'SELECT yard_id,short_form from yard where status=1 ORDER BY yard_id DESC');
 
-                                                          while( $r = mysqli_fetch_array($q) )
-                                                            {?>
-                                                              <option value="<?php echo $r['yard_id']; ?>"><?php echo $r['short_form']; ?></option>
-                                                          <?php } //END OF WHILE ?>
+                                                      while( $r = mysqli_fetch_array($q) )
+                                                        {?>
+                                                          <option value="<?php echo $r['yard_id']; ?>"><?php echo $r['short_form']; ?></option>
+                                                      <?php } //END OF WHILE ?>
+                                                          
                                                       </select>
                                                   </div>
 
                                                   <div class="col-md-1">
 
-                                                            <button class="btn btn-xs green empty_terminal_id" para="empty_terminal_id"  type="button">
-                                                            
-                                                              <i class="fa fa-refresh"></i>
-                                                            
-                                                            </button>
+                                                        <button class="btn btn-xs green to_yard_id" para="to_yard_id"  type="button">
+                                                        
+                                                          <i class="fa fa-refresh"></i>
+                                                        
+                                                        </button>
 
-                                                      </div>
+                                                  </div>
 
                                                   <div class="col-md-4">
-                                                    <input type="text" class="form-control" placeholder="Full Form" id="empty_terminal_id_full_form" tabindex="-1" readonly>
+                                                    <input type="text" class="form-control" placeholder="Full Form" id="to_yard_id_full_form" tabindex="-1" readonly>
                                                   </div>
                                               </div> 
                                         </div>
                                         <div class="row"> 
-                                              <div class="form-group">
-                                                    <label class="col-md-2 control-label">From Destination:</label>
+                                            <div class="form-group">
+                                                      <label class="col-md-2 control-label">B/L OR CRO No:</label>
                                                     <div class="col-md-3">
-                                                        <select class="form-control" id="from_yard_id" name="from_yard_id" required tabindex="7" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'disabled' ?> >
-                                                            <option value="">Select Destination</option>
-                                                            <?php 
-
-                                                          $q = mysqli_query($mycon,'SELECT yard_id,short_form from yard where status=1 ORDER BY yard_id DESC');
-
-                                                          while( $r = mysqli_fetch_array($q) )
-                                                            {?>
-                                                              <option value="<?php echo $r['yard_id']; ?>"><?php echo $r['short_form']; ?></option>
-                                                          <?php } //END OF WHILE ?>
-                                                            
-                                                        </select>
+                                                      <input type="text" class="form-control" placeholder="0898664" id="bl_cro_number" name="bl_cro_number" required  <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) { echo 'value="'.$_SESSION['bl_cro_number'].'" readonly tabindex="-1" ';}?>  tabindex="9">
                                                     </div>
-
-
-                                                    <div class="col-md-1">
-
-                                                            <button class="btn btn-xs green from_yard_id" para="from_yard_id"  type="button">
-                                                            
-                                                              <i class="fa fa-refresh"></i>
-                                                            
-                                                            </button>
-
-                                                      </div>
-
+                                        
+                                                      <label class="col-md-1 control-label">Job No:</label>
                                                     <div class="col-md-4">
-                                                      <input type="text" class="form-control" placeholder="Full Form" id="from_yard_id_full_form" tabindex="-1" readonly>
+                                                      <input type="text" class="form-control" placeholder="123456" id="job_number" name="job_number" required <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) { echo 'value="'.$_SESSION['job_number'].'" readonly tabindex="-1" ';}?> tabindex="10">
                                                     </div>
-                                                </div> 
+                                             </div>  
+                                         </div>
+                                  
+                                         <div class="row"> 
+                                             <div class="form-group">
+                                                <label class="col-md-2 control-label">Container No:</label>
+                                                <div class="col-md-3">
+                                                  <input type="text" class="form-control" placeholder="APZU4846408" id="container_number" name="container_number" required tabindex="11"  <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) { echo 'autofocus=""';}?> >
+                                                </div>
+
+                                                       
+                                                     <div class="col-md-2 small-lab">
+                                                      <label class=" control-label">Index No</label>
+                                                       <input type="text" class="form-control" placeholder="123456" id="index_number" name="index_number" required  <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) { echo 'value="'.$_SESSION['index_number'].'" readonly tabindex="-1" ';}?> tabindex="12">
+                                                     </div>
+                                                
+                                                  <div class="col-md-3 small-lab2">
+                                                    <label class=" control-label">Container Size:</label>
+                                                      <select class="form-control" id="container_size" name="container_size" tabindex="13" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'disabled' ?> >
+                                                          <option value="20">20</option>
+                                                          <option value="40">40</option>
+                                                          <option value="45">45</option>
+                                                      </select>
+                                                  </div>
+                                                     
+                                              </div>  
                                           </div>
                                           <div class="row"> 
                                                 <div class="form-group">
-                                                      <label class="col-md-2 control-label">To Destination:</label>
+                                                      <label class="col-md-2 control-label">Vehicle No:</label>
                                                       <div class="col-md-3">
-                                                          <select class="form-control" id="to_yard_id" name="to_yard_id" required tabindex="8" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'disabled' ?> >
-                                                              <option value="">Select Destination</option>
-                                                                <?php 
+                                                          <select class="form-control" id="vehicle_id" name="vehicle_id" required tabindex="14" >
+                                                            <option value="">Select Vehicle</option>
+                                                              <?php 
 
-                                                          $q = mysqli_query($mycon,'SELECT yard_id,short_form from yard where status=1 ORDER BY yard_id DESC');
+                                                      $q = mysqli_query($mycon,'SELECT vehicle_id,vehicle_number from vehicle where status=1 ORDER BY vehicle_id DESC');
 
-                                                          while( $r = mysqli_fetch_array($q) )
-                                                            {?>
-                                                              <option value="<?php echo $r['yard_id']; ?>"><?php echo $r['short_form']; ?></option>
-                                                          <?php } //END OF WHILE ?>
-                                                              
+                                                      while( $r = mysqli_fetch_array($q) )
+                                                        {?>
+                                                          <option value="<?php echo $r['vehicle_id']; ?>"><?php echo $r['vehicle_number']; ?></option>
+                                                      <?php } //END OF WHILE ?>
                                                           </select>
                                                       </div>
 
                                                       <div class="col-md-1">
 
-                                                            <button class="btn btn-xs green to_yard_id" para="to_yard_id"  type="button">
-                                                            
-                                                              <i class="fa fa-refresh"></i>
-                                                            
-                                                            </button>
+                                                        <button class="btn btn-xs green vehicle_id" para="vehicle_id"  type="button">
+                                                        
+                                                          <i class="fa fa-refresh"></i>
+                                                        
+                                                        </button>
 
                                                       </div>
 
+
                                                       <div class="col-md-4">
-                                                        <input type="text" class="form-control" placeholder="Full Form" id="to_yard_id_full_form" tabindex="-1" readonly>
+                                                        <input type="text" class="form-control" placeholder="Owner Name" id="vehicle_id_full_form" tabindex="-1" readonly>
                                                       </div>
                                                   </div> 
                                             </div>
                                             <div class="row"> 
-                                                <div class="form-group">
-                                                          <label class="col-md-2 control-label">B/L OR CRO No:</label>
-                                                        <div class="col-md-3">
-                                                          <input type="text" class="form-control" placeholder="0898664" id="bl_cro_number" name="bl_cro_number" required  <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) { echo 'value="'.$_SESSION['bl_cro_number'].'" readonly tabindex="-1" ';}?>  tabindex="9">
-                                                        </div>
-                                            
-                                                          <label class="col-md-1 control-label">Job No:</label>
-                                                        <div class="col-md-4">
-                                                          <input type="text" class="form-control" placeholder="123456" id="job_number" name="job_number" required <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) { echo 'value="'.$_SESSION['job_number'].'" readonly tabindex="-1" ';}?> tabindex="10">
-                                                        </div>
-                                                 </div>  
-                                             </div>
-                                      
-                                             <div class="row"> 
-                                                 <div class="form-group">
-                                                    <label class="col-md-2 control-label">Container No:</label>
-                                                    <div class="col-md-3">
-                                                      <input type="text" class="form-control" placeholder="APZU4846408" id="container_number" name="container_number" required tabindex="11"  <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) { echo 'autofocus=""';}?> >
-                                                    </div>
-
-                                                           
-                                                         <div class="col-md-2 small-lab">
-                                                          <label class=" control-label">Index No</label>
-                                                           <input type="text" class="form-control" placeholder="123456" id="index_number" name="index_number" required  <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) { echo 'value="'.$_SESSION['index_number'].'" readonly tabindex="-1" ';}?> tabindex="12">
-                                                         </div>
-                                                    
-                                                      <div class="col-md-3 small-lab2">
-                                                        <label class=" control-label">Container Size:</label>
-                                                          <select class="form-control" id="container_size" name="container_size" tabindex="13" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'disabled' ?> >
-                                                              <option value="20">20</option>
-                                                              <option value="40">40</option>
-                                                              <option value="45">45</option>
-                                                          </select>
-                                                      </div>
+                                                  <div class="form-group">
+                                                        <label class="col-md-2 control-label">Advance:</label>
                                                          
-                                                  </div>  
+                                                        <div class="col-md-2">
+                                                          <input type="number" min="0" class="form-control" placeholder="Advance" required id="advance" name="advance" tabindex="15">
+                                                        </div>
+
+                                                        <label class="col-md-1 control-label">Rent:</label>
+                                                        <div class="col-md-2">
+                                                          <input type="number" min="0" class="form-control" placeholder="Rent" id="rent" name="rent" tabindex="17" <?php if( isset( $_SESSION['rent'] ) && $_SESSION['rent'] != NULL ) { echo 'value="'.$_SESSION['rent'].'"';}?> >
+                                                        </div>
+
+                                                        <label class="col-md-1 control-label">Lolo Charges:</label>
+                                                        <div class="col-md-2">
+                                                          <input type="number" min="0" step="0.01" class="form-control" placeholder="lolo Charges" id="lolo_charges" name="lolo_charges" required  <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) { echo 'value="'.$_SESSION['lolo_charges'].'" readonly tabindex="-1" ';}?> tabindex="18">
+                                                        </div>
+                                                          
+                                                          
+                                                    </div> 
+
                                               </div>
                                               <div class="row"> 
                                                     <div class="form-group">
-                                                          <label class="col-md-2 control-label">Vehicle No:</label>
-                                                          <div class="col-md-3">
-                                                              <select class="form-control" id="vehicle_id" name="vehicle_id" required tabindex="14" >
-                                                                <option value="">Select Vehicle</option>
-                                                                  <?php 
-
-                                                          $q = mysqli_query($mycon,'SELECT vehicle_id,vehicle_number from vehicle where status=1 ORDER BY vehicle_id DESC');
-
-                                                          while( $r = mysqli_fetch_array($q) )
-                                                            {?>
-                                                              <option value="<?php echo $r['vehicle_id']; ?>"><?php echo $r['vehicle_number']; ?></option>
-                                                          <?php } //END OF WHILE ?>
-                                                              </select>
+                                                          
+                                                          <label class="col-md-2 control-label">Party Rent:</label>
+                                                          <div class="col-md-2">
+                                                            <input type="number" min="0" class="form-control" placeholder="Party Charges" id="party_charges" name="party_charges" required   <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo ' readonly tabindex="-1" ' ?> tabindex="19" />
                                                           </div>
 
-                                                          <div class="col-md-1">
-
-                                                            <button class="btn btn-xs green vehicle_id" para="vehicle_id"  type="button">
-                                                            
-                                                              <i class="fa fa-refresh"></i>
-                                                            
-                                                            </button>
-
+                                                          <label class="col-md-1 control-label">Balance:</label>
+                                                          <div class="col-md-2">
+                                                            <input type="number" class="form-control" placeholder="Balance" id="balance" name="balance" tabindex="-1" readonly >
                                                           </div>
 
-
-                                                          <div class="col-md-4">
-                                                            <input type="text" class="form-control" placeholder="Owner Name" id="vehicle_id_full_form" tabindex="-1" readonly>
+                                                          <label class="col-md-1 control-label">Diesel:</label>
+                                                          <div class="col-md-2">
+                                                            <input type="number" class="form-control" placeholder="Diesel" id="diesel" name="diesel" tabindex="20" min="0" required>
                                                           </div>
+                                                         
                                                       </div> 
+
+
                                                 </div>
-                                                <div class="row"> 
-                                                      <div class="form-group">
-                                                            <label class="col-md-2 control-label">Advance:</label>
-                                                             
-                                                            <div class="col-md-2">
-                                                              <input type="number" min="0" class="form-control" placeholder="Advance" required id="advance" name="advance" tabindex="15">
-                                                            </div>
 
-                                                            <label class="col-md-1 control-label">Rent:</label>
-                                                            <div class="col-md-2">
-                                                              <input type="number" min="0" class="form-control" placeholder="Rent" id="rent" name="rent" tabindex="17" <?php if( isset( $_SESSION['rent'] ) && $_SESSION['rent'] != NULL ) { echo 'value="'.$_SESSION['rent'].'"';}?> >
-                                                            </div>
+                                          
+                                          <div class="row"> 
+                                                <div class="form-group">
+                                                      <label class="col-md-2 control-label">Container Type:</label>
+                                                      <div class="col-md-3">
+                                                          <select class="form-control" id="container_id" name="container_id" required tabindex="21" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'disabled' ?> >
+                                                              <option value="">Select Container Type</option>
+                                                              <?php 
 
-                                                            <label class="col-md-1 control-label">Lolo Charges:</label>
-                                                            <div class="col-md-2">
-                                                              <input type="number" min="0" step="0.01" class="form-control" placeholder="lolo Charges" id="lolo_charges" name="lolo_charges" required  <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) { echo 'value="'.$_SESSION['lolo_charges'].'" readonly tabindex="-1" ';}?> tabindex="18">
-                                                            </div>
-                                                              
-                                                              
-                                                        </div> 
+                                                      $q = mysqli_query($mycon,'SELECT container_id,type from container where status=1 ORDER BY container_id DESC');
 
-                                                  </div>
-                                                  <div class="row"> 
-                                                        <div class="form-group">
-                                                              
-                                                              <label class="col-md-2 control-label">Party Rent:</label>
-                                                              <div class="col-md-2">
-                                                                <input type="number" min="0" class="form-control" placeholder="Party Charges" id="party_charges" name="party_charges" required   <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo ' readonly tabindex="-1" ' ?> tabindex="19" />
-                                                              </div>
-
-                                                              <label class="col-md-1 control-label">Balance:</label>
-                                                              <div class="col-md-2">
-                                                                <input type="number" class="form-control" placeholder="Balance" id="balance" name="balance" tabindex="-1" readonly >
-                                                              </div>
-
-                                                              <label class="col-md-1 control-label">Diesel:</label>
-                                                              <div class="col-md-2">
-                                                                <input type="number" class="form-control" placeholder="Diesel" id="diesel" name="diesel" tabindex="20" min="0" required>
-                                                              </div>
-                                                             
-                                                          </div> 
-
-
-                                                    </div>
-
-                                              
-                                              <div class="row"> 
-                                                    <div class="form-group">
-                                                          <label class="col-md-2 control-label">Container Type:</label>
-                                                          <div class="col-md-3">
-                                                              <select class="form-control" id="container_id" name="container_id" required tabindex="21" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'disabled' ?> >
-                                                                  <option value="">Select Container Type</option>
-                                                                  <?php 
-
-                                                          $q = mysqli_query($mycon,'SELECT container_id,type from container where status=1 ORDER BY container_id DESC');
-
-                                                          while( $r = mysqli_fetch_array($q) )
-                                                            {?>
-                                                              <option value="<?php echo $r['container_id']; ?>"><?php echo $r['type']; ?></option>
-                                                          <?php } //END OF WHILE ?>
-                                                               
-                                                              </select>
-                                                          </div>
-
-                                                          <div class="col-md-1">
-
-                                                            <button class="btn btn-xs green container_id" para="container_id"  type="button">
-                                                            
-                                                              <i class="fa fa-refresh"></i>
-                                                            
-                                                            </button>
-
-                                                          </div>
-  
-
-                                                          <label class="col-md-1 control-label">Lot Of :</label>
+                                                      while( $r = mysqli_fetch_array($q) )
+                                                        {?>
+                                                          <option value="<?php echo $r['container_id']; ?>"><?php echo $r['type']; ?></option>
+                                                      <?php } //END OF WHILE ?>
                                                            
-                                                          <div class="col-md-3">
-                                                            <input type="number" min="0"  class="form-control" placeholder="Lot Of" id="lot_of" name="lot_of" required  <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo ' readonly tabindex="-1"' ?> tabindex="22" />
-                                                          </div>
-                                                           
-                                                      </div> 
-                                                </div>
-                                                <div class="row"> 
-                                                      <div class="form-group">
-                                                            <label class="col-md-2 control-label">Shipping Line:</label>
-                                                            <div class="col-md-3">
-                                                                <select class="form-control" id="line_id" name="line_id" required tabindex="23" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'disabled' ?> >
-                                                                    <option value="">Select Shipping Line</option>
-                                                                    <?php 
+                                                          </select>
+                                                      </div>
 
-                                                          $q = mysqli_query($mycon,'SELECT line_id,short_form from line where status=1 ORDER BY line_id ');
+                                                      <div class="col-md-1">
 
-                                                          while( $r = mysqli_fetch_array($q) )
-                                                            {?>
-                                                              <option value="<?php echo $r['line_id']; ?>"><?php echo $r['short_form']; ?></option>
-                                                          <?php } //END OF WHILE ?>
-                                                                </select>
-                                                            </div>
+                                                        <button class="btn btn-xs green container_id" para="container_id"  type="button">
+                                                        
+                                                          <i class="fa fa-refresh"></i>
+                                                        
+                                                        </button>
 
-                                                            <div class="col-md-1">
+                                                      </div>
 
-                                                            <button class="btn btn-xs green line_id" para="line_id"  type="button">
-                                                            
-                                                              <i class="fa fa-refresh"></i>
-                                                            
-                                                            </button>
 
-                                                          </div>
-  
+                                                      <label class="col-md-1 control-label">Lot Of :</label>
+                                                       
+                                                      <div class="col-md-3">
+                                                        <input type="number" min="0"  class="form-control" placeholder="Lot Of" id="lot_of" name="lot_of" required  <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo ' readonly tabindex="-1"' ?> tabindex="22" />
+                                                      </div>
+                                                       
+                                                  </div> 
+                                            </div>
+                                            <div class="row"> 
+                                                  <div class="form-group">
+                                                        <label class="col-md-2 control-label">Shipping Line:</label>
+                                                        <div class="col-md-3">
+                                                            <select class="form-control" id="line_id" name="line_id" required tabindex="23" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) echo 'disabled' ?> >
+                                                                <option value="">Select Shipping Line</option>
+                                                                <?php 
 
-                                                            <div class="col-md-4">
-                                                              <input type="text" class="form-control" placeholder="Full Form" id="line_id_full_form" tabindex="-1" readonly>
-                                                            </div>
-                                                        </div> 
-                                                  </div>
-                                            
-                                                     
-                                                      <div class="row"> 
-                                                          <div class="form-group">
-                                                                  
-                                                                  <label class="col-md-2 control-label">Weight Charges</label>
-                                                                   
-                                                                  <div class="col-md-3">
-                                                                    <input type="number" min="0" step="0.01" class="form-control" placeholder="Weight Charges" id="weight_charges" name="weight_charges" required  <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) { echo 'value="'.$_SESSION['weight_charges'].'" readonly tabindex="-1" ';}?> tabindex="24">
-                                                                  </div>
-                                                      
-                                                                   
-                                                           </div>  
-                                                       </div>
-                                                       <div class="row"> 
-                                                           <div class="form-group"> 
-                                                            <label class="col-md-2 control-label">Special Transaction Color:</label>
-                                                            <div class="col-md-3">
-                                                                <select class="form-control" id="color" name="color" tabindex="25">
-                                                                    <option value="white">White</option>
-                                                                    <option value="red">Red</option>
-                                                                    <option value="green">Green</option>
-                                                                    <option value="yellow">Yellow</option> 
-                                                                </select>
-                                                            </div>
-                                                                     <label class="col-md-2 control-label">Other Charges:</label>
-                                                                   <div class="col-md-3">
-                                                                     <input type="number" min="0" step="0.01" value="0" class="form-control" placeholder="Charges" id="mr_charges" name="mr_charges"  tabindex="26">
-                                                                   </div>
-                                                            </div>  
+                                                      $q = mysqli_query($mycon,'SELECT line_id,short_form from line where status=1 ORDER BY line_id ');
+
+                                                      while( $r = mysqli_fetch_array($q) )
+                                                        {?>
+                                                          <option value="<?php echo $r['line_id']; ?>"><?php echo $r['short_form']; ?></option>
+                                                      <?php } //END OF WHILE ?>
+                                                            </select>
                                                         </div>
-                                                          <div class="row"> 
-                                                            <div class="form-group">
-                                                                  <label class="col-md-2 control-label">Remarks:</label>
-                                                                
-                                                                  <div class="col-md-8">
-                                                                   <textarea class="form-control" rows="5" id="remarks" name="remarks" tabindex="27" style="resize: none;"></textarea>
-                                                                  </div>
-                                                              </div> 
-                                                        </div>                                     
-                                    <div class="form-actions ">
-                                      <div class="col-md-2 col-md-offset-2" style=" padding-left:  0px;">
-                                        <button type="submit" class="btn blue" id="btn_submit" tabindex="28">Submit (F2)</button> 
-                                        <!-- <button type="reset" class="btn default" id="btn_reset" tabindex="29">Cancel</button> -->
 
-                                        <button type="submit" class="btn blue hidden" id="update_form_btn" tabindex="28">Update</button>
-                                        <button type="button" class="btn default hidden"  id="add_new" tabindex="29">Add New</button>
-                                      <?php 
-                                        if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL )
-                                        {
-                                          echo '<a href="ajax/container_movement/destroy_cmid.php" class="btn default"  id="add_new_movement" tabindex="30">Add New Movement</a>';
-                                        } ?>
-                                      </div>
-                                    </div>
+                                                        <div class="col-md-1">
+
+                                                        <button class="btn btn-xs green line_id" para="line_id"  type="button">
+                                                        
+                                                          <i class="fa fa-refresh"></i>
+                                                        
+                                                        </button>
+
+                                                      </div>
+
+
+                                                        <div class="col-md-4">
+                                                          <input type="text" class="form-control" placeholder="Full Form" id="line_id_full_form" tabindex="-1" readonly>
+                                                        </div>
+                                                    </div> 
+                                              </div>
+                                        
+                                                 
+                                                  <div class="row"> 
+                                                      <div class="form-group">
+                                                              
+                                                        <label class="col-md-2 control-label">Weight Charges</label>    
+                                                        <div class="col-md-3">
+                                                          <input type="number" min="0" step="0.01" class="form-control" placeholder="Weight Charges" id="weight_charges" name="weight_charges" required  <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) { echo 'value="'.$_SESSION['weight_charges'].'" readonly tabindex="-1" ';}?> tabindex="24">
+                                                        </div>
+                                                      
+                                                      <label class="col-md-2 control-label">Special Transaction Color:</label>
+                                                      <div class="col-md-3">
+                                                          <select class="form-control" id="color" name="color" tabindex="25">
+                                                              <option value="white">White</option>
+                                                              <option value="red">Red</option>
+                                                              <option value="green">Green</option>
+                                                              <option value="yellow">Yellow</option> 
+                                                          </select>
+                                                      </div>
+                                                               
+                                                       </div>  
+                                                   </div>
+                                                   <div class="row"> 
+                                                       <div class="form-group"> 
+                                                        
+                                                          <label class="col-md-2 control-label">Other Charges:</label>
+                                                          <div class="col-md-3">
+                                                            <input type="number" min="0" step="0.01" value="0" class="form-control" placeholder="Charges" id="mr_charges" name="mr_charges"  tabindex="26">
+                                                          </div>
+
+                                                          <label class="col-md-2 control-label">Advance Payment:</label>
+                                                          <div class="col-md-3">
+                                                            <input type="number" min="0" value="0" class="form-control" placeholder="0" id="advance_charges" name="advance_charges" <?php if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL ) { echo 'value="'.$_SESSION['advance_charges'].'" readonly tabindex="-1" ';}else{echo 'tabindex="27"';}?> >
+                                                          </div>
+
+                                                        </div>  
+                                                    </div>
+                                                      <div class="row"> 
+                                                        <div class="form-group">
+                                                              <label class="col-md-2 control-label">Remarks:</label>
+                                                              <div class="col-md-8">
+                                                               <textarea class="form-control" rows="5" id="remarks" name="remarks" tabindex="28"></textarea>
+                                                              </div>
+                                                          </div> 
+                                                    </div>                                     
+                                <div class="form-actions ">
+                                  <div class="col-md-2 col-md-offset-2" style=" padding-left:  0px;">
+                                    <button type="submit" class="btn blue" id="btn_submit" tabindex="28">Submit (F2)</button> 
+                                    <!-- <button type="reset" class="btn default" id="btn_reset" tabindex="29">Cancel</button> -->
+
+                                    <button type="submit" class="btn blue hidden" id="update_form_btn" tabindex="28">Update</button>
+                                    <button type="button" class="btn default hidden"  id="add_new" tabindex="29">Add New</button>
+                                  <?php 
+                                    if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL )
+                                    {
+                                      echo '<a href="ajax/container_movement/destroy_cmid.php" class="btn default"  id="add_new_movement" tabindex="30">Add New Movement</a>';
+                                    } ?>
+                                  </div>
                                 </div>
-                                
-                            </form>
+                            </div>
+                              
+                          </form>
 
                             <?php }//END OF IF?> 
-
                         </div>
                         <!-- Form ends -->
                          <hr> 
@@ -566,7 +550,6 @@ date_default_timezone_set("Asia/Karachi");
                                             <tr>
                                                
                                                 <th> Action </th> 
-                                              
                                                 <th> # </th>
                                                 <th> Date </th>
                                                 <th> Agent Name </th>
@@ -593,7 +576,8 @@ date_default_timezone_set("Asia/Karachi");
                                                 <th> Lolo Charges </th>
                                                 <th> Weight Charges </th>
                                                 <th> Color </th>
-                                                <th> Maintenance Charges </th>
+                                                <th> Other Charges </th>
+                                                <th> Advance Charges </th>
                                                 <th> Remarks</th>
 
                                             </tr>
@@ -651,7 +635,6 @@ include 'footer.php';
               b = $('#advance').val()/1 + $('#diesel').val()/1 ; 
           $('#balance').val( a - b );
         });
-
 
         //Select2
       $('#agent_id,#coa_id,#consignee_id,#empty_terminal_id,#movement,#vehicle_id,#container_id,#line_id,#color,#container_size,#from_yard_id,#to_yard_id').select2({
@@ -781,7 +764,6 @@ include 'footer.php';
 
       getId();
       
-
       function load_full_form(v,param)
       {
         $.ajax({
@@ -835,7 +817,6 @@ include 'footer.php';
         load_full_form(v,param);
 
       });
-
 
       function myDataTable()
         {
@@ -952,6 +933,7 @@ include 'footer.php';
                             '<td>'+value['weight_charges']+'</td>'+
                             '<td>'+value['color']+'</td>'+
                             '<td>'+value['mr_charges']+'</td>'+
+                            '<td>'+value['advance_charges']+'</td>'+
                             '<td>'+value['remarks']+'</td>'+
                             
                             '</tr>');
@@ -1006,38 +988,30 @@ include 'footer.php';
                       $('#vehicle_id').val("").trigger('change');
                       
                       <?php 
-
                         if( isset( $_SESSION['cm_id'] ) && $_SESSION['cm_id'] != NULL )
-                        {
                           echo 'loadData("'.$_SESSION['cm_id'].'")';  
-                        }
                       ?>
 
                       alertMessage('Entry Added Successfully.','success');
-
                   }
                   else
-                  {
-                    // alert(data['lot_of_limit']);
                     alertMessage("'"+data['lot_of_limit']+"'",'error');
-                  }
+
                   getId();
               },
               error:function(){ /*alert("Error in Add Container Entry Ajax Call.")*/ }
           });
       }
 
-      function add(datee,agent_id,coa_id,consignee_id,movement,empty_terminal_id,from_yard_id,to_yard_id,bl_cro_number,job_number,container_number,index_number,container_size,vehicle_id,advance,rent,balance,diesel,party_charges,container_id,lot_of,line_id,lolo_charges,weight_charges,color,mr_charges,remarks)
+      function add(datee,agent_id,coa_id,consignee_id,movement,empty_terminal_id,from_yard_id,to_yard_id,bl_cro_number,job_number,container_number,index_number,container_size,vehicle_id,advance,rent,balance,diesel,party_charges,container_id,lot_of,line_id,lolo_charges,weight_charges,color,mr_charges,remarks,advance_charges)
       {
           $.ajax({
-              url:'ajax/container_movement/add.php?datee='+encodeURIComponent(datee)+'&agent_id='+agent_id+'&coa_id='+coa_id+'&consignee_id='+consignee_id+'&movement='+encodeURIComponent(movement)+'&empty_terminal_id='+empty_terminal_id+'&from_yard_id='+from_yard_id+'&to_yard_id='+to_yard_id+'&container_size='+container_size+'&party_charges='+party_charges+'&lot_of='+lot_of+'&line_id='+line_id+'&bl_cro_number='+bl_cro_number+'&job_number='+job_number+'&index_number='+index_number+'&container_id='+container_id+'&lolo_charges='+lolo_charges+'&weight_charges='+weight_charges,
-              type:"POST",
+              url:'ajax/container_movement/add.php?datee='+encodeURIComponent(datee)+'&agent_id='+agent_id+'&coa_id='+coa_id+'&consignee_id='+consignee_id+'&movement='+encodeURIComponent(movement)+'&empty_terminal_id='+empty_terminal_id+'&from_yard_id='+from_yard_id+'&to_yard_id='+to_yard_id+'&container_size='+container_size+'&party_charges='+party_charges+'&lot_of='+lot_of+'&line_id='+line_id+'&bl_cro_number='+bl_cro_number+'&job_number='+job_number+'&index_number='+index_number+'&container_id='+container_id+'&lolo_charges='+lolo_charges+'&weight_charges='+weight_charges+'&advance_charges='+advance_charges,
+              type:"GET",
               dataType:'JSON',
               success:function(data){
                   if(data['inserted'])
-                  {
-                      // $('#datee,#agent_id,#coa_id,#consignee_id,#movement,#empty_terminal_id,#from_yard_id,#to_yard_id,#container_size,#party_charges,#lot_of,#line_id').attr('readonly', 'readonly');
-                      
+                  {                      
                       add_entry(data['cm_id'],container_number,vehicle_id,advance,diesel,rent,balance,color,mr_charges,remarks);
 
                       location.assign('container-entry.php');
@@ -1068,7 +1042,7 @@ include 'footer.php';
                       temp[19] = diesel;
                       temp[26] = color;
                       temp[27] = mr_charges;
-                      temp[28] = remarks;
+                      temp[29] = remarks;
 
                       $('#mytable').DataTable().row(i).data(temp).draw();
 
@@ -1142,7 +1116,6 @@ include 'footer.php';
 
       function addNewClick()
       {
-
           $('form').removeClass('update_form');
 
           $('#container_number,#advance,#remarks,#diesel').val("");
@@ -1159,7 +1132,6 @@ include 'footer.php';
           $('#btn_reset').removeClass('hidden');
 
           getId();
-
       }
 
       //DELETE 
@@ -1220,7 +1192,7 @@ include 'footer.php';
           // $('#weight_charges').val( trr.find('td').eq(24).text() );
           $('#color').val( trr.find('td').eq(26).text() ).trigger('change');
           $('#mr_charges').val( trr.find('td').eq(27).text() );
-          $('#remarks').val( trr.find('td').eq(28).text() );
+          $('#remarks').val( trr.find('td').eq(29).text() );
       });
 
       //Add & Update
@@ -1255,6 +1227,7 @@ include 'footer.php';
              weight_charges = $('#weight_charges').val(),
              color = $('#color').val(),
              mr_charges = $('#mr_charges').val(),
+             advance_charges = $('#advance_charges').val(),
              remarks = $('#remarks').val(),
              ce_id =  $('#ce_id').val();
 
@@ -1273,7 +1246,7 @@ include 'footer.php';
          }
          else
          {
-              add(datee,agent_id,coa_id,consignee_id,movement,empty_terminal_id,from_yard_id,to_yard_id,bl_cro_number,job_number,container_number,index_number,container_size,vehicle_id,advance,rent,balance,diesel,party_charges,container_id,lot_of,line_id,lolo_charges,weight_charges,color,mr_charges,remarks);
+            add(datee,agent_id,coa_id,consignee_id,movement,empty_terminal_id,from_yard_id,to_yard_id,bl_cro_number,job_number,container_number,index_number,container_size,vehicle_id,advance,rent,balance,diesel,party_charges,container_id,lot_of,line_id,lolo_charges,weight_charges,color,mr_charges,remarks,advance_charges);
          }
 
          $('#container_number').focus();

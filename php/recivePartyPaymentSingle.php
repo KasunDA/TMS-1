@@ -5,9 +5,7 @@ require 'connection.php';
 date_default_timezone_set("Asia/Karachi");
 
 if( !isset( $_GET['cm_id']) ||  $_GET['cm_id'] == NULL  )
-{
     echo '<script>location.assign("recivePartyPayment.php");</script>';
-}
 
 $cm_id = $_GET['cm_id'];
  ?>
@@ -66,6 +64,7 @@ $cm_id = $_GET['cm_id'];
                                     <th> Weight Charges </th>
                                     <th> Party Charges </th>
                                     <th> Other Charges </th>
+                                    <th> Advance Charges </th>
                                     <th> Total Party Bill </th>
                                 </tr>
                             </thead>
@@ -425,7 +424,6 @@ include 'footer.php';
                 
                 $.each(data,function(index,value){
 
-
                     if( value['paid_status'] == 1 )
                     {                        
                         status = '<span class="label label-sm label-success"> paid </span>';
@@ -433,7 +431,6 @@ include 'footer.php';
 
                         $('#voucher_div').show();
                         loadVoucher(<?php echo $cm_id; ?>);
-
                     }
                     else
                     {
@@ -456,7 +453,6 @@ include 'footer.php';
                             '<td>'+value['container_size']+'</td>'+
                             '<td>'+value['lot_of']+'</td>'+
                             '<td id="'+value['line_id']+'">'+value['line']+'</td>'+
-
                             '<td>'+value['bl_cro_number']+'</td>'+
                             '<td>'+value['job_number']+'</td>'+
                             '<td>'+value['index_number']+'</td>'+
@@ -465,6 +461,7 @@ include 'footer.php';
                             '<td>'+value['weight_charges']+'</td>'+
                             '<td>'+value['party_charges']+'</td>'+
                             '<td>'+value['other_charges']+'</td>'+
+                            '<td>'+value['advance_charges']+'</td>'+
                             '<td id="total_party_charges">'+value['total_party_charges']+'</td>'+
 
                             '</tr>');
@@ -473,7 +470,7 @@ include 'footer.php';
                 })
 
                 myDataTable();
-                $('#amount').attr('max',$('#total_party_charges').html());
+                $('#amount').attr({'max':$('#total_party_charges').html(),'min':$('#total_party_charges').html()});
 
             },
             error:function(){ alertMessage("Failed Fetch Ajax Call.",'error') }

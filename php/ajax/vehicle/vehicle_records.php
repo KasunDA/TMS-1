@@ -25,6 +25,9 @@
 
 	$voucher_numbers = str_replace( str_split("[]"),"",$_GET['voucher_numbers']);
 
+	if( $voucher_numbers == NULL || $voucher_numbers == '' ) 
+		$voucher_numbers = "''";
+
 	if( isset($_GET['vehicle_id']) && $_GET['vehicle_id'] != NULL && $_GET['vehicle_id'] != 'null' )
 		$vehicle_id = str_replace( str_split("[]"),"",$_GET['vehicle_id']);
 	
@@ -76,13 +79,14 @@
 		$json[0]['total_de_amount'] = $r['total_de_amount'];
 	
 	//Repair & Maintainance CODE
-	$rmsql = "SELECT SUM(amount) as total_rm_amount FROM garage_entry  where status=1 and datee BETWEEN '$from_datee' AND '$to_datee' and vehicle_id IN (".$vehicle_id.") ";
+	$rmsql = "SELECT SUM(amount) as total_rm_amount FROM garage_entry  where status=1 AND paid_status=0 AND datee BETWEEN '$from_datee' AND '$to_datee' and vehicle_id IN (".$vehicle_id.") ";
 	$rmq = mysqli_query($mycon,$rmsql);
 	if( $r = mysqli_fetch_array($rmq) )
 		$json[0]['total_rm_amount'] = $r['total_rm_amount'];
 
 	//Paid Voucher CODE
-	$pssql = "SELECT SUM(amount) as total_paid_salary FROM voucher where status=1 and datee BETWEEN '$from_datee' AND '$to_datee' and voucher_number IN (".$voucher_numbers.") ";
+	//and datee BETWEEN '$from_datee' AND '$to_datee'
+	$pssql = "SELECT SUM(amount) as total_paid_salary FROM voucher where status=1 and voucher_number IN (".$voucher_numbers.") ";
 	$psq = mysqli_query($mycon,$pssql);
 	if( $r = mysqli_fetch_array($psq) )
 		$json[0]['total_paid_salary'] = $r['total_paid_salary'];

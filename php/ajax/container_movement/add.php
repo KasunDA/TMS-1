@@ -14,28 +14,24 @@
 	$party_charges = $_GET['party_charges'];
 	$lot_of= $_GET['lot_of'];
 	$line_id = $_GET['line_id'];
-
 	$bl_cro_number = $_GET['bl_cro_number'];
 	$job_number = $_GET['job_number'];
 	$index_number = $_GET['index_number'];
-	
 	$container_id = $_GET['container_id'];
 	$lolo_charges = $_GET['lolo_charges'];
 	$weight_charges = $_GET['weight_charges'];
+	$advance_charges = $_GET['advance_charges'];
 	
 	$json;
 
-	$q = mysqli_query($mycon,"INSERT INTO container_movement(datee,agent_id,coa_id,consignee_id,movement,empty_terminal_id,from_yard_id,to_yard_id,container_size,party_charges,lot_of,line_id,bl_cro_number,job_number,index_number,container_id,lolo_charges,weight_charges) VALUES( '$datee',$agent_id,$coa_id,$consignee_id,'$movement',$empty_terminal_id,$from_yard_id,$to_yard_id,$container_size,$party_charges,$lot_of,$line_id,'$bl_cro_number','$job_number','$index_number',$container_id,$lolo_charges,$weight_charges ) ");
+	$q = mysqli_query($mycon,"INSERT INTO container_movement(datee,agent_id,coa_id,consignee_id,movement,empty_terminal_id,from_yard_id,to_yard_id,container_size,party_charges,lot_of,line_id,bl_cro_number,job_number,index_number,container_id,lolo_charges,weight_charges,advance_charges) VALUES( '$datee',$agent_id,$coa_id,$consignee_id,'$movement',$empty_terminal_id,$from_yard_id,$to_yard_id,$container_size,$party_charges,$lot_of,$line_id,'$bl_cro_number','$job_number','$index_number',$container_id,$lolo_charges,$weight_charges,$advance_charges ) ");
 
 	if(mysqli_affected_rows($mycon))
 	{
-
 		$iq = mysqli_query($mycon,'SELECT * FROM container_movement ORDER BY cm_id DESC LIMIT 1');
-
 		$riq = mysqli_fetch_array($iq);
 
 		session_start();
-
 		$_SESSION['cm_id'] = $riq['cm_id'];
 		$_SESSION['datee'] = $riq['datee'];
 		$_SESSION['lot_of'] = $riq['lot_of'];
@@ -49,19 +45,17 @@
 		$_SESSION['container_size'] = $riq['container_size'];
 		$_SESSION['party_charges'] = $riq['party_charges'];
 		$_SESSION['line_id'] = $riq['line_id'];
-
 		$_SESSION['bl_cro_number'] = $riq['bl_cro_number'];
 		$_SESSION['job_number'] = $riq['job_number'];
 		$_SESSION['index_number'] = $riq['index_number'];
-		
 		$_SESSION['container_id'] = $riq['container_id'];
 		$_SESSION['lolo_charges'] = $riq['lolo_charges'];
 		$_SESSION['weight_charges'] = $riq['weight_charges'];
+		$_SESSION['advance_charges'] = $riq['advance_charges'];
 
 		$json['inserted'] = 'true';
 		$json['cm_id'] = $riq['cm_id'];
 	}
 
 	echo json_encode($json);
-
 ?>

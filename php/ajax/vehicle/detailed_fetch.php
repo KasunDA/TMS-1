@@ -3,7 +3,7 @@
 	require '../../connection.php';
 
 	$json=NULL;
-	$vids=[0];
+	$vids=[];
 	$vehicle_number=[];
 	$voucher_numbers=[];
 	$sql='';
@@ -169,15 +169,16 @@
 		$json[$n]['remarks'] = $r['remarks'];
 		$json[$n]['paid_status'] = $r['ppaid_status'];
 		
-		if( !in_array($r['vehicle_id'] , $vids) )
+		// if( !in_array($r['vehicle_id'] , $vids) )
+		if( $r['ppaid_status'] == 0 )
 			array_push($vids ,$r['vehicle_id']);
 
 		if (empty($vehicle_number)) 
-		    array_push($vehicle_number ,$r['vehicle_number']);	
+		    array_push($vehicle_number ,$r['ce_id'].'-'.$r['vehicle_number'].'-'.$r['balance']);	
 		else
 		{
 			if( !in_array($r['vehicle_number'] , $vehicle_number) )
-				array_push($vehicle_number ,$r['vehicle_number']);			
+				array_push($vehicle_number ,$r['ce_id'].'-'.$r['vehicle_number'].'-'.$r['balance']);		
 		}
 
 		if (empty($voucher_numbers)) 

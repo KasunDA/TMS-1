@@ -3,6 +3,7 @@
 	require '../../connection.php';
 
 	$json=NULL;
+	$ge_ids = [];
 	$n  = 0;
 	$sql='';
 	$from_datee =  date('Y-m-d', strtotime($_GET['from_datee'])) ; //date('Y-m-d', strtotime(
@@ -35,8 +36,10 @@
 		$json[$n]['amount'] = $r['amount'];
 
 		$n++;
-	}
 
+		array_push($ge_ids,$r['ge_id']);
+	}
+	$json['ge_ids'] = $ge_ids;
 	echo json_encode($json);
 
 

@@ -84,6 +84,7 @@
 		// updateData($mycon,$datee);
 	}
 	
+	$json['updated']   = 'false';
 	$cm_id 			   = $_GET['cm_id'];
 	$datee 			   = $_GET['datee'];
 	$agent_id 		   = $_GET['agent_id'];
@@ -103,12 +104,13 @@
 	$container_id 	   = $_GET['container_id'];
 	$lolo_charges 	   = $_GET['lolo_charges'];
 	$weight_charges    = $_GET['weight_charges'];
+	$advance_charges   = $_GET['advance_charges'];
 
-	$q = mysqli_query($mycon,"UPDATE container_movement SET datee='$datee', agent_id= $agent_id , coa_id= $coa_id, consignee_id=$consignee_id , movement='$movement', empty_terminal_id=$empty_terminal_id , from_yard_id=$from_yard_id , to_yard_id=$to_yard_id , container_size=$container_size , party_charges=$party_charges , lot_of=$lot_of , line_id=$line_id , bl_cro_number='$bl_cro_number',job_number='$job_number', index_number='$index_number' , container_id=$container_id , lolo_charges=$lolo_charges , weight_charges=$weight_charges WHERE cm_id=$cm_id ");
+	$q = mysqli_query($mycon,"UPDATE container_movement SET datee='$datee', agent_id= $agent_id , coa_id= $coa_id, consignee_id=$consignee_id , movement='$movement', empty_terminal_id=$empty_terminal_id , from_yard_id=$from_yard_id , to_yard_id=$to_yard_id , container_size=$container_size , party_charges=$party_charges , lot_of=$lot_of , line_id=$line_id , bl_cro_number='$bl_cro_number',job_number='$job_number', index_number='$index_number' , container_id=$container_id , lolo_charges=$lolo_charges , weight_charges=$weight_charges , advance_charges=$advance_charges WHERE cm_id=".$cm_id);
 
 	if(mysqli_affected_rows($mycon))
 	{
-		echo "true";
+		$json['updated'] = 'true';
 
 		session_start();
 		$_SESSION['cm_id']		       = $cm_id;
@@ -130,11 +132,11 @@
 		$_SESSION['container_id'] 	   = $container_id;
 		$_SESSION['lolo_charges'] 	   = $lolo_charges;
 		$_SESSION['weight_charges']    = $weight_charges;
-
+		$_SESSION['advance_charges']   = $advance_charges;
 
 		$q1 = mysqli_query($mycon,"SELECT * FROM expenses WHERE (dd_id=5 OR dd_id=8)  AND cm_id=".$cm_id);
 		if( $r1 = mysqli_fetch_array($q1) )
 			updateDescription($mycon,$cm_id);
 	}
-
+	echo json_encode($json);
 ?>

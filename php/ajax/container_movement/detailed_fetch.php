@@ -3,6 +3,7 @@
 	require '../../connection.php';
 
 	$json=NULL;
+	$n  = 0;
 	$sql='';
 		
 	if( isset($_GET['from_datee']) && $_GET['from_datee'] != NULL && isset($_GET['to_datee']) && $_GET['to_datee'] != NULL )
@@ -27,9 +28,6 @@
 	}
 
 	$q = mysqli_query($mycon,$sql);
-	
-	$n  = 0;
-	
 	while($r = mysqli_fetch_array($q))
 	{
 		$json[$n]['paid_status'] = $r['paid_status'];
@@ -110,7 +108,8 @@
 		$json[$n]['other_charges'] = $r1['other_charges'];
 
 		$json[$n]['party_charges'] = $r['party_charges'];
-		$json[$n]['total_party_charges'] = $r['party_charges']*$r['lot_of']+$r1['other_charges'];
+		$json[$n]['advance_charges'] = $r['advance_charges'];
+		$json[$n]['total_party_charges'] = ($r['party_charges']*$r['lot_of']+$r1['other_charges'])-$r['advance_charges'];
 
 		$n++;
 	}

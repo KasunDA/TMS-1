@@ -331,12 +331,12 @@ date_default_timezone_set("Asia/Karachi");
                                     <th> B/L OR CRO NO. </th>
                                     <th> Job # </th>
                                     <th> Index # </th>
-                                    <!-- <th> Rent </th> -->
                                     <th> Type </th>
                                     <th> Lolo Charges </th>
                                     <th> Weight Charges </th>
                                     <th> Party Charges </th>
                                     <th> Other Charges </th>
+                                    <th> Advance Charges </th>
                                     <th> Total Party Bill </th>
                                 </tr>
                             </thead>
@@ -361,12 +361,12 @@ date_default_timezone_set("Asia/Karachi");
                                     <th> B/L OR CRO NO. </th>
                                     <th> Job # </th>
                                     <th> Index # </th>
-                                    <!-- <th> Rent </th> -->
                                     <th> Type </th>
                                     <th> Lolo Charges </th>
                                     <th> Weight Charges </th>
                                     <th> Party Charges </th>
                                     <th> Other Charges </th>
+                                    <th> Advance Charges </th>
                                     <th> Total Party Bill </th>
                                 </tr>
                             </tfoot>
@@ -611,8 +611,8 @@ include 'footer.php';
                                 'font-size': '10pt'
                               })
                               .prepend('<div class="row" style="page-break-inside: avoid;">'+
-                                '<img src="http://<?php echo $_SERVER['SERVER_NAME']=='panel.buttbrothers.com.pk'?$_SERVER['SERVER_NAME']:$_SERVER['SERVER_NAME'].'/TMS' ?>/php/ajax/header.jpg" style="top:0; left:0;" />')
-                              .append('<img src="http://<?php echo $_SERVER['SERVER_NAME']=='panel.buttbrothers.com.pk'?$_SERVER['SERVER_NAME']:$_SERVER['SERVER_NAME'].'/TMS' ?>/php/ajax/footer.jpg" /> </div>');
+                                '<img src="http://<?php echo $_SERVER['SERVER_NAME']=='panel.buttbrothers.com.pk'?$_SERVER['SERVER_NAME']:$_SERVER['SERVER_NAME'].'/TMS' ?>/php/ajax/header.jpg" style="top:0; left:0;" /> </div>');
+                              //.append('<img src="http://<?php //echo $_SERVER['SERVER_NAME']=='panel.buttbrothers.com.pk'?$_SERVER['SERVER_NAME']:$_SERVER['SERVER_NAME'].'/TMS' ?>/php/ajax/footer.jpg" /> </div>');
                         }
               }
               , {
@@ -702,16 +702,15 @@ include 'footer.php';
                             '<td>'+value['container_size']+'</td>'+
                             '<td>'+value['lot_of']+'</td>'+
                             '<td id="'+value['line_id']+'">'+value['line']+'</td>'+
-
                             '<td>'+value['bl_cro_number']+'</td>'+
                             '<td>'+value['job_number']+'</td>'+
                             '<td>'+value['index_number']+'</td>'+
-                            // '<td>'+value['rent']+'</td>'+
                             '<td id="'+value['container_id']+'">'+value['container_type']+'</td>'+
                             '<td>'+value['lolo_charges']+'</td>'+
                             '<td>'+value['weight_charges']+'</td>'+
                             '<td>'+value['party_charges']+'</td>'+
                             '<td>'+value['other_charges']+'</td>'+
+                            '<td>'+value['advance_charges']+'</td>'+
                             '<td name="total_party_charges">'+value['total_party_charges']+'</td>'+
 
                             '</tr>');

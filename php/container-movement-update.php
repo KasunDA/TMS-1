@@ -378,26 +378,24 @@ date_default_timezone_set("Asia/Karachi");
                                                           </div>
 
                                                           <div class="col-md-1">
-
                                                             <button class="btn btn-xs green container_id" para="container_id"  type="button">
-                                                            
                                                               <i class="fa fa-refresh"></i>
-                                                            
                                                             </button>
-
                                                           </div>
-  
+
+                                                      <label class="col-md-2 control-label">Advance Payment:</label>
+                                                      <div class="col-md-3">
+                                                        <input type="number" min="0" value="0" class="form-control" placeholder="0" id="advance_charges" name="advance_charges" tabindex="19" required >
+                                                      </div>
+    
 
                                                       </div> 
                                                 </div> 
                               
-                                    <div class="form-actions ">
-                                        <!-- <button type="submit" class="btn blue" id="btn_submit" tabindex="13">Submit (F2)</button>  -->
-                                        
+                                    <div class="form-actions ">                                        
 
                                         <button type="submit" class="btn blue" id="update_form_btn" disabled tabindex="20">Update</button>
-                                        <!-- <button type="reset" class="btn default" id="btn_reset" tabindex="14">Cancel</button> -->
-                                        <!-- <button type="button" class="btn default hidden"  id="add_new" tabindex="14">Add New</button> -->
+
                                     </div>
                                 </div>
                                 
@@ -419,9 +417,7 @@ date_default_timezone_set("Asia/Karachi");
                                     <table class="table table-striped table-bordered table-hover table-checkable order-column" id="mytable">
                                         <thead>
                                             <tr>
-                                               
                                                 <th> Action </th> 
-                                              
                                                 <th> # </th>
                                                 <th> Container Movement Id </th>
                                                 <th> Date </th>
@@ -442,7 +438,7 @@ date_default_timezone_set("Asia/Karachi");
                                                 <th> Container Type </th>
                                                 <th> Lolo Charges </th>
                                                 <th> Weight Charges </th>
-
+                                                <th> Advance Charges </th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -483,37 +479,6 @@ include 'footer.php';
           $('#btn_submit').trigger('click');
        }
       }
-
-      $('#advance').on('keyup change',function(){
-          // $('#balance').val($('#advance').val()-$('#rent').val());
-        });
-
-      function toYardIdSelect()
-      {
-        $('#to_yard_id').select2({
-            width: 'resolve',
-            theme: "classic"
-          });
-      }
-      
-      // $('#from_yard_id').on('change',function(){
-
-      //   $('#to_yard_id').find('option').each(function(){
-      //       $(this).removeAttr('disabled');
-      //   });
-      //   toYardIdSelect();
-
-      //   var option = $('#to_yard_id').find("option[value='" + $(this).val() + "']");
-
-      //   if (option.length) 
-      //   {
-      //     option.attr('disabled',true);
-      //     toYardIdSelect();
-      //   }
-        
-
-      // });
-
       
       $('#agent_id,#coa_id,#consignee_id,#empty_terminal_id,#movement,#vehicle_id,#line_id,#container_size,#from_yard_id,#to_yard_id,#container_id').select2({
             width: 'resolve',
@@ -770,6 +735,7 @@ include 'footer.php';
                             '<td id="'+value['container_id']+'">'+value['container_type']+'</td>'+
                             '<td>'+value['lolo_charges']+'</td>'+
                             '<td>'+value['weight_charges']+'</td>'+
+                            '<td>'+value['advance_charges']+'</td>'+
                             '</tr>');
 
                     n++; i++;
@@ -787,13 +753,15 @@ include 'footer.php';
 
       loadData();
 
-      function update(cm_id,datee,agent_id,agent_name,coa_id,coa,consignee_id,consignee,movement,empty_terminal_id,empty_terminal,from_yard_id,from_yard,to_yard_id,to_yard,container_size,party_charges,lot_of,line_id,line,bl_cro_number,job_number,index_number,container_id,container_type,lolo_charges,weight_charges)
+      function update(cm_id,datee,agent_id,agent_name,coa_id,coa,consignee_id,consignee,movement,empty_terminal_id,empty_terminal,from_yard_id,from_yard,to_yard_id,to_yard,container_size,party_charges,lot_of,line_id,line,bl_cro_number,job_number,index_number,container_id,container_type,lolo_charges,weight_charges,advance_charges)
       {
           $.ajax({
-              url:'ajax/container_movement/update.php?cm_id='+cm_id+'&datee='+datee+'&agent_id='+agent_id+'&coa_id='+coa_id+'&consignee_id='+consignee_id+'&movement='+movement+'&empty_terminal_id='+empty_terminal_id+'&from_yard_id='+from_yard_id+'&to_yard_id='+to_yard_id+'&container_size='+container_size+'&party_charges='+party_charges+'&lot_of='+lot_of+'&line_id='+line_id+'&bl_cro_number='+bl_cro_number+'&job_number='+job_number+'&index_number='+index_number+'&container_id='+container_id+'&lolo_charges='+lolo_charges+'&weight_charges='+weight_charges,
+              url:'ajax/container_movement/update.php',
+              data:{cm_id:cm_id,datee:datee,agent_id:agent_id,coa_id:coa_id,consignee_id:consignee_id,movement:movement,empty_terminal_id:empty_terminal_id,from_yard_id:from_yard_id,to_yard_id:to_yard_id,container_size:container_size,party_charges:party_charges,lot_of:lot_of,line_id:line_id,bl_cro_number:bl_cro_number,job_number:job_number,index_number:index_number,container_id:container_id,lolo_charges:lolo_charges,weight_charges:weight_charges,advance_charges:advance_charges},
               type:"GET",
+              dataType:'JSON',
               success:function(data){
-                  if(data)
+                  if(data['updated'] == 'true')
                   {
                       var i = $('.selectedd').attr('index');
                       var temp = $('#mytable').DataTable().row(i).data();
@@ -812,23 +780,23 @@ include 'footer.php';
                       temp[12] = party_charges;
                       temp[13] = lot_of;
                       temp[14] = line;
-
                       temp[15] = bl_cro_number;
                       temp[16] = job_number
                       temp[17] = index_number
-
                       temp[18] = container_type
                       temp[19] = lolo_charges
                       temp[20] = weight_charges
+                      temp[21] = advance_charges
 
                       $('#mytable').DataTable().row(i).data(temp).draw();
 
                       alertMessage('Updated Successfully.','success');
 
                       $('.selectedd').css('');
-
                       // location.assign('container-entry.php');
                   }
+                  else
+                    alertMessage("Not Updated!",'error')
               },
               error:function(){ alertMessage("Error in Update Ajax Call.",'error') }
           });
@@ -936,14 +904,13 @@ include 'footer.php';
           $('#party_charges').val( trr.find('td').eq(12).text() );
           $('#lot_of').val( trr.find('td').eq(13).text() );
           $('#line_id').val( trr.find('td').eq(14).attr('id') ).trigger('change');
-
           $('#bl_cro_number').val( trr.find('td').eq(15).text() );
           $('#job_number').val( trr.find('td').eq(16).text() );
           $('#index_number').val( trr.find('td').eq(17).text() );
-          
           $('#container_id').val( trr.find('td').eq(18).attr('id') ).trigger('change');
           $('#lolo_charges').val( trr.find('td').eq(19).text() );
           $('#weight_charges').val( trr.find('td').eq(20).text() );
+          $('#advance_charges').val( trr.find('td').eq(21).text() );
       });
 
       //Update
@@ -978,17 +945,13 @@ include 'footer.php';
              container_type = $('#container_id option:selected').text(),
              lolo_charges = $('#lolo_charges').val(),
              weight_charges = $('#weight_charges').val(),
-             
+             advance_charges = $('#advance_charges').val(),
              cm_id =  $('#cm_id').val();
 
          if( $(this).hasClass('update_form') ) 
          {
-            update(cm_id,datee,agent_id,agent_name,coa_id,coa,consignee_id,consignee,movement,empty_terminal_id,empty_terminal,from_yard_id,from_yard,to_yard_id,to_yard,container_size,party_charges,lot_of,line_id,line,bl_cro_number,job_number,index_number,container_id,container_type,lolo_charges,weight_charges);
+            update(cm_id,datee,agent_id,agent_name,coa_id,coa,consignee_id,consignee,movement,empty_terminal_id,empty_terminal,from_yard_id,from_yard,to_yard_id,to_yard,container_size,party_charges,lot_of,line_id,line,bl_cro_number,job_number,index_number,container_id,container_type,lolo_charges,weight_charges,advance_charges);
          }
-         // else
-         // {
-
-         // }
       });
 
     });
