@@ -43,10 +43,12 @@
 
 	function advanceRecover($mycon,$from_datee,$to_datee,$vehicle_id)
 	{
-		if($vehicle_id == NULL)
-			return false;
+		// if($vehicle_id == NULL)
+		// 	return false;
 
-		$q = mysqli_query($mycon,"SELECT owner_name,driver_name,vehicle_id FROM vehicle WHERE vehicle_id IN ".$vehicle_id);
+		$sql = "SELECT owner_name,driver_name,vehicle_id FROM vehicle WHERE vehicle_id IN (".$vehicle_id.") ";
+		// echo $sql;
+		$q = mysqli_query($mycon,$sql);
 
 		while( $r_vehicle = mysqli_fetch_array($q) ) 
 		{
@@ -54,27 +56,39 @@
 			$cvehicle_id = $r_vehicle['vehicle_id'];
 			$driver_name = $r_vehicle['driver_name'].' (Driver)';
 			$t_driver	 = 0;
-			$advanceqd = mysqli_query($mycon,"SELECT SUM(amount) as total_advance FROM expenses where dd_id=2 and paid_status=0 and status=1 and datee BETWEEN '$from_datee' AND '$to_datee' and vehicle_id=$cvehicle_id AND name='$driver_name' ");
+			$advanceqdsql = "SELECT SUM(amount) as total_advance FROM expenses where dd_id=2 and paid_status=0 and status=1 and datee BETWEEN '$from_datee' AND '$to_datee' and vehicle_id=$cvehicle_id AND name='$driver_name' ";
+			// echo $advanceqdsql;
+			$advanceqd = mysqli_query($mycon,$advanceqdsql);
 
 			if( $r = mysqli_fetch_array($advanceqd) )
 			{
 				$q1 = mysqli_query($mycon,"SELECT SUM(amount) as received_amount from income where vehicle_id=$cvehicle_id and name='$driver_name' AND datee BETWEEN '$from_datee' AND '$to_datee'");
-				$r1 = mysqli_fetch_array($q1);
-				$t_driver = $r['total_advance'] - $r1['received_amount'];
-				addIncome($mycon,$t_driver,$cvehicle_id,$driver_name);
+				if( $r1 = mysqli_fetch_array($q1) )
+				{
+					$t_driver = $r['total_advance'] - $r1['received_amount'];
+					// echo '\n total driver loan '.$r['total_advance'].' - '.$r1['received_amount'].' = '.$t_driver; 
+					if( $t_driver != 0 || $t_driver != NULL )
+						addIncome($mycon,$t_driver,$cvehicle_id,$driver_name);
+				}
 			}
 
 			//Advance CODE For Vehicle Owner
-			$owner_name  = $r_vehicle['owner_name'].' (Owner)';
-			$t_owner	 = 0;
-			$advanceqo = mysqli_query($mycon,"SELECT SUM(amount) as total_advance FROM expenses where dd_id=2 and paid_status=0 and status=1 and datee BETWEEN '$from_datee' AND '$to_datee' and vehicle_id=$cvehicle_id and name='$owner_name' ");
+			$owner_name   = $r_vehicle['owner_name'].' (Owner)';
+			$t_owner	  = 0;
+			$advanceqosql = "SELECT SUM(amount) as total_advance FROM expenses where dd_id=2 and paid_status=0 and status=1 and datee BETWEEN '$from_datee' AND '$to_datee' and vehicle_id=$cvehicle_id and name='$owner_name' ";
+			// echo $advanceqosql;
+			$advanceqo = mysqli_query($mycon,$advanceqosql);
 
 			if( $r = mysqli_fetch_array($advanceqo) )
 			{
 				$q1 = mysqli_query($mycon,"SELECT SUM(amount) as received_amount from income where vehicle_id=$cvehicle_id and name='$owner_name' AND datee BETWEEN '$from_datee' AND '$to_datee'");
-				$r1 = mysqli_fetch_array($q1);
-				$t_owner = $r['total_advance'] - $r1['received_amount'];
-				addIncome($mycon,$t_owner,$cvehicle_id,$owner_name);
+				if ( $r1 = mysqli_fetch_array($q1) )
+				{
+					$t_owner = $r['total_advance'] - $r1['received_amount'];
+					// echo '\n total owner loan '.$r['total_advance'].' - '.$r1['received_amount'].' = '.$t_owner;
+					if( $t_owner != 0 || $t_owner != NULL )
+						addIncome($mycon,$t_owner,$cvehicle_id,$owner_name);
+				}
 			}
 		}
 	}
@@ -89,9 +103,9 @@
 	$description 	 = $_POST['description'];
 	$ce_ids 	 	 = json_decode($_POST['ce_ids']);
 	$ge_ids 	 	 = json_decode($_POST['ge_ids']);
-	$vids  		 	 = json_decode($_POST['vids']);
-	$from_date 		 = $_POST['from_date'];
-	$to_date 		 = $_POST['to_date'];
+	$vids  		 	 = str_replace( str_split("[]"),"",$_POST['vids']);
+	$from_date 		 = date('Y-m-d', strtotime($_POST['from_date']) );
+	$to_date 		 = date('Y-m-d', strtotime($_POST['to_date']) );
 	
 	if( $_POST['bank_id'] != NULL && $_POST['check_number'] != NULL  )
 	{

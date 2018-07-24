@@ -17,22 +17,25 @@
 	$json[0]['total_driver_salary'] = 0;
 	$json[0]['total_paid_salary'] = 0;
 
-	$from_datee =  date('Y-m-d', strtotime($_GET['from_datee']));
-	$to_datee   =  date('Y-m-d', strtotime($_GET['to_datee']));
+	$from_datee =  date('Y-m-d', strtotime($_POST['from_datee']));
+	$to_datee   =  date('Y-m-d', strtotime($_POST['to_datee']));
 
-	$from_date =  $_GET['from_datee'] ; //date('Y-m-d', strtotime(
-	$to_date   =  $_GET['to_datee'];
+	$from_date =  $_POST['from_datee'] ; //date('Y-m-d', strtotime(
+	$to_date   =  $_POST['to_datee'];
 
-	$voucher_numbers = str_replace( str_split("[]"),"",$_GET['voucher_numbers']);
+	$voucher_numbers = str_replace( str_split("[]"),"",$_POST['voucher_numbers']);
 
 	if( $voucher_numbers == NULL || $voucher_numbers == '' ) 
 		$voucher_numbers = "''";
 
-	if( isset($_GET['vehicle_id']) && $_GET['vehicle_id'] != NULL && $_GET['vehicle_id'] != 'null' )
-		$vehicle_id = str_replace( str_split("[]"),"",$_GET['vehicle_id']);
+	// if( isset($_POST['vehicle_id']) && $_POST['vehicle_id'] != NULL && $_POST['vehicle_id'] != 'null' )
+	// 	$vehicle_id = str_replace( str_split("[]"),"",$_POST['vehicle_id']);
 	
-	else
-		$vehicle_id = str_replace( str_split("[]"),"",$_GET['vids']);
+	// else
+	$vehicle_id = str_replace( str_split("[]"),"",$_POST['vids']);
+	
+	if( $vehicle_id == NULL || $vehicle_id == '' ) 
+			$vehicle_id = "''";
 
 	$vehicle_query = mysqli_query($mycon,"SELECT owner_name,driver_name,vehicle_id FROM vehicle WHERE vehicle_id IN (".$vehicle_id.") ");
 	while ( $r_vehicle = mysqli_fetch_array($vehicle_query) ) 

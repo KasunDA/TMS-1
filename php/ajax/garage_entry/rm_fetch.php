@@ -6,20 +6,23 @@
 	$ge_ids = [];
 	$n  = 0;
 	$sql='';
-	$from_datee =  date('Y-m-d', strtotime($_GET['from_datee'])) ; //date('Y-m-d', strtotime(
-	$to_datee = date('Y-m-d', strtotime($_GET['to_datee']));
+	$from_datee =  date('Y-m-d', strtotime($_POST['from_datee'])) ; //date('Y-m-d', strtotime(
+	$to_datee = date('Y-m-d', strtotime($_POST['to_datee']));
 
-	if( isset($_GET['vehicle_id']) && $_GET['vehicle_id'] != NULL && $_GET['vehicle_id'] != 'null' )
-	{
-		$vehicle_id = str_replace( str_split("[]"),"",$_GET['vehicle_id']);
-		$sql = "SELECT * FROM garage_entry  where status=1 and datee BETWEEN '$from_datee' AND '$to_datee' AND vehicle_id IN (".$vehicle_id.") ";
-	}
-	else
-	{
-		$vids = str_replace( str_split("[]"),"",$_GET['vids']);
+	// if( isset($_POST['vehicle_id']) && $_POST['vehicle_id'] != NULL && $_POST['vehicle_id'] != 'null' )
+	// {
+	// 	$vehicle_id = str_replace( str_split("[]"),"",$_POST['vehicle_id']);
+	// 	$sql = "SELECT * FROM garage_entry  where status=1 and datee BETWEEN '$from_datee' AND '$to_datee' AND vehicle_id IN (".$vehicle_id.") ";
+	// }
+	// else
+	// {
+		$vids = str_replace( str_split("[]"),"",$_POST['vids']);
 
+		if( $vids == NULL || $vids == '' ) 
+			$vids = "''";
+		
 		$sql = "SELECT * FROM garage_entry  where status=1 and datee BETWEEN '$from_datee' AND '$to_datee' AND vehicle_id IN (".$vids.") ";
-	}
+	// }
 
 	$q = mysqli_query($mycon,$sql);
 

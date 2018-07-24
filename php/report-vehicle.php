@@ -835,7 +835,7 @@ include 'footer.php';
         vids.push(v_id);
       }
       calculations();
-      getRecords(from_date,to_date,null,vids,voucher_numbers);
+      getRecords(from_date,to_date,vids,voucher_numbers);
     });
 
       //RESET BUTTON CODE
@@ -1209,9 +1209,7 @@ include 'footer.php';
                     vehicle_number  = new Array();
                     voucher_numbers  = new Array();
 
-                if(vehicle_id==null)
-                  vids = data['vids'];
-
+                vids = data['vids'];
                 vehicle_number  = data['vnumbers'];
                 voucher_numbers = data['voucher_numbers'];
 
@@ -1282,7 +1280,7 @@ include 'footer.php';
                 $('#balance_trips').html(balance_trips);
                 $('#total_diesel').html(total_diesel);
                 $('#total_rent').html(total_rent);
-                getRecords(from_datee,to_datee,vehicle_id,vids,voucher_numbers);
+                getRecords(from_datee,to_datee,vids,voucher_numbers);
 
                 //Voucher Form
                 if( data !=null && ( vehicle_id!=0 || owner_name !='' ) )
@@ -1302,12 +1300,12 @@ include 'footer.php';
 
     var ge_ids = new Array();
     //Repair and Maintenance Table Code
-    function loadMR(from_datee,to_datee,vehicle_id,vids)
+    function loadMR(from_datee,to_datee,vids)
     {
       $.ajax({
         url:'ajax/garage_entry/rm_fetch.php',
-        data:{from_datee:from_datee,to_datee:to_datee,vehicle_id:JSON.stringify(vehicle_id),vids:JSON.stringify(vids)},
-        type:'GET',
+        data:{from_datee:from_datee,to_datee:to_datee,vids:JSON.stringify(vids)},
+        type:'POST',
         dataType:'JSON',
         success:function(data){
             var n=1;
@@ -1336,8 +1334,9 @@ include 'footer.php';
     function calculations(){
       // alert( "advance taken owner="+$('#advance_taken_owner').html()+ " advance taken"+ $('#advance_taken').html() + " total diesel = " + $('#total_diesel').html() + " total repair maintenance =  " + $('#total_rm').html() );
       // + $('#total_diesel').html()/1
+      //+ $('#paid_salary').html()/1
       
-      $('#total_balance').html( $('#balance_trips').html()/1 - ( $('#advance_taken_owner').html()/1 + $('#advance_taken').html()/1 + $('#total_rm').html()/1 + $('#driver_salary').html()/1  + $('#paid_salary').html()/1 ) );
+      $('#total_balance').html( $('#balance_trips').html()/1 - ( $('#advance_taken_owner').html()/1 + $('#advance_taken').html()/1 + $('#total_rm').html()/1 + $('#driver_salary').html()/1   ) );
 
       var total_balance = $('#total_balance').html()/1;
       if( total_balance <= 0 )
@@ -1433,19 +1432,22 @@ include 'footer.php';
         });
     }
 
-    Array.prototype.unique = function() {
-      return this.filter(function (value, index, self) { 
-        return self.indexOf(value) === index;
-      });
+    function uniques(arr) 
+    {
+      var a = [];
+      for (var i=0, l=arr.length; i<l; i++)
+          if (a.indexOf(arr[i]) === -1 && arr[i] !== '')
+              a.push(arr[i]);
+      return a;
     }
 
-    function getRecords(from_datee,to_datee,vehicle_id,vids,voucher_numbers)
+    function getRecords(from_datee,to_datee,vids,voucher_numbers)
     {
-      var vvids = vids.unique();
+      var vvids = uniques(vids);
         $.ajax({
             url:'ajax/vehicle/vehicle_records.php',
-            data:{from_datee:from_datee,to_datee:to_datee,vehicle_id:JSON.stringify(vehicle_id),vids:JSON.stringify(vvids),voucher_numbers:JSON.stringify(voucher_numbers)},
-            type:'GET',
+            data:{from_datee:from_datee,to_datee:to_datee,vids:JSON.stringify(vvids),voucher_numbers:JSON.stringify(voucher_numbers)},
+            type:'POST',
             dataType:"JSON",
             success: function(data){
                 
@@ -1459,7 +1461,7 @@ include 'footer.php';
 
                     calculations();
 
-                    loadMR(from_datee,to_datee,vehicle_id,vvids);
+                    loadMR(from_datee,to_datee,vvids);
                 });
             },
             error: function(){ alertMessage("Failed Fetch Records.",'error') }, 
@@ -1470,11 +1472,11 @@ include 'footer.php';
     {
       $('#btn_submit').attr("disabled", 'disabled');
       $('#vloading').show();   
-      var vvids = vids.unique();
+      var vvids = uniques(vids);
       $.ajax({
           url:'ajax/vehicle/voucher_add.php',
           data:{vehicle_number:JSON.stringify(vehicle_number),datee:datee,method:method,check_number:check_number,bank_id:bank_id,amount:amount,description:description,ce_ids:JSON.stringify(ce_ids),ge_ids:JSON.stringify(ge_ids),vids:JSON.stringify(vvids),from_date:from_date,to_date:to_date},
-          type:"POST",
+          type:'POST',
           dataType:'JSON',
           success:function(data){
               if(data['inserted'] == 'true')
@@ -1554,7 +1556,7 @@ include 'footer.php';
            amount = $('#amount').val(),
            description = $('#description').val();
 
-        add(vehicle_number,datee,method,check_number,bank_id,amount,description,ce_ids,ge_ids,from_date,to_date);
+        add(vehicle_number,datee,method,check_number,bank_id,amount,description,ce_ids,ge_ids,vids,from_date,to_date);
     });
 
     function printPDF() {
