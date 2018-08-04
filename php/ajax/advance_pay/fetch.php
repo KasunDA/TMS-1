@@ -5,7 +5,7 @@ $json = NULL;
 $n = 0;
 $sql = '';
 
-$q = mysqli_query($mycon,'SELECT expense_id,datee,name,borrower_id,description,SUM(amount) as total_amount , vehicle_id FROM expenses where dd_id=2 and paid_status=0 AND cmp_id IS NULL AND cm_id IS NULL AND bike_id IS NULL  AND status=1 GROUP BY name,borrower_id');
+$q = mysqli_query($mycon,'SELECT expense_id,datee,name,borrower_id,description,SUM(amount) as total_amount , vehicle_id FROM expenses where dd_id=2 and paid_status=0 AND cmp_id IS NULL AND cm_id IS NULL AND bike_id IS NULL AND status=1 GROUP BY vehicle_id,name,borrower_id');
 
 while ( $r = mysqli_fetch_array($q) ) 
 {
@@ -20,8 +20,8 @@ while ( $r = mysqli_fetch_array($q) )
 		$rq1 = mysqli_fetch_array($vq1);
 		$json[$n]['vehicle_number'] = $rq1['vehicle_number'];	
 
-
-		$sql = "SELECT SUM(amount) as received_amount from income where status=1 AND vehicle_id=".$r['vehicle_id']." and name='".$r['name']."' ";
+        
+		$sql = "SELECT SUM(amount) as received_amount from income where vehicle_id=".$r['vehicle_id']." and name='".$r['name']."' and status=1 ";
 		
 	}
 	else if ( $r['borrower_id'] != NULL  &&  $r['name'] != NULL )

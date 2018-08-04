@@ -1,1 +1,3 @@
-connection.php
+
+*.php
+php/connection.php

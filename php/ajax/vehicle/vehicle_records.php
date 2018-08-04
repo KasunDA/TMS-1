@@ -48,7 +48,7 @@
 
 		if( $r = mysqli_fetch_array($advanceqd) )
 		{
-			$q1 = mysqli_query($mycon,"SELECT SUM(amount) as received_amount from income where vehicle_id=$cvehicle_id and name='$driver_name' AND datee BETWEEN '$from_datee' AND '$to_datee'");
+			$q1 = mysqli_query($mycon,"SELECT SUM(amount) as received_amount from income where status=1 and vehicle_id=$cvehicle_id and name='$driver_name' AND datee BETWEEN '$from_datee' AND '$to_datee'");
 			$r1 = mysqli_fetch_array($q1);
 			$t_driver = $r['total_advance'] - $r1['received_amount'];
 			$json[0]['total_remaining_advance'] += $t_driver;
@@ -61,7 +61,7 @@
 
 		if( $r = mysqli_fetch_array($advanceqo) )
 		{
-			$q1 = mysqli_query($mycon,"SELECT SUM(amount) as received_amount from income where vehicle_id=$cvehicle_id and name='$owner_name' AND datee BETWEEN '$from_datee' AND '$to_datee'");
+			$q1 = mysqli_query($mycon,"SELECT SUM(amount) as received_amount from income where status=1 and vehicle_id=$cvehicle_id and name='$owner_name' AND datee BETWEEN '$from_datee' AND '$to_datee'");
 			$r1 = mysqli_fetch_array($q1);
 			$t_owner = $r['total_advance'] - $r1['received_amount'];
 			$json[0]['total_remaining_advance_owner'] += $t_owner;
